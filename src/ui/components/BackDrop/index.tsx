@@ -2,19 +2,19 @@ import React from 'react';
 import {
   Backdrop,
   CircularProgress,
-} from '@mui/material';
 
-import useStyles from './styles';
+  useTheme,
+} from '@mui/material';
 
 interface IBackDropProps {
   open: boolean;
 };
 
 const BackDrop: React.FC<IBackDropProps> = (props) => {
-  const classes = useStyles();
+  const theme = useTheme();
 
   return (
-    <Backdrop open={props.open} className={classes.root}>
+    <Backdrop open={props.open} sx={{ zIndex: theme.zIndex.drawer + 1, color: '#fff', }}>
       <CircularProgress color="inherit" />
     </Backdrop>
   );
