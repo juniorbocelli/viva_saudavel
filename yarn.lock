@@ -2015,6 +2015,13 @@
   dependencies:
     "@types/react" "*"
 
+"@types/react-text-mask@^5.4.10":
+  version "5.4.10"
+  resolved "https://registry.yarnpkg.com/@types/react-text-mask/-/react-text-mask-5.4.10.tgz#9007e6636791a122827f2a9ef19dd1f5ebeedd73"
+  integrity sha512-Q0+3WIRgwv5ds2PzyjuVCHRQ22wIjQ27mN4NIzW/C70i9eelaCBqGnkIQv9r+W0vIu1LsvltB1qM6hz/pBaymA==
+  dependencies:
+    "@types/react" "*"
+
 "@types/react-transition-group@^4.4.4":
   version "4.4.4"
   resolved "https://registry.npmjs.org/@types/react-transition-group/-/react-transition-group-4.4.4.tgz"
@@ -9097,7 +9104,7 @@ prompts@2.4.0, prompts@^2.0.1:
     kleur "^3.0.3"
     sisteransi "^1.0.5"
 
-prop-types@^15.6.2, prop-types@^15.7.2:
+prop-types@^15.5.6, prop-types@^15.6.2, prop-types@^15.7.2:
   version "15.7.2"
   resolved "https://registry.npmjs.org/prop-types/-/prop-types-15.7.2.tgz"
   integrity sha512-8QQikdH7//R2vurIJSutZ1smHYTcLpRWEOlHnzcWHmBYrOGUysKwSsrC89BCiFj3CbrfJ/nXFdJepOVrY1GCHQ==
@@ -9317,6 +9324,11 @@ react-error-overlay@^6.0.9:
   resolved "https://registry.npmjs.org/react-error-overlay/-/react-error-overlay-6.0.9.tgz"
   integrity sha512-nQTTcUu+ATDbrSD1BZHr5kgSD4oF8OFjxun8uAaL8RwPBacGBNPf/yAuVVdx17N8XNzRDMrZ9XcKZHCjPW+9ew==
 
+react-hook-form@^7.20.5:
+  version "7.20.5"
+  resolved "https://registry.yarnpkg.com/react-hook-form/-/react-hook-form-7.20.5.tgz#69d563c9cceafb2d4449bd3c28d17342b57b5830"
+  integrity sha512-xYeBmQW6oqxDYAYVWIoZYC7tRD6lJBJt9b8Rr1Mv/VhZ+ZUCy2IuXlm2YA9i0/zl0TKKxqBWQOxGEb3qyVIhMg==
+
 react-is@^16.7.0, react-is@^16.8.1:
   version "16.13.1"
   resolved "https://registry.npmjs.org/react-is/-/react-is-16.13.1.tgz"
@@ -9412,6 +9424,13 @@ react-scripts@4.0.3:
     workbox-webpack-plugin "5.1.4"
   optionalDependencies:
     fsevents "^2.1.3"
+
+react-text-mask@^5.4.3:
+  version "5.4.3"
+  resolved "https://registry.yarnpkg.com/react-text-mask/-/react-text-mask-5.4.3.tgz#991efb4299e30c2e6c2c46d13f617169463e0d2d"
+  integrity sha1-mR77QpnjDC5sLEbRP2FxaUY+DS0=
+  dependencies:
+    prop-types "^15.5.6"
 
 react-transition-group@^4.4.2:
   version "4.4.2"
