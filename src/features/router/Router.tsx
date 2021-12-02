@@ -6,29 +6,14 @@ import {
   Navigate,
 } from "react-router-dom";
 
-import BreadCrumbs from '../../components/BreadCrumbs';
-import PageTitle from '../../components/PageTitle';
 import * as GlobalRoutes from '../../globals/routes';
 
-
-interface IInternalPageRouteProps {
-  children: React.ReactNode;
-};
-
-const InternalPageRoute: React.FC<IInternalPageRouteProps> = ({ children }) => {
-  return (
-    <React.Fragment>
-      <PageTitle />
-      <BreadCrumbs />
-      {children}
-    </React.Fragment>
-  );
-};
+import ModelOne from '../../screens/models/ModelOne';
 
 const LoggedRoutes = React.memo((props) => {
   return (
     <Routes>
-      <Route path={GlobalRoutes.SCREEN_INDEX} element={<InternalPageRoute><div>Olá</div></InternalPageRoute>} />
+      <Route path={GlobalRoutes.SCREEN_INDEX} element={<ModelOne />} />
 
       <Route path='*' element={<Navigate to={GlobalRoutes.SCREEN_INDEX} replace />} />
     </Routes>
