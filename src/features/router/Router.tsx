@@ -7,6 +7,7 @@ import {
 } from "react-router-dom";
 
 import BreadCrumbs from '../../components/BreadCrumbs';
+import PageTitle from '../../components/PageTitle';
 import * as GlobalRoutes from '../../globals/routes';
 
 
@@ -17,6 +18,7 @@ interface IInternalPageRouteProps {
 const InternalPageRoute: React.FC<IInternalPageRouteProps> = ({ children }) => {
   return (
     <React.Fragment>
+      <PageTitle />
       <BreadCrumbs />
       {children}
     </React.Fragment>
