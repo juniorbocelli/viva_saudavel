@@ -8,6 +8,9 @@ import {
 
 import * as GlobalRoutes from '../../globals/routes';
 
+import Navigation from '../../features/navigation/Navigation';
+import CheckSession from '../auth/CheckSession';
+
 import ModelOne from '../../screens/models/ModelOne';
 import SignIn from '../../screens/login/SignIn';
 
@@ -32,12 +35,22 @@ const NotLoggedRoutes = React.memo((props) => {
 });
 
 const Router = () => {
+  // TODO: get this information from authContext
   const isLoggedIn = true;
 
   return (
-    <BrowserRouter>
-      {isLoggedIn ? <LoggedRoutes /> : <NotLoggedRoutes />}
-    </BrowserRouter>
+    <CheckSession>
+      <BrowserRouter>
+        {
+          isLoggedIn ?
+            <Navigation>
+              <LoggedRoutes />
+            </Navigation>
+            :
+            <NotLoggedRoutes />
+        }
+      </BrowserRouter>
+    </CheckSession>
   );
 };
 
