@@ -6,8 +6,8 @@ import {
   useTheme,
 } from '@mui/material';
 
-import BreadCrumbs from '../../../components/BreadCrumbs';
-import PageTitle from '../../../components/PageTitle';
+import BreadCrumbs from '../../../../components/BreadCrumbs';
+import PageTitle from '../../../../components/PageTitle';
 
 interface IMainContentBoxProps {
   children?: ReactNode;
@@ -42,7 +42,12 @@ const MainContentBox: React.FC<IMainContentBoxProps> = (props) => {
       <Box sx={{ flexGrow: 1, p: theme.spacing(2) }}>
         {
           typeof (primary) !== "undefined" &&
-          <Typography component="h1" variant="h4" color="primary" gutterBottom>
+          <Typography
+            component="h1"
+            variant="h4"
+            color="primary.dark"
+            gutterBottom
+          >
             {primary}
           </Typography>
         }
