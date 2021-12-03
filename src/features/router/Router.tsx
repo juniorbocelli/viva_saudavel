@@ -32,7 +32,7 @@ const NotLoggedRoutes = React.memo((props) => {
 });
 
 const Router = () => {
-  const isLoggedIn = false;
+  const isLoggedIn = true;
 
   return (
     <BrowserRouter>
