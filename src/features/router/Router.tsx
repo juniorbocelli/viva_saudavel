@@ -9,6 +9,7 @@ import {
 import * as GlobalRoutes from '../../globals/routes';
 
 import ModelOne from '../../screens/models/ModelOne';
+import SignIn from '../../screens/login/SignIn';
 
 const LoggedRoutes = React.memo((props) => {
   return (
@@ -23,13 +24,15 @@ const LoggedRoutes = React.memo((props) => {
 const NotLoggedRoutes = React.memo((props) => {
   return (
     <Routes>
+      <Route path={GlobalRoutes.SCREEN_LOGIN} element={<SignIn />} />
 
+      <Route path='*' element={<Navigate to={GlobalRoutes.SCREEN_LOGIN} replace />} />
     </Routes>
   );
 });
 
 const Router = () => {
-  const isLoggedIn = true;
+  const isLoggedIn = false;
 
   return (
     <BrowserRouter>

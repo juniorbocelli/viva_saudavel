@@ -16,14 +16,14 @@ import { TextField } from '@mui/material';
  * shrink: boolean indicando se a label deve sofrer encolhimento forçado (manual). Apenas para campos problemáticos em relação ao encolhimento automático.
  */
 export default function TextInput({
-  hookForm = null,
+  hookForm,
   mask = null,
   fullWidth = true,
   shrink = false,
   type = 'text',
   margin = 'normal',
   autoFocus = false,
-  autoComplete = null,
+  autoComplete,
   size = "small",
   inputRef=null,
   ...rest }) {
@@ -56,6 +56,11 @@ export default function TextInput({
 }
 
 TextInput.propTypes = {
-  hookForm: PropTypes.array | undefined, // [name, register, errors, validate]
+  hookForm: PropTypes.array, // [name, register, errors, validate]
   mask: PropTypes.func,
+};
+
+TextInput.defaultProps = {
+  hookForm: undefined,
+  autoComplete: undefined,
 };
