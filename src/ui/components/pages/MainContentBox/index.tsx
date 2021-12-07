@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react';
+import React from 'react';
 import {
   Box,
   Typography,
@@ -8,17 +8,25 @@ import {
 
 import BreadCrumbs from '../../../../components/BreadCrumbs';
 import PageTitle from '../../../../components/PageTitle';
+import BackDrop from '../../../../ui/components/BackDrop';
+import AlertDialog from '../../../../ui/components/AlertDialog';
+
+import useModelPageStates, { IUseModelPageState } from './states';
 
 interface IMainContentBoxProps {
-  children?: ReactNode;
+  children?: React.FC<{ modelPageStates: IUseModelPageState }>;
   primary?: string;
 
   hasBreadcrumb?: boolean;
   hasBrowseTitle?: boolean;
+
+  isRenderBackDrop?: boolean;
+  isRenderErrorMessages?: boolean;
 };
 
 const MainContentBox: React.FC<IMainContentBoxProps> = (props) => {
   const theme = useTheme();
+  const states = useModelPageStates();
 
   const {
     children,
@@ -26,12 +34,31 @@ const MainContentBox: React.FC<IMainContentBoxProps> = (props) => {
 
     hasBreadcrumb,
     hasBrowseTitle,
+
+    isRenderBackDrop,
+    isRenderErrorMessages,
   } = props;
 
   return (
     <div style={{ width: '100%', padding: 0, margin: 0 }}>
       {
         !!hasBreadcrumb && <BreadCrumbs />
+      }
+
+      {
+        !!isRenderBackDrop &&
+        <BackDrop
+          open={states.isQueryingAPI}
+        />
+      }
+
+      {
+        !!isRenderErrorMessages &&
+        <AlertDialog
+          open={typeof (states.errorMessage) !== "undefined"}
+          content={states.errorMessage || ""}
+          onClose={() => states.setErrorMessage(undefined)}
+        />
       }
 
       {
@@ -52,7 +79,9 @@ const MainContentBox: React.FC<IMainContentBoxProps> = (props) => {
           </Typography>
         }
 
-        {children}
+        {
+          typeof (children) !== "undefined" && children({ modelPageStates: states })
+        }
       </Box>
     </div>
   );
