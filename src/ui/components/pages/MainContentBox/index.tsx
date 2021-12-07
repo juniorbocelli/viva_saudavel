@@ -11,10 +11,13 @@ import PageTitle from '../../../../components/PageTitle';
 import BackDrop from '../../../../ui/components/BackDrop';
 import AlertDialog from '../../../../ui/components/AlertDialog';
 
-import useModelPageStates, { IUseModelPageState } from './states';
+import {
+  IsQueryingAPIState,
+  ErrorMessageState,
+} from './types';
 
 interface IMainContentBoxProps {
-  children?: React.FC<{ modelPageStates: IUseModelPageState }>;
+  children?: React.ReactNode;
   primary?: string;
 
   hasBreadcrumb?: boolean;
@@ -22,11 +25,18 @@ interface IMainContentBoxProps {
 
   isRenderBackDrop?: boolean;
   isRenderErrorMessages?: boolean;
+
+  states?: {
+    isQueryingAPI?: IsQueryingAPIState;
+
+    errorMessage?: ErrorMessageState;
+    setErrorMessage?: React.Dispatch<React.SetStateAction<ErrorMessageState>>;
+  }
+
 };
 
 const MainContentBox: React.FC<IMainContentBoxProps> = (props) => {
   const theme = useTheme();
-  const states = useModelPageStates();
 
   const {
     children,
@@ -37,7 +47,14 @@ const MainContentBox: React.FC<IMainContentBoxProps> = (props) => {
 
     isRenderBackDrop,
     isRenderErrorMessages,
+
+    states,
   } = props;
+
+  const _onClose = () => {
+    if (typeof (states?.setErrorMessage) !== "undefined")
+      states.setErrorMessage(undefined);
+  };
 
   return (
     <div style={{ width: '100%', padding: 0, margin: 0 }}>
@@ -46,18 +63,18 @@ const MainContentBox: React.FC<IMainContentBoxProps> = (props) => {
       }
 
       {
-        !!isRenderBackDrop &&
+        !!isRenderBackDrop && states?.isQueryingAPI &&
         <BackDrop
           open={states.isQueryingAPI}
         />
       }
 
       {
-        !!isRenderErrorMessages &&
+        !!isRenderErrorMessages && states &&
         <AlertDialog
           open={typeof (states.errorMessage) !== "undefined"}
           content={states.errorMessage || ""}
-          onClose={() => states.setErrorMessage(undefined)}
+          onClose={_onClose}
         />
       }
 
@@ -79,9 +96,7 @@ const MainContentBox: React.FC<IMainContentBoxProps> = (props) => {
           </Typography>
         }
 
-        {
-          typeof (children) !== "undefined" && children({ modelPageStates: states })
-        }
+        {children}
       </Box>
     </div>
   );
