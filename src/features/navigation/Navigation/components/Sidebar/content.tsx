@@ -13,7 +13,6 @@ import InboxIcon from '@mui/icons-material/MoveToInbox';
 
 const drawerContent = (
   <div>
-    <Toolbar />
     <Divider />
     <List>
       {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (

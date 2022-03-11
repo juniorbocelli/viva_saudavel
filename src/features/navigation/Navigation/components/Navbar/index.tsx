@@ -132,10 +132,6 @@ export default function Navbar(props: INavbarProps) {
     <Box sx={{ flexGrow: 1 }}>
       <AppBar
         position="fixed"
-        sx={{
-          width: { sm: `calc(100% - ${drawerWidth}px)` },
-          ml: { sm: `${drawerWidth}px` },
-        }}
       >
         <Toolbar>
 
