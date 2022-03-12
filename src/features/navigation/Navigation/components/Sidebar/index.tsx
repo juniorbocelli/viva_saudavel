@@ -49,13 +49,17 @@ export default function Sidebar(props: ISidebarProps) {
         variant="temporary"
         open={isMobileOpen}
         onClose={handleDrawerToggle}
-        ModalProps={{
-          keepMounted: true, // Better open performance on mobile.
-        }}
-        sx={{
-          display: { xs: 'block', sm: 'none' },
-          '& .MuiDrawer-paper': { boxSizing: 'border-box', width: '100%' },
-        }}
+        ModalProps={
+          {
+            keepMounted: true, // Better open performance on mobile.
+          }
+        }
+        sx={
+          {
+            display: { xs: 'block', sm: 'none' },
+            '& .MuiDrawer-paper': { boxSizing: 'border-box', width: '100%' },
+          }
+        }
       >
         {/* Close Button */}
         <IconButton
@@ -64,7 +68,7 @@ export default function Sidebar(props: ISidebarProps) {
           edge="start"
           onClick={handleDrawerToggle}
           size="large"
-          sx={{ ml: theme.spacing(1),  width: '50px', height: '50px' }}
+          sx={{ ml: theme.spacing(1), width: '50px', height: '50px' }}
         >
           <CloseIcon sx={{ fontSize: '2.7rem' }} />
         </IconButton>
