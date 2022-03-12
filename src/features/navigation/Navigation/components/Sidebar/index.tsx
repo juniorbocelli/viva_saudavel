@@ -15,7 +15,6 @@ import { IUseStates } from '../../states';
 
 interface ISidebarProps {
   states: IUseStates;
-  drawerWidth: number;
   /**
    * Injected by the documentation to work in an iframe.
    * You won't need it on your project.
@@ -30,8 +29,6 @@ export default function Sidebar(props: ISidebarProps) {
     window,
 
     states: { isMobileOpen, setIsMobileOpen },
-
-    drawerWidth,
   } = props;
 
   const container = window !== undefined ? () => window().document.body : undefined;
