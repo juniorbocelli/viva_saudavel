@@ -33,10 +33,9 @@ const Cart: React.FC<IUseStates> = (states) => {
 
   const list = () => (
     <Box
-      sx={{ width: { sx: '100%', md: 500 }, flexGrow: 1 }}
-      role="presentation"
-      onClick={toggleDrawer(false)}
-      onKeyDown={toggleDrawer(false)}
+      component="nav"
+      sx={{ flexShrink: { sm: 0 } }}
+      aria-label="mailbox folders"
     >
       <List>
         {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
@@ -68,6 +67,14 @@ const Cart: React.FC<IUseStates> = (states) => {
         anchor='right'
         open={isMobileCartOpen}
         onClose={toggleDrawer(false)}
+        ModalProps={{
+          keepMounted: true, // Better open performance on mobile.
+        }}
+        sx={
+          {
+          '& .MuiDrawer-paper': { boxSizing: 'border-box', width: {sx: '100%', md: 500 }},
+        }
+      }
       >
         {list()}
       </Drawer>
