@@ -2,7 +2,12 @@ import React from 'react';
 import {
   Box,
   Drawer,
+  IconButton,
+
+  useTheme,
 } from '@mui/material';
+
+import { Close as CloseIcon } from '@mui/icons-material';
 
 import drawerContent from './content';
 
@@ -10,7 +15,6 @@ import { IUseStates } from '../../states';
 
 interface ISidebarProps {
   states: IUseStates;
-  drawerWidth: number;
   /**
    * Injected by the documentation to work in an iframe.
    * You won't need it on your project.
@@ -19,12 +23,12 @@ interface ISidebarProps {
 };
 
 export default function Sidebar(props: ISidebarProps) {
+  const theme = useTheme();
+
   const {
     window,
 
     states: { isMobileOpen, setIsMobileOpen },
-
-    drawerWidth,
   } = props;
 
   const container = window !== undefined ? () => window().document.body : undefined;
@@ -36,7 +40,7 @@ export default function Sidebar(props: ISidebarProps) {
   return (
     <Box
       component="nav"
-      sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}
+      sx={{ flexShrink: { sm: 0 } }}
       aria-label="mailbox folders"
     >
       {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
@@ -50,19 +54,21 @@ export default function Sidebar(props: ISidebarProps) {
         }}
         sx={{
           display: { xs: 'block', sm: 'none' },
-          '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
+          '& .MuiDrawer-paper': { boxSizing: 'border-box', width: '100%' },
         }}
       >
-        {drawerContent}
-      </Drawer>
-      <Drawer
-        variant="permanent"
-        sx={{
-          display: { xs: 'none', sm: 'block' },
-          '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
-        }}
-        open
-      >
+        {/* Close Button */}
+        <IconButton
+          color="inherit"
+          aria-label="close drawer"
+          edge="start"
+          onClick={handleDrawerToggle}
+          size="large"
+          sx={{ ml: theme.spacing(1),  width: '50px', height: '50px' }}
+        >
+          <CloseIcon sx={{ fontSize: '2.7rem' }} />
+        </IconButton>
+
         {drawerContent}
       </Drawer>
     </Box>

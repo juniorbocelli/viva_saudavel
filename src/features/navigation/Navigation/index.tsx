@@ -3,6 +3,7 @@ import { Box, Toolbar } from '@mui/material';
 
 import Navbar from './components/Navbar';
 import Sidebar from './components/Sidebar';
+import Cart from './components/Cart';
 
 import useStates from './states';
 
@@ -17,9 +18,10 @@ const Navigation: React.FC<INavigationProps> = ({ children }) => {
 
   return (
     <Box sx={{ display: 'flex' }}>
-      <Navbar drawerWidth={drawerWidth} states={states} />
-      <Sidebar drawerWidth={drawerWidth} states={states} />
-
+      <Navbar {...states} />
+      <Sidebar states={states} />
+      <Cart {...states} />
+      
       <Box
         component="main"
         sx={{ flexGrow: 1, width: { sm: `calc(100% - ${drawerWidth}px)`, xs: '100%' } }}
