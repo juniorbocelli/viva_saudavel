@@ -8,6 +8,8 @@ import {
   Badge,
   MenuItem,
   Menu,
+  Paper,
+  InputBase,
 
   useTheme,
 } from '@mui/material';
@@ -16,6 +18,7 @@ import AccountCircle from '@mui/icons-material/AccountCircle';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import MoreIcon from '@mui/icons-material/MoreVert';
+import SearchIcon from '@mui/icons-material/Search';
 
 import { IUseStates } from '../../states';
 
@@ -162,9 +165,24 @@ export default function Navbar(states: IUseStates) {
           </IconButton>
 
           {/* Logo */}
-          <Typography variant="h6" noWrap component="div">
-            Responsive drawer
+          <Typography sx={{ fontSize: { md: '2.2rem' }, ml: { md: theme.spacing(2) } }} variant="h6" noWrap component="div">
+            viva saudável
           </Typography>
+
+          <Paper
+            component="form"
+            sx={{ display: { xs: 'none', md: 'flex' }, alignItems: 'center', flexGrow: 1, ml: theme.spacing(4) }}
+          >
+            <InputBase
+              sx={{ ml: 1, flexGrow: 1, }}
+              placeholder="Busque seu produto..."
+              inputProps={{ 'aria-label': 'campo de busca principal' }}
+              size="small"
+            />
+            <IconButton type="submit" sx={{ p: '10px' }} aria-label="search">
+              <SearchIcon />
+            </IconButton>
+          </Paper>
 
           <Box sx={{ flexGrow: 1 }} />
 

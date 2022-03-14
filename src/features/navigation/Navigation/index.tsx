@@ -19,6 +19,7 @@ const Navigation: React.FC<INavigationProps> = ({ children }) => {
   return (
     <Box sx={{ display: 'flex' }}>
       <Navbar {...states} />
+
       <Sidebar states={states} />
       <Cart {...states} />
       

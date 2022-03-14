@@ -1271,10 +1271,10 @@
     minimatch "^3.0.4"
     strip-json-comments "^3.1.1"
 
-"@fontsource/roboto@^4.5.1":
-  version "4.5.1"
-  resolved "https://registry.npmjs.org/@fontsource/roboto/-/roboto-4.5.1.tgz"
-  integrity sha512-3mhfL+eNPG/woMNqwD/OHaW5qMpeGEBsDwzmhFmjB1yUV+M+M9P0NhP/AyHvnGz3DrqkvZ7CPzNMa+UkVLeELg==
+"@fontsource/raleway@^4.5.3":
+  version "4.5.3"
+  resolved "https://registry.yarnpkg.com/@fontsource/raleway/-/raleway-4.5.3.tgz#0a4477e037dbd9a4a26c1c9db3aa2bf93722b499"
+  integrity sha512-wJ8Rm8k5MuSnfERuL5Q1bd8Z80o3uWpC1vUmZAxcLXAY9IxnfGqZjZJ1Jd2lY1u5NaEo+zXCvHEViAIv6b1jEg==
 
 "@hapi/address@2.x.x":
   version "2.1.4"
