@@ -1,5 +1,15 @@
 import React from 'react';
-import { Box, Toolbar } from '@mui/material';
+import {
+  Box,
+  Toolbar,
+  Paper,
+  InputBase,
+  IconButton,
+
+  useTheme,
+} from '@mui/material';
+
+import SearchIcon from '@mui/icons-material/Search'
 
 import Navbar from './components/Navbar';
 import Sidebar from './components/Sidebar';
@@ -7,14 +17,13 @@ import Cart from './components/Cart';
 
 import useStates from './states';
 
-const drawerWidth = 240;
-
 interface INavigationProps {
   children?: React.ReactNode;
 };
 
 const Navigation: React.FC<INavigationProps> = ({ children }) => {
   const states = useStates();
+  const theme = useTheme();
 
   return (
     <Box sx={{ display: 'flex' }}>
@@ -22,12 +31,41 @@ const Navigation: React.FC<INavigationProps> = ({ children }) => {
 
       <Sidebar states={states} />
       <Cart {...states} />
-      
+
       <Box
         component="main"
-        sx={{ flexGrow: 1, width: { sm: `calc(100% - ${drawerWidth}px)`, xs: '100%' } }}
+        sx={{ flexGrow: 1, width: '100%', mt: { xs: 0, md: '70px' } }}
       >
         <Toolbar />
+
+        <Box sx={
+          {
+            flexGrow: 1,
+            justifyContent: 'center',
+            display: { xs: 'flex', md: 'none' },
+            mt: theme.spacing(1)
+          }
+        }
+        >
+          <Paper
+            component="form"
+            sx={
+              {
+                alignItems: 'center',
+              }
+            }
+          >
+            <InputBase
+              sx={{ ml: 1, flexGrow: 1, }}
+              placeholder="Busque seu produto..."
+              inputProps={{ 'aria-label': 'campo de busca principal' }}
+              size="small"
+            />
+            <IconButton type="submit" sx={{ p: '10px' }} aria-label="search">
+              <SearchIcon />
+            </IconButton>
+          </Paper>
+        </Box>
 
         {children}
 

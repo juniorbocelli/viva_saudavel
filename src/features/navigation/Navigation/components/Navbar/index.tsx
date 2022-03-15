@@ -20,6 +20,8 @@ import NotificationsIcon from '@mui/icons-material/Notifications';
 import MoreIcon from '@mui/icons-material/MoreVert';
 import SearchIcon from '@mui/icons-material/Search';
 
+import NavbarMenu from '../NavbarMenu';
+
 import { IUseStates } from '../../states';
 
 export default function Navbar(states: IUseStates) {
@@ -192,7 +194,7 @@ export default function Navbar(states: IUseStates) {
             <IconButton
               size="large"
               edge="end"
-              aria-label="conta d0 usuário"
+              aria-label="conta do usuário"
               aria-controls={accountMenuId}
               aria-haspopup="true"
               onClick={handleProfileMenuOpen}
@@ -253,6 +255,13 @@ export default function Navbar(states: IUseStates) {
               <MoreIcon />
             </IconButton>
           </Box>
+        </Toolbar>
+
+        {/* Menu */}
+        <Toolbar
+          sx={{ display: { xs: 'none', md: 'flex' } }}
+        >
+          <NavbarMenu />
         </Toolbar>
       </AppBar>
 
