@@ -202,9 +202,9 @@ const NavbarMenu: React.FC<React.ReactFragment> = (props) => {
         🎛️ Filtros
       </Typography>
 
-      <Link href='/produtos/leite-e-seus-derivados/' underline='none' color='inherit'>
+      <Link href='/produtos/leite-e-derivados/' underline='none' color='inherit'>
         <Typography>
-          🍶 Leite e seus derivados
+          🍶 Leite e derivados
         </Typography>
       </Link>
 
