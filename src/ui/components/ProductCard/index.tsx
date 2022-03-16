@@ -1,37 +1,70 @@
 import React from 'react';
-import Card from '@mui/material/Card';
-import CardActions from '@mui/material/CardActions';
-import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
-import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
+import {
+  Card,
+  CardActions,
+  CardContent,
+  CardMedia,
+  Button,
+  Typography,
 
+  useTheme,
+} from '@mui/material';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+
+import * as MaskApply from '../../../features/validation/maskApply';
 import { Product } from '../../../features/globalContext/types';
 
 const ProductCard: React.FC<Product> = (product) => {
-    return (
-        <Card sx={{ maxWidth: 200 }}>
-            <CardMedia
-                component="img"
-                height="140"
-                image={product.images[0]}
-                alt="green iguana"
-            />
-            <CardContent>
-                <Typography gutterBottom variant="h5" component="div">
-                    {product.name}
-                </Typography>
-                <Typography variant="body2" color="text.secondary">
-                    Lizards are a widespread group of squamate reptiles, with over 6,000
-                    species, ranging across all continents except Antarctica
-                </Typography>
-            </CardContent>
-            <CardActions>
-                <Button size="small">Share</Button>
-                <Button size="small">Learn More</Button>
-            </CardActions>
-        </Card>
-    );
+  const theme = useTheme();
+
+  return (
+    <Card sx={{ maxWidth: 200, borderWidth: 0 }} variant="outlined" square={true}>
+      <CardMedia
+        component="img"
+        sx={{ height: '200', cursor: 'pointer' }}
+        image={product.images[0]}
+        alt={`Imagem - ${product.name} - ${product.producer}`}
+      />
+      <CardContent sx={{ cursor: 'pointer', }}>
+        <Typography
+          gutterBottom variant="h5"
+          component="div"
+          sx={{ fontWeight: 'bold', m: 0, mt: theme.spacing(-1) }}
+          color={theme.palette.primary.main}
+        >
+          {product.name}
+        </Typography>
+        <Typography
+          variant="h6"
+          component="div"
+          color={theme.palette.primary.light}
+          sx={{ mt: theme.spacing(-1), p: 0 }}
+        >
+          {product.producer}
+        </Typography>
+
+        <Typography
+          variant="h5"
+          component="div"
+          color="text.secondary"
+          sx={{ fontWeight: 'bold', mb: 0 }}
+        >
+          {`R$ ${MaskApply.maskMoney(product.price)}`}
+        </Typography>
+      </CardContent>
+      <CardActions sx={{mt: theme.spacing(-1)}}>
+        <Button
+          variant='contained'
+          color='secondary'
+          size="medium"
+          endIcon={<ShoppingCartIcon />}
+          sx={{ width: '100%', }}
+        >
+          Adicionar
+        </Button>
+      </CardActions>
+    </Card>
+  );
 };
 
 export default ProductCard;

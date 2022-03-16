@@ -77,7 +77,7 @@ export default function Navbar(states: IUseStates) {
   };
 
   const accountMenuId = 'primary-search-account-menu';
-  {/* Account sub-menu */ }
+  // Account sub-menu
   const renderMenu = (
     <Menu
       anchorEl={accountSubmenuAnchorEl}
