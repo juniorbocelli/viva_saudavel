@@ -32,3 +32,9 @@ export interface IUseStates {
   products: Products;
   setProducts: React.Dispatch<React.SetStateAction<Products>>;
 };
+
+export interface IGlobalContext {
+  products: Products;
+
+  fetchProducts: () => void;
+};

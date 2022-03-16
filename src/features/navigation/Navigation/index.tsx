@@ -16,6 +16,7 @@ import Sidebar from './components/Sidebar';
 import Cart from './components/Cart';
 
 import useStates from './states';
+import { useGlobalContext } from '../../globalContext/context';
 
 interface INavigationProps {
   children?: React.ReactNode;
@@ -24,6 +25,11 @@ interface INavigationProps {
 const Navigation: React.FC<INavigationProps> = ({ children }) => {
   const states = useStates();
   const theme = useTheme();
+  const globalContext = useGlobalContext();
+
+  React.useEffect(() => {
+    globalContext.fetchProducts();
+  }, [globalContext]);
 
   return (
     <Box sx={{ display: 'flex' }}>
