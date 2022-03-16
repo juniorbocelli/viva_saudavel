@@ -1,0 +1,14 @@
+Service notebook key: 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
+Image size: 1000x1000px
+
+Colors:
+
+primary: {
+    main: '#016239',
+},
+secondary: {
+    main: '#eb6e00',
+},
+info: {
+    main: '#8dd40e',
+},

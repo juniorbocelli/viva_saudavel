@@ -34,7 +34,14 @@ const Navigation: React.FC<INavigationProps> = ({ children }) => {
 
       <Box
         component="main"
-        sx={{ flexGrow: 1, width: '100%', mt: { xs: 0, md: '70px' } }}
+        sx={
+          {
+            flexGrow: 1,
+            width: '100%',
+            mt: { xs: 0, md: '70px' },
+            backgroundColor: theme.palette.grey[50]
+          }
+        }
       >
         <Toolbar />
 
