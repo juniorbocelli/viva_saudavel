@@ -3,12 +3,16 @@ import { ThemeProvider } from '@mui/material';
 
 import defaultThemme from './ui/theme/defaultTheme';
 
+import { GlobalContextProvider } from './features/globalContext/context';
 import Router from './features/router/Router';
 
 function App() {
+
   return (
     <ThemeProvider theme={defaultThemme}>
-      <Router />
+      <GlobalContextProvider>
+        <Router />
+      </GlobalContextProvider>
     </ThemeProvider>
   );
 };
