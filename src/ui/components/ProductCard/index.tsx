@@ -14,7 +14,12 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import * as MaskApply from '../../../features/validation/maskApply';
 import { Product } from '../../../features/globalContext/types';
 
-const ProductCard: React.FC<Product> = (product) => {
+interface IProductCardProps {
+  product: Product;
+  setProduct: React.Dispatch<React.SetStateAction<null | Product>>;
+}
+
+const ProductCard: React.FC<IProductCardProps> = ({ product, setProduct }) => {
   const theme = useTheme();
 
   return (
@@ -24,8 +29,9 @@ const ProductCard: React.FC<Product> = (product) => {
         sx={{ height: '200', cursor: 'pointer' }}
         image={product.images[0]}
         alt={`Imagem - ${product.name} - ${product.producer}`}
+        onClick={() => setProduct(product)}
       />
-      <CardContent sx={{ cursor: 'pointer', }}>
+      <CardContent sx={{ cursor: 'pointer', }} onClick={() => setProduct(product)}>
         <Typography
           gutterBottom variant="h5"
           component="div"
@@ -52,7 +58,7 @@ const ProductCard: React.FC<Product> = (product) => {
           {`R$ ${MaskApply.maskMoney(product.price)}`}
         </Typography>
       </CardContent>
-      <CardActions sx={{mt: theme.spacing(-1)}}>
+      <CardActions sx={{ mt: theme.spacing(-1) }}>
         <Button
           variant='contained'
           color='secondary'

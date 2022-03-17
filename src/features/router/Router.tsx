@@ -11,13 +11,13 @@ import * as GlobalRoutes from '../../globals/routes';
 import Navigation from '../../features/navigation/Navigation';
 import CheckSession from '../auth/CheckSession';
 
-import ModelOne from '../../screens/models/ModelOne';
+import Home from '../../screens/Home';
 import SignIn from '../../screens/login/SignIn';
 
 const LoggedRoutes = React.memo((props) => {
   return (
     <Routes>
-      <Route path={GlobalRoutes.SCREEN_INDEX} element={<ModelOne />} />
+      <Route path={GlobalRoutes.SCREEN_INDEX} element={<Home />} />
 
       <Route path='*' element={<Navigate to={GlobalRoutes.SCREEN_INDEX} replace />} />
     </Routes>

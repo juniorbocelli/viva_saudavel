@@ -9,11 +9,7 @@ const ModelOne: React.FC<React.ReactFragment> = (props) => {
   const globalContext = useGlobalContext();
   return (
     <MainContentBox primary="Título da Página">
-      {
-        globalContext.products.map((product, key) => {
-          return (<ProductCard {...product} />);
-        })
-      }
+
     </MainContentBox>
   );
 };
