@@ -1,5 +1,7 @@
 import { Products } from '../../../globalContext/types';
 import img_01 from '../../../../assets/images/products/leite-e-derivados/01/01.jpg';
+import img_02 from '../../../../assets/images/products/leite-e-derivados/01/02.jpg';
+import img_03 from '../../../../assets/images/products/leite-e-derivados/01/03.png';
 
 export const products: Products = [
   {
@@ -26,6 +28,6 @@ export const products: Products = [
       isLactoseFree: false,
     },
     price: 40.5,
-    images: [img_01]
+    images: [img_01, img_02, img_03],
   },
 ];

@@ -5,7 +5,7 @@ import ProductCard from '../../ui/components/ProductCard';
 import ProductModal from '../../ui/components/ProductModal';
 
 import { useGlobalContext } from '../../features/globalContext/context';
-import { Product } from '../../features/globalContext/types';
+
 import useStates from './states';
 
 const Home: React.FC<React.ReactFragment> = (props) => {
