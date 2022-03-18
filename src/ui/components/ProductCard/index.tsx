@@ -23,10 +23,10 @@ const ProductCard: React.FC<IProductCardProps> = ({ product, setProduct }) => {
   const theme = useTheme();
 
   return (
-    <Card sx={{ maxWidth: 200, borderWidth: 0 }} variant="outlined" square={true}>
+    <Card sx={{ maxWidth: { xs: 300, md: 200 }, borderWidth: 0 }} variant="outlined" square={true}>
       <CardMedia
         component="img"
-        sx={{ height: '200', cursor: 'pointer' }}
+        sx={{ height: { xs: 300, md: 200 }, cursor: 'pointer' }}
         image={product.images[0]}
         alt={`Imagem - ${product.name} - ${product.producer}`}
         onClick={() => setProduct(product)}
