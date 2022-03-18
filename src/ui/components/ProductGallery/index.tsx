@@ -21,7 +21,7 @@ const ProductGallery: React.FC<IProductGalleryProps> = ({ products, setProduct, 
   const theme = useTheme();
 
   const settings_md = {
-    dots: true,
+    dots: false,
     arrrows: true,
     infinite: true,
     speed: 500,

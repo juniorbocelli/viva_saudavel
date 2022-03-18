@@ -23,28 +23,62 @@ const ProductCard: React.FC<IProductCardProps> = ({ product, setProduct }) => {
   const theme = useTheme();
 
   return (
-    <Card sx={{ maxWidth: { xs: 300, md: 200 }, borderWidth: 0 }} variant="outlined" square={true}>
+    <Card sx={{ maxWidth: { xs: 300, md: 220 }, borderWidth: 0 }} variant="outlined" square={true}>
       <CardMedia
         component="img"
-        sx={{ height: { xs: 300, md: 200 }, cursor: 'pointer' }}
+        sx={{ height: { xs: 300, md: 220 }, cursor: 'pointer' }}
         image={product.images[0]}
         alt={`Imagem - ${product.name} - ${product.producer}`}
         onClick={() => setProduct(product)}
       />
       <CardContent sx={{ cursor: 'pointer', }} onClick={() => setProduct(product)}>
+        {/* Mobile name */}
         <Typography
           gutterBottom variant="h5"
           component="div"
-          sx={{ fontWeight: 'bold', m: 0, mt: theme.spacing(-1) }}
+          sx={
+            {
+              display: {xs: 'block', md: 'none'},
+              fontWeight: '500',
+              fontSize: { xs: '1.5rem', md: '1.3rem' },
+              mb: { xs: theme.spacing(0.5), md: 0 },
+              mt: theme.spacing(-0.5)
+            }
+          }
           color={theme.palette.primary.main}
         >
-          {product.name}
+          {product.name.length < 21 ? product.name : `${product.name.slice(0, 18)}...`}
         </Typography>
+
+        {/* Desktop name */}
+        <Typography
+          gutterBottom variant="h5"
+          component="div"
+          sx={
+            {
+              display: {xs: 'none', md: 'block'},
+              fontWeight: '500',
+              fontSize: { xs: '1.5rem', md: '1.3rem' },
+              mb: { xs: theme.spacing(0.5), md: 0 },
+              mt: theme.spacing(-0.5)
+            }
+          }
+          color={theme.palette.primary.main}
+        >
+          {product.name.length < 17 ? product.name : `${product.name.slice(0, 14)}...`}
+        </Typography>
+
         <Typography
           variant="h6"
           component="div"
           color={theme.palette.primary.light}
-          sx={{ mt: theme.spacing(-1), p: 0 }}
+          sx={
+            {
+              mt: theme.spacing(-1),
+              p: 0,
+              fontSize: { xs: '1.0rem' },
+            }
+          }
         >
           {product.producer}
         </Typography>
