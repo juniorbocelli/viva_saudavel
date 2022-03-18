@@ -12,7 +12,7 @@ import {
 
   useTheme,
 } from '@mui/material';
-import CloseIcon from '@mui/icons-material/Close';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { TransitionProps } from '@mui/material/transitions';
 
@@ -25,6 +25,8 @@ import isKosher from '../../../assets/images/product-categories-icons/kosher.svg
 import isLactoseFree from '../../../assets/images/product-categories-icons/lactoseFree.svg';
 import isSugarFree from '../../../assets/images/product-categories-icons/sugarFree.svg';
 import isNatural from '../../../assets/images/product-categories-icons/natural.svg';
+
+import ProductImageGallery from '../../../ui/components/ProductImageGallery';
 
 const Filters: React.FC<Product | null> = (product) => {
   return (
@@ -41,7 +43,7 @@ const Filters: React.FC<Product | null> = (product) => {
           }
         >
 
-          <img src={isKosher} />
+          <img src={isKosher} alt="Filtro de produtos kosher" />
         </IconButton>
       }
 
@@ -56,7 +58,7 @@ const Filters: React.FC<Product | null> = (product) => {
           }
         >
 
-          <img src={isA2A2} />
+          <img src={isA2A2} alt="Filtro de produtos A2A2" />
         </IconButton>
       }
 
@@ -71,7 +73,7 @@ const Filters: React.FC<Product | null> = (product) => {
           }
         >
 
-          <img src={isGlutenFree} />
+          <img src={isGlutenFree} alt="Filtro de produtos sem glúten" />
         </IconButton>
       }
 
@@ -86,7 +88,7 @@ const Filters: React.FC<Product | null> = (product) => {
           }
         >
 
-          <img src={isLactoseFree} />
+          <img src={isLactoseFree} alt="Filtro de produtos sem lactose" />
         </IconButton>
       }
 
@@ -101,7 +103,7 @@ const Filters: React.FC<Product | null> = (product) => {
           }
         >
 
-          <img src={isSugarFree} />
+          <img src={isSugarFree} alt="Filtro de produtos sem açúcar" />
         </IconButton>
       }
 
@@ -116,7 +118,7 @@ const Filters: React.FC<Product | null> = (product) => {
           }
         >
 
-          <img src={isNatural} />
+          <img src={isNatural} alt="Filtro de produtos naturais" />
         </IconButton>
       }
     </Box>
@@ -166,21 +168,21 @@ const ProductModal: React.FC<IProductModalProps> = ({ product, setProduct }) => 
               onClick={handleClose}
               aria-label="close"
             >
-              <CloseIcon />
+              <ArrowBackIcon />
             </IconButton>
             <Typography sx={{ ml: 2, flex: 1 }} variant="h6" component="div">
               Voltar
             </Typography>
-            <Button autoFocus color="inherit" onClick={handleClose}>
-              save
-            </Button>
           </Toolbar>
         </AppBar>
 
         <Box sx={{ p: theme.spacing(2) }}>
           <Grid container spacing={theme.spacing(1)}>
-            <Grid item md={5} xs={12}>
-              Fotos
+            <Grid item md={5} xs={12} >
+              {
+                product &&
+                <ProductImageGallery images={product.images} />
+              }
             </Grid>
 
             <Grid item md={7} xs={12}>
