@@ -1,7 +1,7 @@
 import React from 'react';
 
 import MainContentBox from '../../ui/components/pages/MainContentBox';
-import ProductCard from '../../ui/components/ProductCard';
+import ProductGallery from '../../ui/components/ProductGallery';
 import ProductModal from '../../ui/components/ProductModal';
 
 import { useGlobalContext } from '../../features/globalContext/context';
@@ -16,11 +16,7 @@ const Home: React.FC<React.ReactFragment> = (props) => {
     <MainContentBox primary="Título da Página">
       <ProductModal product={states.selectedProduct} setProduct={states.setSelectedProduct} />
 
-      {
-        globalContext.products.map((product, key) => {
-          return (<ProductCard product={product} setProduct={states.setSelectedProduct} key={key} />);
-        })
-      }
+      <ProductGallery products={globalContext.products} setProduct={states.setSelectedProduct} />
     </MainContentBox>
   );
 };
