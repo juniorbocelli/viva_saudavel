@@ -9,6 +9,10 @@ import {
   Slide,
   Grid,
   Box,
+  Menu,
+  MenuItem,
+
+  Fade,
 
   useTheme,
 } from '@mui/material';
@@ -16,8 +20,9 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { TransitionProps } from '@mui/material/transitions';
 
-import { Product } from '../../../features/globalContext/types';
 import * as MaskApply from '../../../features/validation/maskApply';
+import { Product, CartItem } from '../../../features/globalContext/types';
+import { useGlobalContext } from '../../../features/globalContext/context';
 
 import isA2A2 from '../../../assets/images/product-categories-icons/a2a2.svg';
 import isGlutenFree from '../../../assets/images/product-categories-icons/glutenFree.svg';
@@ -142,15 +147,25 @@ interface IProductModalProps {
 
 const ProductModal: React.FC<IProductModalProps> = ({ product, setProduct }) => {
   const theme = useTheme();
-  // const handleClickOpen = () => {
-  //   setOpen(true);
-  // };
+  const globalContext = useGlobalContext();
+
+  // Menu controller
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const open = Boolean(anchorEl);
+  const handleClick = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleCloseMenu = (product?: Product, frequency?: CartItem['frequency']) => {
+    setAnchorEl(null);
+
+    if (typeof (product) !== 'undefined' && typeof (frequency) !== 'undefined')
+      globalContext.addItem(product, frequency);
+  };
 
   const handleClose = () => {
     setProduct(null);
   };
-
-  console.log('product', product);
 
   return (
     <div>
@@ -242,15 +257,42 @@ const ProductModal: React.FC<IProductModalProps> = ({ product, setProduct }) => 
                 {product && `R$ ${MaskApply.maskMoney(product?.price)}`}
               </Typography>
 
-              <Button
-                variant='contained'
-                color='secondary'
-                size="small"
-                endIcon={<ShoppingCartIcon />}
-                sx={{ fontSize: { xs: '0.6rem', md: '0.8rem' } }}
-              >
-                Adicionar
-              </Button>
+              {
+                product &&
+                <React.Fragment>
+                  <Button
+                    id={`fade-modal-button-${product.id}`}
+                    aria-controls={open ? `fade-modal-menu-${product.id}` : undefined}
+                    aria-haspopup="true"
+                    aria-expanded={open ? 'true' : undefined}
+                    onClick={handleClick}
+
+                    variant='contained'
+                    color='secondary'
+                    size="small"
+                    endIcon={<ShoppingCartIcon />}
+                    sx={{ fontSize: { xs: '0.6rem', md: '0.8rem' } }}
+                  >
+                    Adicionar
+                  </Button>
+                  <Menu
+                    id={`fade-modal-menu-${product.id}`}
+                    MenuListProps={{
+                      'aria-labelledby': `fade-modal-button-${product.id}`,
+                    }}
+                    anchorEl={anchorEl}
+                    open={open}
+                    onClose={() => handleCloseMenu()}
+                    TransitionComponent={Fade}
+                  >
+                    <MenuItem onClick={() => handleCloseMenu(product, 'once')}>Uma vez</MenuItem>
+                    <MenuItem onClick={() => handleCloseMenu(product, 'weekly')}>Semanal</MenuItem>
+                    <MenuItem onClick={() => handleCloseMenu(product, 'biweekly')}>Quinzenal</MenuItem>
+                    <MenuItem onClick={() => handleCloseMenu(product, 'monthly')}>Mensal</MenuItem>
+                  </Menu>
+                </React.Fragment>
+              }
+
 
               {
                 product &&

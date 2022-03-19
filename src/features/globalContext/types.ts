@@ -26,15 +26,33 @@ export type Product = {
   images: Array<string>;
 };
 
+export type CartItem = {
+  id: string;
+  name: string;
+  price: number;
+  image: string;
+  frequency: 'once' | 'weekly' | 'biweekly' | 'monthly';
+  quantity: number;
+};
+
+export type Cart = Array<CartItem>;
+
 export type Products = Array<Product>;
 
 export interface IUseStates {
   products: Products;
   setProducts: React.Dispatch<React.SetStateAction<Products>>;
+
+  cart: Cart;
+  setCart: React.Dispatch<React.SetStateAction<Cart>>;
 };
 
 export interface IGlobalContext {
   products: Products;
-
   fetchProducts: () => void;
+
+  cart: Cart;
+  addItem: (product: Product, frequency: CartItem['frequency']) => void;
+  getCartLenght: () => number;
+  getCartValue: () => number;
 };
