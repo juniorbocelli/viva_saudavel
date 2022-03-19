@@ -23,9 +23,11 @@ import SearchIcon from '@mui/icons-material/Search';
 import NavbarMenu from '../NavbarMenu';
 
 import { IUseStates } from '../../states';
+import { useGlobalContext } from '../../../../globalContext/context';
 
 export default function Navbar(states: IUseStates) {
   const theme = useTheme();
+  const globalContext = useGlobalContext();
 
   const {
     isMobileOpen,
@@ -223,7 +225,8 @@ export default function Navbar(states: IUseStates) {
               sx={{ ml: theme.spacing(4) }}
               onClick={handleCartDrawerToggle}
             >
-              <Badge badgeContent={1} color="error">
+              {/* Desktop cart icon */}
+              <Badge badgeContent={globalContext.getCartLenght()} color="error">
                 <ShoppingCartIcon sx={{ fontSize: '2.2rem' }} />
               </Badge>
               <Typography

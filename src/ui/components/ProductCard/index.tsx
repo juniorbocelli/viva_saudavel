@@ -6,13 +6,17 @@ import {
   CardMedia,
   Button,
   Typography,
+  Menu,
+  MenuItem,
+  Fade,
 
   useTheme,
 } from '@mui/material';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 
 import * as MaskApply from '../../../features/validation/maskApply';
-import { Product } from '../../../features/globalContext/types';
+import { Product, CartItem } from '../../../features/globalContext/types';
+import { useGlobalContext } from '../../../features/globalContext/context';
 
 interface IProductCardProps {
   product: Product;
@@ -21,6 +25,21 @@ interface IProductCardProps {
 
 const ProductCard: React.FC<IProductCardProps> = ({ product, setProduct }) => {
   const theme = useTheme();
+  const globalContext = useGlobalContext();
+
+  // Menu controller
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const open = Boolean(anchorEl);
+  const handleClick = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = (product?: Product, frequency?: CartItem['frequency']) => {
+    setAnchorEl(null);
+
+    if (typeof (product) !== 'undefined' && typeof (frequency) !== 'undefined')
+      globalContext.addItem(product, frequency);
+  };
 
   return (
     <Card sx={{ maxWidth: { xs: 300, md: 220 }, borderWidth: 0 }} variant="outlined" square={true}>
@@ -38,7 +57,7 @@ const ProductCard: React.FC<IProductCardProps> = ({ product, setProduct }) => {
           component="div"
           sx={
             {
-              display: {xs: 'block', md: 'none'},
+              display: { xs: 'block', md: 'none' },
               fontWeight: '500',
               fontSize: { xs: '1.5rem', md: '1.3rem' },
               mb: { xs: theme.spacing(0.5), md: 0 },
@@ -56,7 +75,7 @@ const ProductCard: React.FC<IProductCardProps> = ({ product, setProduct }) => {
           component="div"
           sx={
             {
-              display: {xs: 'none', md: 'block'},
+              display: { xs: 'none', md: 'block' },
               fontWeight: '500',
               fontSize: { xs: '1.5rem', md: '1.3rem' },
               mb: { xs: theme.spacing(0.5), md: 0 },
@@ -94,6 +113,12 @@ const ProductCard: React.FC<IProductCardProps> = ({ product, setProduct }) => {
       </CardContent>
       <CardActions sx={{ mt: theme.spacing(-1) }}>
         <Button
+          id={`fade-button-${product.id}`}
+          aria-controls={open ? `fade-menu-${product.id}` : undefined}
+          aria-haspopup="true"
+          aria-expanded={open ? 'true' : undefined}
+          onClick={handleClick}
+
           variant='contained'
           color='secondary'
           size="medium"
@@ -102,6 +127,24 @@ const ProductCard: React.FC<IProductCardProps> = ({ product, setProduct }) => {
         >
           Adicionar
         </Button>
+
+        <Menu
+          id={`fade-menu-${product.id}`}
+          MenuListProps={
+            {
+              'aria-labelledby': `fade-button-${product.id}`,
+            }
+          }
+          anchorEl={anchorEl}
+          open={open}
+          onClose={() => handleClose()}
+          TransitionComponent={Fade}
+        >
+          <MenuItem onClick={() => handleClose(product, 'once')}>Uma vez</MenuItem>
+          <MenuItem onClick={() => handleClose(product, 'weekly')}>Semanal</MenuItem>
+          <MenuItem onClick={() => handleClose(product, 'biweekly')}>Quinzenal</MenuItem>
+          <MenuItem onClick={() => handleClose(product, 'monthly')}>Mensal</MenuItem>
+        </Menu>
       </CardActions>
     </Card>
   );
