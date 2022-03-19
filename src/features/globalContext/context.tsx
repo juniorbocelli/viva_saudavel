@@ -27,6 +27,8 @@ export const GlobalContextProvider: React.FC<IProps> = ({ children }) => {
           addItem: cart.addProduct,
           getCartLenght: cart.getCartLenght,
           getCartValue: cart.getCartValue,
+          getQuantityFromItem: cart.getQuantityFromItem,
+          removeItem: cart.removeItem,
         }
       }
     >
