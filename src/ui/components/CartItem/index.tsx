@@ -98,7 +98,7 @@ const CartItem: React.FC<ICartItemProps> = ({ cartItem, itemKey }) => {
                 display: 'flex',
                 flexDirection: { xs: 'row', md: 'column' },
                 mb: { xs: theme.spacing(2.0) },
-                mt: {xs: theme.spacing(-0.5)}
+                mt: { xs: theme.spacing(-0.5) }
               }
             }
           >
@@ -109,7 +109,7 @@ const CartItem: React.FC<ICartItemProps> = ({ cartItem, itemKey }) => {
                 {
                   width: { xs: '50%', md: '100%' },
                   height: { xs: '30px' },
-                  p: { xs: theme.spacing(0.2) }
+                  p: { xs: theme.spacing(0.2), md: 0 }
                 }
               }
               endIcon={<EditIcon />}
@@ -140,7 +140,7 @@ const CartItem: React.FC<ICartItemProps> = ({ cartItem, itemKey }) => {
                 {
                   display: 'flex',
                   mt: theme.spacing(0.3),
-                  width: '50%',
+                  width: { xs: '50%', md: '100%' },
                   height: { xs: '30px' },
                 }
               }
@@ -159,7 +159,7 @@ const CartItem: React.FC<ICartItemProps> = ({ cartItem, itemKey }) => {
                   {
                     fontWeight: 600,
                     flexGrow: 1,
-                    fontSize: { xs: '1.3rem', md: '1.5rem' },
+                    fontSize: { xs: '1.3rem', md: '1.3rem' },
                     textAlign: 'center'
                   }
                 }
