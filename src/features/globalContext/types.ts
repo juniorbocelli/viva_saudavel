@@ -56,5 +56,6 @@ export interface IGlobalContext {
   getCartLenght: () => number;
   getCartValue: () => number;
   getQuantityFromItem: (productId: Product['id']) => number
-  removeItem: (itemKey: number) => void;
+  addItemByKey: (itemKey: number) => void;
+  removeItemByKey: (itemKey: number) => void;
 };

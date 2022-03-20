@@ -1,18 +1,21 @@
 import React from 'react';
-import Box from '@mui/material/Box';
-import Drawer from '@mui/material/Drawer';
-import List from '@mui/material/List';
-import Divider from '@mui/material/Divider';
-import ListItem from '@mui/material/ListItem';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
-import MailIcon from '@mui/icons-material/Mail';
+import {
+  Box,
+  Drawer,
+  Divider,
+  IconButton,
+
+  useTheme,
+} from '@mui/material';
+import { Close as CloseIcon } from '@mui/icons-material';
 
 import { IUseStates } from '../../states';
+import CartItem from '../../../../../ui/components/CartItem';
+import { useGlobalContext } from '../../../../globalContext/context';
 
 const Cart: React.FC<IUseStates> = (states) => {
-
+  const theme = useTheme();
+  const globalContext = useGlobalContext();
   const {
     isMobileCartOpen,
     setIsMobileCartOpen,
@@ -31,36 +34,6 @@ const Cart: React.FC<IUseStates> = (states) => {
       setIsMobileCartOpen(open);
     };
 
-  const list = () => (
-    <Box
-      component="nav"
-      sx={{ flexShrink: { sm: 0 } }}
-      aria-label="mailbox folders"
-    >
-      <List>
-        {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-          <ListItem button key={text}>
-            <ListItemIcon>
-              {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-            </ListItemIcon>
-            <ListItemText primary={text} />
-          </ListItem>
-        ))}
-      </List>
-      <Divider />
-      <List>
-        {['All mail', 'Trash', 'Spam'].map((text, index) => (
-          <ListItem button key={text}>
-            <ListItemIcon>
-              {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-            </ListItemIcon>
-            <ListItemText primary={text} />
-          </ListItem>
-        ))}
-      </List>
-    </Box>
-  );
-
   return (
     <div>
       <Drawer
@@ -72,11 +45,34 @@ const Cart: React.FC<IUseStates> = (states) => {
         }}
         sx={
           {
-          '& .MuiDrawer-paper': { boxSizing: 'border-box', width: {sx: '100%', md: 500 }},
+            '& .MuiDrawer-paper': { boxSizing: 'border-box', width: { xs: '100%', md: 700 } },
+          }
         }
-      }
       >
-        {list()}
+        {/* Close Button */}
+        <IconButton
+          color="inherit"
+          aria-label="close drawer"
+          edge="start"
+          onClick={toggleDrawer(false)}
+          size="large"
+          sx={{ ml: theme.spacing(1), width: '50px', height: '50px' }}
+        >
+          <CloseIcon sx={{ fontSize: '2.7rem' }} />
+        </IconButton>
+        <Divider />
+
+        {/* Cart itens */}
+        <Box
+          sx={{ flexShrink: { sm: 0 } }}
+          aria-label="Itens do carrinho de compra"
+        >
+          {
+            globalContext.cart.map((item, key) => {
+              return <CartItem cartItem={item} itemKey={key} key={key} />;
+            })
+          }
+        </Box>
       </Drawer>
     </div>
   );

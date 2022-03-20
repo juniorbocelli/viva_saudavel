@@ -9,34 +9,37 @@ interface IUseCart {
   addProduct: (product: Product, frequency: CartItem['frequency']) => void;
   getCartLenght: () => number;
   getCartValue: () => number;
-  getQuantityFromItem: (productId: Product['id']) => number
-  removeItem: (itemKey: number) => void;
+  getQuantityFromItem: (productId: Product['id']) => number;
+  addItemByKey: (itemKey: number) => void;
+  removeItemByKey: (itemKey: number) => void;
 };
 
 export default function useCart(states: IUseStates): IUseCart {
   // Adiciona novo produto ao carrinho
   const addProduct = (product: Product, frequency: CartItem['frequency']) => {
     let newCart = states.cart.slice();
+    let modifiedItens = [];
 
     // Passa por cada produto para ver se cria uma nova entrada ou altera uma existente
-    states.cart.forEach((item, key) => {
+    modifiedItens = states.cart.filter((item, key) => {
       if (item.id === product.id && item.frequency === frequency) {
         newCart[key] = { ...newCart[key], quantity: newCart[key].quantity + 1 };
         states.setCart(newCart);
-        return;
+        return item;
       };
     });
 
-    newCart.push(
-      {
-        id: product.id,
-        name: product.name,
-        price: product.price,
-        image: product.images[0],
-        frequency: frequency,
-        quantity: 1,
-      }
-    );
+    if (modifiedItens.length === 0)
+      newCart.push(
+        {
+          id: product.id,
+          name: product.name,
+          price: product.price,
+          image: product.images[0],
+          frequency: frequency,
+          quantity: 1,
+        }
+      );
 
     states.setCart(newCart)
   };
@@ -72,13 +75,21 @@ export default function useCart(states: IUseStates): IUseCart {
     return quantity;
   };
 
-  const removeItem = (itemId: number) => {
+  const addItemByKey = (itemKey: number) => {
     let newCart = states.cart.slice();
 
-    if (newCart[itemId].quantity > 0)
-      newCart[itemId] = { ...newCart[itemId], quantity: newCart[itemId].quantity - 1 }
+    newCart[itemKey] = { ...newCart[itemKey], quantity: newCart[itemKey].quantity + 1 }
+
+    states.setCart(newCart);
+  };
+
+  const removeItemByKey = (itemKey: number) => {
+    let newCart = states.cart.slice();
+
+    if (newCart[itemKey].quantity > 1)
+      newCart[itemKey] = { ...newCart[itemKey], quantity: newCart[itemKey].quantity - 1 }
     else
-      newCart.splice(itemId, 1);
+      newCart.splice(itemKey, 1);
 
     states.setCart(newCart);
   };
@@ -88,6 +99,7 @@ export default function useCart(states: IUseStates): IUseCart {
     getCartLenght,
     getCartValue,
     getQuantityFromItem,
-    removeItem,
+    addItemByKey,
+    removeItemByKey,
   };
 };
