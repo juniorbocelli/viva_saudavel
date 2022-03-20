@@ -188,7 +188,8 @@ const NavbarMenu: React.FC<React.ReactFragment> = (props) => {
         data-id='company-menu'
         aria-owns={getActiveMenu() === 'company-menu' ? 'company-menu' : undefined}
         aria-haspopup="true"
-        onMouseEnter={handlePopoverOpen}
+        onClick={handlePopoverOpen}
+        sx={{ cursor: 'pointer' }}
       >
         🏛️ Marcas
       </Typography>
@@ -197,7 +198,8 @@ const NavbarMenu: React.FC<React.ReactFragment> = (props) => {
         data-id='filter-menu'
         aria-owns={getActiveMenu() === 'filter-menu' ? 'filter-menu' : undefined}
         aria-haspopup="true"
-        onMouseEnter={handlePopoverOpen}
+        onClick={handlePopoverOpen}
+        sx={{ cursor: 'pointer' }}
       >
         🎛️ Filtros
       </Typography>
