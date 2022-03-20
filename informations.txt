@@ -15,3 +15,8 @@ secondary: {
 info: {
     main: '#8dd40e',
 },
+
+
+https://create-react-app.dev/docs/deployment/
+yarn global add serve
+serve -s build
