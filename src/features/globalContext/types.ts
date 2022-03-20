@@ -58,4 +58,5 @@ export interface IGlobalContext {
   getQuantityFromItem: (productId: Product['id']) => number
   addItemByKey: (itemKey: number) => void;
   removeItemByKey: (itemKey: number) => void;
+  getProductsByFrequency: (frequency: CartItem['frequency']) => Array<[CartItem, number]>;
 };
