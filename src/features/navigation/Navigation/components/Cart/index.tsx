@@ -74,7 +74,7 @@ const Cart: React.FC<IUseStates> = (states) => {
                 top: 0,
                 backgroundColor: 'white',
                 zIndex: 100,
-                width: {md: 700},
+                width: { xs: '100%', md: 700 },
               }
             }
           >
@@ -96,17 +96,17 @@ const Cart: React.FC<IUseStates> = (states) => {
             sx={
               {
                 p: theme.spacing(1),
-                pt: { md: '60px' },
-                pb: { md: '90px' }
+                pt: { xs: '60px', md: '60px' },
+                pb: { xs: '70px', md: '90px' }
               }
             }
             aria-label="Itens do carrinho de compra"
           >
             {/* Once itens */}
             {
-              onceItems.length > 0 &&
-              <Box sx={{ mb: { md: theme.spacing(2.0) } }}>
-                <Box sx={{ display: 'flex', alignItems: 'center', mb: { md: theme.spacing(1.0) } }}>
+              onceItems.quantity > 0 &&
+              <Box sx={{ mb: { xs: theme.spacing(2.0), md: theme.spacing(2.0) } }}>
+                <Box sx={{ display: 'flex', alignItems: 'center', mb: { xs: theme.spacing(1.0), md: theme.spacing(1.0) } }}>
                   <CalendarMonthIcon sx={{ fontSize: { md: '2.0rem' } }} color='primary' />
 
                   <Typography
@@ -115,17 +115,17 @@ const Cart: React.FC<IUseStates> = (states) => {
                     sx={
                       {
                         fontWeight: 600,
-                        fontSize: '1.3rem',
+                        fontSize: { xs: '1.0rem', md: '1.3rem' },
                         ml: theme.spacing(1.0),
                       }
                     }
                   >
-                    {`Apenas uma vez (${onceItems.length} itens)`}
+                    {`Apenas uma vez (${onceItems.quantity} itens)`}
                   </Typography>
                 </Box>
 
                 {
-                  onceItems.map((item) => {
+                  onceItems.items.map((item) => {
                     return <CartItem cartItem={item[0]} itemKey={item[1]} key={item[1]} />;
                   })
                 }
@@ -134,9 +134,9 @@ const Cart: React.FC<IUseStates> = (states) => {
 
             {/* Weekly itens */}
             {
-              weeklyItems.length > 0 &&
-              <Box sx={{ mb: { md: theme.spacing(2.0) } }}>
-                <Box sx={{ display: 'flex', alignItems: 'center', mb: { md: theme.spacing(1.0) } }}>
+              weeklyItems.quantity > 0 &&
+              <Box sx={{ mb: { xs: theme.spacing(2.0), md: theme.spacing(2.0) } }}>
+                <Box sx={{ display: 'flex', alignItems: 'center', mb: { xs: theme.spacing(1.0), md: theme.spacing(1.0) } }}>
                   <CalendarMonthIcon sx={{ fontSize: { md: '2.0rem' } }} color='primary' />
 
                   <Typography
@@ -145,17 +145,17 @@ const Cart: React.FC<IUseStates> = (states) => {
                     sx={
                       {
                         fontWeight: 600,
-                        fontSize: '1.3rem',
+                        fontSize: { xs: '1.0rem', md: '1.3rem' },
                         ml: theme.spacing(1.0),
                       }
                     }
                   >
-                    {`Semanal (${weeklyItems.length} itens)`}
+                    {`Semanal (${weeklyItems.quantity} itens)`}
                   </Typography>
                 </Box>
 
                 {
-                  weeklyItems.map((item) => {
+                  weeklyItems.items.map((item) => {
                     return <CartItem cartItem={item[0]} itemKey={item[1]} key={item[1]} />;
                   })
                 }
@@ -164,9 +164,9 @@ const Cart: React.FC<IUseStates> = (states) => {
 
             {/* Biweekly itens */}
             {
-              biweeklyItems.length > 0 &&
-              <Box sx={{ mb: { md: theme.spacing(2.0) } }}>
-                <Box sx={{ display: 'flex', alignItems: 'center', mb: { md: theme.spacing(1.0) } }}>
+              biweeklyItems.quantity > 0 &&
+              <Box sx={{ mb: { xs: theme.spacing(2.0), md: theme.spacing(2.0) } }}>
+                <Box sx={{ display: 'flex', alignItems: 'center', mb: { xs: theme.spacing(1.0), md: theme.spacing(1.0) } }}>
                   <CalendarMonthIcon sx={{ fontSize: { md: '2.0rem' } }} color='primary' />
 
                   <Typography
@@ -175,17 +175,17 @@ const Cart: React.FC<IUseStates> = (states) => {
                     sx={
                       {
                         fontWeight: 600,
-                        fontSize: '1.3rem',
+                        fontSize: { xs: '1.0rem', md: '1.3rem' },
                         ml: theme.spacing(1.0),
                       }
                     }
                   >
-                    {`Quinzenal (${biweeklyItems.length} itens)`}
+                    {`Quinzenal (${biweeklyItems.quantity} itens)`}
                   </Typography>
                 </Box>
 
                 {
-                  biweeklyItems.map((item) => {
+                  biweeklyItems.items.map((item) => {
                     return <CartItem cartItem={item[0]} itemKey={item[1]} key={item[1]} />;
                   })
                 }
@@ -194,9 +194,9 @@ const Cart: React.FC<IUseStates> = (states) => {
 
             {/* Monthly itens */}
             {
-              monthlyItems.length > 0 &&
-              <Box sx={{ mb: { md: theme.spacing(2.0) } }}>
-                <Box sx={{ display: 'flex', alignItems: 'center', mb: { md: theme.spacing(1.0) } }}>
+              monthlyItems.quantity > 0 &&
+              <Box sx={{ mb: { xs: theme.spacing(2.0), md: theme.spacing(2.0) } }}>
+                <Box sx={{ display: 'flex', alignItems: 'center', mb: { xs: theme.spacing(1.0), md: theme.spacing(1.0) } }}>
                   <CalendarMonthIcon sx={{ fontSize: { md: '2.0rem' } }} color='primary' />
 
                   <Typography
@@ -205,17 +205,17 @@ const Cart: React.FC<IUseStates> = (states) => {
                     sx={
                       {
                         fontWeight: 600,
-                        fontSize: '1.3rem',
+                        fontSize: { xs: '1.0rem', md: '1.3rem' },
                         ml: theme.spacing(1.0),
                       }
                     }
                   >
-                    {`Mensal (${monthlyItems.length} itens)`}
+                    {`Mensal (${monthlyItems.quantity} itens)`}
                   </Typography>
                 </Box>
 
                 {
-                  monthlyItems.map((item) => {
+                  monthlyItems.items.map((item) => {
                     return <CartItem cartItem={item[0]} itemKey={item[1]} key={item[1]} />;
                   })
                 }
@@ -230,11 +230,11 @@ const Cart: React.FC<IUseStates> = (states) => {
                 position: 'fixed',
                 bottom: 0,
                 backgroundColor: colors.grey['200'],
-                height: { md: '90px' },
-                width: { md: 700 },
+                height: { xs: '65px', md: '90px' },
+                width: { xs: '100%', md: 700 },
                 display: 'flex',
                 justifyContent: 'space-between',
-                p: { md: theme.spacing(1) },
+                p: { xs: theme.spacing(1), md: theme.spacing(1) },
                 pt: { md: theme.spacing(1.5) },
               }
             }>
@@ -254,7 +254,7 @@ const Cart: React.FC<IUseStates> = (states) => {
                 sx={
                   {
                     fontWeight: 600,
-                    fontSize: { md: '1.8rem' }
+                    fontSize: { xs: '1.3rem', md: '1.8rem' }
                   }
                 }
               >
@@ -267,7 +267,8 @@ const Cart: React.FC<IUseStates> = (states) => {
               variant='contained'
               sx={
                 {
-                  height: { md: '50px' }
+                  height: { xs: '30px', md: '50px' },
+                  fontSize: { xs: '0.8rem' }
                 }
               }
 

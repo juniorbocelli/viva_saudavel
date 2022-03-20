@@ -12,7 +12,7 @@ interface IUseCart {
   getQuantityFromItem: (productId: Product['id']) => number;
   addItemByKey: (itemKey: number) => void;
   removeItemByKey: (itemKey: number) => void;
-  getProductsByFrequency: (frequency: CartItem['frequency']) => Array<[CartItem, number]>;
+  getProductsByFrequency: (frequency: CartItem['frequency']) => { quantity: number, items: Array<[CartItem, number]> };
 };
 
 export default function useCart(states: IUseStates): IUseCart {
@@ -97,11 +97,15 @@ export default function useCart(states: IUseStates): IUseCart {
 
   const getProductsByFrequency = (frequency: CartItem['frequency']) => {
     let itemsCategoty: Array<[CartItem, number]> = [];
+    let quantity = 0;
+
     states.cart.forEach((item, key) => {
-      if (item.frequency === frequency)
+      if (item.frequency === frequency) {
+        quantity += item.quantity;
         itemsCategoty.push([item, key]);
+      };
     });
-    return itemsCategoty;
+    return { quantity: quantity, items: itemsCategoty };
   };
 
   return {

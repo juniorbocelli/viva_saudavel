@@ -29,7 +29,7 @@ const CartItem: React.FC<ICartItemProps> = ({ cartItem, itemKey }) => {
   return (
     <Box>
       <Grid container>
-        <Grid item md={9}>
+        <Grid item xs={12} md={9}>
           <Box
             sx={
               {
@@ -40,8 +40,8 @@ const CartItem: React.FC<ICartItemProps> = ({ cartItem, itemKey }) => {
             <Box
               sx={
                 {
-                  width: '20%',
-                  ml: theme.spacing(1)
+                  width: { xs: '17%', md: '20%' },
+                  ml: { xs: theme.spacing(0.5), md: theme.spacing(1) }
                 }
               }
             >
@@ -60,7 +60,7 @@ const CartItem: React.FC<ICartItemProps> = ({ cartItem, itemKey }) => {
                 component='div'
                 sx={
                   {
-                    fontSize: { md: '1.4rem' }
+                    fontSize: { xs: '1.0rem', md: '1.4rem' }
                   }
                 }
               >
@@ -73,7 +73,7 @@ const CartItem: React.FC<ICartItemProps> = ({ cartItem, itemKey }) => {
                   component='div'
                   sx={
                     {
-                      fontSize: { md: '1.5rem' },
+                      fontSize: { xs: '1.1rem', md: '1.5rem' },
                       fontWeight: 600
                     }
                   }
@@ -91,9 +91,29 @@ const CartItem: React.FC<ICartItemProps> = ({ cartItem, itemKey }) => {
           </Box>
         </Grid>
 
-        <Grid md={3} item>
-          <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-            <Button variant='contained' color='primary' sx={{ width: '100%' }} endIcon={<EditIcon />}>
+        <Grid xs={12} md={3} item>
+          <Box
+            sx={
+              {
+                display: 'flex',
+                flexDirection: { xs: 'row', md: 'column' },
+                mb: { xs: theme.spacing(2.0) },
+                mt: {xs: theme.spacing(-0.5)}
+              }
+            }
+          >
+            <Button
+              variant='contained'
+              color='primary'
+              sx={
+                {
+                  width: { xs: '50%', md: '100%' },
+                  height: { xs: '30px' },
+                  p: { xs: theme.spacing(0.2) }
+                }
+              }
+              endIcon={<EditIcon />}
+            >
               {
                 cartItem.frequency === 'once'
                   ?
@@ -115,7 +135,16 @@ const CartItem: React.FC<ICartItemProps> = ({ cartItem, itemKey }) => {
               }
             </Button>
 
-            <Box sx={{ display: 'flex', mt: theme.spacing(0.3) }}>
+            <Box
+              sx={
+                {
+                  display: 'flex',
+                  mt: theme.spacing(0.3),
+                  width: '50%',
+                  height: { xs: '30px' },
+                }
+              }
+            >
               <IconButton onClick={() => globalContext.removeItemByKey(itemKey)}>
                 {
                   cartItem.quantity === 1 ?
@@ -130,7 +159,7 @@ const CartItem: React.FC<ICartItemProps> = ({ cartItem, itemKey }) => {
                   {
                     fontWeight: 600,
                     flexGrow: 1,
-                    fontSize: { md: '1.5rem' },
+                    fontSize: { xs: '1.3rem', md: '1.5rem' },
                     textAlign: 'center'
                   }
                 }
