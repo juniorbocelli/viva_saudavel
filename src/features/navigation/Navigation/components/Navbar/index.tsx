@@ -16,7 +16,6 @@ import {
 import MenuIcon from '@mui/icons-material/Menu';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import NotificationsIcon from '@mui/icons-material/Notifications';
 import MoreIcon from '@mui/icons-material/MoreVert';
 import SearchIcon from '@mui/icons-material/Search';
 
@@ -142,8 +141,9 @@ export default function Navbar(states: IUseStates) {
           aria-label="carrinho"
           color="inherit"
         >
-          <Badge badgeContent={1} color="error">
-            <NotificationsIcon />
+          {/* Mobile cart icon */}
+          <Badge badgeContent={globalContext.getCartLenght()} color="error">
+            <ShoppingCartIcon />
           </Badge>
         </IconButton>
         <p>Carrinho</p>
