@@ -1,20 +1,20 @@
-import { Products } from '../../../../globalContext/types';
+import { Products } from '../../features/globalContext/types';
 
-import queijos_01_img_01 from '../../../../../assets/images/products/queijos/01/01.jpg';
-import queijos_01_img_02 from '../../../../../assets/images/products/queijos/01/02.jpg';
-import queijos_01_img_03 from '../../../../../assets/images/products/queijos/01/03.png';
+import queijos_01_img_01 from '../../assets/images/products/queijos/01/01.jpg';
+import queijos_01_img_02 from '../../assets/images/products/queijos/01/02.jpg';
+import queijos_01_img_03 from '../../assets/images/products/queijos/01/03.png';
 
-import queijos_02_img_01 from '../../../../../assets/images/products/queijos/02/01.jpg';
-import queijos_02_img_02 from '../../../../../assets/images/products/queijos/02/02.jpg';
-import queijos_02_img_03 from '../../../../../assets/images/products/queijos/02/03.jpg';
+import queijos_02_img_01 from '../../assets/images/products/queijos/02/01.jpg';
+import queijos_02_img_02 from '../../assets/images/products/queijos/02/02.jpg';
+import queijos_02_img_03 from '../../assets/images/products/queijos/02/03.jpg';
 
-import queijos_03_img_01 from '../../../../../assets/images/products/queijos/03/01.jpg';
-import queijos_03_img_02 from '../../../../../assets/images/products/queijos/03/02.jpg';
-import queijos_03_img_03 from '../../../../../assets/images/products/queijos/03/03.png';
+import queijos_03_img_01 from '../../assets/images/products/queijos/03/01.jpg';
+import queijos_03_img_02 from '../../assets/images/products/queijos/03/02.jpg';
+import queijos_03_img_03 from '../../assets/images/products/queijos/03/03.png';
 
-import queijos_04_img_01 from '../../../../../assets/images/products/queijos/04/01.jpg';
-import queijos_04_img_02 from '../../../../../assets/images/products/queijos/04/02.jpg';
-import queijos_04_img_03 from '../../../../../assets/images/products/queijos/04/03.jpg';
+import queijos_04_img_01 from '../../assets/images/products/queijos/04/01.jpg';
+import queijos_04_img_02 from '../../assets/images/products/queijos/04/02.jpg';
+import queijos_04_img_03 from '../../assets/images/products/queijos/04/03.jpg';
 
 export const products_queijos: Products = [
   {

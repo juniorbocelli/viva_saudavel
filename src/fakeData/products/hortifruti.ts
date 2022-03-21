@@ -1,24 +1,24 @@
-import { Products } from '../../../../globalContext/types';
+import { Products } from '../../features/globalContext/types';
 
-import hortifruti_01_img_01 from '../../../../../assets/images/products/hortifruti/01/01.jpg';
-import hortifruti_01_img_02 from '../../../../../assets/images/products/hortifruti/01/02.jpg';
-import hortifruti_01_img_03 from '../../../../../assets/images/products/hortifruti/01/03.jpg';
+import hortifruti_01_img_01 from '../../assets/images/products/hortifruti/01/01.jpg';
+import hortifruti_01_img_02 from '../../assets/images/products/hortifruti/01/02.jpg';
+import hortifruti_01_img_03 from '../../assets/images/products/hortifruti/01/03.jpg';
 
-import hortifruti_02_img_01 from '../../../../../assets/images/products/hortifruti/02/01.jpg';
-import hortifruti_02_img_02 from '../../../../../assets/images/products/hortifruti/02/02.jpg';
-import hortifruti_02_img_03 from '../../../../../assets/images/products/hortifruti/02/03.png';
+import hortifruti_02_img_01 from '../../assets/images/products/hortifruti/02/01.jpg';
+import hortifruti_02_img_02 from '../../assets/images/products/hortifruti/02/02.jpg';
+import hortifruti_02_img_03 from '../../assets/images/products/hortifruti/02/03.png';
 
-import hortifruti_03_img_01 from '../../../../../assets/images/products/hortifruti/03/01.jpg';
-import hortifruti_03_img_02 from '../../../../../assets/images/products/hortifruti/03/02.jpg';
-import hortifruti_03_img_03 from '../../../../../assets/images/products/hortifruti/03/03.jpg';
+import hortifruti_03_img_01 from '../../assets/images/products/hortifruti/03/01.jpg';
+import hortifruti_03_img_02 from '../../assets/images/products/hortifruti/03/02.jpg';
+import hortifruti_03_img_03 from '../../assets/images/products/hortifruti/03/03.jpg';
 
-import hortifruti_04_img_01 from '../../../../../assets/images/products/hortifruti/04/01.jpg';
-import hortifruti_04_img_02 from '../../../../../assets/images/products/hortifruti/04/02.jpg';
-import hortifruti_04_img_03 from '../../../../../assets/images/products/hortifruti/04/03.jpg';
+import hortifruti_04_img_01 from '../../assets/images/products/hortifruti/04/01.jpg';
+import hortifruti_04_img_02 from '../../assets/images/products/hortifruti/04/02.jpg';
+import hortifruti_04_img_03 from '../../assets/images/products/hortifruti/04/03.jpg';
 
-import hortifruti_05_img_01 from '../../../../../assets/images/products/hortifruti/05/01.jpg';
-import hortifruti_05_img_02 from '../../../../../assets/images/products/hortifruti/05/02.jpg';
-import hortifruti_05_img_03 from '../../../../../assets/images/products/hortifruti/05/03.png';
+import hortifruti_05_img_01 from '../../assets/images/products/hortifruti/05/01.jpg';
+import hortifruti_05_img_02 from '../../assets/images/products/hortifruti/05/02.jpg';
+import hortifruti_05_img_03 from '../../assets/images/products/hortifruti/05/03.png';
 
 export const products_hortifruti: Products = [
   {

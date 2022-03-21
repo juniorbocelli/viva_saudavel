@@ -1,20 +1,20 @@
-import { Products } from '../../../../globalContext/types';
+import { Products } from '../../features/globalContext/types';
 
-import bebidas_01_img_01 from '../../../../../assets/images/products/bebidas/01/01.jpg';
-import bebidas_01_img_02 from '../../../../../assets/images/products/bebidas/01/02.jpg';
-import bebidas_01_img_03 from '../../../../../assets/images/products/bebidas/01/03.jpg';
+import bebidas_01_img_01 from '../../assets/images/products/bebidas/01/01.jpg';
+import bebidas_01_img_02 from '../../assets/images/products/bebidas/01/02.jpg';
+import bebidas_01_img_03 from '../../assets/images/products/bebidas/01/03.jpg';
 
-import bebidas_02_img_01 from '../../../../../assets/images/products/bebidas/02/01.jpg';
-import bebidas_02_img_02 from '../../../../../assets/images/products/bebidas/02/02.jpg';
-import bebidas_02_img_03 from '../../../../../assets/images/products/bebidas/02/03.png';
+import bebidas_02_img_01 from '../../assets/images/products/bebidas/02/01.jpg';
+import bebidas_02_img_02 from '../../assets/images/products/bebidas/02/02.jpg';
+import bebidas_02_img_03 from '../../assets/images/products/bebidas/02/03.png';
 
-import bebidas_03_img_01 from '../../../../../assets/images/products/bebidas/03/01.jpg';
-import bebidas_03_img_02 from '../../../../../assets/images/products/bebidas/03/02.jpg';
-import bebidas_03_img_03 from '../../../../../assets/images/products/bebidas/03/03.png';
+import bebidas_03_img_01 from '../../assets/images/products/bebidas/03/01.jpg';
+import bebidas_03_img_02 from '../../assets/images/products/bebidas/03/02.jpg';
+import bebidas_03_img_03 from '../../assets/images/products/bebidas/03/03.png';
 
-import bebidas_04_img_01 from '../../../../../assets/images/products/bebidas/04/01.jpg';
-import bebidas_04_img_02 from '../../../../../assets/images/products/bebidas/04/02.jpg';
-import bebidas_04_img_03 from '../../../../../assets/images/products/bebidas/04/03.jpg';
+import bebidas_04_img_01 from '../../assets/images/products/bebidas/04/01.jpg';
+import bebidas_04_img_02 from '../../assets/images/products/bebidas/04/02.jpg';
+import bebidas_04_img_03 from '../../assets/images/products/bebidas/04/03.jpg';
 
 export const products_bebidas: Products = [
   {

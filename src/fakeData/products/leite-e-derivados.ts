@@ -1,16 +1,16 @@
-import { Products } from '../../../../globalContext/types';
+import { Products } from '../../features/globalContext/types';
 
-import leite_e_derivados_01_img_01 from '../../../../../assets/images/products/leite-e-derivados/01/01.jpg';
-import leite_e_derivados_01_img_02 from '../../../../../assets/images/products/leite-e-derivados/01/02.jpg';
-import leite_e_derivados_01_img_03 from '../../../../../assets/images/products/leite-e-derivados/01/03.png';
+import leite_e_derivados_01_img_01 from '../../assets/images/products/leite-e-derivados/01/01.jpg';
+import leite_e_derivados_01_img_02 from '../../assets/images/products/leite-e-derivados/01/02.jpg';
+import leite_e_derivados_01_img_03 from '../../assets/images/products/leite-e-derivados/01/03.png';
 
-import leite_e_derivados_02_img_01 from '../../../../../assets/images/products/leite-e-derivados/02/01.jpg';
-import leite_e_derivados_02_img_02 from '../../../../../assets/images/products/leite-e-derivados/02/02.jpg';
-import leite_e_derivados_02_img_03 from '../../../../../assets/images/products/leite-e-derivados/02/03.jpg';
+import leite_e_derivados_02_img_01 from '../../assets/images/products/leite-e-derivados/02/01.jpg';
+import leite_e_derivados_02_img_02 from '../../assets/images/products/leite-e-derivados/02/02.jpg';
+import leite_e_derivados_02_img_03 from '../../assets/images/products/leite-e-derivados/02/03.jpg';
 
-import leite_e_derivados_03_img_01 from '../../../../../assets/images/products/leite-e-derivados/03/01.jpg';
-import leite_e_derivados_03_img_02 from '../../../../../assets/images/products/leite-e-derivados/03/02.jpg';
-import leite_e_derivados_03_img_03 from '../../../../../assets/images/products/leite-e-derivados/03/03.png';
+import leite_e_derivados_03_img_01 from '../../assets/images/products/leite-e-derivados/03/01.jpg';
+import leite_e_derivados_03_img_02 from '../../assets/images/products/leite-e-derivados/03/02.jpg';
+import leite_e_derivados_03_img_03 from '../../assets/images/products/leite-e-derivados/03/03.png';
 
 export const products_leite_e_derivados: Products = [
   {
