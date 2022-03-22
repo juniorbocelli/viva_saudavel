@@ -3,6 +3,7 @@ import {
   Box,
   Drawer,
   IconButton,
+  Typography,
 
   useTheme,
 } from '@mui/material';
@@ -61,17 +62,31 @@ export default function Sidebar(props: ISidebarProps) {
           }
         }
       >
-        {/* Close Button */}
-        <IconButton
-          color="inherit"
-          aria-label="close drawer"
-          edge="start"
-          onClick={handleDrawerToggle}
-          size="large"
-          sx={{ ml: theme.spacing(1), width: '50px', height: '50px' }}
+
+        <Box
+          sx={{ display: 'flex', alignItems: 'center' }}
         >
-          <CloseIcon sx={{ fontSize: '2.7rem' }} />
-        </IconButton>
+          {/* Close Button */}
+          <IconButton
+            color="inherit"
+            aria-label="close drawer"
+            edge="start"
+            onClick={handleDrawerToggle}
+            size="large"
+            sx={{ ml: theme.spacing(1), width: '50px', height: '50px' }}
+          >
+            <CloseIcon sx={{ fontSize: '2.7rem' }} />
+          </IconButton>
+          <Typography
+            variant='h5'
+            component='div'
+            color={theme.palette.primary.dark}
+
+            sx={{ fontWeight: 600 }}
+          >
+            Menu
+          </Typography>
+        </Box>
 
         <DrawerContent handleDrawerToggle={handleDrawerToggle} />
       </Drawer>
