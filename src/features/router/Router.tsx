@@ -13,6 +13,8 @@ import CheckSession from '../auth/CheckSession';
 
 import Home from '../../screens/Home';
 import Category from '../../screens/Category';
+import Producer from '../../screens/Producer';
+import Filter from '../../screens/Filter';
 
 import SignIn from '../../screens/login/SignIn';
 
@@ -21,6 +23,8 @@ const LoggedRoutes = React.memo((props) => {
     <Routes>
       <Route path={GlobalRoutes.SCREEN_INDEX} element={<Home />} />
       <Route path={GlobalRoutes.SCREEN_CATEGORY} element={<Category />} />
+      <Route path={GlobalRoutes.SCREEN_PRODUCER} element={<Producer />} />
+      <Route path={GlobalRoutes.SCREEN_FILTER} element={<Filter />} />
 
       <Route path='*' element={<Navigate to={GlobalRoutes.SCREEN_INDEX} replace />} />
     </Routes>

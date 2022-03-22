@@ -5,7 +5,9 @@ export const API_ROOT = 'api';
  * NOT LOGGED IN CLIENT SCREENS ROUTES
  */
 export const SCREEN_INDEX = `${APP_ROOT}/`;
-export const SCREEN_CATEGORY = `${APP_ROOT}/produtos/:category`;
+export const SCREEN_CATEGORY = `${APP_ROOT}/produtos/:category/`;
+export const SCREEN_PRODUCER = `${APP_ROOT}/marca/:producer/`;
+export const SCREEN_FILTER = `${APP_ROOT}/filtro/:filter/`;
 
 
 /**

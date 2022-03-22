@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
   AppBar,
   Box,
@@ -23,10 +24,12 @@ import NavbarMenu from '../NavbarMenu';
 
 import { IUseStates } from '../../states';
 import { useGlobalContext } from '../../../../globalContext/context';
+import { SCREEN_INDEX } from '../../../../../globals/routes';
 
 export default function Navbar(states: IUseStates) {
   const theme = useTheme();
   const globalContext = useGlobalContext();
+  const navigate = useNavigate();
 
   const {
     isMobileOpen,
@@ -169,7 +172,12 @@ export default function Navbar(states: IUseStates) {
           </IconButton>
 
           {/* Logo */}
-          <Typography sx={{ fontSize: { md: '2.2rem' }, ml: { md: theme.spacing(2) } }} variant="h6" noWrap component="div">
+          <Typography
+            sx={{ fontSize: { md: '2.2rem' }, ml: { md: theme.spacing(2) }, cursor: 'pointer' }}
+            variant="h6"
+            noWrap component="div"
+            onClick={() => navigate(SCREEN_INDEX)}
+          >
             viva saudável
           </Typography>
 

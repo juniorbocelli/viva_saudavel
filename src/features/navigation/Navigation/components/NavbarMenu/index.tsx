@@ -65,7 +65,7 @@ const NavbarMenu: React.FC<React.ReactFragment> = (props) => {
         </ListItemButton>
 
         <ListItemButton component="a" href="/marca/fazenda-do-bem/">
-          <ListItemText primary="Fazenda do bem" />
+          <ListItemText primary="Fazenda do Bem" />
         </ListItemButton>
 
         <ListItemButton component="a" href="/marca/goldy/">
@@ -85,7 +85,7 @@ const NavbarMenu: React.FC<React.ReactFragment> = (props) => {
         </ListItemButton>
 
         <ListItemButton component="a" href="/marca/la-ferme-moderne/">
-          <ListItemText primary="La Ferme moderne" />
+          <ListItemText primary="La Ferme Moderne" />
         </ListItemButton>
       </Box>
 
@@ -152,7 +152,7 @@ const NavbarMenu: React.FC<React.ReactFragment> = (props) => {
       <ListItemText primary="Kosher" />
     </ListItemButton>
 
-    <ListItemButton component="a" href="/filtro/zero-lactose/">
+    <ListItemButton component="a" href="/filtro/sem-lactose/">
       <ListItemText primary="Zero lactose" />
     </ListItemButton>
 

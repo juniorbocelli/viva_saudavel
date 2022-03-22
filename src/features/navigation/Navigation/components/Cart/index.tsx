@@ -78,16 +78,29 @@ const Cart: React.FC<IUseStates> = (states) => {
               }
             }
           >
-            <IconButton
-              color="inherit"
-              aria-label="close drawer"
-              edge="start"
-              onClick={toggleDrawer(false)}
-              size="large"
-              sx={{ ml: theme.spacing(1), width: '50px', height: '50px' }}
+            <Box
+              sx={{ display: 'flex', alignItems: 'center' }}
             >
-              <CloseIcon sx={{ fontSize: '2.7rem' }} />
-            </IconButton>
+              <IconButton
+                color="inherit"
+                aria-label="close drawer"
+                edge="start"
+                onClick={toggleDrawer(false)}
+                size="large"
+                sx={{ ml: theme.spacing(1), width: '50px', height: '50px' }}
+              >
+                <CloseIcon sx={{ fontSize: '2.7rem' }} />
+              </IconButton>
+              <Typography
+                variant='h5'
+                component='div'
+                color={theme.palette.primary.dark}
+
+                sx={{fontWeight: 600}}
+                >
+                Carrinho
+              </Typography>
+            </Box>
             <Divider />
           </Box>
 
@@ -102,6 +115,14 @@ const Cart: React.FC<IUseStates> = (states) => {
             }
             aria-label="Itens do carrinho de compra"
           >
+            {/* No products */}
+            {
+              globalContext.getCartLenght() === 0 &&
+              <Typography variant='h6' component='div' color='text.secondary'>
+                Você ainda não adicionou produtos ao carrinho
+              </Typography>
+            }
+
             {/* Once itens */}
             {
               onceItems.quantity > 0 &&
