@@ -6,11 +6,21 @@ import {
   Popover,
   ListItemButton,
   ListItemText,
-  Link,
 } from '@mui/material';
+import {
+  useNavigate,
+} from 'react-router-dom';
+
+import * as GlobalRouters from '../../../../../globals/routes';
 
 const NavbarMenu: React.FC<React.ReactFragment> = (props) => {
+  const navigate = useNavigate();
   const [anchorEl, setAnchorEl] = React.useState<HTMLElement | null>(null);
+
+  const handlerClickNavigate = (to: string) => {
+    handlePopoverClose();
+    navigate(to);
+  };
 
   const handlePopoverOpen = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -44,89 +54,131 @@ const NavbarMenu: React.FC<React.ReactFragment> = (props) => {
   >
     <Box display='flex'>
       <Box>
-        <ListItemButton component="a" href="/marca/aviacao/">
+        <ListItemButton
+          onClick={() => handlerClickNavigate(GlobalRouters.SCREEN_PRODUCER.replace(':producer', 'aviacao'))}
+        >
           <ListItemText primary="Aviação" />
         </ListItemButton>
 
-        <ListItemButton component="a" href="/marca/agua-na-caixa/">
+        <ListItemButton
+          onClick={() => handlerClickNavigate(GlobalRouters.SCREEN_PRODUCER.replace(':producer', 'agua-na-caixa'))}
+        >
           <ListItemText primary="Água na Caixa" />
         </ListItemButton>
 
-        <ListItemButton component="a" href="/marca/beta-mel/">
+        <ListItemButton
+          onClick={() => handlerClickNavigate(GlobalRouters.SCREEN_PRODUCER.replace(':producer', 'beta-mel'))}
+        >
           <ListItemText primary="Beta Mel" />
         </ListItemButton>
 
-        <ListItemButton component="a" href="/marca/bufala-almeida-prado/">
+        <ListItemButton
+          onClick={() => handlerClickNavigate(GlobalRouters.SCREEN_PRODUCER.replace(':producer', 'bufala-almeida-prado'))}
+        >
           <ListItemText primary="Búfala Almeida Prado" />
         </ListItemButton>
 
-        <ListItemButton component="a" href="/marca/capril-do-bosque/">
+        <ListItemButton
+          onClick={() => handlerClickNavigate(GlobalRouters.SCREEN_PRODUCER.replace(':producer', 'capril-do-bosque'))}
+        >
           <ListItemText primary="Capril do Bosque" />
         </ListItemButton>
 
-        <ListItemButton component="a" href="/marca/fazenda-do-bem/">
+        <ListItemButton
+          onClick={() => handlerClickNavigate(GlobalRouters.SCREEN_PRODUCER.replace(':producer', 'fazenda-do-bem'))}
+        >
           <ListItemText primary="Fazenda do Bem" />
         </ListItemButton>
 
-        <ListItemButton component="a" href="/marca/goldy/">
+        <ListItemButton
+          onClick={() => handlerClickNavigate(GlobalRouters.SCREEN_PRODUCER.replace(':producer', 'goldy'))}
+        >
           <ListItemText primary="Goldy" />
         </ListItemButton>
 
-        <ListItemButton component="a" href="/marca/jaguacy/">
+        <ListItemButton
+          onClick={() => handlerClickNavigate(GlobalRouters.SCREEN_PRODUCER.replace(':producer', 'jaguacy'))}
+        >
           <ListItemText primary="Jaguacy" />
         </ListItemButton>
 
-        <ListItemButton component="a" href="/marca/keiff/">
+        <ListItemButton
+          onClick={() => handlerClickNavigate(GlobalRouters.SCREEN_PRODUCER.replace(':producer', 'keiff'))}
+        >
           <ListItemText primary="Keiff" />
         </ListItemButton>
 
-        <ListItemButton component="a" href="/marca/letti/">
+        <ListItemButton
+          onClick={() => handlerClickNavigate(GlobalRouters.SCREEN_PRODUCER.replace(':producer', 'letti'))}
+        >
           <ListItemText primary="Letti A²" />
         </ListItemButton>
 
-        <ListItemButton component="a" href="/marca/la-ferme-moderne/">
+        <ListItemButton
+          onClick={() => handlerClickNavigate(GlobalRouters.SCREEN_PRODUCER.replace(':producer', 'la-ferme-moderne'))}
+        >
           <ListItemText primary="La Ferme Moderne" />
         </ListItemButton>
       </Box>
 
       <Box>
-        <ListItemButton component="a" href="/marca/mister-rabbit/">
+        <ListItemButton
+          onClick={() => handlerClickNavigate(GlobalRouters.SCREEN_PRODUCER.replace(':producer', 'mister-rabbit'))}
+        >
           <ListItemText primary="Mister Rabbit" />
         </ListItemButton>
 
-        <ListItemButton component="a" href="/marca/naturegg/">
+        <ListItemButton
+          onClick={() => handlerClickNavigate(GlobalRouters.SCREEN_PRODUCER.replace(':producer', 'naturegg'))}
+        >
           <ListItemText primary="Naturegg" />
         </ListItemButton>
 
-        <ListItemButton component="a" href="/marca/pardinho-artesanal/">
+        <ListItemButton
+          onClick={() => handlerClickNavigate(GlobalRouters.SCREEN_PRODUCER.replace(':producer', 'pardinho-artesanal'))}
+        >
           <ListItemText primary="Pardinho Artesanal" />
         </ListItemButton>
 
-        <ListItemButton component="a" href="/marca/piracanjuba/">
+        <ListItemButton
+          onClick={() => handlerClickNavigate(GlobalRouters.SCREEN_PRODUCER.replace(':producer', 'piracanjuba'))}
+        >
           <ListItemText primary="Piracanjuba" />
         </ListItemButton>
 
-        <ListItemButton component="a" href="/marca/ralston/">
+        <ListItemButton
+          onClick={() => handlerClickNavigate(GlobalRouters.SCREEN_PRODUCER.replace(':producer', 'ralston'))}
+        >
           <ListItemText primary="Ralston" />
         </ListItemButton>
 
-        <ListItemButton component="a" href="/marca/urakami/">
+        <ListItemButton
+          onClick={() => handlerClickNavigate(GlobalRouters.SCREEN_PRODUCER.replace(':producer', 'urakami'))}
+        >
           <ListItemText primary="Urakami" />
         </ListItemButton>
 
-        <ListItemButton component="a" href="/marca/verde-campo/">
+        <ListItemButton
+          onClick={() => handlerClickNavigate(GlobalRouters.SCREEN_PRODUCER.replace(':producer', 'verde-campo'))}
+        >
           <ListItemText primary="Verde Campo" />
         </ListItemButton>
 
-        <ListItemButton component="a" href="/marca/villa-piva/">
+        <ListItemButton
+          onClick={() => handlerClickNavigate(GlobalRouters.SCREEN_PRODUCER.replace(':producer', 'villa-piva'))}
+        >
           <ListItemText primary="Villa Piva" />
         </ListItemButton>
 
-        <ListItemButton component="a" href="/marca/xando/">
+        <ListItemButton
+          onClick={() => handlerClickNavigate(GlobalRouters.SCREEN_PRODUCER.replace(':producer', 'xando'))}
+        >
           <ListItemText primary="Xandô" />
         </ListItemButton>
 
-        <ListItemButton component="a" href="/marca/yorgus/">
+        <ListItemButton
+          onClick={() => handlerClickNavigate(GlobalRouters.SCREEN_PRODUCER.replace(':producer', 'yorgus'))}
+        >
           <ListItemText primary="Yorgus" />
         </ListItemButton>
       </Box>
@@ -148,27 +200,39 @@ const NavbarMenu: React.FC<React.ReactFragment> = (props) => {
     onClose={handlePopoverClose}
     disableRestoreFocus
   >
-    <ListItemButton component="a" href="/filtro/kosher/">
+    <ListItemButton
+      onClick={() => handlerClickNavigate(GlobalRouters.SCREEN_FILTER.replace(':filter', 'kosher'))}
+    >
       <ListItemText primary="Kosher" />
     </ListItemButton>
 
-    <ListItemButton component="a" href="/filtro/sem-lactose/">
+    <ListItemButton
+      onClick={() => handlerClickNavigate(GlobalRouters.SCREEN_FILTER.replace(':filter', 'sem-lactose'))}
+    >
       <ListItemText primary="Zero lactose" />
     </ListItemButton>
 
-    <ListItemButton component="a" href="/filtro/a2a2/">
+    <ListItemButton
+      onClick={() => handlerClickNavigate(GlobalRouters.SCREEN_FILTER.replace(':filter', 'a2a2'))}
+    >
       <ListItemText primary="A2A2" />
     </ListItemButton>
 
-    <ListItemButton component="a" href="/filtro/sem-gluten/">
+    <ListItemButton
+      onClick={() => handlerClickNavigate(GlobalRouters.SCREEN_FILTER.replace(':filter', 'sem-gluten'))}
+    >
       <ListItemText primary="Sem glúten" />
     </ListItemButton>
 
-    <ListItemButton component="a" href="/filtro/sem-adicao-de-acucar/">
+    <ListItemButton
+      onClick={() => handlerClickNavigate(GlobalRouters.SCREEN_FILTER.replace(':filter', 'sem-adicao-de-acucar'))}
+    >
       <ListItemText primary="Sem adição de açúcar" />
     </ListItemButton>
 
-    <ListItemButton component="a" href="/filtro/natural/">
+    <ListItemButton
+      onClick={() => handlerClickNavigate(GlobalRouters.SCREEN_FILTER.replace(':filter', 'natural'))}
+    >
       <ListItemText primary="Natural" />
     </ListItemButton>
   </Popover>
@@ -204,41 +268,47 @@ const NavbarMenu: React.FC<React.ReactFragment> = (props) => {
         🎛️ Filtros
       </Typography>
 
-      <Link href='/produtos/leite-e-derivados/' underline='none' color='inherit'>
-        <Typography>
-          🍶 Leite e derivados
-        </Typography>
-      </Link>
+      <Typography
+        onClick={() => handlerClickNavigate(GlobalRouters.SCREEN_CATEGORY.replace(':category', 'leite-e-derivados'))}
+        sx={{ cursor: 'pointer' }}
+      >
+        🍶 Leite e derivados
+      </Typography>
 
-      <Link href='/produtos/queijos/' underline='none' color='inherit'>
-        <Typography>
-          🧀 Queijos
-        </Typography>
-      </Link>
+      <Typography
+        onClick={() => handlerClickNavigate(GlobalRouters.SCREEN_CATEGORY.replace(':category', 'queijos'))}
+        sx={{ cursor: 'pointer' }}
+      >
+        🧀 Queijos
+      </Typography>
 
-      <Link href='/produtos/frios/' underline='none' color='inherit'>
-        <Typography>
-          🥓 Frios
-        </Typography>
-      </Link>
+      <Typography
+        onClick={() => handlerClickNavigate(GlobalRouters.SCREEN_CATEGORY.replace(':category', 'frios'))}
+        sx={{ cursor: 'pointer' }}
+      >
+        🥓 Frios
+      </Typography>
 
-      <Link href='/produtos/hortifruti/' underline='none' color='inherit'>
-        <Typography>
-          🥗 Hortifruti
-        </Typography>
-      </Link>
+      <Typography
+        onClick={() => handlerClickNavigate(GlobalRouters.SCREEN_CATEGORY.replace(':category', 'hortifruti'))}
+        sx={{ cursor: 'pointer' }}
+      >
+        🥗 Hortifruti
+      </Typography>
 
-      <Link href='/produtos/bebidas/' underline='none' color='inherit'>
-        <Typography>
-          🧃 Bebidas
-        </Typography>
-      </Link>
+      <Typography
+        onClick={() => handlerClickNavigate(GlobalRouters.SCREEN_CATEGORY.replace(':category', 'bebidas'))}
+        sx={{ cursor: 'pointer' }}
+      >
+        🧃 Bebidas
+      </Typography>
 
-      <Link href='/produtos/doces-e-geleias/' underline='none' color='inherit'>
-        <Typography>
-          🧁 Doces e Geléias
-        </Typography>
-      </Link>
+      <Typography
+        onClick={() => handlerClickNavigate(GlobalRouters.SCREEN_CATEGORY.replace(':category', 'doces-e-geleias'))}
+        sx={{ cursor: 'pointer' }}
+      >
+        🧁 Doces e Geléias
+      </Typography>
 
       {companyMenu}
       {filterMenu}
