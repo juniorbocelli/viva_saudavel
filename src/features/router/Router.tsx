@@ -12,12 +12,15 @@ import Navigation from '../../features/navigation/Navigation';
 import CheckSession from '../auth/CheckSession';
 
 import Home from '../../screens/Home';
+import Category from '../../screens/Category';
+
 import SignIn from '../../screens/login/SignIn';
 
 const LoggedRoutes = React.memo((props) => {
   return (
     <Routes>
       <Route path={GlobalRoutes.SCREEN_INDEX} element={<Home />} />
+      <Route path={GlobalRoutes.SCREEN_CATEGORY} element={<Category />} />
 
       <Route path='*' element={<Navigate to={GlobalRoutes.SCREEN_INDEX} replace />} />
     </Routes>

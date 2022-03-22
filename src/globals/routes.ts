@@ -2,9 +2,10 @@ export const APP_ROOT = '';
 export const API_ROOT = 'api';
 
 /**
- * LOGGED IN SCREENS ROUTES
+ * NOT LOGGED IN CLIENT SCREENS ROUTES
  */
 export const SCREEN_INDEX = `${APP_ROOT}/`;
+export const SCREEN_CATEGORY = `${APP_ROOT}/produtos/:category`;
 
 
 /**
