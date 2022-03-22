@@ -9,6 +9,9 @@ export const SCREEN_CATEGORY = `${APP_ROOT}/produtos/:category/`;
 export const SCREEN_PRODUCER = `${APP_ROOT}/marca/:producer/`;
 export const SCREEN_FILTER = `${APP_ROOT}/filtro/:filter/`;
 
+export const SCREEN_PRODUCER_SELECT = `${APP_ROOT}/marca/`;
+export const SCREEN_FILTER_SELECT = `${APP_ROOT}/filtro/`;
+
 
 /**
  * NOT LOGGED IN SCREENS ROUTES

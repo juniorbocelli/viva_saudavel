@@ -9,7 +9,7 @@ import {
 
 import { Close as CloseIcon } from '@mui/icons-material';
 
-import drawerContent from './content';
+import DrawerContent from './content';
 
 import { IUseStates } from '../../states';
 
@@ -73,7 +73,7 @@ export default function Sidebar(props: ISidebarProps) {
           <CloseIcon sx={{ fontSize: '2.7rem' }} />
         </IconButton>
 
-        {drawerContent}
+        <DrawerContent handleDrawerToggle={handleDrawerToggle} />
       </Drawer>
     </Box>
   );
