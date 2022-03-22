@@ -91,6 +91,13 @@ const MainContentBox: React.FC<IMainContentBoxProps> = (props) => {
             variant="h4"
             color="primary.dark"
             gutterBottom
+
+            sx={
+              {
+                fontSize: {xs: '1.4rem', md: '2.1rem'},
+                mb: {xs: theme.spacing(2), md: theme.spacing(3)},
+              }
+            }
           >
             {primary}
           </Typography>
