@@ -6,11 +6,13 @@ import { products_hortifruti } from '../../fakeData/products/hortifruti';
 import { products_bebidas } from '../../fakeData/products/bebidas';
 import { products_doces_e_geleias } from '../../fakeData/products/doces-e-geleias';
 
+export type FilterCodes = 'a2a2' | 'sem-gluten' | 'kosher' | 'sem-lactose' | 'natural' | 'sem-adicao-de-acucar'
+
 const products = products_leite_e_derivados.concat(products_queijos).concat(products_hortifruti).concat(products_bebidas).concat(products_doces_e_geleias);
 
 export interface IUseAPIs {
   getProductsByCategory: (category: Filter['categories']) => Products;
-  getProductByFilter: (filter: 'isA2A2' | 'isGlutenFree' | 'isKosher' | 'isLactoseFree' | 'isNatural' | 'isSugarFree') => Products;
+  getProductByFilter: (filter: FilterCodes) => Products;
   getProductsByProducer: (producer: Filter['producerCode']) => Products;
 };
 
@@ -26,46 +28,46 @@ export default function useAPIs(): IUseAPIs {
     return productsList;
   };
 
-  const getProductByFilter = (filter: 'isA2A2' | 'isGlutenFree' | 'isKosher' | 'isLactoseFree' | 'isNatural' | 'isSugarFree') => {
+  const getProductByFilter = (filter: FilterCodes) => {
     let productsList: Products = [];
 
     switch (filter) {
-      case 'isA2A2':
+      case 'a2a2':
         products.forEach((item, key) => {
           if (item.filters.isA2A2)
             productsList.push(item);
         });
         break;
 
-      case 'isGlutenFree':
+      case 'sem-gluten':
         products.forEach((item, key) => {
           if (item.filters.isGlutenFree)
             productsList.push(item);
         });
         break;
 
-      case 'isKosher':
+      case 'kosher':
         products.forEach((item, key) => {
           if (item.filters.isKosher)
             productsList.push(item);
         });
         break;
 
-      case 'isLactoseFree':
+      case 'sem-lactose':
         products.forEach((item, key) => {
           if (item.filters.isLactoseFree)
             productsList.push(item);
         });
         break;
 
-      case 'isNatural':
+      case 'natural':
         products.forEach((item, key) => {
           if (item.filters.isNatural)
             productsList.push(item);
         });
         break
 
-      case 'isSugarFree':
+      case 'sem-adicao-de-acucar':
         products.forEach((item, key) => {
           if (item.filters.isSugarFree)
             productsList.push(item);
