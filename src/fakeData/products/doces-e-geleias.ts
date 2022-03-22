@@ -1,17 +1,21 @@
 import { Products } from '../../features/globalContext/types';
 
+import t_doces_e_geleias_01_img_01 from '../../assets/images/products/doces-e-geleias/01/t_01.jpg';
 import doces_e_geleias_01_img_01 from '../../assets/images/products/doces-e-geleias/01/01.jpg';
 import doces_e_geleias_01_img_02 from '../../assets/images/products/doces-e-geleias/01/02.jpg';
 import doces_e_geleias_01_img_03 from '../../assets/images/products/doces-e-geleias/01/03.jpg';
 
+import t_doces_e_geleias_02_img_01 from '../../assets/images/products/doces-e-geleias/02/t_01.jpg';
 import doces_e_geleias_02_img_01 from '../../assets/images/products/doces-e-geleias/02/01.jpg';
 import doces_e_geleias_02_img_02 from '../../assets/images/products/doces-e-geleias/02/02.jpg';
 import doces_e_geleias_02_img_03 from '../../assets/images/products/doces-e-geleias/02/03.png';
 
+import t_doces_e_geleias_03_img_01 from '../../assets/images/products/doces-e-geleias/03/t_01.jpg';
 import doces_e_geleias_03_img_01 from '../../assets/images/products/doces-e-geleias/03/01.jpg';
 import doces_e_geleias_03_img_02 from '../../assets/images/products/doces-e-geleias/03/02.jpg';
 import doces_e_geleias_03_img_03 from '../../assets/images/products/doces-e-geleias/03/03.jpg';
 
+import t_doces_e_geleias_04_img_01 from '../../assets/images/products/doces-e-geleias/04/t_01.jpg';
 import doces_e_geleias_04_img_01 from '../../assets/images/products/doces-e-geleias/04/01.jpg';
 import doces_e_geleias_04_img_02 from '../../assets/images/products/doces-e-geleias/04/02.jpg';
 import doces_e_geleias_04_img_03 from '../../assets/images/products/doces-e-geleias/04/03.png';
@@ -44,6 +48,7 @@ export const products_doces_e_geleias: Products = [
     },
     price: 17.65,
     images: [doces_e_geleias_01_img_01, doces_e_geleias_01_img_02, doces_e_geleias_01_img_03],
+    thumb: t_doces_e_geleias_01_img_01,
   },
 
   {
@@ -78,6 +83,7 @@ export const products_doces_e_geleias: Products = [
     },
     price: 27.95,
     images: [doces_e_geleias_02_img_01, doces_e_geleias_02_img_02, doces_e_geleias_02_img_03],
+    thumb: t_doces_e_geleias_02_img_01,
   },
 
   {
@@ -109,6 +115,7 @@ export const products_doces_e_geleias: Products = [
     },
     price: 45.5,
     images: [doces_e_geleias_03_img_01, doces_e_geleias_03_img_02, doces_e_geleias_03_img_03],
+    thumb: t_doces_e_geleias_03_img_01,
   },
 
   {
@@ -138,6 +145,7 @@ export const products_doces_e_geleias: Products = [
     },
     price: 5.99,
     images: [doces_e_geleias_04_img_01, doces_e_geleias_04_img_02, doces_e_geleias_04_img_03],
+    thumb: t_doces_e_geleias_04_img_01,
   },
 
 
@@ -172,6 +180,7 @@ export const products_doces_e_geleias: Products = [
     },
     price: 17.65,
     images: [doces_e_geleias_01_img_01, doces_e_geleias_01_img_02, doces_e_geleias_01_img_03],
+    thumb: t_doces_e_geleias_01_img_01,
   },
 
   {
@@ -206,6 +215,7 @@ export const products_doces_e_geleias: Products = [
     },
     price: 27.95,
     images: [doces_e_geleias_02_img_01, doces_e_geleias_02_img_02, doces_e_geleias_02_img_03],
+    thumb: t_doces_e_geleias_02_img_01,
   },
 
   {
@@ -237,6 +247,7 @@ export const products_doces_e_geleias: Products = [
     },
     price: 45.5,
     images: [doces_e_geleias_03_img_01, doces_e_geleias_03_img_02, doces_e_geleias_03_img_03],
+    thumb: t_doces_e_geleias_03_img_01,
   },
 
   {
@@ -266,5 +277,6 @@ export const products_doces_e_geleias: Products = [
     },
     price: 14.45,
     images: [doces_e_geleias_04_img_01, doces_e_geleias_04_img_02, doces_e_geleias_04_img_03],
+    thumb: t_doces_e_geleias_04_img_01,
   },
 ];

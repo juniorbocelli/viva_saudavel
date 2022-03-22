@@ -24,7 +24,7 @@ const Home: React.FC<React.ReactFragment> = (props) => {
     states.setHortifruti(apis.getProductsByCategory('hortifruti'));
     states.setBebidas(apis.getProductsByCategory('bebidas'));
     states.setDocesEGeleias(apis.getProductsByCategory('doces-e-geleias'));
-  }, [apis, states]);
+  }, []);
 
   return (
     <MainContentBox>

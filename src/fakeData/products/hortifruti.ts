@@ -1,21 +1,26 @@
 import { Products } from '../../features/globalContext/types';
 
+import t_hortifruti_01_img_01 from '../../assets/images/products/hortifruti/01/t_01.jpg';
 import hortifruti_01_img_01 from '../../assets/images/products/hortifruti/01/01.jpg';
 import hortifruti_01_img_02 from '../../assets/images/products/hortifruti/01/02.jpg';
 import hortifruti_01_img_03 from '../../assets/images/products/hortifruti/01/03.jpg';
 
+import t_hortifruti_02_img_01 from '../../assets/images/products/hortifruti/02/t_01.jpg';
 import hortifruti_02_img_01 from '../../assets/images/products/hortifruti/02/01.jpg';
 import hortifruti_02_img_02 from '../../assets/images/products/hortifruti/02/02.jpg';
 import hortifruti_02_img_03 from '../../assets/images/products/hortifruti/02/03.png';
 
+import t_hortifruti_03_img_01 from '../../assets/images/products/hortifruti/03/t_01.jpg';
 import hortifruti_03_img_01 from '../../assets/images/products/hortifruti/03/01.jpg';
 import hortifruti_03_img_02 from '../../assets/images/products/hortifruti/03/02.jpg';
 import hortifruti_03_img_03 from '../../assets/images/products/hortifruti/03/03.jpg';
 
+import t_hortifruti_04_img_01 from '../../assets/images/products/hortifruti/04/t_01.jpg';
 import hortifruti_04_img_01 from '../../assets/images/products/hortifruti/04/01.jpg';
 import hortifruti_04_img_02 from '../../assets/images/products/hortifruti/04/02.jpg';
 import hortifruti_04_img_03 from '../../assets/images/products/hortifruti/04/03.jpg';
 
+import t_hortifruti_05_img_01 from '../../assets/images/products/hortifruti/05/t_01.jpg';
 import hortifruti_05_img_01 from '../../assets/images/products/hortifruti/05/01.jpg';
 import hortifruti_05_img_02 from '../../assets/images/products/hortifruti/05/02.jpg';
 import hortifruti_05_img_03 from '../../assets/images/products/hortifruti/05/03.png';
@@ -52,6 +57,7 @@ export const products_hortifruti: Products = [
     },
     price: 45.0,
     images: [hortifruti_01_img_01, hortifruti_01_img_02, hortifruti_01_img_03],
+    thumb: t_hortifruti_01_img_01,
   },
 
   {
@@ -83,6 +89,7 @@ export const products_hortifruti: Products = [
     },
     price: 13.10,
     images: [hortifruti_02_img_01, hortifruti_02_img_02, hortifruti_02_img_03],
+    thumb: t_hortifruti_02_img_01,
   },
 
   {
@@ -109,6 +116,7 @@ export const products_hortifruti: Products = [
     },
     price: 7.7,
     images: [hortifruti_03_img_01, hortifruti_03_img_02, hortifruti_03_img_03],
+    thumb: t_hortifruti_03_img_01,
   },
 
   {
@@ -139,6 +147,7 @@ export const products_hortifruti: Products = [
     },
     price: 29.99,
     images: [hortifruti_04_img_01, hortifruti_04_img_02, hortifruti_04_img_03],
+    thumb: t_hortifruti_04_img_01,
   },
 
   {
@@ -177,6 +186,7 @@ export const products_hortifruti: Products = [
     },
     price: 13.5,
     images: [hortifruti_05_img_01, hortifruti_05_img_02, hortifruti_05_img_03],
+    thumb: t_hortifruti_05_img_01,
   },
 
 
@@ -214,6 +224,7 @@ export const products_hortifruti: Products = [
     },
     price: 45.0,
     images: [hortifruti_01_img_01, hortifruti_01_img_02, hortifruti_01_img_03],
+    thumb: t_hortifruti_01_img_01,
   },
 
   {
@@ -245,6 +256,7 @@ export const products_hortifruti: Products = [
     },
     price: 13.10,
     images: [hortifruti_02_img_01, hortifruti_02_img_02, hortifruti_02_img_03],
+    thumb: t_hortifruti_02_img_01,
   },
 
   {
@@ -271,6 +283,7 @@ export const products_hortifruti: Products = [
     },
     price: 7.7,
     images: [hortifruti_03_img_01, hortifruti_03_img_02, hortifruti_03_img_03],
+    thumb: t_hortifruti_03_img_01,
   },
 
   {
@@ -301,6 +314,7 @@ export const products_hortifruti: Products = [
     },
     price: 29.99,
     images: [hortifruti_04_img_01, hortifruti_04_img_02, hortifruti_04_img_03],
+    thumb: t_hortifruti_04_img_01,
   },
 
   {
@@ -339,5 +353,6 @@ export const products_hortifruti: Products = [
     },
     price: 13.5,
     images: [hortifruti_05_img_01, hortifruti_05_img_02, hortifruti_05_img_03],
+    thumb: t_hortifruti_05_img_01,
   },
 ];

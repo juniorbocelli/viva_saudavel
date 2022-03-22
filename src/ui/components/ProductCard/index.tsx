@@ -46,7 +46,7 @@ const ProductCard: React.FC<IProductCardProps> = ({ product, setProduct }) => {
       <CardMedia
         component="img"
         sx={{ height: { xs: 300, md: 220 }, cursor: 'pointer' }}
-        image={product.images[0]}
+        image={product.thumb}
         alt={`Imagem - ${product.name} - ${product.producer}`}
         onClick={() => setProduct(product)}
       />

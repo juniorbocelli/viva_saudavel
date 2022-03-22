@@ -29,6 +29,7 @@ export type Product = {
   filters: Filter;
   price: number;
   images: Array<string>;
+  thumb: string;
 };
 
 export type CartItem = {

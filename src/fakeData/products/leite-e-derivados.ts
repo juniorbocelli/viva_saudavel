@@ -1,13 +1,16 @@
 import { Products } from '../../features/globalContext/types';
 
+import t_leite_e_derivados_01_img_01 from '../../assets/images/products/leite-e-derivados/01/t_01.jpg';
 import leite_e_derivados_01_img_01 from '../../assets/images/products/leite-e-derivados/01/01.jpg';
 import leite_e_derivados_01_img_02 from '../../assets/images/products/leite-e-derivados/01/02.jpg';
 import leite_e_derivados_01_img_03 from '../../assets/images/products/leite-e-derivados/01/03.png';
 
+import t_leite_e_derivados_02_img_01 from '../../assets/images/products/leite-e-derivados/02/t_01.jpg';
 import leite_e_derivados_02_img_01 from '../../assets/images/products/leite-e-derivados/02/01.jpg';
 import leite_e_derivados_02_img_02 from '../../assets/images/products/leite-e-derivados/02/02.jpg';
 import leite_e_derivados_02_img_03 from '../../assets/images/products/leite-e-derivados/02/03.jpg';
 
+import t_leite_e_derivados_03_img_01 from '../../assets/images/products/leite-e-derivados/03/t_01.jpg';
 import leite_e_derivados_03_img_01 from '../../assets/images/products/leite-e-derivados/03/01.jpg';
 import leite_e_derivados_03_img_02 from '../../assets/images/products/leite-e-derivados/03/02.jpg';
 import leite_e_derivados_03_img_03 from '../../assets/images/products/leite-e-derivados/03/03.png';
@@ -41,6 +44,7 @@ export const products_leite_e_derivados: Products = [
     },
     price: 40.5,
     images: [leite_e_derivados_01_img_01, leite_e_derivados_01_img_02, leite_e_derivados_01_img_03],
+    thumb: t_leite_e_derivados_01_img_01,
   },
 
   {
@@ -72,6 +76,7 @@ export const products_leite_e_derivados: Products = [
     },
     price: 9.8,
     images: [leite_e_derivados_02_img_01, leite_e_derivados_02_img_02, leite_e_derivados_02_img_03],
+    thumb: t_leite_e_derivados_02_img_01,
   },
 
   {
@@ -104,6 +109,7 @@ export const products_leite_e_derivados: Products = [
     },
     price: 20.2,
     images: [leite_e_derivados_03_img_01, leite_e_derivados_03_img_02, leite_e_derivados_03_img_03],
+    thumb: t_leite_e_derivados_03_img_01
   },
 
 
@@ -139,6 +145,7 @@ export const products_leite_e_derivados: Products = [
     },
     price: 40.5,
     images: [leite_e_derivados_01_img_01, leite_e_derivados_01_img_02, leite_e_derivados_01_img_03],
+    thumb: t_leite_e_derivados_01_img_01,
   },
 
   {
@@ -170,6 +177,7 @@ export const products_leite_e_derivados: Products = [
     },
     price: 9.8,
     images: [leite_e_derivados_02_img_01, leite_e_derivados_02_img_02, leite_e_derivados_02_img_03],
+    thumb: t_leite_e_derivados_02_img_01,
   },
 
   {
@@ -202,6 +210,7 @@ export const products_leite_e_derivados: Products = [
     },
     price: 20.2,
     images: [leite_e_derivados_03_img_01, leite_e_derivados_03_img_02, leite_e_derivados_03_img_03],
+    thumb: t_leite_e_derivados_03_img_01,
   },
 
   {
@@ -232,6 +241,7 @@ export const products_leite_e_derivados: Products = [
     },
     price: 40.5,
     images: [leite_e_derivados_01_img_01, leite_e_derivados_01_img_02, leite_e_derivados_01_img_03],
+    thumb: t_leite_e_derivados_01_img_01,
   },
 
   {
@@ -263,6 +273,7 @@ export const products_leite_e_derivados: Products = [
     },
     price: 9.8,
     images: [leite_e_derivados_02_img_01, leite_e_derivados_02_img_02, leite_e_derivados_02_img_03],
+    thumb: t_leite_e_derivados_02_img_01,
   },
 
   {
@@ -295,5 +306,6 @@ export const products_leite_e_derivados: Products = [
     },
     price: 20.2,
     images: [leite_e_derivados_03_img_01, leite_e_derivados_03_img_02, leite_e_derivados_03_img_03],
+    thumb: t_leite_e_derivados_03_img_01,
   },
 ];

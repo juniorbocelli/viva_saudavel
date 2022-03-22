@@ -1,17 +1,21 @@
 import { Products } from '../../features/globalContext/types';
 
+import t_bebidas_01_img_01 from '../../assets/images/products/bebidas/01/t_01.jpg';
 import bebidas_01_img_01 from '../../assets/images/products/bebidas/01/01.jpg';
 import bebidas_01_img_02 from '../../assets/images/products/bebidas/01/02.jpg';
 import bebidas_01_img_03 from '../../assets/images/products/bebidas/01/03.jpg';
 
+import t_bebidas_02_img_01 from '../../assets/images/products/bebidas/02/t_01.jpg';
 import bebidas_02_img_01 from '../../assets/images/products/bebidas/02/01.jpg';
 import bebidas_02_img_02 from '../../assets/images/products/bebidas/02/02.jpg';
 import bebidas_02_img_03 from '../../assets/images/products/bebidas/02/03.png';
 
+import t_bebidas_03_img_01 from '../../assets/images/products/bebidas/03/t_01.jpg';
 import bebidas_03_img_01 from '../../assets/images/products/bebidas/03/01.jpg';
 import bebidas_03_img_02 from '../../assets/images/products/bebidas/03/02.jpg';
 import bebidas_03_img_03 from '../../assets/images/products/bebidas/03/03.png';
 
+import t_bebidas_04_img_01 from '../../assets/images/products/bebidas/04/t_01.jpg';
 import bebidas_04_img_01 from '../../assets/images/products/bebidas/04/01.jpg';
 import bebidas_04_img_02 from '../../assets/images/products/bebidas/04/02.jpg';
 import bebidas_04_img_03 from '../../assets/images/products/bebidas/04/03.jpg';
@@ -50,6 +54,7 @@ export const products_bebidas: Products = [
     },
     price: 15.63,
     images: [bebidas_01_img_01, bebidas_01_img_02, bebidas_01_img_03],
+    thumb: t_bebidas_01_img_01,
   },
 
   {
@@ -91,6 +96,7 @@ export const products_bebidas: Products = [
     },
     price: 18.0,
     images: [bebidas_02_img_01, bebidas_02_img_02, bebidas_02_img_03],
+    thumb: t_bebidas_02_img_01,
   },
 
   {
@@ -131,6 +137,7 @@ export const products_bebidas: Products = [
     },
     price: 21.0,
     images: [bebidas_03_img_01, bebidas_03_img_02, bebidas_03_img_03],
+    thumb: t_bebidas_03_img_01,
   },
 
   {
@@ -159,6 +166,7 @@ export const products_bebidas: Products = [
     },
     price: 5.99,
     images: [bebidas_04_img_01, bebidas_04_img_02, bebidas_04_img_03],
+    thumb: t_bebidas_04_img_01,
   },
 
 
@@ -199,6 +207,7 @@ export const products_bebidas: Products = [
     },
     price: 15.63,
     images: [bebidas_01_img_01, bebidas_01_img_02, bebidas_01_img_03],
+    thumb: t_bebidas_01_img_01,
   },
 
   {
@@ -240,6 +249,7 @@ export const products_bebidas: Products = [
     },
     price: 18.0,
     images: [bebidas_02_img_01, bebidas_02_img_02, bebidas_02_img_03],
+    thumb: t_bebidas_02_img_01,
   },
 
   {
@@ -280,6 +290,7 @@ export const products_bebidas: Products = [
     },
     price: 21.0,
     images: [bebidas_03_img_01, bebidas_03_img_02, bebidas_03_img_03],
+    thumb: t_bebidas_03_img_01,
   },
 
   {
@@ -308,5 +319,6 @@ export const products_bebidas: Products = [
     },
     price: 5.99,
     images: [bebidas_04_img_01, bebidas_04_img_02, bebidas_04_img_03],
+    thumb: t_bebidas_04_img_01,
   },
 ];

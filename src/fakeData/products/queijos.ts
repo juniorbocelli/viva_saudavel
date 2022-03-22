@@ -1,17 +1,21 @@
 import { Products } from '../../features/globalContext/types';
 
+import t_queijos_01_img_01 from '../../assets/images/products/queijos/01/t_01.jpg';
 import queijos_01_img_01 from '../../assets/images/products/queijos/01/01.jpg';
 import queijos_01_img_02 from '../../assets/images/products/queijos/01/02.jpg';
 import queijos_01_img_03 from '../../assets/images/products/queijos/01/03.png';
 
+import t_queijos_02_img_01 from '../../assets/images/products/queijos/02/t_01.jpg';
 import queijos_02_img_01 from '../../assets/images/products/queijos/02/01.jpg';
 import queijos_02_img_02 from '../../assets/images/products/queijos/02/02.jpg';
 import queijos_02_img_03 from '../../assets/images/products/queijos/02/03.jpg';
 
+import t_queijos_03_img_01 from '../../assets/images/products/queijos/03/t_01.jpg';
 import queijos_03_img_01 from '../../assets/images/products/queijos/03/01.jpg';
 import queijos_03_img_02 from '../../assets/images/products/queijos/03/02.jpg';
 import queijos_03_img_03 from '../../assets/images/products/queijos/03/03.png';
 
+import t_queijos_04_img_01 from '../../assets/images/products/queijos/04/t_01.jpg';
 import queijos_04_img_01 from '../../assets/images/products/queijos/04/01.jpg';
 import queijos_04_img_02 from '../../assets/images/products/queijos/04/02.jpg';
 import queijos_04_img_03 from '../../assets/images/products/queijos/04/03.jpg';
@@ -49,6 +53,7 @@ export const products_queijos: Products = [
     },
     price: 28.0,
     images: [queijos_01_img_01, queijos_01_img_02, queijos_01_img_03],
+    thumb: t_queijos_01_img_01,
   },
 
   {
@@ -79,6 +84,7 @@ export const products_queijos: Products = [
     },
     price: 31.81,
     images: [queijos_02_img_01, queijos_02_img_02, queijos_02_img_03],
+    thumb: t_queijos_02_img_01,
   },
 
   {
@@ -114,6 +120,7 @@ export const products_queijos: Products = [
     },
     price: 16.0,
     images: [queijos_03_img_01, queijos_03_img_02, queijos_03_img_03],
+    thumb: t_queijos_03_img_01,
   },
 
   {
@@ -153,6 +160,7 @@ export const products_queijos: Products = [
     },
     price: 33.35,
     images: [queijos_04_img_01, queijos_04_img_02, queijos_04_img_03],
+    thumb: t_queijos_04_img_01,
   },
 
 
@@ -191,6 +199,7 @@ export const products_queijos: Products = [
     },
     price: 28.0,
     images: [queijos_01_img_01, queijos_01_img_02, queijos_01_img_03],
+    thumb: t_queijos_01_img_01,
   },
 
   {
@@ -221,6 +230,7 @@ export const products_queijos: Products = [
     },
     price: 31.81,
     images: [queijos_02_img_01, queijos_02_img_02, queijos_02_img_03],
+    thumb: t_queijos_02_img_01,
   },
 
   {
@@ -256,6 +266,7 @@ export const products_queijos: Products = [
     },
     price: 16.0,
     images: [queijos_03_img_01, queijos_03_img_02, queijos_03_img_03],
+    thumb: t_queijos_03_img_01,
   },
 
   {
@@ -295,5 +306,6 @@ export const products_queijos: Products = [
     },
     price: 33.35,
     images: [queijos_04_img_01, queijos_04_img_02, queijos_04_img_03],
+    thumb: t_queijos_04_img_01,
   },
 ];
