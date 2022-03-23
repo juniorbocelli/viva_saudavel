@@ -24,7 +24,7 @@ import NavbarMenu from '../NavbarMenu';
 
 import { IUseStates } from '../../states';
 import { useGlobalContext } from '../../../../globalContext/context';
-import { SCREEN_INDEX } from '../../../../../globals/routes';
+import * as GlobalRoutes from '../../../../../globals/routes';
 
 export default function Navbar(states: IUseStates) {
   const theme = useTheme();
@@ -68,10 +68,13 @@ export default function Navbar(states: IUseStates) {
     setMobileMoreAnchorEl(null);
   };
 
-  // Close mobile submenu account from left menu
-  const handleMenuClose = () => {
+  // Close mobile and desktop submenu account from left menu
+  const handleMenuClose = (to: undefined | string) => {
     setAccountSubmenuAnchorEl(null);
     handleMobileMenuClose();
+
+    if (typeof (to) !== 'undefined')
+      navigate(to);
   };
 
   // Control Cart drawer (from left menu)
@@ -96,12 +99,15 @@ export default function Navbar(states: IUseStates) {
         horizontal: 'right',
       }}
       open={isMenuOpen}
-      onClose={handleMenuClose}
+      onClose={() => handleMenuClose}
     >
-      <MenuItem onClick={handleMenuClose}>Meu perfil</MenuItem>
+      <MenuItem onClick={() => handleMenuClose(GlobalRoutes.SCREEN_CLIENT_LOGIN)}>Login</MenuItem>
+      <MenuItem onClick={() => handleMenuClose(GlobalRoutes.SCREEN_CLIENT_REGISTER)}>Cadastro</MenuItem>
+
+      {/* <MenuItem onClick={handleMenuClose}>Meu perfil</MenuItem>
       <MenuItem onClick={handleMenuClose}>Minhas cestas</MenuItem>
       <MenuItem onClick={handleMenuClose}>Meus pedidos</MenuItem>
-      <MenuItem onClick={handleMenuClose}>Sair</MenuItem>
+      <MenuItem onClick={handleMenuClose}>Sair</MenuItem> */}
     </Menu>
   );
 
@@ -176,7 +182,7 @@ export default function Navbar(states: IUseStates) {
             sx={{ fontSize: { md: '2.2rem' }, ml: { md: theme.spacing(2) }, cursor: 'pointer' }}
             variant="h6"
             noWrap component="div"
-            onClick={() => navigate(SCREEN_INDEX)}
+            onClick={() => navigate(GlobalRoutes.SCREEN_INDEX)}
           >
             viva saudável
           </Typography>

@@ -19,6 +19,7 @@ import ProducerSelect from '../../screens/ProducerSelect';
 import FilterSelect from '../../screens/FilterSelect';
 
 import Login from '../../screens/login/Login';
+import Register from '../../screens/login/Register';
 
 const CommonRoutes = React.memo((props) => {
   return (
@@ -31,6 +32,7 @@ const CommonRoutes = React.memo((props) => {
       <Route path={GlobalRoutes.SCREEN_FILTER_SELECT} element={<Navigation><FilterSelect /></Navigation>} />
 
       <Route path={GlobalRoutes.SCREEN_CLIENT_LOGIN} element={<Login />} />
+      <Route path={GlobalRoutes.SCREEN_CLIENT_REGISTER} element={<Register />} />
 
       <Route path='*' element={<Navigate to={GlobalRoutes.SCREEN_INDEX} replace />} />
     </Routes>
