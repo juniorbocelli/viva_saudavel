@@ -7,7 +7,6 @@ import {
 } from '@mui/material';
 
 import robocontLogo from '../../../assets/images/logo/leaf.svg';
-import background1 from '../../../assets/images/backgrounds/background-1.jpg';
 
 import BackDrop from '../../../ui/components/BackDrop';
 import SignIn from './components/SignIn';
@@ -35,7 +34,6 @@ const Login: React.FC<React.ReactFragment> = (props) => {
     setToken,
   } = states;
 
-  // Get token to recovery reset password
   effects.useComponentdidMount(states);
   React.useEffect(() => {
     setToken(Url.getParams().token);
@@ -50,9 +48,7 @@ const Login: React.FC<React.ReactFragment> = (props) => {
           flexDirection: { xs: 'column', sm: 'row' },
           width: '100vw',
           height: '100vh',
-          // backgroundColor: theme.palette.grey[50],
-          backgroundImage: `url(${background1})`,
-          backgroundSize: 'cover'
+          backgroundColor: theme.palette.grey[50],
         }
       }
     >
@@ -116,29 +112,27 @@ const Login: React.FC<React.ReactFragment> = (props) => {
 
         <Typography
           variant='h3'
-          component='div'
           sx={
             {
               fontWeight: 700,
               fontSize: '2rem',
               mb: theme.spacing(1),
               textAlign: 'center',
-              color: theme.palette.primary.light
             }
           }
         >
           {
-            operation === 'signIn' ? `Login` :
+            operation === 'signIn' ? `Entrar` :
               operation === 'recoveryPassword' ? `Recuperar Senha` : `Redefinir Senha`
           }
         </Typography>
 
         <Typography
           variant='body1'
-          sx={{ textAlign: 'center', color: 'text.secondary' }}
+          sx={{ textAlign: 'center', }}
         >
           {
-            operation === 'signIn' ? `Entre para fazer suas compras` :
+            operation === 'signIn' ? `Entre para emitir suas notas` :
               operation === 'recoveryPassword' ? `Digite seu usuário para recuperar sua senha` : `Digide corretamente sua nova senha`
           }
         </Typography>

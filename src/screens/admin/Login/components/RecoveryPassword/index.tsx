@@ -28,7 +28,7 @@ const RecoveryPassword: React.FC<IUseStates> = (states) => {
 
   return (
     <React.Fragment>
-      <form onSubmit={handleSubmit(onSubmit)} style={{width: '100%'}}>
+      <form onSubmit={handleSubmit(onSubmit)}>
         <TextInput
           label="Usuário"
           name="username"
@@ -40,7 +40,7 @@ const RecoveryPassword: React.FC<IUseStates> = (states) => {
 
         <Typography
           variant='subtitle1'
-          sx={{ mb: theme.spacing(-1), fontSize: '0.8rem', textAlign: 'right', width: '100%', cursor: 'pointer' }}
+          sx={{ mb: -2, fontSize: '0.8rem', textAlign: 'right', width: '100%', cursor: 'pointer' }}
 
           onClick={() => setOperation('signIn')}
         >

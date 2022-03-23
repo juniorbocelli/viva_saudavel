@@ -1,7 +1,6 @@
 import React from 'react';
 import {
   Button,
-  Typography,
 
   useTheme,
 } from '@mui/material';
@@ -12,40 +11,43 @@ import TextInput from '../../../../../ui/components/form/TextInput';
 import * as Rules from '../../../../../features/validation/rules';
 import { IUseStates } from '../../states';
 
-const RecoveryPassword: React.FC<IUseStates> = (states) => {
+const ResetPassword: React.FC<IUseStates> = (states) => {
   const theme = useTheme();
   const { register, formState: { errors }, handleSubmit } = useForm();
 
   const {
-    setOperation,
+    setErrorMessage,
   } = states;
 
-  const onSubmit = (data: { username: string, password: string }) => {
+  const onSubmit = (data: { password: string, passwordConfirmation: string }) => {
     console.log(data);
     // Here: API that send login data
+
+    if (data.password !== data.passwordConfirmation)
+      setErrorMessage("As senhas informadas não coincidem!");
     return null;
   }
 
   return (
     <React.Fragment>
-      <form onSubmit={handleSubmit(onSubmit)} style={{width: '100%'}}>
+      <form onSubmit={handleSubmit(onSubmit)}>
         <TextInput
-          label="Usuário"
-          name="username"
-          autoComplete="username"
-          autoFocus={true}
+          name="password"
+          label="Nova senha"
+          type="password"
+          autoComplete="password"
           size="small"
-          hookForm={['username', register, errors, Rules.requiredText]}
+          hookForm={['password', register, errors, Rules.requiredText]}
         />
 
-        <Typography
-          variant='subtitle1'
-          sx={{ mb: theme.spacing(-1), fontSize: '0.8rem', textAlign: 'right', width: '100%', cursor: 'pointer' }}
-
-          onClick={() => setOperation('signIn')}
-        >
-          Fazer login
-        </Typography>
+        <TextInput
+          name="passwordConfirmation"
+          label="Confirmação de senha"
+          type="password"
+          autoComplete="confirmation-password"
+          size="small"
+          hookForm={['passwordConfirmation', register, errors, Rules.requiredText]}
+        />
 
         <Button
           type="submit"
@@ -61,4 +63,4 @@ const RecoveryPassword: React.FC<IUseStates> = (states) => {
   );
 };
 
-export default RecoveryPassword;
+export default ResetPassword;

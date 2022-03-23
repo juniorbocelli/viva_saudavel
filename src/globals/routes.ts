@@ -1,5 +1,6 @@
 export const APP_ROOT = '';
 export const API_ROOT = 'api';
+export const ADMIN_PREFIX = 'admin'
 
 /**
  * NOT LOGGED IN CLIENT SCREENS ROUTES
@@ -13,12 +14,14 @@ export const SCREEN_PRODUCER_SELECT = `${APP_ROOT}/marca/`;
 export const SCREEN_FILTER_SELECT = `${APP_ROOT}/filtro/`;
 
 export const SCREEN_CLIENT_LOGIN = `${APP_ROOT}/login/`;
+export const SCREEN_CLIENT_REGISTER = `${APP_ROOT}/cadastro/`;
 
 
 /**
  * NOT LOGGED IN SCREENS ROUTES
  */
- export const SCREEN_LOGIN = `${APP_ROOT}/admin/login/`;
+export const SCREEN_ADMIN_INDEX = `${APP_ROOT}/${ADMIN_PREFIX}/`;
+export const SCREEN_ADMIN_LOGIN = `${APP_ROOT}/${ADMIN_PREFIX}/login/`;
 
 /**
  * APIs

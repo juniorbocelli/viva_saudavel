@@ -2,7 +2,7 @@ import * as GlobalRoutes from '../../globals/routes';
 
 const titleInfo = [
   {
-    path: GlobalRoutes.SCREEN_LOGIN,
+    path: GlobalRoutes.SCREEN_ADMIN_LOGIN,
     title: "Login",
   },
   {
