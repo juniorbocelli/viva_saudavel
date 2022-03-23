@@ -12,12 +12,13 @@ export const SCREEN_FILTER = `${APP_ROOT}/filtro/:filter/`;
 export const SCREEN_PRODUCER_SELECT = `${APP_ROOT}/marca/`;
 export const SCREEN_FILTER_SELECT = `${APP_ROOT}/filtro/`;
 
+export const SCREEN_CLIENT_LOGIN = `${APP_ROOT}/login/`;
+
 
 /**
  * NOT LOGGED IN SCREENS ROUTES
  */
-export const SCREEN_LOGIN = `${APP_ROOT}/login/`;
-
+ export const SCREEN_LOGIN = `${APP_ROOT}/admin/login/`;
 
 /**
  * APIs

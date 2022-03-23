@@ -18,24 +18,26 @@ import Filter from '../../screens/Filter';
 import ProducerSelect from '../../screens/ProducerSelect';
 import FilterSelect from '../../screens/FilterSelect';
 
-import SignIn from '../../screens/login/SignIn';
+import SignIn from '../../screens/login/Login';
 
-const LoggedRoutes = React.memo((props) => {
+const CommonRoutes = React.memo((props) => {
   return (
     <Routes>
-      <Route path={GlobalRoutes.SCREEN_INDEX} element={<Home />} />
-      <Route path={GlobalRoutes.SCREEN_CATEGORY} element={<Category />} />
-      <Route path={GlobalRoutes.SCREEN_PRODUCER} element={<Producer />} />
-      <Route path={GlobalRoutes.SCREEN_FILTER} element={<Filter />} />
-      <Route path={GlobalRoutes.SCREEN_PRODUCER_SELECT} element={<ProducerSelect />} />
-      <Route path={GlobalRoutes.SCREEN_FILTER_SELECT} element={<FilterSelect />} />
+      <Route path={GlobalRoutes.SCREEN_INDEX} element={<Navigation><Home /></Navigation>} />
+      <Route path={GlobalRoutes.SCREEN_CATEGORY} element={<Navigation><Category /></Navigation>} />
+      <Route path={GlobalRoutes.SCREEN_PRODUCER} element={<Navigation><Producer /></Navigation>} />
+      <Route path={GlobalRoutes.SCREEN_FILTER} element={<Navigation><Filter /></Navigation>} />
+      <Route path={GlobalRoutes.SCREEN_PRODUCER_SELECT} element={<Navigation><ProducerSelect /></Navigation>} />
+      <Route path={GlobalRoutes.SCREEN_FILTER_SELECT} element={<Navigation><FilterSelect /></Navigation>} />
+
+      <Route path={GlobalRoutes.SCREEN_CLIENT_LOGIN} element={<SignIn />} />
 
       <Route path='*' element={<Navigate to={GlobalRoutes.SCREEN_INDEX} replace />} />
     </Routes>
   );
 });
 
-const NotLoggedRoutes = React.memo((props) => {
+const AdminRoutes = React.memo((props) => {
   return (
     <Routes>
       <Route path={GlobalRoutes.SCREEN_LOGIN} element={<SignIn />} />
@@ -54,11 +56,9 @@ const Router = () => {
       <BrowserRouter>
         {
           isLoggedIn ?
-            <Navigation>
-              <LoggedRoutes />
-            </Navigation>
+            <CommonRoutes />
             :
-            <NotLoggedRoutes />
+            <AdminRoutes />
         }
       </BrowserRouter>
     </CheckSession>
