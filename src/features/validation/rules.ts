@@ -103,6 +103,15 @@ export const requiredCompetence = {
   },
 };
 
+export const requiredMobilePhone = {
+  required: required,
+  pattern: (value: string) => {
+    const d = value.match(/^\((\d\d)\) (\d\d\d\d\d)-(\d\d\d\d)$/);
+    if (!d)
+      return "Competência inválida";
+  },
+};
+
 export const optionalCompetence = {
   required: optional,
   pattern: (value: string) => {

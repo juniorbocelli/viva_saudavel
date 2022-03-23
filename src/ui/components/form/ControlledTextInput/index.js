@@ -5,6 +5,8 @@ import PropTypes from 'prop-types';
 // Material-UI ======================================================================================================================================
 import { TextField } from "@mui/material";
 
+import { Controller } from 'react-hook-form';
+
 
 // TextInput Component ==============================================================================================================================
 /**
@@ -16,7 +18,7 @@ import { TextField } from "@mui/material";
  * shrink: boolean indicando se a label deve sofrer encolhimento forçado (manual). Apenas para campos problemáticos em relação ao encolhimento automático.
  */
 export default function ControlledTextInput({
-  hookForm,
+  hookForm = null,
   mask = null,
   fullWidth = true,
   shrink = false,
@@ -25,42 +27,75 @@ export default function ControlledTextInput({
   autoFocus = false,
   autoComplete = null,
   size = "small",
-  inputRef,
+  inputRef = null,
+  defaultValue = "",
+  label = "",
+  variant = "outlined",
   ...rest }) {
-  const [name, register, errors, validate] = hookForm || [];
+  const [name, control, errors, validate] = hookForm || [];
 
   return (
-    <TextField
-      name={hookForm ? null : rest.name}
+    <Controller
+      name={name}
 
-      type={type}
-      margin={margin}
-      autoFocus={autoFocus}
-      autoComplete={autoComplete}
-      size={size}
-      inputRef={inputRef}
+      control={control}
+      rules={{ validate }}
+      defaultValue={defaultValue}
 
-      {...register(name, { validate: validate })}
-      error={(errors ? errors[name] : rest.error) && true}
-      helperText={errors ? errors[name]?.message : rest.helperText}
+      render={
+        ({ field }) => {
+          const { name, onBlur: _onBlur, onChange: _onChange, value: _value } = field;
+          return (
+            <TextField
+              {...field}
+              {...rest}
 
-      InputProps={mask != null ? { inputComponent: mask, ...rest.InputProps } : rest.InputProps}
+              autoFocus={autoFocus}
 
-      variant="outlined"
+              type={type}
+              margin={margin}
+              autoComplete={autoComplete}
+              size={size}
+              inputRef={inputRef}
 
-      fullWidth={fullWidth}
-      InputLabelProps={shrink ? { shrink: true, ...rest.InputLabelProps } : rest.InputLabelProps} // TODO: Workaround Material-UI + react-hook-forms por não conseguir determinar estado de preenchimento.
-      {...rest}
+              onBlur={
+                (e) => {
+                  _onBlur(e);
+                  if (typeof (rest.onBlur) !== "undefined")
+                    rest.onBlur();
+                }
+              }
+
+              onChange={
+                (e) => {
+                  _onChange(e);
+                  if (typeof (rest.onChange) !== "undefined")
+                    rest.onChange(e);
+                }
+              }
+
+              value={typeof (rest.value) !== "undefined" ? rest.value : _value}
+
+              error={(errors ? errors[name] : rest.error) && true}
+              helperText={errors ? errors[name]?.message : rest.helperText}
+
+              InputProps={mask != null ? { inputComponent: mask, ...rest.InputProps } : rest.InputProps}
+
+              variant={variant}
+
+              label={label}
+
+              fullWidth={fullWidth}
+              InputLabelProps={shrink ? { shrink: true, ...rest.InputLabelProps } : rest.InputLabelProps} // TODO: Workaround Material-UI + react-hook-forms por não conseguir determinar estado de preenchimento.
+            />
+          );
+        }
+      }
     />
   );
-};
+}
 
 ControlledTextInput.propTypes = {
   hookForm: PropTypes.array, // [name, register, errors, validate]
   mask: PropTypes.func,
-};
-
-ControlledTextInput.defaultProps = {
-  hookForm: undefined,
-  inputRef: undefined,
 };
