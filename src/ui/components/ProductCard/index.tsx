@@ -52,7 +52,7 @@ const ProductCard: React.FC<IProductCardProps> = ({ product, setProduct }) => {
       />
       <CardContent sx={{ cursor: 'pointer', }} onClick={() => setProduct(product)}>
         {/* Mobile name */}
-        <Typography
+        {/* <Typography
           gutterBottom variant="h5"
           component="div"
           sx={
@@ -67,24 +67,25 @@ const ProductCard: React.FC<IProductCardProps> = ({ product, setProduct }) => {
           color={theme.palette.primary.main}
         >
           {product.name.length < 21 ? product.name : `${product.name.slice(0, 18)}...`}
-        </Typography>
+        </Typography> */}
 
-        {/* Desktop name */}
+        {/* Desktop and mobile name */}
         <Typography
           gutterBottom variant="h5"
           component="div"
           sx={
             {
-              display: { xs: 'none', md: 'block' },
               fontWeight: '500',
               fontSize: { xs: '1.5rem', md: '1.3rem' },
               mb: { xs: theme.spacing(0.5), md: 0 },
-              mt: theme.spacing(-0.5)
+              mt: theme.spacing(-0.5),
+              textOverflow: 'ellipsis',
             }
           }
           color={theme.palette.primary.main}
+          noWrap
         >
-          {product.name.length < 17 ? product.name : `${product.name.slice(0, 14)}...`}
+          {product.name}
         </Typography>
 
         <Typography
