@@ -10,6 +10,7 @@ import BreadCrumbs from '../../../../components/BreadCrumbs';
 import PageTitle from '../../../../components/PageTitle';
 import BackDrop from '../../../../ui/components/BackDrop';
 import AlertDialog from '../../../../ui/components/AlertDialog';
+import Footer from '../../../../ui/components/Footer';
 
 import {
   IsQueryingAPIState,
@@ -57,55 +58,70 @@ const MainContentBox: React.FC<IMainContentBoxProps> = (props) => {
   };
 
   return (
-    <div style={{ width: '100%', padding: 0, margin: 0 }}>
+    <Box sx={
       {
-        !!hasBreadcrumb && <BreadCrumbs />
+        minHeight: '100vh',
+        //width: '100%',
+        padding: 0,
+        margin: 0,
       }
+    }
+    >
+      <Box>
 
-      {
-        !!isRenderBackDrop && states?.isQueryingAPI &&
-        <BackDrop
-          open={states.isQueryingAPI}
-        />
-      }
 
-      {
-        !!isRenderErrorMessages && states &&
-        <AlertDialog
-          open={typeof (states.errorMessage) !== "undefined"}
-          content={states.errorMessage || ""}
-          onClose={_onClose}
-        />
-      }
-
-      {
-        (typeof (hasBrowseTitle) === "undefined" ? true : hasBrowseTitle) &&
-        <PageTitle />
-      }
-
-      <Box sx={{ flexGrow: 1, p: theme.spacing(2) }}>
         {
-          typeof (primary) !== "undefined" &&
-          <Typography
-            component="h1"
-            variant="h4"
-            color="primary.dark"
-            gutterBottom
-
-            sx={
-              {
-                fontSize: {xs: '1.4rem', md: '2.1rem'},
-                mb: {xs: theme.spacing(2), md: theme.spacing(3)},
-              }
-            }
-          >
-            {primary}
-          </Typography>
+          !!hasBreadcrumb && <BreadCrumbs />
         }
 
-        {children}
+        {
+          !!isRenderBackDrop && states?.isQueryingAPI &&
+          <BackDrop
+            open={states.isQueryingAPI}
+          />
+        }
+
+        {
+          !!isRenderErrorMessages && states &&
+          <AlertDialog
+            open={typeof (states.errorMessage) !== "undefined"}
+            content={states.errorMessage || ""}
+            onClose={_onClose}
+          />
+        }
+
+        {
+          (typeof (hasBrowseTitle) === "undefined" ? true : hasBrowseTitle) &&
+          <PageTitle />
+        }
+
+        <Box sx={{ flexGrow: 1, p: theme.spacing(2) }}>
+          {
+            typeof (primary) !== "undefined" &&
+            <Typography
+              component="h1"
+              variant="h4"
+              color="primary.dark"
+              gutterBottom
+
+              sx={
+                {
+                  fontSize: { xs: '1.4rem', md: '2.1rem' },
+                  mb: { xs: theme.spacing(2), md: theme.spacing(3) },
+                }
+              }
+            >
+              {primary}
+            </Typography>
+          }
+
+          {children}
+        </Box>
+
       </Box>
-    </div>
+
+      <Footer />
+    </Box>
   );
 };
 
