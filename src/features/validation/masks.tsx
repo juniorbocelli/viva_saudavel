@@ -40,6 +40,12 @@ export function TextMaskMobilePhone(props: MaskProps): JSX.Element {
   return TextMaskBase(maskCpf, props);
 };
 
+// Phone Mask ========================================================================================================================================
+export function TextMaskPhone(props: MaskProps): JSX.Element {
+    const maskCpf: MaskType = ['(', /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/];
+    return TextMaskBase(maskCpf, props);
+  };
+
 // CNPJ Mask ========================================================================================================================================
 export function TextMaskCnpj(props: MaskProps): JSX.Element {
     const maskCnpj: MaskType = [/\d/, /\d/, '.', /\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '/', /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/];

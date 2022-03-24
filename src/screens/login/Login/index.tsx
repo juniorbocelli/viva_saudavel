@@ -6,7 +6,7 @@ import {
   useTheme,
 } from '@mui/material';
 
-import robocontLogo from '../../../assets/images/logo/leaf.svg';
+import leafLogo from '../../../assets/images/logo/leaf.svg';
 import background1 from '../../../assets/images/backgrounds/background-1.jpg';
 
 import BackDrop from '../../../ui/components/BackDrop';
@@ -50,7 +50,6 @@ const Login: React.FC<React.ReactFragment> = (props) => {
           flexDirection: { xs: 'column', sm: 'row' },
           width: '100vw',
           height: '100vh',
-          // backgroundColor: theme.palette.grey[50],
           backgroundImage: `url(${background1})`,
           backgroundSize: 'cover'
         }
@@ -111,7 +110,7 @@ const Login: React.FC<React.ReactFragment> = (props) => {
         <Box
           sx={{ width: 90, height: 90, mb: { xs: theme.spacing(-1), md: theme.spacing(-1) } }}
         >
-          <img src={robocontLogo} width='100%' alt='Logo' />
+          <img src={leafLogo} width='100%' alt='Logo' />
         </Box>
 
         <Typography
