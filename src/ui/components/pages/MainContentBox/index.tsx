@@ -60,16 +60,13 @@ const MainContentBox: React.FC<IMainContentBoxProps> = (props) => {
   return (
     <Box sx={
       {
-        minHeight: '100vh',
-        //width: '100%',
+        width: '100%',
         padding: 0,
         margin: 0,
       }
     }
     >
       <Box>
-
-
         {
           !!hasBreadcrumb && <BreadCrumbs />
         }
@@ -95,7 +92,7 @@ const MainContentBox: React.FC<IMainContentBoxProps> = (props) => {
           <PageTitle />
         }
 
-        <Box sx={{ flexGrow: 1, p: theme.spacing(2) }}>
+        <Box sx={{ flexGrow: 1, p: theme.spacing(2), minHeight: '70vh' }}>
           {
             typeof (primary) !== "undefined" &&
             <Typography
@@ -121,7 +118,7 @@ const MainContentBox: React.FC<IMainContentBoxProps> = (props) => {
       </Box>
 
       <Footer />
-    </Box>
+    </Box >
   );
 };
 
