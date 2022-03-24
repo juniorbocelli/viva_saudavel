@@ -34,9 +34,20 @@ const Item: React.FC<IItemProps> = ({ text, to }) => {
   };
 
   return (
-    <ListItem sx={{ cursor: 'pointer' }}>
-      <ListItemText primary={text} onClick={() => to ? handleClick(to) : null} />
-    </ListItem>
+    <li style={{ listStyleType: 'none' }}>
+      <Typography
+        component='span'
+        sx={
+          {
+            cursor: 'pointer',
+          }
+        }
+        onClick={() => to ? handleClick(to) : null}
+      >
+        {text}
+      </Typography>
+
+    </li>
   );
 }
 
@@ -51,7 +62,7 @@ const Footer: React.FC<React.ReactFragment> = () => {
           backgroundColor: theme.palette.primary.main,
           width: '100%',
           color: theme.palette.primary.contrastText,
-          mt: {xs: theme.spacing(5), md: theme.spacing(5)}
+          mt: { xs: theme.spacing(5), md: theme.spacing(5) }
         }
       }
 
@@ -103,11 +114,11 @@ const Footer: React.FC<React.ReactFragment> = () => {
               Institucional
           </Typography>
 
-            <List dense>
+            <ul style={{ padding: 0, paddingLeft: theme.spacing(1) }}>
               <Item text='Sobre nós' />
               <Item text='Fale conosco' />
               <Item text='Contato' />
-            </List>
+            </ul>
           </Box>
 
         </Box>
@@ -118,7 +129,7 @@ const Footer: React.FC<React.ReactFragment> = () => {
             Loja
           </Typography>
 
-          <List dense>
+          <ul style={{ padding: 0, paddingLeft: theme.spacing(1) }}>
             <Item text='Marcas' />
             <Item text='Filtros' />
             <Item text='Leite e derivados' />
@@ -127,7 +138,7 @@ const Footer: React.FC<React.ReactFragment> = () => {
             <Item text='Hortifruti' />
             <Item text='Bebidas' />
             <Item text='Doces e Gelérias' />
-          </List>
+          </ul>
         </Box>
 
         {/* Column 3 */}
@@ -136,13 +147,13 @@ const Footer: React.FC<React.ReactFragment> = () => {
             Atendimento
           </Typography>
 
-          <List dense>
+          <ul style={{ padding: 0, paddingLeft: theme.spacing(1) }}>
             <Item text='Login' />
             <Item text='Cadastre-se' />
             <Item text='Contato' />
             <Item text='Dúvidas frequentes' />
             <Item text='Política de Privacidade' />
-          </List>
+          </ul>
         </Box>
 
         {/* Column 4 */}
