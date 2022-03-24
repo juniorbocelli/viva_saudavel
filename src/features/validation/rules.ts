@@ -108,7 +108,18 @@ export const requiredMobilePhone = {
   pattern: (value: string) => {
     const d = value.match(/^\((\d\d)\) (\d\d\d\d\d)-(\d\d\d\d)$/);
     if (!d)
-      return "Competência inválida";
+      return "Telefone celular inválido";
+  },
+};
+
+export const optionalPhone = {
+  required: optional,
+  pattern: (value: string) => {
+    if (trimAll(value) === '') return true;
+
+    const d = value.match(/^\((\d\d)\) (\d\d\d\d)-(\d\d\d\d)$/);
+    if (!d)
+      return "Telefone inválido";
   },
 };
 
