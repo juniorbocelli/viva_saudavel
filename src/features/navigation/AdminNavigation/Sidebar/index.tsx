@@ -8,15 +8,14 @@ import {
   Divider,
   Toolbar,
   Collapse,
-  Typography,
+  Box,
+
+  useTheme,
 } from '@mui/material';
 
 import IconExpandLess from '@mui/icons-material/ExpandLess'
 import IconExpandMore from '@mui/icons-material/ExpandMore'
 import DescriptionIcon from '@mui/icons-material/Description';
-import AssessmentIcon from '@mui/icons-material/Assessment';
-import ListIcon from '@mui/icons-material/List';
-import SettingsIcon from '@mui/icons-material/Settings';
 
 interface IOpenMenu {
   [index: string]: boolean;
@@ -24,6 +23,7 @@ interface IOpenMenu {
 
 export default function Navbar() {
   const drawerWidth = 240;
+  const theme = useTheme();
   const [open, setOpen] = React.useState<IOpenMenu>({
     "productMenu": false,
   });
@@ -42,47 +42,60 @@ export default function Navbar() {
         }
       }
       variant="permanent"
-      classes={{
-        paper: { with: drawerWidth }
-      }}
     >
       <Toolbar />
-      <Typography align="center" className={classes.companyName}>
-        {company?.name}
-      </Typography>
-      <div className={classes.drawerContainer}>
-        <List>
+
+      <Box sx={{ overflow: 'auto', }}
+      >
+        <List sx={{ width: `${drawerWidth}px`, }}>
 
           {/**
            * NFSe - Prestador
            */}
           <ListItem
             button onClick={handleClick}
-            className={classes.menuItem}
-            data-control='nfTakerMenu'
-            selected={computedMatch?.path === Endpoints.SCREEN_COMPANY_DOCUMENTS_PROVIDER_INVOICES_LIST}
+            sx={{ width: `${drawerWidth - 1}px`, }}
+            data-control='productMenu'
+            selected={false}
           >
-            <ListItemIcon className={classes.menuItemIcon}>
+            <ListItemIcon>
               <DescriptionIcon />
             </ListItemIcon>
-            <ListItemText primary="NFSe - Prestador" classes={{ primary: classes.listItemText }} />
+            <ListItemText primary="Produtos" sx={{ fontSize: '1.0rem', }} />
             {open.nfTakerMenu ? <IconExpandLess /> : <IconExpandMore />}
           </ListItem>
 
-          <Collapse in={open.nfTakerMenu} timeout="auto" unmountOnExit>
+          <Collapse in={open.productMenu} timeout="auto" unmountOnExit>
             <Divider />
             <List component="div" disablePadding>
-              <ListItemLink
-                classes={classes.listItemLink}
-                primary='Visualizar notas'
-                to={getUrl(Endpoints.SCREEN_COMPANY_DOCUMENTS_PROVIDER_INVOICES_LIST)}
-                selected={computedMatch?.path === Endpoints.SCREEN_COMPANY_DOCUMENTS_PROVIDER_INVOICES_LIST}
-              />
+              <ListItem
+                sx={
+                  {
+                    fontSize: '0.9rem',
+                    paddingLeft: theme.spacing(2),
+                    width: `${drawerWidth - 1}px`,
+                  }
+                }
+              >
+                Lista de produtos
+                </ListItem>
+
+              <ListItem
+                sx={
+                  {
+                    fontSize: '0.9rem',
+                    paddingLeft: theme.spacing(2),
+                    width: `${drawerWidth - 1}px`,
+                  }
+                }
+              >
+                Novo produto
+                </ListItem>
               <Divider />
             </List>
           </Collapse>
         </List>
-      </div>
+      </Box>
     </Drawer>
   );
 }
