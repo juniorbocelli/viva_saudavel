@@ -18,10 +18,17 @@ export const SCREEN_CLIENT_REGISTER = `${APP_ROOT}/cadastro/`;
 
 
 /**
- * NOT LOGGED IN SCREENS ROUTES
+ * NOT LOGGED IN ADMIN SCREENS ROUTES
+ */
+export const SCREEN_ADMIN_LOGIN = `${APP_ROOT}/${ADMIN_PREFIX}/login/`;
+
+/**
+ * LOGGED IN ADMIN SCREENS ROUTER
  */
 export const SCREEN_ADMIN_INDEX = `${APP_ROOT}/${ADMIN_PREFIX}/`;
-export const SCREEN_ADMIN_LOGIN = `${APP_ROOT}/${ADMIN_PREFIX}/login/`;
+export const SCREEN_ADMIN_PRODUCTS = `${APP_ROOT}/${ADMIN_PREFIX}/produtos/`;
+export const SCREEN_ADMIN_PRODUCTS_CREATE = `${APP_ROOT}/${ADMIN_PREFIX}/produto/`;
+export const SCREEN_ADMIN_PRODUCTS_EDIT = `${APP_ROOT}/${ADMIN_PREFIX}/produto/:id/`;
 
 /**
  * APIs

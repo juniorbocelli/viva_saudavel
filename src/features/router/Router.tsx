@@ -21,6 +21,9 @@ import FilterSelect from '../../screens/FilterSelect';
 import Login from '../../screens/login/Login';
 import Register from '../../screens/login/Register';
 
+import AdminNavigation from '../../features/navigation/AdminNavigation';
+import AdminHome from '../../screens/admin/AdminHome';
+
 const CommonRoutes = React.memo((props) => {
   return (
     <Routes>
@@ -42,9 +45,9 @@ const CommonRoutes = React.memo((props) => {
 const AdminRoutes = React.memo((props) => {
   return (
     <Routes>
-      <Route path={GlobalRoutes.SCREEN_ADMIN_LOGIN} element={<Login />} />
+      <Route path={GlobalRoutes.SCREEN_ADMIN_INDEX} element={<AdminNavigation><AdminHome /></AdminNavigation>} />
 
-      <Route path='*' element={<Navigate to={GlobalRoutes.SCREEN_ADMIN_LOGIN} replace />} />
+      <Route path='*' element={<Navigate to={GlobalRoutes.SCREEN_ADMIN_INDEX} replace />} />
     </Routes>
   );
 });
