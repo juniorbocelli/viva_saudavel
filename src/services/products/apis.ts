@@ -11,12 +11,17 @@ export type FilterCodes = 'a2a2' | 'sem-gluten' | 'kosher' | 'sem-lactose' | 'na
 const products = products_leite_e_derivados.concat(products_queijos).concat(products_hortifruti).concat(products_bebidas).concat(products_doces_e_geleias);
 
 export interface IUseAPIs {
+  getAllProducts: () => Products;
   getProductsByCategory: (category: Filter['categories']) => Products;
   getProductByFilter: (filter: FilterCodes) => Products;
   getProductsByProducer: (producer: Filter['producerCode']) => Products;
 };
 
 export default function useAPIs(): IUseAPIs {
+  const getAllProducts = () => {
+    return products;
+  };
+
   const getProductsByCategory = (category: Filter['categories']) => {
     let productsList: Products = [];
 
@@ -93,6 +98,7 @@ export default function useAPIs(): IUseAPIs {
   };
 
   return {
+    getAllProducts,
     getProductsByCategory,
     getProductByFilter,
     getProductsByProducer,
