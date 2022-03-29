@@ -166,17 +166,17 @@ const Footer: React.FC<React.ReactFragment> = () => {
             <ListItem sx={{ display: { xs: 'none', md: 'block' } }}>
               <Box sx={{ display: 'flex', flexDirection: 'column' }}>
                 <Box sx={{ display: 'flex' }}>
-                  <img src={mastercardIcon} width='40px' style={{ marginRight: theme.spacing(1) }} />
-                  <img src={visaIcon} width='40px' style={{ marginRight: theme.spacing(1) }} />
-                  <img src={eloIcon} width='40px' style={{ marginRight: theme.spacing(1) }} />
-                  <img src={americanExpressIcon} width='40px' />
+                  <img src={mastercardIcon} width='40px' style={{ marginRight: theme.spacing(1) }} alt='Mastercard icon' />
+                  <img src={visaIcon} width='40px' style={{ marginRight: theme.spacing(1) }} alt='Visa icon' />
+                  <img src={eloIcon} width='40px' style={{ marginRight: theme.spacing(1) }} alt='ELO icon' />
+                  <img src={americanExpressIcon} width='40px' alt='American Express icon' />
                 </Box>
 
                 <Box sx={{ display: 'flex' }}>
-                  <img src={hipercardIcon} width='40px' style={{ marginRight: theme.spacing(1) }} />
-                  <img src={jcbIcon} width='40px' style={{ marginRight: theme.spacing(1) }} />
-                  <img src={discoverIcon} width='40px' style={{ marginRight: theme.spacing(1) }} />
-                  <img src={dinersIcon} width='40px' />
+                  <img src={hipercardIcon} width='40px' style={{ marginRight: theme.spacing(1) }} alt='Hipercard icon' />
+                  <img src={jcbIcon} width='40px' style={{ marginRight: theme.spacing(1) }} alt='JCB icon' />
+                  <img src={discoverIcon} width='40px' style={{ marginRight: theme.spacing(1) }} alt='Discover icon' />
+                  <img src={dinersIcon} width='40px' alt='Diners icon' />
                 </Box>
               </Box>
             </ListItem>
@@ -184,17 +184,17 @@ const Footer: React.FC<React.ReactFragment> = () => {
             <ListItem sx={{ display: { xs: 'block', md: 'none' } }}>
               <Box sx={{ display: 'flex', flexDirection: 'column' }}>
                 <Box sx={{ display: 'flex' }}>
-                  <img src={mastercardIcon} width='30px' style={{ marginRight: theme.spacing(1) }} />
-                  <img src={visaIcon} width='30px' style={{ marginRight: theme.spacing(1) }} />
-                  <img src={eloIcon} width='30px' style={{ marginRight: theme.spacing(1) }} />
-                  <img src={americanExpressIcon} width='30px' />
+                  <img src={mastercardIcon} width='30px' style={{ marginRight: theme.spacing(1) }} alt='Mastercard icon' />
+                  <img src={visaIcon} width='30px' style={{ marginRight: theme.spacing(1) }} alt='Visa icon' />
+                  <img src={eloIcon} width='30px' style={{ marginRight: theme.spacing(1) }} alt='ELO icon' />
+                  <img src={americanExpressIcon} width='30px' alt='American Express icon' />
                 </Box>
 
                 <Box sx={{ display: 'flex' }}>
-                  <img src={hipercardIcon} width='30px' style={{ marginRight: theme.spacing(1) }} />
-                  <img src={jcbIcon} width='30px' style={{ marginRight: theme.spacing(1) }} />
-                  <img src={discoverIcon} width='30px' style={{ marginRight: theme.spacing(1) }} />
-                  <img src={dinersIcon} width='30px' />
+                  <img src={hipercardIcon} width='30px' style={{ marginRight: theme.spacing(1) }} alt='Hipercard icon' />
+                  <img src={jcbIcon} width='30px' style={{ marginRight: theme.spacing(1) }} alt='JCB icon' />
+                  <img src={discoverIcon} width='30px' style={{ marginRight: theme.spacing(1) }} alt='Discover icon' />
+                  <img src={dinersIcon} width='30px' alt='Diners icon' />
                 </Box>
               </Box>
             </ListItem>
