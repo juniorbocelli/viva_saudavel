@@ -23,6 +23,7 @@ import Register from '../../screens/login/Register';
 
 import AdminNavigation from '../../features/navigation/AdminNavigation';
 import AdminHome from '../../screens/admin/AdminHome';
+import ProductsList from '../../screens/admin/ProductsList';
 
 const CommonRoutes = React.memo((props) => {
   return (
@@ -37,6 +38,9 @@ const CommonRoutes = React.memo((props) => {
       <Route path={GlobalRoutes.SCREEN_CLIENT_LOGIN} element={<Login />} />
       <Route path={GlobalRoutes.SCREEN_CLIENT_REGISTER} element={<Register />} />
 
+      <Route path={GlobalRoutes.SCREEN_ADMIN_INDEX} element={<AdminNavigation><AdminHome /></AdminNavigation>} />
+      <Route path={GlobalRoutes.SCREEN_ADMIN_PRODUCTS} element={<AdminNavigation><ProductsList /></AdminNavigation>} />
+
       <Route path='*' element={<Navigate to={GlobalRoutes.SCREEN_INDEX} replace />} />
     </Routes>
   );
@@ -46,6 +50,7 @@ const AdminRoutes = React.memo((props) => {
   return (
     <Routes>
       <Route path={GlobalRoutes.SCREEN_ADMIN_INDEX} element={<AdminNavigation><AdminHome /></AdminNavigation>} />
+      <Route path={GlobalRoutes.SCREEN_ADMIN_PRODUCTS} element={<AdminNavigation><ProductsList /></AdminNavigation>} />
 
       <Route path='*' element={<Navigate to={GlobalRoutes.SCREEN_ADMIN_INDEX} replace />} />
     </Routes>
@@ -54,13 +59,13 @@ const AdminRoutes = React.memo((props) => {
 
 const Router = () => {
   // TODO: get this information from authContext
-  const isLoggedIn = true;
+  const isLoggedIn = false;
 
   return (
     <CheckSession>
       <BrowserRouter>
         {
-          isLoggedIn ?
+          !isLoggedIn ?
             <CommonRoutes />
             :
             <AdminRoutes />
