@@ -11,20 +11,20 @@ import TextInput from '../../../../../ui/components/form/TextInput';
 
 import * as Rules from '../../../../../features/validation/rules';
 import { IUseStates } from '../../states';
+import { RecoveryPasswordFormData } from '../../types';
 
 const RecoveryPassword: React.FC<IUseStates> = (states) => {
   const theme = useTheme();
-  const { register, formState: { errors }, handleSubmit } = useForm();
+  const { register, formState: { errors }, handleSubmit } = useForm<RecoveryPasswordFormData>();
 
   const {
     setOperation,
   } = states;
 
-  const onSubmit = (data: { username: string, password: string }) => {
+  const onSubmit = (data: RecoveryPasswordFormData) => {
     console.log(data);
     // Here: API that send login data
-    return null;
-  }
+  };
 
   return (
     <React.Fragment>
