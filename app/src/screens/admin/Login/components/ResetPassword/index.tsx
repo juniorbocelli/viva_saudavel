@@ -10,23 +10,23 @@ import TextInput from '../../../../../ui/components/form/TextInput';
 
 import * as Rules from '../../../../../features/validation/rules';
 import { IUseStates } from '../../states';
+import { ResetPasswordFormData } from '../../types';
 
 const ResetPassword: React.FC<IUseStates> = (states) => {
   const theme = useTheme();
-  const { register, formState: { errors }, handleSubmit } = useForm();
+  const { register, formState: { errors }, handleSubmit } = useForm<ResetPasswordFormData>();
 
   const {
     setErrorMessage,
   } = states;
 
-  const onSubmit = (data: { password: string, passwordConfirmation: string }) => {
+  const onSubmit = (data: ResetPasswordFormData) => {
     console.log(data);
     // Here: API that send login data
 
     if (data.password !== data.passwordConfirmation)
       setErrorMessage("As senhas informadas não coincidem!");
-    return null;
-  }
+  };
 
   return (
     <React.Fragment>

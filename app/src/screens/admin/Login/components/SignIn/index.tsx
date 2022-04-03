@@ -15,10 +15,11 @@ import TextInput from '../../../../../ui/components/form/TextInput';
 
 import * as Rules from '../../../../../features/validation/rules';
 import { IUseStates } from '../../states';
+import { SignInFormData } from '../../types';
 
 const SignIn: React.FC<IUseStates> = (states) => {
   const theme = useTheme();
-  const { register, formState: { errors }, handleSubmit } = useForm();
+  const { register, formState: { errors }, handleSubmit } = useForm<SignInFormData>();
 
   const {
     setOperation,
@@ -27,13 +28,12 @@ const SignIn: React.FC<IUseStates> = (states) => {
   const [showPassword, setShowPassword] = React.useState(false);
   const handleClickShowPassword = () => {
     setShowPassword(!showPassword);
-  }
+  };
 
-  const onSubmit = (data: { username: string, password: string }) => {
+  const onSubmit = (data: SignInFormData) => {
     console.log(data);
     // Here: API that send login data
-    return null;
-  }
+  };
 
   return (
     <React.Fragment>
