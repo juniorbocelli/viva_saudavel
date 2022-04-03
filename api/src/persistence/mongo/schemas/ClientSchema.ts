@@ -30,6 +30,9 @@ const clientSchema = new mongoose.Schema<Client>({
     type: String,
     required: [true, 'A senha é obrigatória'],
   },
+  token: {
+    type: String,
+  },
 
   createdAt: {
     type: Date,
