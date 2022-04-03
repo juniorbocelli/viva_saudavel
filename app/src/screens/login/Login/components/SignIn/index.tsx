@@ -28,11 +28,11 @@ const SignIn: React.FC<IUseStates> = (states) => {
   const [showPassword, setShowPassword] = React.useState(false);
   const handleClickShowPassword = () => {
     setShowPassword(!showPassword);
-  }
+  };
 
   const onSubmit = (data: SignInFormData) => {
     console.log(data);
-  }
+  };
 
   return (
     <React.Fragment>
