@@ -28,7 +28,6 @@ const postSchema = new mongoose.Schema<Post>({
   },
 });
 
-// To create methods: https://mongoosejs.com/docs/index.html
 var PostSchema = mongoose.model("Post", postSchema);
 
 export default PostSchema;
