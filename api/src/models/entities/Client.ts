@@ -11,11 +11,12 @@ class Client {
   phone?: string;
 
   password: string;
+  token?: string;
 
   createdAt: Date;
   isActive: boolean;
 
-  constructor(id: mongoose.Types.ObjectId | string | undefined, name: string, cpf: string, email: string, cellPhone: string, phone: string | undefined, password: string, createdAt: Date | undefined, isActive: boolean | undefined) {
+  constructor(id: mongoose.Types.ObjectId | string | undefined, name: string, cpf: string, email: string, cellPhone: string, phone: string | undefined, password: string, token: string | undefined, createdAt: Date | undefined, isActive: boolean | undefined) {
     this.id = id;
 
     this.name = name;
@@ -26,6 +27,7 @@ class Client {
     this.phone = phone;
 
     this.password = password;
+    this.token = token;
 
     this.createdAt = createdAt || new Date();
     this.isActive = isActive || true;

@@ -19,44 +19,25 @@ class DAOPost implements DAO<Client, string> {
   async save(client: Client) {
     let clientSchema: Client & mongoose.Document<any, any, Client>;
 
-    if (typeof (client.id) === "undefined") {
-      clientSchema = new ClientSchema({
-        name: client.name,
-        cpf: client.cpf,
+    clientSchema = new ClientSchema({
+      name: client.name,
+      cpf: client.cpf,
 
-        email: client.email,
-        cellPhone: client.cellPhone,
-        phone: client.phone,
+      email: client.email,
+      cellPhone: client.cellPhone,
+      phone: client.phone,
 
-        password: client.password,
+      password: client.password,
+      token: client.token,
 
-        createdAt: client.createdAt,
-        isActive: client.isActive,
-      });
-    } else {
-      if (!this.isValidObjectId(client))
-        throw `O id do cliente é inválido`;
-
-      clientSchema = new ClientSchema({
-        name: client.name,
-        cpf: client.cpf,
-
-        email: client.email,
-        cellPhone: client.cellPhone,
-        phone: client.phone,
-
-        password: client.password,
-
-        createdAt: client.createdAt,
-        isActive: client.isActive,
-
-        _id: client.id,
-      });
-    };
-
+      createdAt: client.createdAt,
+      isActive: client.isActive,
+    });
     await clientSchema.save();
 
     client.id = clientSchema._id;
+
+    return clientSchema;
   };
 
   async update(client: Client) {
@@ -65,29 +46,32 @@ class DAOPost implements DAO<Client, string> {
 
     const foundedClient = await ClientSchema.findById(client.id);
 
-    const updatedClient = {
+    if (foundedClient === null)
+      throw 'Usuário inválido'
+
+    const updatedClientData = {
       name: client.name,
-      cpf: client.cpf,
+      cpf: foundedClient.cpf,
 
       email: client.email,
       cellPhone: client.cellPhone,
-      phone: client.phone || foundedClient?.phone,
+      phone: client.phone || foundedClient.phone,
 
       password: client.password,
+      token: client.token || foundedClient.token,
 
-      createdAt: client.createdAt || foundedClient?.createdAt,
-      isActive: client.isActive || foundedClient?.isActive,
+      createdAt: client.createdAt || foundedClient.createdAt,
+      isActive: client.isActive || foundedClient.isActive,
 
       _id: client.id,
     };
 
-    await ClientSchema.findByIdAndUpdate(client.id, updatedClient, { new: true });
+    return await ClientSchema.findByIdAndUpdate(client.id, updatedClientData, { new: true });
   };
 
   async saveOrUpdate(client: Client) {
     if (typeof (client.id) === "undefined") {
-      this.save(client);
-      return;
+      return this.save(client);
     };
 
     if (!this.isValidObjectId(client))
@@ -96,9 +80,9 @@ class DAOPost implements DAO<Client, string> {
     const singleClient = await ClientSchema.findById(client.id);
 
     if (singleClient === null)
-      this.save(client);
+      return this.save(client);
     else
-      this.update(client);
+      return this.update(client);
   };
 
   async saveOrUpdateWithReturnId(client: Client): Promise<string> {
@@ -120,7 +104,7 @@ class DAOPost implements DAO<Client, string> {
     if (client === null)
       return null;
 
-    return new Client(client.id, client.name, client.cpf, client.email, client.cellPhone, client.phone, client.password, client.createdAt, client.isActive);
+    return new Client(client.id, client.name, client.cpf, client.email, client.cellPhone, client.phone, client.password, client.token, client.createdAt, client.isActive);
   };
 
   async selectAll(): Promise<Array<Client>> {
@@ -128,7 +112,17 @@ class DAOPost implements DAO<Client, string> {
     let clientsToReturn: Array<Client> = [];
 
     clients.forEach((client) => {
-      clientsToReturn.push(new Client(client.id, client.name, client.cpf, client.email, client.cellPhone, client.phone, client.password, client.createdAt, client.isActive));
+      clientsToReturn.push(new Client(client.id, client.name, client.cpf, client.email, client.cellPhone, client.phone, client.password, client.token, client.createdAt, client.isActive));
+    });
+    return clientsToReturn;
+  };
+
+  async selectBy(query: Object): Promise<Array<Client>> {
+    const clients = await ClientSchema.find(query).exec();
+    let clientsToReturn: Array<Client> = [];
+
+    clients.forEach((client) => {
+      clientsToReturn.push(new Client(client.id, client.name, client.cpf, client.email, client.cellPhone, client.phone, client.password, client.token, client.createdAt, client.isActive));
     });
     return clientsToReturn;
   };
