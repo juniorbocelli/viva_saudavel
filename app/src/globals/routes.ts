@@ -35,6 +35,7 @@ export const SCREEN_ADMIN_PRODUCTS_EDIT = `${APP_ROOT}/${ADMIN_PREFIX}/produto/:
  */
 
 // Auth APIs
+export const API_CLIENT_REGISTER = `${API_ROOT}/client/`;
 export const API_LOGIN = `${API_ROOT}`;
 export const API_LOGOUT = `${API_ROOT}`;
 export const API_PERMISSIONS = `${API_ROOT}`;

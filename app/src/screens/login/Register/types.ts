@@ -6,7 +6,7 @@ export type RegisterDataForm = {
   cpf: string;
   email: string;
   password: string;
-  mobilePhone: string;
+  cellPhone: string;
   phone?: string;
 
   cep: string;
@@ -16,4 +16,13 @@ export type RegisterDataForm = {
   city: string;
   number: string;
   complement?: string;
+};
+
+export type RegisterDataSend = {
+  name: string;
+  cpf: string;
+  email: string;
+  password: string;
+  cellPhone: string;
+  phone?: string;
 };
