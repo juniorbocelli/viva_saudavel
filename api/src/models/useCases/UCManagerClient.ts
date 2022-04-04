@@ -1,11 +1,8 @@
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
-import dotenv from 'dotenv';
 
 import Client from '../entities/Client';
 import DAOClient from '../../persistence/mongo/dao/DAOClient';
-
-dotenv.config();
 
 class UCManagerClient {
   client: Client;
