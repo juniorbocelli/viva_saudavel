@@ -15,8 +15,9 @@ class Client {
 
   createdAt: Date;
   isActive: boolean;
+  isAdmin: boolean;
 
-  constructor(id: mongoose.Types.ObjectId | string | undefined, name: string, cpf: string, email: string, cellPhone: string, phone: string | undefined, password: string, token: string | undefined, createdAt: Date | undefined, isActive: boolean | undefined) {
+  constructor(id: mongoose.Types.ObjectId | string | undefined, name: string, cpf: string, email: string, cellPhone: string, phone: string | undefined, password: string, token: string | undefined, createdAt: Date | undefined, isActive: boolean | undefined, isAdmin: boolean | undefined) {
     this.id = id;
 
     this.name = name;
@@ -30,7 +31,8 @@ class Client {
     this.token = token;
 
     this.createdAt = createdAt || new Date();
-    this.isActive = isActive || true;
+    this.isActive = typeof (isActive) !== 'undefined' ? isActive : true;
+    this.isAdmin = typeof (isAdmin) !== 'undefined' ? isAdmin : false;
   };
 };
 

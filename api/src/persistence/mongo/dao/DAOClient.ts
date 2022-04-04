@@ -32,6 +32,7 @@ class DAOPost implements DAO<Client, string> {
 
       createdAt: client.createdAt,
       isActive: client.isActive,
+      isAdmin: client.isAdmin,
     });
     await clientSchema.save();
 
@@ -62,6 +63,7 @@ class DAOPost implements DAO<Client, string> {
 
       createdAt: client.createdAt || foundedClient.createdAt,
       isActive: client.isActive || foundedClient.isActive,
+      isAdmin: client.isAdmin || foundedClient.isAdmin,
 
       _id: client.id,
     };
@@ -104,7 +106,7 @@ class DAOPost implements DAO<Client, string> {
     if (client === null)
       return null;
 
-    return new Client(client.id, client.name, client.cpf, client.email, client.cellPhone, client.phone, client.password, client.token, client.createdAt, client.isActive);
+    return new Client(client.id, client.name, client.cpf, client.email, client.cellPhone, client.phone, client.password, client.token, client.createdAt, client.isActive, client.isAdmin);
   };
 
   async selectAll(): Promise<Array<Client>> {
@@ -112,7 +114,7 @@ class DAOPost implements DAO<Client, string> {
     let clientsToReturn: Array<Client> = [];
 
     clients.forEach((client) => {
-      clientsToReturn.push(new Client(client.id, client.name, client.cpf, client.email, client.cellPhone, client.phone, client.password, client.token, client.createdAt, client.isActive));
+      clientsToReturn.push(new Client(client.id, client.name, client.cpf, client.email, client.cellPhone, client.phone, client.password, client.token, client.createdAt, client.isActive, client.isAdmin));
     });
     return clientsToReturn;
   };
@@ -122,7 +124,7 @@ class DAOPost implements DAO<Client, string> {
     let clientsToReturn: Array<Client> = [];
 
     clients.forEach((client) => {
-      clientsToReturn.push(new Client(client.id, client.name, client.cpf, client.email, client.cellPhone, client.phone, client.password, client.token, client.createdAt, client.isActive));
+      clientsToReturn.push(new Client(client.id, client.name, client.cpf, client.email, client.cellPhone, client.phone, client.password, client.token, client.createdAt, client.isActive, client.isAdmin));
     });
     return clientsToReturn;
   };

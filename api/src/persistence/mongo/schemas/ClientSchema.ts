@@ -41,6 +41,12 @@ const clientSchema = new mongoose.Schema<Client>({
   isActive: {
     type: Boolean,
     default: true,
+    required: [true, 'Problema ao cadastrar cliente'],
+  },
+  isAdmin: {
+    type: Boolean,
+    default: false,
+    required: [true, 'Problema ao cadastrar cliente'],
   },
 });
 
