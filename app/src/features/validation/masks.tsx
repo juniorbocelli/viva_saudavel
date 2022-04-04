@@ -35,7 +35,7 @@ export function TextMaskCpf(props: MaskProps): JSX.Element {
 };
 
 // Mobile Phone Mask ========================================================================================================================================
-export function TextMaskMobilePhone(props: MaskProps): JSX.Element {
+export function TextMaskCellPhone(props: MaskProps): JSX.Element {
   const maskCpf: MaskType = ['(', /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/];
   return TextMaskBase(maskCpf, props);
 };

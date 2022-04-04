@@ -103,7 +103,7 @@ export const requiredCompetence = {
   },
 };
 
-export const requiredMobilePhone = {
+export const requiredCellPhone = {
   required: required,
   pattern: (value: string) => {
     const d = value.match(/^\((\d\d)\) (\d\d\d\d\d)-(\d\d\d\d)$/);

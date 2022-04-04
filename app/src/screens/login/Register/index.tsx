@@ -19,21 +19,22 @@ import useStates from './states';
 import * as Rules from '../../../features/validation/rules';
 import {
   TextMaskCpf,
-  TextMaskMobilePhone,
+  TextMaskCellPhone,
   TextMaskCep,
   TextMaskPhone,
 } from '../../../features/validation/masks';
 import { RegisterDataForm } from './types';
+import useAPIs from './apis';
 
 const Register: React.FC<React.ReactFragment> = () => {
   const states = useStates();
+  const apis = useAPIs(states);
   const theme = useTheme();
   const methods = useForm<RegisterDataForm>({ mode: 'onBlur', reValidateMode: 'onBlur' });
 
   const onSubmit = (data: RegisterDataForm) => {
     console.log(data);
-    // Here: API that send login data
-    return null;
+    apis.register(data);
   }
 
   const {
@@ -152,14 +153,14 @@ const Register: React.FC<React.ReactFragment> = () => {
               <ControlledTextInput
                 hookForm={["state", methods.control, methods.formState.errors, Rules.requiredText]}
                 label="Estado"
-                disabled={true}
+                disabled={false}
                 fullWidth={true}
               />
 
               <ControlledTextInput
                 hookForm={["city", methods.control, methods.formState.errors, Rules.requiredText]}
                 label="Cidade"
-                disabled={true}
+                disabled={false}
                 fullWidth={true}
               />
 
@@ -195,7 +196,7 @@ const Register: React.FC<React.ReactFragment> = () => {
               />
 
               <ControlledTextInput
-                hookForm={["email", methods.control, methods.formState.errors, Rules.requiredEmail]}
+                hookForm={["email", methods.control, methods.formState.errors, Rules.requiredText]}
                 label="E-mail"
                 placeholder="Digite seu e-mail..."
                 fullWidth={true}
@@ -205,16 +206,16 @@ const Register: React.FC<React.ReactFragment> = () => {
                 hookForm={["password", methods.control, methods.formState.errors, Rules.requiredText]}
                 type='password'
                 label="Senha"
-                placeholder="Digite seu uma senha..."
+                placeholder="Digite sua uma senha..."
                 fullWidth={true}
               />
 
               <ControlledTextInput
-                hookForm={["mobilePhone", methods.control, methods.formState.errors, Rules.requiredMobilePhone]}
+                hookForm={["cellPhone", methods.control, methods.formState.errors, Rules.requiredCellPhone]}
                 label="Celular"
                 placeholder="Digite seu número de celular..."
                 fullWidth={true}
-                mask={TextMaskMobilePhone}
+                mask={TextMaskCellPhone}
               />
 
               <ControlledTextInput

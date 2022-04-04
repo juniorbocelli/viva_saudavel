@@ -1,8 +1,8 @@
 import axios from 'axios';
 import { globalAuth } from '../features/auth/context';
 
-const baseURL = "http://127.0.0.1:8000";
-const apiAxios = axios.create({ baseURL: baseURL, withCredentials: true });
+const baseURL = "http://localhost:5000";
+const apiAxios = axios.create({ baseURL: baseURL });
 
 
 apiAxios.interceptors.response.use(
