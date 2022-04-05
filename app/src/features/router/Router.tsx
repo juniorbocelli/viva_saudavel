@@ -77,16 +77,6 @@ const AdminLoggedRoutes = React.memo((props) => {
   );
 });
 
-const AdminRoutes = React.memo((props) => {
-  return (
-    <Routes>
-      <Route path={GlobalRoutes.SCREEN_ADMIN_INDEX} element={<AdminNavigation><AdminHome /></AdminNavigation>} />
-      <Route path={GlobalRoutes.SCREEN_ADMIN_PRODUCTS} element={<AdminNavigation><ProductsList /></AdminNavigation>} />
-
-      <Route path='*' element={<Navigate to={GlobalRoutes.SCREEN_ADMIN_INDEX} replace />} />
-    </Routes>
-  );
-});
 
 const Router = () => {
   const authContext = useAuth();
@@ -97,7 +87,7 @@ const Router = () => {
         {
           !authContext.isSignedIn() ?
             <NotLoggedRoutes /> : authContext.isAdmin() ?
-              <AdminRoutes /> : <ClientLoggedRoutes />
+              <AdminLoggedRoutes /> : <ClientLoggedRoutes />
         }
       </BrowserRouter>
     </CheckSession>
