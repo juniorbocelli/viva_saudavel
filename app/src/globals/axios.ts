@@ -10,7 +10,7 @@ apiAxios.interceptors.response.use(
     return response;
   },
   error => {
-    if (error.response.status === 401) {
+    if (error.response.status === 401 || error.response.status === 403) {
       console.log("é pra deslogar!");
       globalAuth.logout();
     };
