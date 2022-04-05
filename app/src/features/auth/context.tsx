@@ -14,9 +14,19 @@ export let globalAuth = {
 };
 
 export const AuthContextProvider: React.FC<Props> = ({ children }) => {
-
   const states = useStates();
   const api = useAPIs(states);
+
+  const isSignedIn = () => {
+    return Boolean(states.loggedUser);
+  };
+
+  const isAdmin = () => {
+    if (states.loggedUser === null)
+      return false;
+    else
+      return states.loggedUser.isAdmin;
+  };
 
   globalAuth = {
     logout: api.logout,
@@ -26,15 +36,14 @@ export const AuthContextProvider: React.FC<Props> = ({ children }) => {
     <AuthContext.Provider
       value={
         {
-          isSignedIn: states.isSignedIn,
           isCheckingSession: states.isCheckingSession,
-          isLoadingAuth: states.isLoadingAuth,
-          errorMessage: states.errorMessage,
-          permissions: states.permissions,
+          loggedUser: states.loggedUser,
 
           login: api.login,
           logout: api.logout,
           checkSession: api.checkSession,
+          isSignedIn: isSignedIn,
+          isAdmin: isAdmin,
         }
       }
     >
