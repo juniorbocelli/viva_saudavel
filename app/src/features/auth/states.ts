@@ -1,36 +1,34 @@
 import React from 'react';
 import {
   IAuthStates,
-  isSignedInType,
-  isLoadingAuthType,
-  isCheckingSessionType,
-  errorMessageType,
-  permissionsType,
+
+  LoggedUserState,
+  IsCheckingSessionState,
+
+  IsQueryingAPIState,
+  ErrorMessageState,
 } from './types';
 
 function useStates(): IAuthStates {
 
-  const [isSignedIn, setIsSignedIn] = React.useState<isSignedInType>(false);
-  const [isLoadingAuth, setIsLoadingAuth] = React.useState<isLoadingAuthType>(false);
-  const [isCheckingSession, setIsCheckingSession] = React.useState<isCheckingSessionType>(false);
-  const [errorMessage, setErrorMessage] = React.useState<errorMessageType>(null);
-  const [permissions, setPermissions] = React.useState<permissionsType>([]);
+  const [loggedUser, setLoggedUser] = React.useState<LoggedUserState>(null);
+  const [isCheckingSession, setIsCheckingSession] = React.useState<IsCheckingSessionState>(false);
+
+  const [isQueryingAPI, setIsQueryingAPI] = React.useState<IsQueryingAPIState>(false);
+  const [errorMessage, setErrorMessage] = React.useState<ErrorMessageState>(null);
 
   return {
-    isSignedIn,
-    setIsSignedIn,
-
-    isLoadingAuth,
-    setIsLoadingAuth,
+    loggedUser,
+    setLoggedUser,
 
     isCheckingSession,
     setIsCheckingSession,
 
+    isQueryingAPI,
+    setIsQueryingAPI,
+
     errorMessage,
     setErrorMessage,
-
-    permissions,
-    setPermissions,
   };
 };
 

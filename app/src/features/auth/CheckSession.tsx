@@ -8,12 +8,10 @@ interface ICheckSessionProps {
 };
 
 const CheckSession: React.FC<ICheckSessionProps> = ({ children }) => {
-  // const { checkSession, isCheckingSession } = useAuth();
-  const { isCheckingSession } = useAuth();
+  const { checkSession, isCheckingSession } = useAuth();
 
   React.useEffect(() => {
-    // TODO: check session before render children
-    // checkSession();
+    checkSession();
   }, []);
 
   return isCheckingSession ? <BackDrop open={true} /> : children;

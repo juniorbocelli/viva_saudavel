@@ -7,45 +7,57 @@ import permissionsAPI from './permissionsAPI';
 
 
 // Types ============================================================================================================================================
-import { IAuthStates } from '../types';
+import { IAuthStates, LoggedUser } from '../types';
+import LocalStorage from '../../storage/LocalStorage';
 
 export interface IUseAPI {
-  login: (user: string, password: string) => void,
-  logout: () => void,
-  checkSession: () => void
-}
+  login: (user: string, password: string) => void;
+  logout: () => void;
+  checkSession: () => void;
+};
 
 // APIs =============================================================================================================================================
 function useAPIs(states: IAuthStates): IUseAPI {
 
   const login = (user: string, password: string) => {
 
-    states.setIsLoadingAuth(true);
+    states.setIsQueryingAPI(true);
 
     loginAPI(user, password)
       .then(response => {
-        states.setIsSignedIn(true);
-        states.setPermissions(response.data.permissions);
+        states.setLoggedUser({
+          id: response.data.id,
+          name: response.data.name,
+          email: response.data.email,
+          isAdmin: response.data.isAdmin,
+        });
+
+        LocalStorage.setToken(response.data.token);
       })
       .catch(error => {
+        LocalStorage.setToken('not_auth');
         states.setErrorMessage(error.response.data.message);
       })
       .finally(() => {
-        states.setIsLoadingAuth(false);
+        states.setIsQueryingAPI(false);
       });
   }
 
   const logout = () => {
-    states.setIsSignedIn(false);
+    states.setLoggedUser(null);
+    LocalStorage.setToken('not_auth');
+    states.setIsQueryingAPI(true);
 
     logoutAPI()
       .then(response => {
 
       })
       .catch(error => {
-
+        states.setErrorMessage(error.response.data.message);
       })
-      .finally();
+      .finally(() => {
+        states.setIsQueryingAPI(false);
+      });
   };
 
   const checkSession = () => {
@@ -53,11 +65,19 @@ function useAPIs(states: IAuthStates): IUseAPI {
 
     permissionsAPI()
       .then(response => {
-        states.setIsSignedIn(true);
-        states.setPermissions(response.data.permissions);
+        states.setLoggedUser({
+          id: response.data.id,
+          name: response.data.name,
+          email: response.data.email,
+          isAdmin: response.data.isAdmin,
+        });
+
+        LocalStorage.setToken(response.data.token);
       })
       .catch(error => {
-        states.setIsSignedIn(false);
+        states.setLoggedUser(null);
+        LocalStorage.setToken('not_auth');
+        states.setErrorMessage(error.response.data.message);
       })
       .finally(() => {
         states.setIsCheckingSession(false);
