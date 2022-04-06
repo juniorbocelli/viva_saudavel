@@ -13,7 +13,7 @@ class UCManagerClient {
     this.daoClient = daoClient;
   };
 
-  public async registerClient() {
+  public async register() {
     // Test new client
     let sameCPF = await this.daoClient.selectBy({ email: this.client.cpf });
     let sameEmail = await this.daoClient.selectBy({ email: this.client.email });
@@ -46,7 +46,35 @@ class UCManagerClient {
 
     newClient.save();
 
-    return token;
+    return newClient;
+  };
+
+  public async login() {
+    if (!(this.client.email && this.client.password))
+      throw new Error("Dados de login incompleto");
+
+    const clients = await this.daoClient.selectBy({ email: this.client.email });
+
+    if (clients.length === 1 && (await bcrypt.compare(this.client.password, clients[0].password))) {
+      this.client = clients[0];
+
+      // Create token
+      const token = jwt.sign(
+        { client_id: this.client.id, email: this.client.email },
+        process.env.TOKEN_KEY!,
+        {
+          expiresIn: process.env.CLIENT_TOKEN_DURATION!,
+        }
+      );
+
+      this.client.token = token;
+
+      this.daoClient.saveOrUpdate(this.client);
+
+      return this.client;
+    } else {
+      throw new Error("Dados de login inválidos");
+    };
   };
 };
 

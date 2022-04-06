@@ -17,8 +17,11 @@ import * as Rules from '../../../../../features/validation/rules';
 import { IUseStates } from '../../states';
 import { SignInFormData } from '../../types';
 
+import { useAuth } from '../../../../../features/auth/context';
+
 const SignIn: React.FC<IUseStates> = (states) => {
   const theme = useTheme();
+  const auth = useAuth();
   const { register, formState: { errors }, handleSubmit } = useForm<SignInFormData>();
 
   const {
@@ -32,18 +35,19 @@ const SignIn: React.FC<IUseStates> = (states) => {
 
   const onSubmit = (data: SignInFormData) => {
     console.log(data);
+    auth.login(data.email, data.password);
   };
 
   return (
     <React.Fragment>
       <form onSubmit={handleSubmit(onSubmit)}>
         <TextInput
-          label="Usuário"
-          name="username"
+          label="E-mail"
+          name="email"
           autoComplete="username"
           autoFocus={true}
           size="small"
-          hookForm={['username', register, errors, Rules.requiredText]}
+          hookForm={['email', register, errors, Rules.requiredText]}
         />
 
         <Typography

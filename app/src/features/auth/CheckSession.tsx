@@ -8,7 +8,7 @@ interface ICheckSessionProps {
 };
 
 const CheckSession: React.FC<ICheckSessionProps> = ({ children }) => {
-  const { checkSession, isCheckingSession } = useAuth();
+  const { checkSession, isCheckingSession, } = useAuth();
 
   React.useEffect(() => {
     checkSession();
