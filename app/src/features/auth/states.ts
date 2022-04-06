@@ -2,7 +2,7 @@ import React from 'react';
 import {
   IAuthStates,
 
-  LoggedUserState,
+  LoggedClientState,
   IsCheckingSessionState,
 
   IsQueryingAPIState,
@@ -11,15 +11,15 @@ import {
 
 function useStates(): IAuthStates {
 
-  const [loggedUser, setLoggedUser] = React.useState<LoggedUserState>(null);
+  const [loggedClient, setLoggedClient] = React.useState<LoggedClientState>(null);
   const [isCheckingSession, setIsCheckingSession] = React.useState<IsCheckingSessionState>(false);
 
   const [isQueryingAPI, setIsQueryingAPI] = React.useState<IsQueryingAPIState>(false);
   const [errorMessage, setErrorMessage] = React.useState<ErrorMessageState>(null);
 
   return {
-    loggedUser,
-    setLoggedUser,
+    loggedClient,
+    setLoggedClient,
 
     isCheckingSession,
     setIsCheckingSession,

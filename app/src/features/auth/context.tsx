@@ -1,5 +1,5 @@
 import React from 'react';
-import useAPIs from './api/apis';
+import useAPIs from './apis';
 import useStates from './states';
 import { IAuthContext } from './types';
 
@@ -18,14 +18,14 @@ export const AuthContextProvider: React.FC<Props> = ({ children }) => {
   const api = useAPIs(states);
 
   const isSignedIn = () => {
-    return Boolean(states.loggedUser);
+    return Boolean(states.loggedClient);
   };
 
   const isAdmin = () => {
-    if (states.loggedUser === null)
+    if (states.loggedClient === null)
       return false;
     else
-      return states.loggedUser.isAdmin;
+      return states.loggedClient.isAdmin;
   };
 
   globalAuth = {
@@ -37,7 +37,7 @@ export const AuthContextProvider: React.FC<Props> = ({ children }) => {
       value={
         {
           isCheckingSession: states.isCheckingSession,
-          loggedUser: states.loggedUser,
+          loggedClient: states.loggedClient,
 
           login: api.login,
           logout: api.logout,

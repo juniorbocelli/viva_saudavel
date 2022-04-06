@@ -12,6 +12,7 @@ router.get('/', Auth.tokenVerify, (req: Request, res: Response) => {
 
 // Loggin Routes
 router.post(Routes.API_CLIENT_REGISTER, ClientController.register);
-router.post(Routes.API_CLIENT_LOGGED, Auth.tokenVerify, ClientController.getLoggedClient);
+router.post(Routes.API_CLIENT_LOGIN, ClientController.login);
+router.get(Routes.API_CLIENT_GET_LOGGED, ClientController.getLoggedClient);
 
 export default router;

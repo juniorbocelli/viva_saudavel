@@ -6,7 +6,7 @@ export type OperationState = 'signIn' | 'recoveryPassword' | 'resetPassword';
 export type TokenState = undefined | 'string';
 
 export type SignInFormData = {
-  username: string;
+  email: string;
   password: string;
 };
 
