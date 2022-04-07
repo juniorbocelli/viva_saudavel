@@ -76,6 +76,25 @@ class UCManagerClient {
       throw new Error("Dados de login inválidos");
     };
   };
+
+  public async logout() {
+    const clients = await this.daoClient.selectBy({ token: this.client.token });
+
+    if (clients.length !== 1)
+      throw new Error("Token inválido");
+
+    this.client = clients[1];
+
+    this.client.token = jwt.sign(
+      { client_id: this.client.id, email: this.client.email },
+      process.env.TOKEN_KEY!,
+      {
+        expiresIn: 1,
+      }
+    );
+
+    this.daoClient.saveOrUpdate(this.client);
+  };
 };
 
 export default UCManagerClient;

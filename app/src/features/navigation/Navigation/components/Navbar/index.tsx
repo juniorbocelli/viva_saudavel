@@ -25,11 +25,13 @@ import NavbarMenu from '../NavbarMenu';
 import { IUseStates } from '../../states';
 import { useGlobalContext } from '../../../../globalContext/context';
 import * as GlobalRoutes from '../../../../../globals/routes';
+import { useAuth } from '../../../../auth/context';
 
 export default function Navbar(states: IUseStates) {
   const theme = useTheme();
   const globalContext = useGlobalContext();
   const navigate = useNavigate();
+  const auth = useAuth();
 
   const {
     isMobileOpen,
@@ -85,7 +87,7 @@ export default function Navbar(states: IUseStates) {
 
   const accountMenuId = 'primary-search-account-menu';
   // Account sub-menu
-  const renderMenu = (
+  const renderNotLoggedMenu = (
     <Menu
       anchorEl={accountSubmenuAnchorEl}
       anchorOrigin={{
@@ -99,15 +101,35 @@ export default function Navbar(states: IUseStates) {
         horizontal: 'right',
       }}
       open={isMenuOpen}
-      onClose={() => handleMenuClose}
+      onClose={() => handleMenuClose(undefined)}
     >
       <MenuItem onClick={() => handleMenuClose(GlobalRoutes.SCREEN_CLIENT_LOGIN)}>Login</MenuItem>
       <MenuItem onClick={() => handleMenuClose(GlobalRoutes.SCREEN_CLIENT_REGISTER)}>Cadastro</MenuItem>
+    </Menu>
+  );
 
-      {/* <MenuItem onClick={handleMenuClose}>Meu perfil</MenuItem>
-      <MenuItem onClick={handleMenuClose}>Minhas cestas</MenuItem>
-      <MenuItem onClick={handleMenuClose}>Meus pedidos</MenuItem>
-      <MenuItem onClick={handleMenuClose}>Sair</MenuItem> */}
+  const renderLoggedMenu = (
+    <Menu
+      anchorEl={accountSubmenuAnchorEl}
+      anchorOrigin={{
+        vertical: 'top',
+        horizontal: 'right',
+      }}
+      id={accountMenuId}
+      keepMounted
+      transformOrigin={{
+        vertical: 'top',
+        horizontal: 'right',
+      }}
+      open={isMenuOpen}
+      onClose={() => handleMenuClose(undefined)}
+    >
+      <MenuItem onClick={() => handleMenuClose('#')}>Meu perfil</MenuItem>
+      <MenuItem onClick={() => handleMenuClose('#')}>Minhas cestas</MenuItem>
+      <MenuItem onClick={() => handleMenuClose('#')}>Meus pedidos</MenuItem>
+      {auth.isAdmin() && <MenuItem onClick={() => handleMenuClose(GlobalRoutes.SCREEN_ADMIN_INDEX)}>Administração</MenuItem>}
+      <MenuItem onClick={auth.logout}>Sair</MenuItem>
+
     </Menu>
   );
 
@@ -283,7 +305,7 @@ export default function Navbar(states: IUseStates) {
       </AppBar>
 
       {renderMobileMenu}
-      {renderMenu}
+      {auth.isSignedIn() ? renderLoggedMenu : renderNotLoggedMenu}
     </Box>
   );
 };

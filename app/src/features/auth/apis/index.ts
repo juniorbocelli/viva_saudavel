@@ -78,7 +78,7 @@ function useAPIs(states: IAuthStates): IUseAPI {
 
     logoutAPI()
       .then(response => {
-
+        console.log('response => logoutAPI', response);
       })
       .catch(error => {
         states.setErrorMessage(error.response.data.message);
