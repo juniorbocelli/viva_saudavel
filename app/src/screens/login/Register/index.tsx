@@ -15,7 +15,6 @@ import leafLogo from '../../../assets/images/logo/leaf.svg';
 import BackDrop from '../../../ui/components/BackDrop';
 import ControlledTextInput from '../../../ui/components/form/ControlledTextInput';
 
-import useStates from './states';
 import * as Rules from '../../../features/validation/rules';
 import {
   TextMaskCpf,
@@ -24,22 +23,36 @@ import {
   TextMaskPhone,
 } from '../../../features/validation/masks';
 import { RegisterDataForm } from './types';
-import useAPIs from './apis';
+import { useAuth } from '../../../features/auth/context';
 
 const Register: React.FC<React.ReactFragment> = () => {
-  const states = useStates();
-  const apis = useAPIs(states);
+  const auth = useAuth();
   const theme = useTheme();
   const methods = useForm<RegisterDataForm>({ mode: 'onBlur', reValidateMode: 'onBlur' });
 
   const onSubmit = (data: RegisterDataForm) => {
-    console.log(data);
-    apis.register(data);
+    let client = {
+      name: data.name,
+      cpf: data.cpf,
+      email: data.email,
+      password: data.password,
+      cellPhone: data.cellPhone,
+      phone: data.phone,
+
+      address: {
+        cep: data.cep,
+        street: data.street,
+        district: data.district,
+        state: data.state,
+        city: data.city,
+        number: data.number,
+        complement: data.complement,
+      },
+    };
+
+    auth.register(client);
   }
 
-  const {
-    isQueryingAPI,
-  } = states;
   return (
     <Box
       component="main"
@@ -55,7 +68,6 @@ const Register: React.FC<React.ReactFragment> = () => {
         }
       }
     >
-      <BackDrop open={isQueryingAPI} />
 
       {/* Green box mobile */}
       <Box

@@ -1,3 +1,5 @@
+import { Client } from '../../../features/auth/types';
+
 export type IsQueryingAPIState = boolean;
 export type ErrorMessageState = string | undefined;
 
@@ -19,10 +21,5 @@ export type RegisterDataForm = {
 };
 
 export type RegisterDataSend = {
-  name: string;
-  cpf: string;
-  email: string;
-  password: string;
-  cellPhone: string;
-  phone?: string;
+  client: Client;
 };

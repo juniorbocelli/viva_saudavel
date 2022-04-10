@@ -12,6 +12,27 @@ export type IsCheckingSessionState = boolean;
 export type IsQueryingAPIState = boolean;
 export type ErrorMessageState = null | string;
 
+export type Address = {
+  cep: string;
+  street: string;
+  district: string;
+  state: string;
+  city: string;
+  number: string;
+  complement?: string;
+};
+
+export type Client = {
+  name: string;
+  cpf: string;
+  email: string;
+  password: string;
+  cellPhone: string;
+  phone?: string;
+
+  address: Address;
+};
+
 export interface IAuthStates {
   loggedClient: LoggedClientState;
   setLoggedClient: React.Dispatch<React.SetStateAction<LoggedClientState>>;
@@ -30,6 +51,7 @@ export interface IAuthContext {
   loggedClient: LoggedClientState;
   isCheckingSession: IsCheckingSessionState
 
+  register: (client: Client) => void;
   login: (email: string, password: string) => void,
   logout: () => void,
   checkSession: () => void;
