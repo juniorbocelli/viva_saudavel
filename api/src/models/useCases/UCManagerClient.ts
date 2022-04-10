@@ -83,7 +83,7 @@ class UCManagerClient {
     if (clients.length !== 1)
       throw new Error("Token inválido");
 
-    this.client = clients[1];
+    this.client = clients[0];
 
     this.client.token = jwt.sign(
       { client_id: this.client.id, email: this.client.email },
