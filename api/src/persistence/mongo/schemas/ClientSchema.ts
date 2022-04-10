@@ -26,6 +26,36 @@ const clientSchema = new mongoose.Schema<Client>({
     type: String,
   },
 
+  address: {
+    cep: {
+      type: String,
+      required: [true, 'O CEP é obrigatório'],
+    },
+    street: {
+      type: String,
+      required: [true, 'O logradouro é obrigatório'],
+    },
+    district: {
+      type: String,
+      required: [true, 'O logradouro é obrigatório'],
+    },
+    state: {
+      type: String,
+      required: [true, 'O estado é obrigatório'],
+    },
+    city: {
+      type: String,
+      required: [true, 'A cidade é obrigatória'],
+    },
+    number: {
+      type: String,
+      required: [true, 'O número é obrigatório'],
+    },
+    complement: {
+      type: String,
+    },
+  },
+
   password: {
     type: String,
     required: [true, 'A senha é obrigatória'],

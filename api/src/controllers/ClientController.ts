@@ -1,16 +1,20 @@
 import { Request, Response } from 'express';
 import jwt from 'jsonwebtoken';
-import DAOClient from '../persistence/mongo/dao/DAOClient';
+
 import Client from '../models/entities/Client';
+import Address from '../models/entities/Address';
+import DAOClient from '../persistence/mongo/dao/DAOClient';
 import UCManagerClient from '../models/useCases/UCManagerClient';
 
 class ClientController {
   static async register(req: Request, res: Response) {
     const daoClient = new DAOClient;
-    const { name, cpf, email, cellPhone, phone, password, } = req.body;
+    const { name, cpf, email, cellPhone, phone, password, address } = req.body;
 
     try {
-      const client = new Client(undefined, name, cpf, email, cellPhone, phone, password, undefined, undefined, undefined, undefined);
+      const clientAddress = new Address(address.cep, address.street, address.district, address.state, address.city, address.number, address.complement);
+
+      const client = new Client(undefined, name, cpf, email, cellPhone, phone, clientAddress, password, undefined, undefined, undefined, undefined);
       const ucManagerClient = new UCManagerClient(client, daoClient);
 
       res.status(200).json({ client: await ucManagerClient.register() });
@@ -30,7 +34,7 @@ class ClientController {
     };
 
     try {
-      const client = new Client(undefined, '', '', email, '', '', password, undefined, undefined, undefined, undefined);
+      const client = new Client(undefined, '', '', email, '', '', undefined, password, undefined, undefined, undefined, undefined);
       const ucManagerClient = new UCManagerClient(client, daoClient);
 
       res.status(200).json({ client: await ucManagerClient.login() });
@@ -69,7 +73,7 @@ class ClientController {
       // Verify if token is valid
       jwt.verify(token as string, process.env.TOKEN_KEY!);
 
-      const client = new Client(undefined, '', '', '', '', undefined, '', token as string, undefined, undefined, undefined);
+      const client = new Client(undefined, '', '', '', '', undefined, undefined, '', token as string, undefined, undefined, undefined);
       const daoClient = new DAOClient();
 
       const ucManagerClient = new UCManagerClient(client, daoClient);

@@ -12,7 +12,6 @@ import { useForm } from 'react-hook-form';
 import background1 from '../../../assets/images/backgrounds/background-1.jpg';
 import leafLogo from '../../../assets/images/logo/leaf.svg';
 
-import BackDrop from '../../../ui/components/BackDrop';
 import ControlledTextInput from '../../../ui/components/form/ControlledTextInput';
 
 import * as Rules from '../../../features/validation/rules';
@@ -31,6 +30,7 @@ const Register: React.FC<React.ReactFragment> = () => {
   const methods = useForm<RegisterDataForm>({ mode: 'onBlur', reValidateMode: 'onBlur' });
 
   const onSubmit = (data: RegisterDataForm) => {
+    console.log('data', data);
     let client = {
       name: data.name,
       cpf: data.cpf,
@@ -141,7 +141,7 @@ const Register: React.FC<React.ReactFragment> = () => {
           <Grid spacing={theme.spacing(2)} container>
             <Grid md={6} item>
               <ControlledTextInput
-                hookForm={["postalCode", methods.control, methods.formState.errors, Rules.requiredText]}
+                hookForm={["cep", methods.control, methods.formState.errors, Rules.requiredText]}
                 label="CEP"
                 placeholder="Digite o CEP da sua rua..."
                 fullWidth={true}

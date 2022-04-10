@@ -57,6 +57,10 @@ class UCManagerClient {
 
     if (clients.length === 1 && (await bcrypt.compare(this.client.password, clients[0].password))) {
       this.client = clients[0];
+    
+      // Verify if client is desactived
+      if (!this.client.isActive)
+        throw new Error("Cliente bloqueado");
 
       // Create token
       const token = jwt.sign(
