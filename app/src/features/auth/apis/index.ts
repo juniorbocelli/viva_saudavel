@@ -1,4 +1,5 @@
 // General Imports ==================================================================================================================================
+import registerAPI from './registerAPI';
 import loginAPI from './loginAPI';
 import logoutAPI from './logoutAPI';
 import checkSessionAPI from './checkSessionAPI';
@@ -37,7 +38,38 @@ function useAPIs(states: IAuthStates): IUseAPI {
   };
 
   const register = (client: Client) => {
+    states.setIsQueryingAPI(true);
 
+    registerAPI(client)
+      .then((response) => {
+        console.log('response => registerAPI', response);
+        // Verify if exist errors
+        if (typeof (response.data.error) !== 'undefined') {
+          setNotLogged();
+          states.setErrorMessage(response.data.error);
+
+          return;
+        };
+
+        // Verify if client exist
+        if (typeof (response.data.client)) {
+          const user: LoggedClient = {
+            id: response.data.client.id,
+            name: response.data.client.name,
+            email: response.data.client.email,
+            isAdmin: response.data.client.isAdmin,
+          };
+
+          setLogged(user, response.data.client.token);
+        };
+      })
+      .catch((error) => {
+        setNotLogged();
+        states.setErrorMessage(error.response.data.message);
+      })
+      .finally(() => {
+        states.setIsQueryingAPI(false)
+      });
   };
 
   const login = (email: string, password: string) => {

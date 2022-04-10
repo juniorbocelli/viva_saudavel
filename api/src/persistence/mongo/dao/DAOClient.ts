@@ -27,6 +27,8 @@ class DAOPost implements DAO<Client, string> {
       cellPhone: client.cellPhone,
       phone: client.phone,
 
+      address: client.address,
+
       password: client.password,
       token: client.token,
 
@@ -57,6 +59,8 @@ class DAOPost implements DAO<Client, string> {
       email: client.email,
       cellPhone: client.cellPhone,
       phone: client.phone || foundedClient.phone,
+
+      adrress: client.address || foundedClient.address,
 
       password: client.password,
       token: client.token || foundedClient.token,
@@ -106,7 +110,7 @@ class DAOPost implements DAO<Client, string> {
     if (client === null)
       return null;
 
-    return new Client(client.id, client.name, client.cpf, client.email, client.cellPhone, client.phone, client.password, client.token, client.createdAt, client.isActive, client.isAdmin);
+    return new Client(client.id, client.name, client.cpf, client.email, client.cellPhone, client.phone, client.address, client.password, client.token, client.createdAt, client.isActive, client.isAdmin);
   };
 
   async selectAll(): Promise<Array<Client>> {
@@ -114,7 +118,7 @@ class DAOPost implements DAO<Client, string> {
     let clientsToReturn: Array<Client> = [];
 
     clients.forEach((client) => {
-      clientsToReturn.push(new Client(client.id, client.name, client.cpf, client.email, client.cellPhone, client.phone, client.password, client.token, client.createdAt, client.isActive, client.isAdmin));
+      clientsToReturn.push(new Client(client.id, client.name, client.cpf, client.email, client.cellPhone, client.phone, client.address, client.password, client.token, client.createdAt, client.isActive, client.isAdmin));
     });
     return clientsToReturn;
   };
@@ -124,7 +128,7 @@ class DAOPost implements DAO<Client, string> {
     let clientsToReturn: Array<Client> = [];
 
     clients.forEach((client) => {
-      clientsToReturn.push(new Client(client.id, client.name, client.cpf, client.email, client.cellPhone, client.phone, client.password, client.token, client.createdAt, client.isActive, client.isAdmin));
+      clientsToReturn.push(new Client(client.id, client.name, client.cpf, client.email, client.cellPhone, client.phone, client.address, client.password, client.token, client.createdAt, client.isActive, client.isAdmin));
     });
     return clientsToReturn;
   };
