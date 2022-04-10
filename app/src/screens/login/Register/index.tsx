@@ -51,7 +51,7 @@ const Register: React.FC<React.ReactFragment> = () => {
     };
 
     auth.register(client);
-  }
+  };
 
   return (
     <Box
