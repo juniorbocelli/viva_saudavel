@@ -7,10 +7,11 @@ import checkSessionAPI from './checkSessionAPI';
 
 
 // Types ============================================================================================================================================
-import { IAuthStates, LoggedClient } from '../types';
+import { IAuthStates, LoggedClient, Client } from '../types';
 import LocalStorage from '../../storage/LocalStorage';
 
 export interface IUseAPI {
+  register: (client: Client) => void;
   login: (email: string, password: string) => void;
   logout: () => void;
   checkSession: () => void;
@@ -33,6 +34,10 @@ function useAPIs(states: IAuthStates): IUseAPI {
   const setNotLogged = () => {
     states.setLoggedClient(null);
     LocalStorage.setToken('not_auth');
+  };
+
+  const register = (client: Client) => {
+
   };
 
   const login = (email: string, password: string) => {
@@ -124,6 +129,7 @@ function useAPIs(states: IAuthStates): IUseAPI {
   };
 
   return {
+    register,
     login,
     logout,
     checkSession
