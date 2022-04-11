@@ -30,6 +30,8 @@ export const SCREEN_ADMIN_PRODUCTS = `${APP_ROOT}/${ADMIN_PREFIX}/produtos/`;
 export const SCREEN_ADMIN_PRODUCTS_CREATE = `${APP_ROOT}/${ADMIN_PREFIX}/produto/`;
 export const SCREEN_ADMIN_PRODUCTS_EDIT = `${APP_ROOT}/${ADMIN_PREFIX}/produto/:id/`;
 
+export const SCREEN_CLIENT_GET = `${APP_ROOT}/meu-perfil/`;
+
 /**
  * APIs
  */

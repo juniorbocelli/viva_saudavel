@@ -110,7 +110,8 @@ class UCManagerClient {
       throw new Error("Cliente inválido");
 
     this.client = clientData;
-      
+    
+    return this.client;
   };
 };
 

@@ -19,6 +19,8 @@ import Filter from '../../screens/Filter';
 import ProducerSelect from '../../screens/ProducerSelect';
 import FilterSelect from '../../screens/FilterSelect';
 
+import ClientEdit from '../../screens/client/ClientEdit';
+
 import Login from '../../screens/login/Login';
 import Register from '../../screens/login/Register';
 
@@ -54,6 +56,8 @@ const ClientLoggedRoutes = React.memo((props) => {
       <Route path={GlobalRoutes.SCREEN_PRODUCER_SELECT} element={<Navigation><ProducerSelect /></Navigation>} />
       <Route path={GlobalRoutes.SCREEN_FILTER_SELECT} element={<Navigation><FilterSelect /></Navigation>} />
 
+      <Route path={GlobalRoutes.SCREEN_CLIENT_GET} element={<Navigation><ClientEdit /></Navigation>} />
+
       <Route path='*' element={<Navigate to={GlobalRoutes.SCREEN_INDEX} replace />} />
     </Routes>
   );
@@ -68,6 +72,8 @@ const AdminLoggedRoutes = React.memo((props) => {
       <Route path={GlobalRoutes.SCREEN_FILTER} element={<Navigation><Filter /></Navigation>} />
       <Route path={GlobalRoutes.SCREEN_PRODUCER_SELECT} element={<Navigation><ProducerSelect /></Navigation>} />
       <Route path={GlobalRoutes.SCREEN_FILTER_SELECT} element={<Navigation><FilterSelect /></Navigation>} />
+
+      <Route path={GlobalRoutes.SCREEN_CLIENT_GET} element={<Navigation><ClientEdit /></Navigation>} />
 
       <Route path={GlobalRoutes.SCREEN_ADMIN_INDEX} element={<AdminNavigation><AdminHome /></AdminNavigation>} />
       <Route path={GlobalRoutes.SCREEN_ADMIN_PRODUCTS} element={<AdminNavigation><ProductsList /></AdminNavigation>} />

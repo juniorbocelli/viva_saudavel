@@ -96,9 +96,9 @@ class ClientController {
 
       const ucManagerClient = new UCManagerClient(client, daoClient);
 
-      await ucManagerClient.get();
+      const clientToSend = await ucManagerClient.get();
 
-      res.status(200).json({ client: client });
+      res.status(200).json({ client: clientToSend });
     } catch (error: any) {
       res.status(200).json({ error: error.message });
     };
