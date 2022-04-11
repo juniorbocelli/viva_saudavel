@@ -1,11 +1,13 @@
+import { SetFieldValue } from 'react-hook-form';
 import getClientAPI from './getClientAPI';
 import { IUseStates } from '../states';
+import { ClientDataForm } from '../types';
 import { Client } from '../../../../features/auth/types';
 export interface IUseAPIs {
   getClient: (id: string) => void;
 };
 
-export default function useAPIs(states: IUseStates): IUseAPIs {
+export default function useAPIs(states: IUseStates, setValue: SetFieldValue<ClientDataForm>): IUseAPIs {
   const getClient = (id: string) => {
     states.setIsQueryingAPI(true);
 
@@ -19,6 +21,10 @@ export default function useAPIs(states: IUseStates): IUseAPIs {
         };
 
         const client: Client = response.data.client;
+
+        console.log('client', client)
+
+        setValue('name', client.name);
 
         states.setClient({name: client.name});
       })

@@ -25,13 +25,12 @@ import {
 import { ClientDataForm } from './types';
 
 const ClientEdit: React.FC<React.ReactFragment> = () => {
+  const methods = useForm<ClientDataForm>({ mode: 'onBlur', reValidateMode: 'onBlur' });
   const auth = useAuth();
   const states = useStates();
-  const apis = useAPIs(states);
+  const apis = useAPIs(states, methods.setValue);
   const effects = useEffects(apis);
   const theme = useTheme();
-
-  const methods = useForm<ClientDataForm>({ mode: 'onBlur', reValidateMode: 'onBlur' });
 
   const onSubmit = (data: ClientDataForm) => {
     console.log('data', data);

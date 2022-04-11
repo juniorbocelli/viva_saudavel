@@ -124,7 +124,7 @@ export default function Navbar(states: IUseStates) {
       open={isMenuOpen}
       onClose={() => handleMenuClose(undefined)}
     >
-      <MenuItem onClick={() => handleMenuClose('#')}>Meu perfil</MenuItem>
+      <MenuItem onClick={() => handleMenuClose(GlobalRoutes.SCREEN_CLIENT_GET)}>Meu perfil</MenuItem>
       <MenuItem onClick={() => handleMenuClose('#')}>Minhas cestas</MenuItem>
       <MenuItem onClick={() => handleMenuClose('#')}>Meus pedidos</MenuItem>
       {auth.isAdmin() && <MenuItem onClick={() => handleMenuClose(GlobalRoutes.SCREEN_ADMIN_INDEX)}>Administração</MenuItem>}
