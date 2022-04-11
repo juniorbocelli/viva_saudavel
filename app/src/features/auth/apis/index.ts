@@ -65,7 +65,7 @@ function useAPIs(states: IAuthStates): IUseAPI {
       })
       .catch((error) => {
         setNotLogged();
-        states.setErrorMessage(error.response.data.message);
+        states.setErrorMessage(error.data.message);
       })
       .finally(() => {
         states.setIsQueryingAPI(false)
@@ -102,7 +102,7 @@ function useAPIs(states: IAuthStates): IUseAPI {
       })
       .catch(error => {
         setNotLogged();
-        states.setErrorMessage(error.response.data.message);
+        states.setErrorMessage(error.data.message);
       })
       .finally(() => {
         states.setIsQueryingAPI(false);
@@ -118,7 +118,7 @@ function useAPIs(states: IAuthStates): IUseAPI {
         console.log('response => logoutAPI', response);
       })
       .catch(error => {
-        states.setErrorMessage(error.response.data.message);
+        states.setErrorMessage(error.data.message);
       })
       .finally(() => {
         states.setIsQueryingAPI(false);
@@ -153,7 +153,7 @@ function useAPIs(states: IAuthStates): IUseAPI {
       })
       .catch(error => {
         setNotLogged();
-        states.setErrorMessage(error.response.data.message);
+        states.setErrorMessage(error.data.message);
       })
       .finally(() => {
         states.setIsCheckingSession(false);
