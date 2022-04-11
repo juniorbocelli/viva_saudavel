@@ -99,6 +99,19 @@ class UCManagerClient {
 
     this.daoClient.saveOrUpdate(this.client);
   };
+
+  public async get() {
+    if (typeof(this.client.id) === 'undefined')
+      throw new Error("");
+
+    const clientData = await this.daoClient.select(this.client.id.toString());
+
+    if (clientData === null)
+      throw new Error("Cliente inválido");
+
+    this.client = clientData;
+      
+  };
 };
 
 export default UCManagerClient;
