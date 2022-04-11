@@ -15,5 +15,6 @@ router.post(Routes.API_CLIENT_REGISTER, ClientController.register);
 router.post(Routes.API_CLIENT_LOGIN, ClientController.login);
 router.get(Routes.API_CLIENT_GET_LOGGED, ClientController.getLoggedClient);
 router.put(Routes.API_CLIENT_LOGOUT, ClientController.logout);
+router.get(Routes.API_CLIENT_GET, Auth.tokenVerify, ClientController.get);
 
 export default router;

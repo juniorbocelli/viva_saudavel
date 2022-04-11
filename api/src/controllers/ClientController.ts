@@ -86,6 +86,23 @@ class ClientController {
       res.status(200).json({ error: error.message });
     };
   };
+
+  static async get(req: Request, res: Response) {
+    const { id } = req.params;
+    const daoClient = new DAOClient();
+
+    try {
+      const client = new Client(id, '', '', '', '', undefined, undefined, '', undefined, undefined, undefined, undefined);
+
+      const ucManagerClient = new UCManagerClient(client, daoClient);
+
+      await ucManagerClient.get();
+
+      res.status(200).json({ client: client });
+    } catch (error: any) {
+      res.status(200).json({ error: error.message });
+    };
+  };
 };
 
 export default ClientController;

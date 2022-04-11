@@ -13,3 +13,4 @@ export const API_CLIENT_REGISTER = `${API_ROOT}/client/`;   // POST
 export const API_CLIENT_LOGIN = `${API_ROOT}/client/login/`;   // POST
 export const API_CLIENT_GET_LOGGED = `${API_ROOT}/client/logged/:token/`;   // GET
 export const API_CLIENT_LOGOUT = `${API_ROOT}/client/logout/`;   // PUT
+export const API_CLIENT_GET = `${API_ROOT}/client/:id/`;    // GET
