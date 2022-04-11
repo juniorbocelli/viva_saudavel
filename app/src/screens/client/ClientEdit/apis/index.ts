@@ -7,7 +7,7 @@ export interface IUseAPIs {
   getClient: (id: string) => void;
 };
 
-export default function useAPIs(states: IUseStates, setValue: SetFieldValue<ClientDataForm>): IUseAPIs {
+export default function useAPIs(states: IUseStates): IUseAPIs {
   const getClient = (id: string) => {
     states.setIsQueryingAPI(true);
 
@@ -23,8 +23,6 @@ export default function useAPIs(states: IUseStates, setValue: SetFieldValue<Clie
         const client: Client = response.data.client;
 
         console.log('client', client)
-
-        setValue('name', client.name);
 
         states.setClient({name: client.name});
       })
