@@ -57,7 +57,7 @@ class UCManagerClient {
 
     if (clients.length === 1 && (await bcrypt.compare(this.client.password, clients[0].password))) {
       this.client = clients[0];
-    
+
       // Verify if client is desactived
       if (!this.client.isActive)
         throw new Error("Cliente bloqueado");
@@ -73,7 +73,7 @@ class UCManagerClient {
 
       this.client.token = token;
 
-      this.daoClient.saveOrUpdate(this.client);
+      this.daoClient.update(this.client);
 
       return this.client;
     } else {
@@ -97,12 +97,12 @@ class UCManagerClient {
       }
     );
 
-    this.daoClient.saveOrUpdate(this.client);
+    this.daoClient.update(this.client);
   };
 
-  public async get() {
-    if (typeof(this.client.id) === 'undefined')
-      throw new Error("");
+  public async getById() {
+    if (typeof (this.client.id) === 'undefined')
+      throw new Error("Cliente inválido");
 
     const clientData = await this.daoClient.select(this.client.id.toString());
 
@@ -110,8 +110,32 @@ class UCManagerClient {
       throw new Error("Cliente inválido");
 
     this.client = clientData;
-    
+
     return this.client;
+  };
+
+  public async getByToken() {
+    if (typeof (this.client.token) === 'undefined')
+      throw new Error("Cliente inválido");
+
+    const clients = await this.daoClient.selectBy({ token: this.client.token });
+
+    if (clients.length !== 1)
+      throw new Error("Cliente inválido");
+
+    this.client = clients[0];
+
+    return this.client;
+  };
+
+  public async update() {
+    // Get logged client
+    const clientToUpdate = await this.getById();
+
+    if (clientToUpdate === null)
+      throw new Error("Cliente não inválido");
+
+    this.daoClient.update(this.client);
   };
 };
 

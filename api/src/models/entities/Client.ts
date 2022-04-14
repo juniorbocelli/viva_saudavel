@@ -1,6 +1,7 @@
 import mongoose from 'mongoose';
 
 import Address from './Address';
+import SanitizerString from '../utils/SanitizerString';
 
 class Client {
   id: mongoose.Types.ObjectId | string | undefined;
@@ -14,7 +15,7 @@ class Client {
 
   address?: Address;
 
-  password: string;
+  password?: string;
   token?: string;
 
   createdAt: Date;
@@ -24,16 +25,16 @@ class Client {
   constructor(id: mongoose.Types.ObjectId | string | undefined, name: string, cpf: string, email: string, cellPhone: string, phone: string | undefined, address: Address | undefined, password: string, token: string | undefined, createdAt: Date | undefined, isActive: boolean | undefined, isAdmin: boolean | undefined) {
     this.id = id;
 
-    this.name = name;
-    this.cpf = cpf;
+    this.name = SanitizerString.removeSpaces(name);
+    this.cpf = SanitizerString.onlyNumbers(cpf);
 
-    this.email = email;
-    this.cellPhone = cellPhone;
-    this.phone = phone;
+    this.email = SanitizerString.removeSpaces(email);
+    this.cellPhone = SanitizerString.onlyNumbers(cellPhone);
+    this.phone = phone ? SanitizerString.stringOrUndefined(SanitizerString.onlyNumbers(phone)) : phone;
 
     this.address = address;
 
-    this.password = password;
+    this.password = SanitizerString.stringOrUndefined(password);
     this.token = token;
 
     this.createdAt = createdAt || new Date();

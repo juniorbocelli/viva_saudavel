@@ -1,4 +1,5 @@
 import { UseFormSetValue } from 'react-hook-form';
+import { AxiosError, AxiosResponse } from 'axios';
 
 import getClientAPI from './getClientAPI';
 import { IUseStates } from '../states';
@@ -14,10 +15,16 @@ export default function useAPIs(states: IUseStates, setValue: UseFormSetValue<Cl
     states.setIsQueryingAPI(true);
 
     getClientAPI(id)
-      .then((response) => {
+      .then((response: AxiosResponse) => {
         console.log('response => getClientAPI', response);
-        if(typeof(response.data.error) !== 'undefined') {
-          states.setErrorMessage(response.data.error);
+        if (typeof (response.data) === 'undefined') {
+          states.setDialogMessage({ title: "Erro", message: "Erro na requisição" });
+
+          return;
+        };
+
+        if (typeof (response.data.error) !== 'undefined') {
+          states.setDialogMessage({ title: "Erro", message: response.data.error });
 
           return;
         };
@@ -39,9 +46,9 @@ export default function useAPIs(states: IUseStates, setValue: UseFormSetValue<Cl
         setValue('cellPhone', client.cellPhone);
         setValue('phone', client.phone);
       })
-      .catch((error) => {
+      .catch((error: AxiosError) => {
         console.log('error => getClientAPI', error);
-        states.setErrorMessage(error.data.message);
+        states.setDialogMessage({ title: "Erro", message: error.message });
       })
       .finally(() => {
         states.setIsQueryingAPI(false);

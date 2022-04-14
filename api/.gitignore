@@ -4,3 +4,5 @@
 /models/
 /seeders/
 /dist/
+
+package-lock.json

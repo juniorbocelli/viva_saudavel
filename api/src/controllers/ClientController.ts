@@ -96,9 +96,38 @@ class ClientController {
 
       const ucManagerClient = new UCManagerClient(client, daoClient);
 
-      const clientToSend = await ucManagerClient.get();
+      const clientToSend = await ucManagerClient.getById();
 
       res.status(200).json({ client: clientToSend });
+    } catch (error: any) {
+      res.status(200).json({ error: error.message });
+    };
+  };
+
+  static async update(req: Request, res: Response) {
+    const daoClient = new DAOClient;
+
+    const { id } = req.params;
+    const token = req.headers["x-access-token"];
+    const { name, cpf, email, cellPhone, phone, password, address } = req.body;
+
+    try {
+      const clientAddress = new Address(address.cep, address.street, address.district, address.state, address.city, address.number, address.complement);
+      const clientToUpdate = new Client(id, name, cpf, email, cellPhone, phone, clientAddress, password, token as string, undefined, undefined, undefined);
+
+      const ucManagerClient = new UCManagerClient(clientToUpdate, daoClient);
+
+      const loggedClient = await ucManagerClient.getByToken();
+
+      // Verify ids
+      if (clientToUpdate.id !== loggedClient.id && !loggedClient.isAdmin) {
+        res.status(200).json({ error: "Você não tem autorização para realizar essa operação" });
+        ucManagerClient.logout();
+
+        return;
+      };
+
+      res.status(200).json({ client: await ucManagerClient.update() });
     } catch (error: any) {
       res.status(200).json({ error: error.message });
     };
