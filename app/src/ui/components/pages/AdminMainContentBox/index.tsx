@@ -13,7 +13,7 @@ import AlertDialog from '../../AlertDialog';
 
 import {
   IsQueryingAPIState,
-  ErrorMessageState,
+  DialogMessageState,
 } from './types';
 
 interface IAdminMainContentBoxProps {
@@ -29,9 +29,9 @@ interface IAdminMainContentBoxProps {
   states?: {
     isQueryingAPI?: IsQueryingAPIState;
 
-    errorMessage?: ErrorMessageState;
-    setErrorMessage?: React.Dispatch<React.SetStateAction<ErrorMessageState>>;
-  }
+    dialogMessage?: DialogMessageState;
+    setDialogMessage?: React.Dispatch<React.SetStateAction<DialogMessageState>>;
+  };
 
 };
 
@@ -52,8 +52,8 @@ const AdminMainContentBox: React.FC<IAdminMainContentBoxProps> = (props) => {
   } = props;
 
   const _onClose = () => {
-    if (typeof (states?.setErrorMessage) !== "undefined")
-      states.setErrorMessage(undefined);
+    if (typeof (states?.setDialogMessage) !== "undefined")
+      states.setDialogMessage(undefined);
   };
 
   return (
@@ -80,8 +80,9 @@ const AdminMainContentBox: React.FC<IAdminMainContentBoxProps> = (props) => {
         {
           !!isRenderErrorMessages && states &&
           <AlertDialog
-            open={typeof (states.errorMessage) !== "undefined"}
-            content={states.errorMessage || ""}
+            open={typeof (states.dialogMessage) !== "undefined"}
+            title={states.dialogMessage?.title}
+            content={states.dialogMessage || ""}
             onClose={_onClose}
           />
         }

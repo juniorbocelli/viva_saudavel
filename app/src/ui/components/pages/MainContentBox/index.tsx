@@ -14,7 +14,7 @@ import Footer from '../../../../ui/components/Footer';
 
 import {
   IsQueryingAPIState,
-  ErrorMessageState,
+  DialogMessageState,
 } from './types';
 
 interface IMainContentBoxProps {
@@ -25,14 +25,14 @@ interface IMainContentBoxProps {
   hasBrowseTitle?: boolean;
 
   isRenderBackDrop?: boolean;
-  isRenderErrorMessages?: boolean;
+  isRenderDialogMessages?: boolean;
 
   states?: {
     isQueryingAPI?: IsQueryingAPIState;
 
-    errorMessage?: ErrorMessageState;
-    setErrorMessage?: React.Dispatch<React.SetStateAction<ErrorMessageState>>;
-  }
+    dialogMessage?: DialogMessageState;
+    setDialogMessage?: React.Dispatch<React.SetStateAction<DialogMessageState>>;
+  };
 
 };
 
@@ -47,14 +47,14 @@ const MainContentBox: React.FC<IMainContentBoxProps> = (props) => {
     hasBrowseTitle,
 
     isRenderBackDrop,
-    isRenderErrorMessages,
+    isRenderDialogMessages,
 
     states,
   } = props;
 
   const _onClose = () => {
-    if (typeof (states?.setErrorMessage) !== "undefined")
-      states.setErrorMessage(undefined);
+    if (typeof (states?.setDialogMessage) !== "undefined")
+      states.setDialogMessage(undefined);
   };
 
   return (
@@ -72,17 +72,18 @@ const MainContentBox: React.FC<IMainContentBoxProps> = (props) => {
         }
 
         {
-          !!isRenderBackDrop && states?.isQueryingAPI &&
+          !isRenderBackDrop && states?.isQueryingAPI &&
           <BackDrop
             open={states.isQueryingAPI}
           />
         }
 
         {
-          !!isRenderErrorMessages && states &&
+          !isRenderDialogMessages && states &&
           <AlertDialog
-            open={typeof (states.errorMessage) !== "undefined"}
-            content={states.errorMessage || ""}
+            open={typeof (states.dialogMessage) !== "undefined"}
+            title={states.dialogMessage?.title}
+            content={states.dialogMessage?.message || ''}
             onClose={_onClose}
           />
         }
