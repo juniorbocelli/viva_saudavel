@@ -2,9 +2,12 @@ import React from 'react';
 import {
   Box,
   Typography,
+  Button,
 
   useTheme,
 } from '@mui/material';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import { useNavigate } from 'react-router-dom';
 
 import leafLogo from '../../../assets/images/logo/leaf.svg';
 import background1 from '../../../assets/images/backgrounds/background-1.jpg';
@@ -20,11 +23,14 @@ import useStates from './states';
 import useAPIs from './apis';
 import { useEffects } from './effects';
 
+import * as Routes from '../../../globals/routes';
+
 const Login: React.FC<React.ReactFragment> = (props) => {
   const states = useStates();
   const apis = useAPIs(states);
   const effects = useEffects(apis);
   const theme = useTheme();
+  const navigation = useNavigate();
 
   const {
     isQueryingAPI,
@@ -153,6 +159,10 @@ const Login: React.FC<React.ReactFragment> = (props) => {
             {errorMessage}
           </Typography>
         }
+
+        <Button sx={{ mt: theme.spacing(3) }} onClick={() => navigation(Routes.SCREEN_ADMIN_INDEX)} startIcon={<ArrowBackIcon />}>
+          Voltar
+        </Button>
       </Box>
     </Box>
   );
