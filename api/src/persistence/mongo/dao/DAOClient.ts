@@ -60,7 +60,7 @@ class DAOPost implements DAO<Client, string> {
       cellPhone: client.cellPhone,
       phone: client.phone || foundedClient.phone,
 
-      adrress: client.address || foundedClient.address,
+      address: client.address || foundedClient.address,
 
       password: client.password || foundedClient.password,
       token: client.token || foundedClient.token,
