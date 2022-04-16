@@ -15,7 +15,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 
 import { CartItem as CartItemType } from '../../../features/globalContext/types';
 import { useGlobalContext } from '../../../features/globalContext/context';
-import * as MaskApply from '../../../features/validation/maskApply';
+import MaskApply from '../../../features/utils/MaskApply';
 
 interface ICartItemProps {
   cartItem: CartItemType;

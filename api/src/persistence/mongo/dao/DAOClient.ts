@@ -65,11 +65,9 @@ class DAOPost implements DAO<Client, string> {
       password: client.password || foundedClient.password,
       token: client.token || foundedClient.token,
 
-      createdAt: client.createdAt || foundedClient.createdAt,
-      isActive: client.isActive || foundedClient.isActive,
-      isAdmin: client.isAdmin || foundedClient.isAdmin,
-
-      _id: client.id,
+      createdAt: client.createdAt,
+      isActive: client.isActive,
+      isAdmin: client.isAdmin,
     };
 
     return await ClientSchema.findByIdAndUpdate(client.id, updatedClientData, { new: true });

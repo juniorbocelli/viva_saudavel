@@ -22,7 +22,7 @@ class Client {
   isActive: boolean;
   isAdmin: boolean;
 
-  constructor(id: mongoose.Types.ObjectId | string | undefined, name: string, cpf: string, email: string, cellPhone: string, phone: string | undefined, address: Address | undefined, password: string, token: string | undefined, createdAt: Date | undefined, isActive: boolean | undefined, isAdmin: boolean | undefined) {
+  constructor(id: mongoose.Types.ObjectId | string | undefined, name: string, cpf: string, email: string, cellPhone: string, phone: string | undefined, address: Address | undefined, password: string | undefined, token: string | undefined, createdAt: Date | undefined, isActive: boolean | undefined, isAdmin: boolean | undefined) {
     this.id = id;
 
     this.name = SanitizerString.removeSpaces(name);

@@ -23,6 +23,7 @@ import {
   TextMaskPhone,
 } from '../../../features/validation/masks';
 import { ClientDataForm } from './types';
+import { IClientUpdateProps } from './apis/updateClientAPI';
 
 const ClientEdit: React.FC<React.ReactFragment> = () => {
   const auth = useAuth();
@@ -34,7 +35,8 @@ const ClientEdit: React.FC<React.ReactFragment> = () => {
 
   const onSubmit = (data: ClientDataForm) => {
     console.log('data', data);
-    let client = {
+    const client: IClientUpdateProps = {
+      id: auth.loggedClient ? auth.loggedClient.id : '',
       name: data.name,
       cpf: data.cpf,
       email: data.email,
@@ -53,7 +55,7 @@ const ClientEdit: React.FC<React.ReactFragment> = () => {
       },
     };
 
-    // auth.register(client);
+    apis.updateClient(client);
   };
 
   effects.useComponentDidMount(auth.loggedClient);
@@ -68,7 +70,7 @@ const ClientEdit: React.FC<React.ReactFragment> = () => {
               label="CEP"
               placeholder="Digite o CEP da sua rua..."
               fullWidth={true}
-              mask={TextMaskCep}
+              mask={React.forwardRef((props, ref) => TextMaskCep({ ...props, ...ref }))}
             />
 
             <ControlledTextInput
@@ -127,8 +129,7 @@ const ClientEdit: React.FC<React.ReactFragment> = () => {
               label="CPF"
               placeholder="Digite seu CPF..."
               fullWidth={true}
-              mask={TextMaskCpf}
-              disabled={true}
+              mask={React.forwardRef((props, ref) => TextMaskCpf({ ...props, ...ref }))}
             />
 
             <ControlledTextInput
@@ -139,7 +140,7 @@ const ClientEdit: React.FC<React.ReactFragment> = () => {
             />
 
             <ControlledTextInput
-              hookForm={["password", methods.control, methods.formState.errors, Rules.requiredText]}
+              hookForm={["password", methods.control, methods.formState.errors, Rules.optionalText]}
               type='password'
               label="Senha"
               placeholder="Digite sua uma senha..."
@@ -151,7 +152,7 @@ const ClientEdit: React.FC<React.ReactFragment> = () => {
               label="Celular"
               placeholder="Digite seu número de celular..."
               fullWidth={true}
-              mask={TextMaskCellPhone}
+              mask={React.forwardRef((props, ref) => TextMaskCellPhone({ ...props, ...ref }))}
             />
 
             <ControlledTextInput
@@ -159,7 +160,7 @@ const ClientEdit: React.FC<React.ReactFragment> = () => {
               label="Telefone"
               placeholder="Opcional"
               fullWidth={true}
-              mask={TextMaskPhone}
+              mask={React.forwardRef((props, ref) => TextMaskPhone({ ...props, ...ref }))}
             />
 
             <Button
@@ -169,7 +170,7 @@ const ClientEdit: React.FC<React.ReactFragment> = () => {
               sx={{ mt: { xs: theme.spacing(2), md: theme.spacing(2) } }}
               fullWidth
             >
-              Cadastrar
+              Salvar dados
               </Button>
           </Grid>
         </Grid>

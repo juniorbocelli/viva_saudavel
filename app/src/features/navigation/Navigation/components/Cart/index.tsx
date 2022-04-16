@@ -16,7 +16,7 @@ import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import { IUseStates } from '../../states';
 import CartItem from '../../../../../ui/components/CartItem';
 import { useGlobalContext } from '../../../../globalContext/context';
-import * as MaskApply from '../../../../../features/validation/maskApply';
+import MaskApply from '../../../../../features/utils/MaskApply';
 
 const Cart: React.FC<IUseStates> = (states) => {
   const theme = useTheme();

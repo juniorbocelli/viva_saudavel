@@ -42,4 +42,5 @@ export const API_CLIENT_LOGIN = `${API_ROOT}/client/login/`;
 export const API_CLIENT_LOGGED = `${API_ROOT}/client/logged/:token/`;
 export const API_CLIENT_LOGOUT = `${API_ROOT}/client/logout/`;
 
-export const API_CLIENT_GET = `${API_ROOT}/client/:id/`;
+export const API_CLIENT_GET = `${API_ROOT}/client/:id/`;    // GET
+export const API_CLIENT_UPDATE = `${API_ROOT}/client/:id/`; // PUT

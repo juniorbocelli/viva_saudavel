@@ -15,9 +15,9 @@ class ClientController {
       const clientAddress = new Address(address.cep, address.street, address.district, address.state, address.city, address.number, address.complement);
 
       const client = new Client(undefined, name, cpf, email, cellPhone, phone, clientAddress, password, undefined, undefined, undefined, undefined);
-      const ucManagerClient = new UCManagerClient(client, daoClient);
+      const ucManagerClient = new UCManagerClient(daoClient);
 
-      res.status(200).json({ client: await ucManagerClient.register() });
+      res.status(200).json({ client: await ucManagerClient.register(client) });
     } catch (error: any) {
       res.status(200).json({ error: error.message });
     };
@@ -34,10 +34,9 @@ class ClientController {
     };
 
     try {
-      const client = new Client(undefined, '', '', email, '', '', undefined, password, undefined, undefined, undefined, undefined);
-      const ucManagerClient = new UCManagerClient(client, daoClient);
+      const ucManagerClient = new UCManagerClient(daoClient);
 
-      res.status(200).json({ client: await ucManagerClient.login() });
+      res.status(200).json({ client: await ucManagerClient.login(email, password) });
     } catch (error: any) {
       res.status(200).json({ error: error.message });
     };
@@ -72,13 +71,11 @@ class ClientController {
 
       // Verify if token is valid
       jwt.verify(token as string, process.env.TOKEN_KEY!);
-
-      const client = new Client(undefined, '', '', '', '', undefined, undefined, '', token as string, undefined, undefined, undefined);
       const daoClient = new DAOClient();
 
-      const ucManagerClient = new UCManagerClient(client, daoClient);
+      const ucManagerClient = new UCManagerClient(daoClient);
 
-      ucManagerClient.logout();
+      ucManagerClient.logout(token as string);
 
       res.status(200).json({ message: "Logout realizado" });
 
@@ -92,11 +89,9 @@ class ClientController {
     const daoClient = new DAOClient();
 
     try {
-      const client = new Client(id, '', '', '', '', undefined, undefined, '', undefined, undefined, undefined, undefined);
+      const ucManagerClient = new UCManagerClient(daoClient);
 
-      const ucManagerClient = new UCManagerClient(client, daoClient);
-
-      const clientToSend = await ucManagerClient.getById();
+      const clientToSend = await ucManagerClient.getById(id);
 
       res.status(200).json({ client: clientToSend });
     } catch (error: any) {
@@ -106,28 +101,33 @@ class ClientController {
 
   static async update(req: Request, res: Response) {
     const daoClient = new DAOClient;
+    const ucManagerClient = new UCManagerClient(daoClient);
 
     const { id } = req.params;
     const token = req.headers["x-access-token"];
     const { name, cpf, email, cellPhone, phone, password, address } = req.body;
 
     try {
-      const clientAddress = new Address(address.cep, address.street, address.district, address.state, address.city, address.number, address.complement);
-      const clientToUpdate = new Client(id, name, cpf, email, cellPhone, phone, clientAddress, password, token as string, undefined, undefined, undefined);
+      const receivedClientAddress = new Address(address.cep, address.street, address.district, address.state, address.city, address.number, address.complement);
+      const receivedClient = new Client(id, name, cpf, email, cellPhone, phone, receivedClientAddress, password, token as string, undefined, undefined, undefined);
 
-      const ucManagerClient = new UCManagerClient(clientToUpdate, daoClient);
+      const foundedClient = await ucManagerClient.getById(id);
+      receivedClient.isActive = foundedClient.isActive;
+      receivedClient.isAdmin = foundedClient.isAdmin;
+      receivedClient.createdAt = foundedClient.createdAt;
 
-      const loggedClient = await ucManagerClient.getByToken();
+      const loggedClient = await ucManagerClient.getByToken(token as string)
+
 
       // Verify ids
-      if (clientToUpdate.id !== loggedClient.id && !loggedClient.isAdmin) {
+      if (receivedClient.id !== loggedClient.id && !loggedClient.isAdmin) {
         res.status(200).json({ error: "Você não tem autorização para realizar essa operação" });
-        ucManagerClient.logout();
+        ucManagerClient.logout(token as string);
 
         return;
       };
 
-      res.status(200).json({ client: await ucManagerClient.update() });
+      res.status(200).json({ client: await ucManagerClient.update(receivedClient) });
     } catch (error: any) {
       res.status(200).json({ error: error.message });
     };
