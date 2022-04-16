@@ -118,7 +118,6 @@ class ClientController {
 
       const loggedClient = await ucManagerClient.getByToken(token as string)
 
-
       // Verify ids
       if (receivedClient.id !== loggedClient.id && !loggedClient.isAdmin) {
         res.status(200).json({ error: "Você não tem autorização para realizar essa operação" });
