@@ -49,7 +49,7 @@ export interface IAuthStates {
 
 export interface IAuthContext {
   loggedClient: LoggedClientState;
-  isCheckingSession: IsCheckingSessionState
+  isCheckingSession: IsCheckingSessionState;
 
   register: (client: Client) => void;
   login: (email: string, password: string) => void,

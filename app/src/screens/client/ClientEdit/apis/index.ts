@@ -2,12 +2,17 @@ import { UseFormSetValue } from 'react-hook-form';
 import { AxiosError, AxiosResponse } from 'axios';
 
 import getClientAPI from './getClientAPI';
+import updateClientAPI, { IClientUpdateProps } from './updateClientAPI';
+
 import { IUseStates } from '../states';
 import { ClientDataForm } from '../types';
 import { Client } from '../../../../features/auth/types';
 
+import MaskApply from '../../../../features/utils/MaskApply';
+
 export interface IUseAPIs {
   getClient: (id: string) => void;
+  updateClient: (client: IClientUpdateProps) => void;
 };
 
 export default function useAPIs(states: IUseStates, setValue: UseFormSetValue<ClientDataForm>): IUseAPIs {
@@ -32,7 +37,7 @@ export default function useAPIs(states: IUseStates, setValue: UseFormSetValue<Cl
         const client: Client = response.data.client;
 
         // Setting received data in form
-        setValue('cep', client.address.cep);
+        setValue('cep', MaskApply.maskCep(client.address.cep));
         setValue('street', client.address.street);
         setValue('district', client.address.district);
         setValue('state', client.address.state);
@@ -41,13 +46,43 @@ export default function useAPIs(states: IUseStates, setValue: UseFormSetValue<Cl
         setValue('complement', client.address.complement);
 
         setValue('name', client.name);
-        setValue('cpf', client.cpf);
+        setValue('cpf', MaskApply.maskCpf(client.cpf));
         setValue('email', client.email);
-        setValue('cellPhone', client.cellPhone);
-        setValue('phone', client.phone);
+        setValue('password', '');
+        setValue('cellPhone', MaskApply.maskCellPhone(client.cellPhone));
+        setValue('phone', client.phone && MaskApply.maskPhone(client.phone));
       })
       .catch((error: AxiosError) => {
-        console.log('error => getClientAPI', error);
+        console.error('error => getClientAPI', error);
+        states.setDialogMessage({ title: "Erro", message: error.message });
+      })
+      .finally(() => {
+        states.setIsQueryingAPI(false);
+      });
+  };
+
+  const updateClient = (client: IClientUpdateProps) => {
+    states.setIsQueryingAPI(true);
+
+    updateClientAPI(client)
+      .then((response) => {
+        console.log('response => updateClientAPI', response);
+        if (typeof (response.data) === 'undefined') {
+          states.setDialogMessage({ title: "Erro", message: "Erro na requisição" });
+
+          return;
+        };
+
+        if (typeof (response.data.error) !== 'undefined') {
+          states.setDialogMessage({ title: "Erro", message: response.data.error });
+
+          return;
+        };
+
+        states.setDialogMessage({ title: "Sucesso", message: "Seus dados foram salvos" })
+      })
+      .catch((error) => {
+        console.error('error => updateClientAPI', error);
         states.setDialogMessage({ title: "Erro", message: error.message });
       })
       .finally(() => {
@@ -57,5 +92,6 @@ export default function useAPIs(states: IUseStates, setValue: UseFormSetValue<Cl
 
   return {
     getClient,
+    updateClient,
   };
 };

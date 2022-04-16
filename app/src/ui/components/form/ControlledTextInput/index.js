@@ -3,7 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 // Material-UI ======================================================================================================================================
-import { TextField } from "@mui/material";
+import { TextField, OutlinedInput } from "@mui/material";
 
 import { Controller } from 'react-hook-form';
 
@@ -21,7 +21,7 @@ export default function ControlledTextInput({
   hookForm = null,
   mask = null,
   fullWidth = true,
-  shrink = false,
+  shrink = true,
   type = 'text',
   margin = 'normal',
   autoFocus = false,
@@ -97,5 +97,5 @@ export default function ControlledTextInput({
 
 ControlledTextInput.propTypes = {
   hookForm: PropTypes.array, // [name, register, errors, validate]
-  mask: PropTypes.func,
+  mask: PropTypes.object,
 };

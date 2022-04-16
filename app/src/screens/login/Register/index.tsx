@@ -145,7 +145,7 @@ const Register: React.FC<React.ReactFragment> = () => {
                 label="CEP"
                 placeholder="Digite o CEP da sua rua..."
                 fullWidth={true}
-                mask={TextMaskCep}
+                mask={React.forwardRef((props, ref) => TextMaskCep({ ...props, ...ref }))}
               />
 
               <ControlledTextInput
@@ -204,7 +204,7 @@ const Register: React.FC<React.ReactFragment> = () => {
                 label="CPF"
                 placeholder="Digite seu CPF..."
                 fullWidth={true}
-                mask={TextMaskCpf}
+                mask={React.forwardRef((props, ref) => TextMaskCpf({ ...props, ...ref }))}
               />
 
               <ControlledTextInput
@@ -227,7 +227,7 @@ const Register: React.FC<React.ReactFragment> = () => {
                 label="Celular"
                 placeholder="Digite seu número de celular..."
                 fullWidth={true}
-                mask={TextMaskCellPhone}
+                mask={React.forwardRef((props, ref) => TextMaskCellPhone({ ...props, ...ref }))}
               />
 
               <ControlledTextInput
@@ -235,7 +235,7 @@ const Register: React.FC<React.ReactFragment> = () => {
                 label="Telefone"
                 placeholder="Opcional"
                 fullWidth={true}
-                mask={TextMaskPhone}
+                mask={React.forwardRef((props, ref) => TextMaskPhone({ ...props, ...ref }))}
               />
 
               <Button

@@ -20,7 +20,7 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { TransitionProps } from '@mui/material/transitions';
 
-import * as MaskApply from '../../../features/validation/maskApply';
+import MaskApply from '../../../features/utils/MaskApply';
 import { Product, CartItem } from '../../../features/globalContext/types';
 import { useGlobalContext } from '../../../features/globalContext/context';
 

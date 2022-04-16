@@ -2,7 +2,7 @@ import React from 'react';
 import { UseFormReturn } from 'react-hook-form';
 
 import ControlledTextInput from '../ControlledTextInput';
-import * as MaksApply from '../../../../features/validation/maskApply';
+import MaskApply from '../../../../features/utils/MaskApply';
 
 export interface ICurrencyInputProps {
   name: string;
@@ -55,20 +55,20 @@ const CurrencyInput: React.FC<ICurrencyInputProps> = (props) => {
     inputProps,
   } = props;
 
-  // const [_value, set_value] = React.useState(MaksApply.maskMoney(defaultValue || ""));
+  // const [_value, set_value] = React.useState(MaskApply.maskMoney(defaultValue || ""));
 
   // - Vai setar o valor inicial do campo;
   // Para o componente controlado monitoramos ações de setValue. Para os não controlados, devemos monitorar
   // o valor atual do estado para então alteramos o valor do campo com setValue.
   React.useEffect(() => {
     if (typeof (state) === "undefined") { // Componente não controlado
-      // set_value(typeof (defaultValue) !== "undefined" ? MaksApply.maskMoney(defaultValue) : "");
+      // set_value(typeof (defaultValue) !== "undefined" ? MaskApply.maskMoney(defaultValue) : "");
       if (typeof (defaultValue) !== "undefined")
-        methods.setValue(name, MaksApply.maskMoney(defaultValue));
+        methods.setValue(name, MaskApply.maskMoney(defaultValue));
     } else {  // Componente controlado
       if (state.value !== "")
-        methods.setValue(name, MaksApply.maskMoney(state.value));
-      if (typeof (state.setValue) !== "undefined") state.setValue(MaksApply.maskMoney(state.value));
+        methods.setValue(name, MaskApply.maskMoney(state.value));
+      if (typeof (state.setValue) !== "undefined") state.setValue(MaskApply.maskMoney(state.value));
     };
   }, [state?.value]);
 
@@ -77,7 +77,7 @@ const CurrencyInput: React.FC<ICurrencyInputProps> = (props) => {
     if (typeof (state) !== "undefined") {
       // Altera o estado caso seja enviado a função que altera o estado
       if (typeof (state.setValue) !== "undefined")
-        state.setValue(MaksApply.maskMoney(methods.getValues(name)));
+        state.setValue(MaskApply.maskMoney(methods.getValues(name)));
 
       // Executa uma função qualquer, caso tenha sido enviada
       if (typeof (setValue) !== "undefined")
@@ -98,9 +98,9 @@ const CurrencyInput: React.FC<ICurrencyInputProps> = (props) => {
       onChange={
         (e: React.ChangeEvent<HTMLInputElement>) => {
           if (typeof (state) !== "undefined")
-            if (typeof (state.setValue) !== "undefined") state.setValue(MaksApply.maskMoney(e.target.value));
+            if (typeof (state.setValue) !== "undefined") state.setValue(MaskApply.maskMoney(e.target.value));
 
-          methods.setValue(name, MaksApply.maskMoney(e.target.value));
+          methods.setValue(name, MaskApply.maskMoney(e.target.value));
 
           if (typeof (onChange) !== "undefined") onChange(e);
         }

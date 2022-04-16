@@ -5,19 +5,17 @@ import Client from '../entities/Client';
 import DAOClient from '../../persistence/mongo/dao/DAOClient';
 
 class UCManagerClient {
-  client: Client;
   daoClient: DAOClient;
 
-  constructor(client: Client, daoClient: DAOClient) {
-    this.client = client;
+  constructor(daoClient: DAOClient) {
     this.daoClient = daoClient;
   };
 
-  public async register() {
+  public async register(client: Client) {
     // Test new client
-    let sameCPF = await this.daoClient.selectBy({ email: this.client.cpf });
-    let sameEmail = await this.daoClient.selectBy({ email: this.client.email });
-    let sameCellPhone = await this.daoClient.selectBy({ email: this.client.email });
+    let sameCPF = await this.daoClient.selectBy({ email: client.cpf });
+    let sameEmail = await this.daoClient.selectBy({ email: client.email });
+    let sameCellPhone = await this.daoClient.selectBy({ email: client.email });
 
     if (sameCPF.length > 0)
       throw new Error("Já existe um cliente cadastrado com esse CPF");
@@ -29,9 +27,9 @@ class UCManagerClient {
       throw new Error("Já existe um cliente cadastrado com este celular");
 
     // Create password hash
-    this.client.password = await bcrypt.hash(this.client.password, 10);
+    client.password = await bcrypt.hash(client.password as string, 10);
 
-    let newClient = await this.daoClient.save(this.client);
+    let newClient = await this.daoClient.save(client);
 
     // Create token
     const token = jwt.sign(
@@ -49,93 +47,94 @@ class UCManagerClient {
     return newClient;
   };
 
-  public async login() {
-    if (!(this.client.email && this.client.password))
+  public async login(email: Client['email'], password: Client['password']) {
+    if (!(email && password))
       throw new Error("Dados de login incompleto");
 
-    const clients = await this.daoClient.selectBy({ email: this.client.email });
+    const clients = await this.daoClient.selectBy({ email: email });
 
-    if (clients.length === 1 && (await bcrypt.compare(this.client.password, clients[0].password))) {
-      this.client = clients[0];
+    if (clients.length === 1 && (await bcrypt.compare(password, clients[0].password as string))) {
+      const client = clients[0];
 
       // Verify if client is desactived
-      if (!this.client.isActive)
+      if (!client.isActive)
         throw new Error("Cliente bloqueado");
 
       // Create token
       const token = jwt.sign(
-        { client_id: this.client.id, email: this.client.email },
+        { client_id: client.id, email: client.email },
         process.env.TOKEN_KEY!,
         {
           expiresIn: process.env.CLIENT_TOKEN_DURATION!,
         }
       );
 
-      this.client.token = token;
+      client.token = token;
 
-      this.daoClient.update(this.client);
+      this.daoClient.update(client);
 
-      return this.client;
+      return client;
     } else {
       throw new Error("Dados de login inválidos");
     };
   };
 
-  public async logout() {
-    const clients = await this.daoClient.selectBy({ token: this.client.token });
+  public async logout(token: Client['token']) {
+    const clients = await this.daoClient.selectBy({ token: token });
 
     if (clients.length !== 1)
       throw new Error("Token inválido");
 
-    this.client = clients[0];
+    const client = clients[0];
 
-    this.client.token = jwt.sign(
-      { client_id: this.client.id, email: this.client.email },
+    client.token = jwt.sign(
+      { client_id: client.id, email: client.email },
       process.env.TOKEN_KEY!,
       {
         expiresIn: 1,
       }
     );
 
-    this.daoClient.update(this.client);
+    this.daoClient.update(client);
   };
 
-  public async getById() {
-    if (typeof (this.client.id) === 'undefined')
+  public async getById(id: Client['id']) {
+    if (typeof (id) === 'undefined')
       throw new Error("Cliente inválido");
 
-    const clientData = await this.daoClient.select(this.client.id.toString());
+    const clientData = await this.daoClient.select(id.toString());
 
     if (clientData === null)
       throw new Error("Cliente inválido");
 
-    this.client = clientData;
+    const client = clientData;
 
-    return this.client;
+    return client;
   };
 
-  public async getByToken() {
-    if (typeof (this.client.token) === 'undefined')
+  public async getByToken(token: Client['token']) {
+    if (typeof (token) === 'undefined')
       throw new Error("Cliente inválido");
 
-    const clients = await this.daoClient.selectBy({ token: this.client.token });
+    const clients = await this.daoClient.selectBy({ token: token });
 
     if (clients.length !== 1)
       throw new Error("Cliente inválido");
 
-    this.client = clients[0];
+    const client = clients[0];
 
-    return this.client;
+    return client;
   };
 
-  public async update() {
-    // Get logged client
-    const clientToUpdate = await this.getById();
+  public async update(client: Client) {
+    const clientToUpdate = await this.getById(client.id?.toString());
 
-    if (clientToUpdate === null)
-      throw new Error("Cliente não inválido");
+    if (typeof (client.password) !== 'undefined')
+      client.password = await bcrypt.hash(client.password as string, 10);
+    else
+      client.password = clientToUpdate.password;
 
-    this.daoClient.update(this.client);
+    return await this.daoClient.update(client);
   };
 };
 
