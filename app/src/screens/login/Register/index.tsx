@@ -7,7 +7,9 @@ import {
 
   useTheme,
 } from '@mui/material';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
 
 import background1 from '../../../assets/images/backgrounds/background-1.jpg';
 import leafLogo from '../../../assets/images/logo/leaf.svg';
@@ -24,10 +26,13 @@ import {
 import { RegisterDataForm } from './types';
 import { useAuth } from '../../../features/auth/context';
 
+import * as Routes from '../../../globals/routes';
+
 const Register: React.FC<React.ReactFragment> = () => {
   const auth = useAuth();
   const theme = useTheme();
   const methods = useForm<RegisterDataForm>({ mode: 'onBlur', reValidateMode: 'onBlur' });
+  const navigation = useNavigate();
 
   const onSubmit = (data: RegisterDataForm) => {
     console.log('data', data);
@@ -249,6 +254,9 @@ const Register: React.FC<React.ReactFragment> = () => {
               </Button>
             </Grid>
           </Grid>
+          <Button sx={{ mt: theme.spacing(3) }} onClick={() => navigation(Routes.SCREEN_ADMIN_INDEX)} startIcon={<ArrowBackIcon />}>
+            Voltar
+          </Button>
         </form>
       </Box>
     </Box>
