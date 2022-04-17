@@ -4,7 +4,7 @@ import DAO from '../../utils/DAO';
 import ClientSchema from '../schemas/ClientSchema';
 import Client from '../../../models/entities/Client';
 
-class DAOPost implements DAO<Client, string> {
+class DAOClient implements DAO<Client, string> {
   isValidObjectId(client: Client | string): boolean {
 
     if (client instanceof Client)
@@ -132,4 +132,4 @@ class DAOPost implements DAO<Client, string> {
   };
 };
 
-export default DAOPost;
+export default DAOClient;
