@@ -3,13 +3,24 @@ import multer, { StorageEngine, Multer } from 'multer';
 import crypto from 'crypto';
 import * as path from 'path';
 
+export type UploadedFile = {
+  fieldname: string; // file
+  originalname: string; // myPicture.png
+  encoding: string; // 7bit
+  mimetype: string; // image/png
+  destination: string; // ./public/uploads
+  filename: string; // 1571575008566-myPicture.png
+  path: string; // public/uploads/1571575008566-myPicture.png
+  size: number; // 1255
+};
+
 class UploadImages {
-  private uploadFilePath: string;
+  public uploadFilePath: string;
   private storageFile: StorageEngine;
   private uploadFile: Multer;
 
   constructor() {
-    this.uploadFilePath = `${process.env.DEFAULT_FILE_STORAGE}/${process.env.DEFAULT_IMAGE_PRODUCT_STORAGE_FOLDER}`;
+    this.uploadFilePath = path.resolve(__dirname, '../..', `${process.env.DEFAULT_FILE_STORAGE}/${process.env.DEFAULT_IMAGE_PRODUCT_STORAGE_FOLDER}`);
 
     this.storageFile = multer.diskStorage({
       destination: this.uploadFilePath,
