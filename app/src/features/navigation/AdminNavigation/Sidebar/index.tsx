@@ -17,12 +17,16 @@ import IconExpandLess from '@mui/icons-material/ExpandLess'
 import IconExpandMore from '@mui/icons-material/ExpandMore'
 import DescriptionIcon from '@mui/icons-material/Description';
 
+import ChildItem from './components/ChildItem';
+import * as Routes from '../../../../globals/routes';
+
+const drawerWidth = 240;
+
 interface IOpenMenu {
   [index: string]: boolean;
 }
 
 export default function Navbar() {
-  const drawerWidth = 240;
   const theme = useTheme();
   const [open, setOpen] = React.useState<IOpenMenu>({
     "productMenu": false,
@@ -68,29 +72,8 @@ export default function Navbar() {
           <Collapse in={open.productMenu} timeout="auto" unmountOnExit>
             <Divider />
             <List component="div" disablePadding>
-              <ListItem
-                sx={
-                  {
-                    fontSize: '0.9rem',
-                    paddingLeft: theme.spacing(2),
-                    width: `${drawerWidth - 1}px`,
-                  }
-                }
-              >
-                Lista de produtos
-                </ListItem>
-
-              <ListItem
-                sx={
-                  {
-                    fontSize: '0.9rem',
-                    paddingLeft: theme.spacing(2),
-                    width: `${drawerWidth - 1}px`,
-                  }
-                }
-              >
-                Novo produto
-                </ListItem>
+              <ChildItem label="Lista de Produtos" to={Routes.SCREEN_ADMIN_PRODUCTS} drawerWidth={drawerWidth} />
+              <ChildItem label="Novo Produto" to={Routes.SCREEN_ADMIN_PRODUCT_CREATE} drawerWidth={drawerWidth} />
               <Divider />
             </List>
           </Collapse>

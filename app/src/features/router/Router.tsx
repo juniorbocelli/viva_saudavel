@@ -27,6 +27,7 @@ import Register from '../../screens/login/Register';
 import AdminNavigation from '../../features/navigation/AdminNavigation';
 import AdminHome from '../../screens/admin/AdminHome';
 import ProductsList from '../../screens/admin/ProductsList';
+import ProductSet from '../../screens/admin/ProductSet';
 
 const NotLoggedRoutes = React.memo((props) => {
   return (
@@ -77,6 +78,8 @@ const AdminLoggedRoutes = React.memo((props) => {
 
       <Route path={GlobalRoutes.SCREEN_ADMIN_INDEX} element={<AdminNavigation><AdminHome /></AdminNavigation>} />
       <Route path={GlobalRoutes.SCREEN_ADMIN_PRODUCTS} element={<AdminNavigation><ProductsList /></AdminNavigation>} />
+      <Route path={GlobalRoutes.SCREEN_ADMIN_PRODUCT_CREATE} element={<AdminNavigation><ProductSet /></AdminNavigation>} />
+      <Route path={GlobalRoutes.SCREEN_ADMIN_PRODUCT_EDIT} element={<AdminNavigation><ProductSet /></AdminNavigation>} />
 
       <Route path='*' element={<Navigate to={GlobalRoutes.SCREEN_INDEX} replace />} />
     </Routes>

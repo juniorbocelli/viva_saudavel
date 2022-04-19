@@ -46,7 +46,7 @@ class UploadImages {
 
   public handleArrayUploadFile = async (req: Request, res: Response): Promise<any> => {
     return new Promise((resolve, reject): void => {
-      let uploader = this.uploadFile.array('picture');
+      let uploader = this.uploadFile.array('files');
       uploader(req, res, (error: any) => {
         if (error) {
           reject(error);
@@ -59,7 +59,7 @@ class UploadImages {
 
   public handleSingleUploadFile = async (req: Request, res: Response): Promise<any> => {
     return new Promise((resolve, reject): void => {
-      let uploader = this.uploadFile.single('picture');
+      let uploader = this.uploadFile.single('files');
       uploader(req, res, (error: any) => {
         if (error) {
           reject(error);

@@ -27,8 +27,8 @@ export const SCREEN_ADMIN_LOGIN = `${APP_ROOT}/${ADMIN_PREFIX}/login/`;
  */
 export const SCREEN_ADMIN_INDEX = `${APP_ROOT}/${ADMIN_PREFIX}/`;
 export const SCREEN_ADMIN_PRODUCTS = `${APP_ROOT}/${ADMIN_PREFIX}/produtos/`;
-export const SCREEN_ADMIN_PRODUCTS_CREATE = `${APP_ROOT}/${ADMIN_PREFIX}/produto/`;
-export const SCREEN_ADMIN_PRODUCTS_EDIT = `${APP_ROOT}/${ADMIN_PREFIX}/produto/:id/`;
+export const SCREEN_ADMIN_PRODUCT_CREATE = `${APP_ROOT}/${ADMIN_PREFIX}/produto/`;
+export const SCREEN_ADMIN_PRODUCT_EDIT = `${APP_ROOT}/${ADMIN_PREFIX}/produto/:id/`;
 
 export const SCREEN_CLIENT_GET = `${APP_ROOT}/meu-perfil/`;
 
@@ -44,3 +44,5 @@ export const API_CLIENT_LOGOUT = `${API_ROOT}/client/logout/`;
 
 export const API_CLIENT_GET = `${API_ROOT}/client/:id/`;    // GET
 export const API_CLIENT_UPDATE = `${API_ROOT}/client/:id/`; // PUT
+
+export const API_PRODUCT_NEW = `${API_ROOT}/product/`;  // POST

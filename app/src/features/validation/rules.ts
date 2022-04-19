@@ -200,6 +200,16 @@ export const requiredCheckbox = {
   },
 };
 
+export const requiredFile = {
+  validate: (value: any) => {
+    console.log('value', value);
+    if (value !== null && typeof (value) !== "undefined")
+      return value || 'Campo obrigatório';
+    else
+      return 'Campo obrigatório';
+  },
+};
+
 function validateFirstCNPJDigit(cnpj: string) {
   if (cnpj.length !== 14) {
     return false;
