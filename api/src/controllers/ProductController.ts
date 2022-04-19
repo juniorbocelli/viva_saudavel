@@ -8,12 +8,15 @@ import UCManagerProduct from '../models/useCases/UCManagerProduct';
 import UploadImages, { UploadedFile } from './utils/UploadImages';
 
 class ProductController {
-  static async newProduct(req: Request, res: Response) {
+  static async new(req: Request, res: Response) {
     const daoProduct = new DAOProduct;
     const uploadImages = new UploadImages();
     const {
       product,
     } = req.body;
+
+    res.status(200).json({buceta: req.body})
+    return;
 
     try {
       const newProduct = new Product(product as Product);
@@ -22,9 +25,9 @@ class ProductController {
       let uploadedFiles: Array<UploadedFile>;
 
       try {
-        uploadResult = await uploadImages.handleSingleUploadFile(req, res);
+        uploadResult = await uploadImages.handleArrayUploadFile(req, res);
       } catch (e) {
-        return res.status(422).json({ error: [e.message] });
+        return res.status(200).json({ error: [e.message] });
       };
 
       uploadedFiles = uploadResult.files;
