@@ -14,9 +14,10 @@ interface ICategorySelectProps {
 
 type Option = {
   label: string;
-  value: ProductCategory;
+  value: ProductCategory | ' ';
 }
 const options: Array<Option> = [
+  { label: 'Categoria...', value: ' ' },
   { label: 'Leite e Derivados', value: 'leite-e-derivados' },
   { label: 'Queijos', value: 'queijos' },
   { label: 'Frios', value: 'frios' },
@@ -29,9 +30,10 @@ const CategorySelect: React.FC<ICategorySelectProps> = ({ methods, sx }) => {
   return (
     <Box sx={sx}>
       <SelectInput
-        label='Produtor'
+        label='Categoria'
         hookForm={["category", methods.control, methods.formState.errors, requiredSelect]}
         options={options}
+        defaultValue=' '
       />
     </Box>
   );

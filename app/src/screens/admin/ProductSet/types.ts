@@ -59,5 +59,5 @@ export type ProductFormData = {
   isActive: boolean;
   quantity: string;
 
-  files: any;
+  files: FileList;
 };
