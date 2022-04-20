@@ -14,9 +14,10 @@ interface IProducerSelectProps {
 
 type Option = {
   label: string;
-  value: ProductProducerCode;
+  value: ProductProducerCode | ' ';
 }
 const options: Array<Option> = [
+  { label: 'Código do Produtor...', value: ' ' },
   { label: 'Aviação', value: 'aviacao' },
   { label: 'Água na Caixa', value: 'agua-na-caixa' },
   { label: 'Beta Mel', value: 'beta-mel' },
@@ -34,9 +35,10 @@ const ProducerSelect: React.FC<IProducerSelectProps> = ({ methods, sx }) => {
   return (
     <Box sx={sx}>
       <SelectInput
-        label='Produtor'
+        label='Código do Produtor'
         hookForm={["producerCode", methods.control, methods.formState.errors, requiredSelect]}
         options={options}
+        defaultValue=' '
       />
     </Box>
   );

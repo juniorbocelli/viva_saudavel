@@ -2,11 +2,11 @@ import newProductAPI, { IProductNewProps } from './newProductAPI';
 import { IUseStates } from '../states';
 
 export interface IUseAPIs {
-  newProduct: (product: IProductNewProps) => void;
+  newProduct: (product: FormData) => void;
 };
 
 export default function useAPIs(states: IUseStates): IUseAPIs {
-  const newProduct = (product: IProductNewProps) => {
+  const newProduct = (product: FormData) => {
     states.setIsQueryingAPI(true);
 
     newProductAPI(product)

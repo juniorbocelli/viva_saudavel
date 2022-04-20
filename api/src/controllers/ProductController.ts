@@ -15,8 +15,7 @@ class ProductController {
       product,
     } = req.body;
 
-    res.status(200).json({buceta: req.body})
-    return;
+
 
     try {
       const newProduct = new Product(product as Product);
@@ -29,6 +28,9 @@ class ProductController {
       } catch (e) {
         return res.status(200).json({ error: [e.message] });
       };
+
+      res.status(200).json({buceta: uploadResult})
+      return;
 
       uploadedFiles = uploadResult.files;
 
