@@ -8,7 +8,7 @@ export interface IUseEffects {
   useProductIdDidChanged: (id: IUseStates['productId']) => void;
 };
 
-export function useEffects(apis: IUseAPIs): IUseEffects {
+export default function useEffects(apis: IUseAPIs): IUseEffects {
   const useComponentDidMount = (id: string | undefined, setProductId: IUseStates['setProductId']) => {
     React.useEffect(() => {
       setProductId(id);

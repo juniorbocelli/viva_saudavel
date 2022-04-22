@@ -24,12 +24,18 @@ import * as Rules from '../../../features/validation/rules';
 import { ProductFormData, ProductProducerCode, ProductCategory, Product } from './types';
 import useStates from './states';
 import useAPIs from './apis';
+import useEffects from './effects';
 
 const ProductSet: React.FC<React.ReactFragment> = () => {
   const theme = useTheme();
   const methods = useForm<ProductFormData>({ mode: 'onBlur', reValidateMode: 'onBlur' });
   const states = useStates();
   const apis = useAPIs(states, methods);
+  const effects = useEffects(apis);
+  const params = useParams();
+
+  effects.useComponentDidMount(params.id, states.setProductId);
+  effects.useProductIdDidChanged(params.id);
 
   const onSubmit = (data: ProductFormData) => {
     console.log('onSubmit', data);
