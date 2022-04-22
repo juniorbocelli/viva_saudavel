@@ -10,6 +10,7 @@ import {
   useTheme,
 } from '@mui/material';
 import { useForm } from 'react-hook-form';
+import { useParams } from 'react-router-dom';
 
 import AdminMainContentBox from '../../../ui/components/pages/AdminMainContentBox';
 import ControlledTextInput from '../../../ui/components/form/ControlledTextInput';
@@ -20,8 +21,7 @@ import ProducerSelect from './components/ProducerSelect';
 import CategorySelect from './components/CategorySelect';
 
 import * as Rules from '../../../features/validation/rules';
-import { ProductFormData, ProductProducerCode, ProductCategory } from './types';
-import { IProductNewProps } from './apis/newProductAPI';
+import { ProductFormData, ProductProducerCode, ProductCategory, Product } from './types';
 import useStates from './states';
 import useAPIs from './apis';
 
@@ -29,12 +29,12 @@ const ProductSet: React.FC<React.ReactFragment> = () => {
   const theme = useTheme();
   const methods = useForm<ProductFormData>({ mode: 'onBlur', reValidateMode: 'onBlur' });
   const states = useStates();
-  const apis = useAPIs(states);
+  const apis = useAPIs(states, methods);
 
   const onSubmit = (data: ProductFormData) => {
     console.log('onSubmit', data);
-    
-    const productToSend: IProductNewProps = {
+
+    const productToSend: Product = {
       name: data.name,
       producer: data.producer,
       measure: data.measure,
@@ -55,7 +55,7 @@ const ProductSet: React.FC<React.ReactFragment> = () => {
       },
 
       price: parseFloat(data.price),
-      quantity: parseFloat(data.quantity),
+      quantity: data.quantity ? parseFloat(data.quantity) : undefined,
 
       images: [],
     };
@@ -66,14 +66,14 @@ const ProductSet: React.FC<React.ReactFragment> = () => {
       console.log('file', file);
       formData.append('files', file);
     })
-    // formData.append('files', data.files);
 
-    apis.newProduct(formData);
+    if (typeof (states.setProductId) === 'undefined')
+      apis.newProduct(formData);
     return;
   };
 
   return (
-    <AdminMainContentBox primary="Cadastro de Produto">
+    <AdminMainContentBox primary={typeof (states.productId) === 'undefined' ? "Cadastro de Produto" : "Edição de Produto"}>
       <form onSubmit={methods.handleSubmit(onSubmit)} encType='multipart/form-data'>
         <Typography variant='h6' component='div' sx={{ mb: theme.spacing(1.5) }}>
           Dados Gerais do Produto
@@ -160,13 +160,20 @@ const ProductSet: React.FC<React.ReactFragment> = () => {
             <ControlledSwitchInput
               label='Ativo?'
               hookForm={['isActive', methods.control, methods.formState.errors, {}]}
-              defautValue={false}
+              defaultValue={typeof (states.productId) === 'undefined' ? true : undefined}
             />
           </Box>
 
           <Box sx={{ width: '90%', }}>
             <ControlledTextInput
-              hookForm={["quantity", methods.control, methods.formState.errors, Rules.optionalText]}
+              hookForm={
+                [
+                  "quantity",
+                  methods.control,
+                  methods.formState.errors,
+                  Rules.optionalNumber(0, undefined, true)
+                ]
+              }
               label="Quantidade"
               placeholder="Deixe em branco para ilimitado"
               fullWidth={true}
@@ -185,19 +192,19 @@ const ProductSet: React.FC<React.ReactFragment> = () => {
                 <ControlledSwitchInput
                   label='É Kosher?'
                   hookForm={['isKosher', methods.control, methods.formState.errors, {}]}
-                  defautValue={false}
+                  defaultValue={false}
                 />
 
                 <ControlledSwitchInput
                   label='É A2A2?'
                   hookForm={['isA2A2', methods.control, methods.formState.errors, {}]}
-                  defautValue={false}
+                  defaultValue={false}
                 />
 
                 <ControlledSwitchInput
                   label='É Sem Glútem?'
                   hookForm={['isGlutenFree', methods.control, methods.formState.errors, {}]}
-                  defautValue={false}
+                  defaultValue={false}
                 />
               </Box>
             </Grid>
@@ -207,19 +214,19 @@ const ProductSet: React.FC<React.ReactFragment> = () => {
                 <ControlledSwitchInput
                   label='É Sem Açúcar?'
                   hookForm={['isSugarFree', methods.control, methods.formState.errors, {}]}
-                  defautValue={false}
+                  defaultValue={false}
                 />
 
                 <ControlledSwitchInput
                   label='É Natural?'
                   hookForm={['isLactoseFree', methods.control, methods.formState.errors, {}]}
-                  defautValue={false}
+                  defaultValue={false}
                 />
 
                 <ControlledSwitchInput
                   label='É Sem Lactose?'
                   hookForm={['isNatural', methods.control, methods.formState.errors, {}]}
-                  defautValue={false}
+                  defaultValue={false}
                 />
               </Box>
             </Grid>

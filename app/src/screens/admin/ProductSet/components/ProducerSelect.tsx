@@ -38,7 +38,6 @@ const ProducerSelect: React.FC<IProducerSelectProps> = ({ methods, sx }) => {
         label='Código do Produtor'
         hookForm={["producerCode", methods.control, methods.formState.errors, requiredSelect]}
         options={options}
-        defaultValue=' '
       />
     </Box>
   );

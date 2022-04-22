@@ -6,6 +6,8 @@ import {
   DialogContent,
   DialogContentText,
   DialogTitle,
+
+  DialogProps
 } from '@mui/material';
 
 interface IAlertDialogProps {
@@ -15,6 +17,8 @@ interface IAlertDialogProps {
   size?: 'lg' | 'md' | 'sm' | 'xl' | 'xs' | false;
   open: boolean;
   onClose: () => void;
+
+  dialogProps?: DialogProps;
 };
 
 export default function AlertDialog(props: IAlertDialogProps) {
@@ -24,7 +28,9 @@ export default function AlertDialog(props: IAlertDialogProps) {
     content,
     size,
     open,
-    onClose
+    onClose,
+
+    dialogProps,
   } = props;
 
   const handleClose = () => {
@@ -38,6 +44,8 @@ export default function AlertDialog(props: IAlertDialogProps) {
       onClose={handleClose}
       maxWidth={size || 'sm'}
       fullWidth={true}
+
+      {...dialogProps}
     >
       <DialogTitle>{title}</DialogTitle>
 
