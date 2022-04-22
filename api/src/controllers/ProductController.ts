@@ -11,14 +11,8 @@ class ProductController {
   static async new(req: Request, res: Response) {
     const daoProduct = new DAOProduct;
     const uploadImages = new UploadImages();
-    const {
-      product,
-    } = req.body;
-
-
 
     try {
-      const newProduct = new Product(product as Product);
       const ucManagerProduct = new UCManagerProduct(daoProduct);
       let uploadResult;
       let uploadedFiles: Array<UploadedFile>;
@@ -29,25 +23,26 @@ class ProductController {
         return res.status(200).json({ error: [e.message] });
       };
 
-      res.status(200).json({buceta: uploadResult})
-      return;
+      const newProduct = new Product(JSON.parse(uploadResult.body.product) as Product);
 
       uploadedFiles = uploadResult.files;
 
       uploadedFiles.forEach(file => {
-        newProduct.images.push(file.path);
+        newProduct.images.push(`${process.env.DEFAULT_IMAGE_PRODUCT_STORAGE_FOLDER?.replace(".", "")}/${file.filename}`);
       });
 
-      let firstImage = uploadedFiles[0].filename;
-      let thumbPath = path.resolve(uploadImages.uploadFilePath, `${firstImage.split('.')[0]}_thumb.${firstImage.split('.')[1]}`)
+      const firstImage = uploadedFiles[0].filename;
+      const thumbName = `${firstImage.split('.')[0]}_thumb.${firstImage.split('.')[1]}`
+      const thumbPath = path.resolve(uploadImages.uploadFilePath, thumbName);
 
       sharp(path.resolve(uploadImages.uploadFilePath, firstImage))
         .resize(400, 400)
         .toFile(thumbPath, function (error) {
-          res.status(200).json({ error: error.message });
+          if (error)
+            res.status(200).json({ error: "Ocorreu um erro ao tentar criar miniatura da imagem principal" });
         });
 
-      newProduct.thumb = thumbPath;
+      newProduct.thumb = `${process.env.DEFAULT_IMAGE_PRODUCT_STORAGE_FOLDER?.replace(".", "")}/${firstImage.split('.')[0]}_thumb.${firstImage.split('.')[1]}`;
 
       res.status(200).json({ product: await ucManagerProduct.new(newProduct) });
     } catch (error: any) {

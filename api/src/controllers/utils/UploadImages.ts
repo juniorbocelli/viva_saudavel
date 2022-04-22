@@ -20,7 +20,7 @@ class UploadImages {
   private uploadFile: Multer;
 
   constructor() {
-    this.uploadFilePath = path.resolve(__dirname, '../..', `${process.env.DEFAULT_FILE_STORAGE}/${process.env.DEFAULT_IMAGE_PRODUCT_STORAGE_FOLDER}`);
+    this.uploadFilePath = path.resolve(__dirname, '../..', `${process.env.DEFAULT_IMAGE_PRODUCT_STORAGE_FOLDER}`);
 
     this.storageFile = multer.diskStorage({
       destination: this.uploadFilePath,
