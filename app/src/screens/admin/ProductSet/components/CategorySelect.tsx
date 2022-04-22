@@ -33,7 +33,6 @@ const CategorySelect: React.FC<ICategorySelectProps> = ({ methods, sx }) => {
         label='Categoria'
         hookForm={["category", methods.control, methods.formState.errors, requiredSelect]}
         options={options}
-        defaultValue=' '
       />
     </Box>
   );

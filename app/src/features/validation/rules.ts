@@ -19,6 +19,34 @@ export const optionalText = {
   required: optional,
 };
 
+export const optionalNumber = (min: number | undefined, max: number | undefined, integer: boolean | undefined) => {
+  const validate = (value: string) => {
+    let number: number;
+
+    if(!!integer)
+      if(isNaN(parseFloat(value)))
+        return "Formato inválido";
+      else
+        number = parseFloat(value);
+    else
+    if(isNaN(parseInt(value)))
+        return "Formato inválido";
+      else
+        number = parseInt(value);
+
+    if (typeof(min) !== 'undefined' && number < min)
+      return `O valor mínimo é ${min}`;
+
+      if (typeof(max) !== 'undefined' && number > max)
+      return `O valor máximo é ${min}`;
+  };
+
+  return {
+    required: optional,
+    validate: validate,
+  }
+};
+
 export const requiredDate = {
   required: required,
   pattern: (value: string) => {

@@ -61,3 +61,6 @@ export type ProductFormData = {
 
   files: FileList;
 };
+
+export type ProductIdState = string | undefined;
+export type ProductImagesState = Product['images'];
