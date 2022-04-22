@@ -62,9 +62,10 @@ const ProductSet: React.FC<React.ReactFragment> = () => {
 
     const formData = new FormData()
     formData.append('product', JSON.stringify(productToSend));
-    for (let file in data.files) {
+    Array.from(data.files).forEach(file => {
+      console.log('file', file);
       formData.append('files', file);
-    };
+    })
     // formData.append('files', data.files);
 
     apis.newProduct(formData);
