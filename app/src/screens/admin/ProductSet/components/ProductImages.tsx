@@ -1,13 +1,14 @@
 import React from 'react';
 import {
-  Divider,
   Paper,
   Stack,
+  Button,
 } from '@mui/material';
 import { styled } from '@mui/material/styles';
 
 import ConfirmationDialog from '../../../../ui/components/ConfirmationDialog';
 import { IUseStates } from '../states';
+import { IUseAPIs } from '../apis';
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -19,29 +20,28 @@ const Item = styled(Paper)(({ theme }) => ({
 
 interface IProductImagesProps {
   productImages: IUseStates['productImages'];
-  setProductImages: IUseStates['setProductImages']
+  api: IUseAPIs['deleteImage'];
 };
 
-const ProductImages: React.FC<IProductImagesProps> = ({ productImages, setProductImages }) => {
-  const [open, setOpen] = React.useState<boolean>(false);
+const ProductImages: React.FC<IProductImagesProps> = ({ productImages, api }) => {
+  const [id, setId] = React.useState<number | null>(null);
 
   return (
     <React.Fragment>
       <ConfirmationDialog
         title='Confirme a ação'
-        content='Deseja excluir a imagem?'
-        open={open}
-        onClose={() => setOpen(false)}
-        onConfirm={() => { }}
+        content={<p>Deseja excluir a imagem <b>{id === 0 ? 'principal' : id}</b>?</p>}
+        open={id !== null}
+        onClose={() => setId(null)}
+        onConfirm={() => { if (id !== null) api(id) }}
       />
 
       <Stack
         direction="row"
-        divider={<Divider orientation="vertical" flexItem />}
         spacing={2}
         sx={
           {
-            width: '100%',
+            flexGrow: 1,
             overflow: 'scroll',
           }
         }
@@ -49,8 +49,17 @@ const ProductImages: React.FC<IProductImagesProps> = ({ productImages, setProduc
         {
           productImages.map((image, key) => {
             return (
-              <Item key={image} sx={{ maxWidth: '180px' }}>
+              <Item key={image} sx={{ display: 'flex', flexDirection: 'column' }}>
                 <img src={image} alt={`Imagem ${key}`} width='180px' />
+                <Button
+                  color='error'
+                  variant='outlined'
+                  sx={{ mt: '5px' }}
+                  size='small'
+                  onClick={() => setId(key)}
+                >
+                  Excluir
+                </Button>
               </Item>
             )
           })

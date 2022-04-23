@@ -34,6 +34,11 @@ const Register: React.FC<React.ReactFragment> = () => {
   const methods = useForm<RegisterDataForm>({ mode: 'onBlur', reValidateMode: 'onBlur' });
   const navigation = useNavigate();
 
+  React.useEffect(() => {
+    if (auth.isSignedIn())
+      navigation(Routes.API_CLIENT_LOGIN, { replace: true });
+  }, [auth.isSignedIn()]);
+
   const onSubmit = (data: RegisterDataForm) => {
     console.log('data', data);
     let client = {

@@ -33,8 +33,8 @@ const AdminNavigation: React.FC<Props> = ({ children }) => {
         sx={
           {
             display: 'block',
-            margin: theme.spacing(6, 2),
-            width: '100%',
+            mt: theme.spacing(6),
+            width: { sm: `calc(100% - ${240}px)` },
           }
         }
       >

@@ -19,6 +19,15 @@ class UCManagerProduct {
 
     return await newProduct.save();
   };
+
+  public async get(id: Product['id']) {
+    const product = await this.daoProduct.select(id as string);
+
+    if (product === null)
+      throw new Error("Produto inválido");
+      
+    return product;
+  };
 };
 
 export default UCManagerProduct;

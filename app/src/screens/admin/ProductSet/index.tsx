@@ -19,6 +19,7 @@ import ControlledSwitchInput from '../../../ui/components/form/ControlledSwitchI
 
 import ProducerSelect from './components/ProducerSelect';
 import CategorySelect from './components/CategorySelect';
+import ProductImages from './components/ProductImages';
 
 import * as Rules from '../../../features/validation/rules';
 import { ProductFormData, ProductProducerCode, ProductCategory, Product } from './types';
@@ -35,7 +36,7 @@ const ProductSet: React.FC<React.ReactFragment> = () => {
   const params = useParams();
 
   effects.useComponentDidMount(params.id, states.setProductId);
-  effects.useProductIdDidChanged(params.id);
+  effects.useProductIdDidChanged(states.productId);
 
   const onSubmit = (data: ProductFormData) => {
     console.log('onSubmit', data);
@@ -73,7 +74,7 @@ const ProductSet: React.FC<React.ReactFragment> = () => {
       formData.append('files', file);
     })
 
-    if (typeof (states.setProductId) === 'undefined')
+    if (typeof (states.productId) === 'undefined')
       apis.newProduct(formData);
     return;
   };
@@ -253,6 +254,10 @@ const ProductSet: React.FC<React.ReactFragment> = () => {
           </Typography>
 
           <Box sx={{ width: '90%' }}>
+            <ProductImages productImages={states.productImages} api={apis.deleteImage} />
+          </Box>
+
+          <Box sx={{ width: '90%', my: theme.spacing(2) }}>
             <FormControl
               variant="outlined"
               size="small"

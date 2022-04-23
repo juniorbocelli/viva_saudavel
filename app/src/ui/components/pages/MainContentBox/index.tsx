@@ -5,6 +5,7 @@ import {
 
   useTheme,
 } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 
 import BreadCrumbs from '../../../../components/BreadCrumbs';
 import PageTitle from '../../../../components/PageTitle';
@@ -12,10 +13,13 @@ import BackDrop from '../../../../ui/components/BackDrop';
 import AlertDialog from '../../../../ui/components/AlertDialog';
 import Footer from '../../../../ui/components/Footer';
 
+import { useAuth } from '../../../../features/auth/context';
+
 import {
   IsQueryingAPIState,
   DialogMessageState,
 } from './types';
+import * as Routes from '../../../../globals/routes';
 
 interface IMainContentBoxProps {
   children?: React.ReactNode;
@@ -26,6 +30,8 @@ interface IMainContentBoxProps {
 
   isRenderBackDrop?: boolean;
   isRenderDialogMessages?: boolean;
+
+  isLoggedIn?: boolean;
 
   states?: {
     isQueryingAPI?: IsQueryingAPIState;
@@ -38,6 +44,8 @@ interface IMainContentBoxProps {
 
 const MainContentBox: React.FC<IMainContentBoxProps> = (props) => {
   const theme = useTheme();
+  const auth = useAuth();
+  const navigation = useNavigate();
 
   const {
     children,
@@ -49,8 +57,15 @@ const MainContentBox: React.FC<IMainContentBoxProps> = (props) => {
     isRenderBackDrop,
     isRenderDialogMessages,
 
+    isLoggedIn,
+
     states,
   } = props;
+
+  React.useEffect(() => {
+    if (!auth.isSignedIn() && !!isLoggedIn)
+      navigation(Routes.API_CLIENT_LOGIN, { replace: true });
+  }, [auth.isSignedIn()]);
 
   const _onClose = () => {
     if (typeof (states?.setDialogMessage) !== "undefined")

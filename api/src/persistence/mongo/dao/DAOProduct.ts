@@ -111,7 +111,7 @@ class DAOProduct implements DAO<Product, string> {
       return null;
 
     const foundedProduct: Product = {
-      id: product._id,
+      id: product.id,
       name: product.name,
       producer: product.producer,
       measure: product.measure,
@@ -139,7 +139,7 @@ class DAOProduct implements DAO<Product, string> {
 
     products.forEach((product) => {
       let foundedProduct: Product = {
-        id: product._id,
+        id: product.id,
         name: product.name,
         producer: product.producer,
         measure: product.measure,
@@ -168,7 +168,7 @@ class DAOProduct implements DAO<Product, string> {
 
     products.forEach((product) => {
       let foundedProduct: Product = {
-        id: product._id,
+        id: product.id,
         name: product.name,
         producer: product.producer,
         measure: product.measure,

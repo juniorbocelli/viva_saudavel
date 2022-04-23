@@ -49,6 +49,19 @@ class ProductController {
       res.status(200).json({ error: error.message });
     };
   };
+
+  static async get(req: Request, res: Response) {
+    const daoProduct = new DAOProduct();
+    const ucManagerProduct = new UCManagerProduct(daoProduct);
+
+    try {
+      const { id } = req.params;
+
+      res.status(200).json({ product: await ucManagerProduct.get(id) });
+    } catch (error: any) {
+      res.status(200).json({ error: error.message });
+    };
+  };
 };
 
 export default ProductController;

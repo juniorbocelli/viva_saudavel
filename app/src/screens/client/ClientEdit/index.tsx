@@ -61,7 +61,7 @@ const ClientEdit: React.FC<React.ReactFragment> = () => {
   effects.useComponentDidMount(auth.loggedClient);
 
   return (
-    <MainContentBox states={states}>
+    <MainContentBox states={states} isLoggedIn={true}>
       <form onSubmit={methods.handleSubmit(onSubmit)}>
         <Grid spacing={theme.spacing(2)} container>
           <Grid md={6} item>
