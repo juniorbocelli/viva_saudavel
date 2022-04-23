@@ -20,11 +20,16 @@ const Item = styled(Paper)(({ theme }) => ({
 
 interface IProductImagesProps {
   productImages: IUseStates['productImages'];
-  api: IUseAPIs['deleteImage'];
+  setProductImages: IUseStates['setProductImages'];
 };
 
-const ProductImages: React.FC<IProductImagesProps> = ({ productImages, api }) => {
+const ProductImages: React.FC<IProductImagesProps> = ({ productImages, setProductImages }) => {
   const [id, setId] = React.useState<number | null>(null);
+  const removeImage = (id: number) => {
+    let currentImages = productImages.slice();
+    currentImages.splice(id, 1);
+    setProductImages(currentImages);
+  };
 
   return (
     <React.Fragment>
@@ -33,7 +38,7 @@ const ProductImages: React.FC<IProductImagesProps> = ({ productImages, api }) =>
         content={<p>Deseja excluir a imagem <b>{id === 0 ? 'principal' : id}</b>?</p>}
         open={id !== null}
         onClose={() => setId(null)}
-        onConfirm={() => { if (id !== null) api(id) }}
+        onConfirm={() => { if (id !== null) removeImage(id) }}
       />
 
       <Stack

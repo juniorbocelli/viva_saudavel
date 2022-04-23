@@ -18,5 +18,6 @@ router.put(Routes.API_CLIENT_UPDATE, Auth.tokenVerify, ClientController.update);
 // Product routes
 router.post(Routes.API_PRODUCT_NEW, Auth.tokenVerify, ProductController.new);
 router.get(Routes.API_PRODUCT_GET, Auth.tokenVerify, ProductController.get);
+router.put(Routes.API_PRODUCT_UPDATE, Auth.tokenVerify, ProductController.update);
 
 export default router;

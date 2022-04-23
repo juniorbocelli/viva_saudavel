@@ -41,6 +41,11 @@ const ProductSet: React.FC<React.ReactFragment> = () => {
   const onSubmit = (data: ProductFormData) => {
     console.log('onSubmit', data);
 
+    if (states.productImages.length === 0 && data.files.length === 0) {
+      states.setDialogMessage({ title: "Erro", message: "O produto deve conter alguma imagem" });
+      return;
+    };
+
     const productToSend: Product = {
       name: data.name,
       producer: data.producer,
@@ -64,23 +69,28 @@ const ProductSet: React.FC<React.ReactFragment> = () => {
       price: parseFloat(data.price),
       quantity: data.quantity ? parseFloat(data.quantity) : undefined,
 
-      images: [],
+      images: states.productImages,
     };
 
     const formData = new FormData()
+    
     formData.append('product', JSON.stringify(productToSend));
     Array.from(data.files).forEach(file => {
-      console.log('file', file);
       formData.append('files', file);
-    })
+    });
 
     if (typeof (states.productId) === 'undefined')
       apis.newProduct(formData);
+    else
+      apis.updateProduct(formData);
     return;
   };
 
   return (
-    <AdminMainContentBox primary={typeof (states.productId) === 'undefined' ? "Cadastro de Produto" : "Edição de Produto"}>
+    <AdminMainContentBox
+      primary={typeof (states.productId) === 'undefined' ? "Cadastro de Produto" : "Edição de Produto"}
+      states={states}
+    >
       <form onSubmit={methods.handleSubmit(onSubmit)} encType='multipart/form-data'>
         <Typography variant='h6' component='div' sx={{ mb: theme.spacing(1.5) }}>
           Dados Gerais do Produto
@@ -254,7 +264,7 @@ const ProductSet: React.FC<React.ReactFragment> = () => {
           </Typography>
 
           <Box sx={{ width: '90%' }}>
-            <ProductImages productImages={states.productImages} api={apis.deleteImage} />
+            <ProductImages productImages={states.productImages} setProductImages={states.setProductImages} />
           </Box>
 
           <Box sx={{ width: '90%', my: theme.spacing(2) }}>
@@ -265,7 +275,7 @@ const ProductSet: React.FC<React.ReactFragment> = () => {
               error={!!(methods.formState.errors['files'])}
             >
               <input
-                {...methods.register("files", { required: "É obrigatório o envio de pelo menos uma imagem" })}
+                {...methods.register("files", { required: typeof (states.productId) === 'undefined' ? "É obrigatório o envio de pelo menos uma imagem" : false })}
                 accept="image/*"
                 multiple
                 type="file"

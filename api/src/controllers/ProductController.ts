@@ -11,12 +11,12 @@ class ProductController {
   static async new(req: Request, res: Response) {
     const daoProduct = new DAOProduct;
     const uploadImages = new UploadImages();
+    const ucManagerProduct = new UCManagerProduct(daoProduct);
+
+    let uploadResult;
+    let uploadedFiles: Array<UploadedFile>;
 
     try {
-      const ucManagerProduct = new UCManagerProduct(daoProduct);
-      let uploadResult;
-      let uploadedFiles: Array<UploadedFile>;
-
       try {
         uploadResult = await uploadImages.handleArrayUploadFile(req, res);
       } catch (e) {
@@ -56,6 +56,21 @@ class ProductController {
 
     try {
       const { id } = req.params;
+
+      res.status(200).json({ product: await ucManagerProduct.get(id) });
+    } catch (error: any) {
+      res.status(200).json({ error: error.message });
+    };
+  };
+
+  static async update(req: Request, res: Response) {
+    const daoProduct = new DAOProduct();
+    const ucManagerProduct = new UCManagerProduct(daoProduct);
+
+    try {
+      const { id } = req.params;
+      const previousProduct = await ucManagerProduct.get(id);
+      // const receivedProduct = new Product(JSON.parse(uploadResult.body.product) as Product);
 
       res.status(200).json({ product: await ucManagerProduct.get(id) });
     } catch (error: any) {

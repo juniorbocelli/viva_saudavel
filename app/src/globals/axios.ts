@@ -5,8 +5,18 @@ import LocalStorage from '../features/storage/LocalStorage';
 const baseURL = "http://localhost:5000";
 const apiAxios = axios.create({ headers: { "x-access-token": LocalStorage.getToken() }, baseURL: baseURL });
 
+apiAxios.interceptors.request.use(function (config) {
+  if (config.headers)
+    config.headers["x-access-token"] = LocalStorage.getToken();
+
+  return config;
+});
+
 apiAxios.interceptors.response.use(
   response => {
+    if (typeof (response.data) === 'undefined')
+      response.data = { error: "Erro em chamada a aPI" }
+
     return response;
   },
   error => {
@@ -14,6 +24,9 @@ apiAxios.interceptors.response.use(
       console.log("é pra deslogar!");
       globalAuth.logout();
     };
+
+    if (typeof (error.data) === 'undefined')
+      error.data = { error: "Erro em chamada a aPI" };
 
     return error;
   },

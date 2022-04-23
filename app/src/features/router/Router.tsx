@@ -55,9 +55,11 @@ const AllRoutes = React.memo((props) => {
 
 const Router = () => {
   return (
-    <BrowserRouter>
-      <AllRoutes />
-    </BrowserRouter>
+    <CheckSession>
+      <BrowserRouter>
+        <AllRoutes />
+      </BrowserRouter>
+    </CheckSession>
   );
 };
 
