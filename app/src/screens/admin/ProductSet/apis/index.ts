@@ -4,6 +4,7 @@ import { AxiosError } from 'axios';
 
 import newProductAPI from './newProductAPI';
 import getProductAPI from './getProductAPI';
+import updateProductAPI from './updateProductAPI';
 
 import { IUseStates } from '../states';
 import * as Routes from '../../../../globals/routes';
@@ -13,7 +14,7 @@ import MaskApply from '../../../../features/utils/MaskApply';
 export interface IUseAPIs {
   newProduct: (product: FormData) => void;
   getProduct: () => void;
-  deleteImage: (key: number) => void;
+  updateProduct: (product: FormData) => void;
 };
 
 export default function useAPIs(states: IUseStates, methods: UseFormReturn<ProductFormData>): IUseAPIs {
@@ -52,6 +53,9 @@ export default function useAPIs(states: IUseStates, methods: UseFormReturn<Produ
       getProductAPI(states.productId)
         .then((response) => {
           console.log('response => getProductAPI', response);
+
+          if(typeof(response.data) === 'undefined')
+            return;
 
           if (typeof (response.data.error) !== 'undefined') {
             states.setDialogMessage({ title: "Erro", message: response.data.error });
@@ -98,13 +102,13 @@ export default function useAPIs(states: IUseStates, methods: UseFormReturn<Produ
         });
   };
 
-  const deleteImage = (key: number) => {
-
+  const updateProduct = (product: FormData) => {
+    
   };
 
   return {
     newProduct,
     getProduct,
-    deleteImage,
+    updateProduct,
   };
 };

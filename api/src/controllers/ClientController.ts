@@ -51,7 +51,7 @@ class ClientController {
 
       // Verify if client exist
       if (client.length !== 1) {
-        res.status(200).json({ error: "Token inválido" });
+        res.status(401).json({ error: "Token inválido" });
 
         return;
       };
@@ -61,7 +61,7 @@ class ClientController {
 
       res.status(200).json({ client: client[0] });
     } catch (error: any) {
-      res.status(200).json({ error: error.message });
+      res.status(401).json({ error: error.message });
     };
   };
 

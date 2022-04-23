@@ -42,7 +42,7 @@ export const AuthContextProvider: React.FC<Props> = ({ children }) => {
           register: api.register,
           login: api.login,
           logout: api.logout,
-          
+
           checkSession: api.checkSession,
           isSignedIn: isSignedIn,
           isAdmin: isAdmin,

@@ -27,7 +27,7 @@ interface IAdminMainContentBoxProps {
   hasBrowseTitle?: boolean;
 
   isRenderBackDrop?: boolean;
-  isRenderErrorMessages?: boolean;
+  isRenderDialogMessages?: boolean;
 
   states?: {
     isQueryingAPI?: IsQueryingAPIState;
@@ -35,7 +35,6 @@ interface IAdminMainContentBoxProps {
     dialogMessage?: DialogMessageState;
     setDialogMessage?: React.Dispatch<React.SetStateAction<DialogMessageState>>;
   };
-
 };
 
 const AdminMainContentBox: React.FC<IAdminMainContentBoxProps> = (props) => {
@@ -44,7 +43,7 @@ const AdminMainContentBox: React.FC<IAdminMainContentBoxProps> = (props) => {
   const navigation = useNavigate();
 
   React.useEffect(() => {
-    if (auth.isAdmin())
+    if (!auth.isAdmin() && auth.loggedClient !== null)
       navigation(Routes.API_CLIENT_LOGIN, { replace: true });
   }, [auth.isAdmin()]);
 
@@ -56,7 +55,7 @@ const AdminMainContentBox: React.FC<IAdminMainContentBoxProps> = (props) => {
     hasBrowseTitle,
 
     isRenderBackDrop,
-    isRenderErrorMessages,
+    isRenderDialogMessages,
 
     states,
   } = props;
@@ -88,11 +87,11 @@ const AdminMainContentBox: React.FC<IAdminMainContentBoxProps> = (props) => {
         }
 
         {
-          !isRenderErrorMessages && states &&
+          !isRenderDialogMessages && states &&
           <AlertDialog
             open={typeof (states.dialogMessage) !== "undefined"}
             title={states.dialogMessage?.title}
-            content={states.dialogMessage || ""}
+            content={states.dialogMessage?.message || ''}
             onClose={_onClose}
           />
         }

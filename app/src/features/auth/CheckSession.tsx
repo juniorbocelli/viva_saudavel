@@ -8,13 +8,13 @@ interface ICheckSessionProps {
 };
 
 const CheckSession: React.FC<ICheckSessionProps> = ({ children }) => {
-  const { checkSession, isCheckingSession, } = useAuth();
+  const { checkSession, loggedClient, isCheckingSession } = useAuth();
 
   React.useEffect(() => {
     checkSession();
   }, []);
 
-  return isCheckingSession ? <BackDrop open={true} /> : children;
+  return <React.Fragment><BackDrop open={isCheckingSession} />{children}</React.Fragment>;
 };
 
 export default React.memo(CheckSession);

@@ -39,7 +39,6 @@ interface IMainContentBoxProps {
     dialogMessage?: DialogMessageState;
     setDialogMessage?: React.Dispatch<React.SetStateAction<DialogMessageState>>;
   };
-
 };
 
 const MainContentBox: React.FC<IMainContentBoxProps> = (props) => {
@@ -63,7 +62,7 @@ const MainContentBox: React.FC<IMainContentBoxProps> = (props) => {
   } = props;
 
   React.useEffect(() => {
-    if (!auth.isSignedIn() && !!isLoggedIn)
+    if (!auth.isSignedIn() && !!isLoggedIn && auth.loggedClient !== null)
       navigation(Routes.API_CLIENT_LOGIN, { replace: true });
   }, [auth.isSignedIn()]);
 
