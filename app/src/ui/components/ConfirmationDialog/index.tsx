@@ -11,7 +11,7 @@ import {
 interface IConfirmationDialogProps {
   id?: string;
   title: string;
-  content: React.ReactFragment;
+  content: React.ReactFragment | React.ReactNode | JSX.Element;
   size?: 'lg' | 'md' | 'sm' | 'xl' | 'xs' | false;
   open: boolean;
   onClose: () => void;

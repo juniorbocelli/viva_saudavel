@@ -47,6 +47,8 @@ class App {
 
     this.server.use(bodyParser.json({ limit: '50mb' }));
     this.server.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
+
+    this.server.use('/public', express.static(__dirname + '/public'));
   };
 };
 

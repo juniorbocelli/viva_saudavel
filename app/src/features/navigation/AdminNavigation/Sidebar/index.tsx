@@ -27,7 +27,6 @@ interface IOpenMenu {
 }
 
 export default function Navbar() {
-  const theme = useTheme();
   const [open, setOpen] = React.useState<IOpenMenu>({
     "productMenu": false,
   });

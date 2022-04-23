@@ -5,6 +5,7 @@ import {
 
   useTheme,
 } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 
 import BreadCrumbs from '../../../../components/BreadCrumbs';
 import PageTitle from '../../../../components/PageTitle';
@@ -15,6 +16,8 @@ import {
   IsQueryingAPIState,
   DialogMessageState,
 } from './types';
+import { useAuth } from '../../../../features/auth/context';
+import * as Routes from '../../../../globals/routes';
 
 interface IAdminMainContentBoxProps {
   children?: React.ReactNode;
@@ -37,6 +40,13 @@ interface IAdminMainContentBoxProps {
 
 const AdminMainContentBox: React.FC<IAdminMainContentBoxProps> = (props) => {
   const theme = useTheme();
+  const auth = useAuth();
+  const navigation = useNavigate();
+
+  React.useEffect(() => {
+    if (auth.isAdmin())
+      navigation(Routes.API_CLIENT_LOGIN, { replace: true });
+  }, [auth.isAdmin()]);
 
   const {
     children,
@@ -71,14 +81,14 @@ const AdminMainContentBox: React.FC<IAdminMainContentBoxProps> = (props) => {
         }
 
         {
-          !!isRenderBackDrop && states?.isQueryingAPI &&
+          !isRenderBackDrop && states?.isQueryingAPI &&
           <BackDrop
             open={states.isQueryingAPI}
           />
         }
 
         {
-          !!isRenderErrorMessages && states &&
+          !isRenderErrorMessages && states &&
           <AlertDialog
             open={typeof (states.dialogMessage) !== "undefined"}
             title={states.dialogMessage?.title}

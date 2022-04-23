@@ -22,6 +22,7 @@ import Url from '../../../features/utils/Url';
 import useStates from './states';
 import useAPIs from './apis';
 import { useEffects } from './effects';
+import { useAuth } from '../../../features/auth/context';
 
 import * as Routes from '../../../globals/routes';
 
@@ -31,6 +32,12 @@ const Login: React.FC<React.ReactFragment> = (props) => {
   const effects = useEffects(apis);
   const theme = useTheme();
   const navigation = useNavigate();
+  const auth = useAuth();
+
+  React.useEffect(() => {
+    if (auth.isSignedIn())
+      navigation(Routes.API_CLIENT_LOGIN, { replace: true });
+  }, [auth.isSignedIn()]);
 
   const {
     isQueryingAPI,

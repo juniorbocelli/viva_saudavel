@@ -18,3 +18,4 @@ export const API_CLIENT_UPDATE = `${API_ROOT}/client/:id/`; // PUT
 
 // Product routes
 export const API_PRODUCT_NEW = `${API_ROOT}/product/`;  // POST
+export const API_PRODUCT_GET = `${API_ROOT}/product/:id/`;  // GET
