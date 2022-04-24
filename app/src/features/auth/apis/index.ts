@@ -126,7 +126,13 @@ function useAPIs(states: IAuthStates): IUseAPI {
   };
 
   const checkSession = () => {
-    states.setIsCheckingSession(true);
+    // If not exist token, client is not logged
+    if (LocalStorage.getToken() === LocalStorage.getDefaultToken()) {
+      states.setLoggedClient(null);
+      return;
+    };
+
+    states.setLoggedClient(undefined);
 
     checkSessionAPI(LocalStorage.getToken())
       .then(response => {
@@ -155,7 +161,7 @@ function useAPIs(states: IAuthStates): IUseAPI {
         states.setErrorMessage(error.data.message);
       })
       .finally(() => {
-        states.setIsCheckingSession(false);
+        // states.setIsCheckingSession(false);
       });
   };
 

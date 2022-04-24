@@ -18,10 +18,16 @@ export const AuthContextProvider: React.FC<Props> = ({ children }) => {
   const api = useAPIs(states);
 
   const isSignedIn = () => {
+    if (states.loggedClient === undefined)
+      return undefined;
+
     return Boolean(states.loggedClient);
   };
 
   const isAdmin = () => {
+    if (states.loggedClient === undefined)
+      return undefined;
+      
     if (states.loggedClient === null)
       return false;
     else
@@ -36,7 +42,6 @@ export const AuthContextProvider: React.FC<Props> = ({ children }) => {
     <AuthContext.Provider
       value={
         {
-          isCheckingSession: states.isCheckingSession,
           loggedClient: states.loggedClient,
 
           register: api.register,

@@ -6,7 +6,7 @@ export type LoggedClient = {
   email: string;
   isAdmin: boolean;
 };
-export type LoggedClientState = LoggedClient | null;
+export type LoggedClientState = LoggedClient | null | undefined;
 export type IsCheckingSessionState = boolean;
 
 export type IsQueryingAPIState = boolean;
@@ -37,9 +37,6 @@ export interface IAuthStates {
   loggedClient: LoggedClientState;
   setLoggedClient: React.Dispatch<React.SetStateAction<LoggedClientState>>;
 
-  isCheckingSession: IsCheckingSessionState;
-  setIsCheckingSession: React.Dispatch<React.SetStateAction<IsCheckingSessionState>>;
-
   isQueryingAPI: IsQueryingAPIState;
   setIsQueryingAPI: React.Dispatch<React.SetStateAction<IsQueryingAPIState>>;
 
@@ -49,12 +46,11 @@ export interface IAuthStates {
 
 export interface IAuthContext {
   loggedClient: LoggedClientState;
-  isCheckingSession: IsCheckingSessionState;
 
   register: (client: Client) => void;
   login: (email: string, password: string) => void,
   logout: () => void,
   checkSession: () => void;
-  isSignedIn: () => boolean;
-  isAdmin: () => boolean;
+  isSignedIn: () => boolean | undefined;
+  isAdmin: () => boolean | undefined;
 };

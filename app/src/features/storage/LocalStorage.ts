@@ -18,9 +18,9 @@ class StoragedValues {
    */
 
   public getToken(): string {
-    if (!localStorage.getItem('auth')) localStorage.setItem('auth', this.defaultToken());
+    if (!localStorage.getItem('auth')) localStorage.setItem('auth', this.getDefaultToken());
 
-    return localStorage.getItem('auth') || this.defaultToken();
+    return localStorage.getItem('auth') || this.getDefaultToken();
   };
 
   public setToken(s: string): void {
@@ -34,7 +34,7 @@ class StoragedValues {
    * Filtros da Lista de Empresas
    * @returns 
    */
-  private defaultToken(): string {
+  public getDefaultToken(): string {
     return 'not_auth';
   };
 };

@@ -3,7 +3,6 @@ import {
   IAuthStates,
 
   LoggedClientState,
-  IsCheckingSessionState,
 
   IsQueryingAPIState,
   ErrorMessageState,
@@ -11,8 +10,7 @@ import {
 
 function useStates(): IAuthStates {
 
-  const [loggedClient, setLoggedClient] = React.useState<LoggedClientState>(null);
-  const [isCheckingSession, setIsCheckingSession] = React.useState<IsCheckingSessionState>(false);
+  const [loggedClient, setLoggedClient] = React.useState<LoggedClientState>(undefined);
 
   const [isQueryingAPI, setIsQueryingAPI] = React.useState<IsQueryingAPIState>(false);
   const [errorMessage, setErrorMessage] = React.useState<ErrorMessageState>(null);
@@ -20,9 +18,6 @@ function useStates(): IAuthStates {
   return {
     loggedClient,
     setLoggedClient,
-
-    isCheckingSession,
-    setIsCheckingSession,
 
     isQueryingAPI,
     setIsQueryingAPI,

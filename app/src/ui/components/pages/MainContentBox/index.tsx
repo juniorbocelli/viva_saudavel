@@ -62,7 +62,7 @@ const MainContentBox: React.FC<IMainContentBoxProps> = (props) => {
   } = props;
 
   React.useEffect(() => {
-    if (!auth.isSignedIn() && !!isLoggedIn && auth.loggedClient !== null)
+    if (auth.isSignedIn() === false && !!isLoggedIn)
       navigation(Routes.API_CLIENT_LOGIN, { replace: true });
   }, [auth.isSignedIn()]);
 
