@@ -20,6 +20,7 @@ import ControlledSwitchInput from '../../../ui/components/form/ControlledSwitchI
 import ProducerSelect from './components/ProducerSelect';
 import CategorySelect from './components/CategorySelect';
 import ProductImages from './components/ProductImages';
+import ImageUpload from './components/ImageUpload';
 
 import * as Rules from '../../../features/validation/rules';
 import { ProductFormData, ProductProducerCode, ProductCategory, Product } from './types';
@@ -41,7 +42,7 @@ const ProductSet: React.FC<React.ReactFragment> = () => {
   const onSubmit = (data: ProductFormData) => {
     console.log('onSubmit', data);
 
-    if (states.productImages.length === 0 && data.files.length === 0) {
+    if (states.productImages.length === 0 && states.images.length === 0) {
       states.setDialogMessage({ title: "Erro", message: "O produto deve conter alguma imagem" });
       return;
     };
@@ -73,10 +74,11 @@ const ProductSet: React.FC<React.ReactFragment> = () => {
     };
 
     const formData = new FormData()
-    
+
     formData.append('product', JSON.stringify(productToSend));
-    Array.from(data.files).forEach(file => {
-      formData.append('files', file);
+
+    states.images.forEach(image => {
+      formData.append('files', image.file as Blob);
     });
 
     if (typeof (states.productId) === 'undefined')
@@ -92,7 +94,7 @@ const ProductSet: React.FC<React.ReactFragment> = () => {
       states={states}
     >
       <form onSubmit={methods.handleSubmit(onSubmit)} encType='multipart/form-data'>
-        <Typography variant='h6' component='div' sx={{ mb: theme.spacing(1.5) }}>
+        <Typography variant='h5' component='div' sx={{ mb: theme.spacing(1.5) }}>
           Dados Gerais do Produto
         </Typography>
 
@@ -263,25 +265,15 @@ const ProductSet: React.FC<React.ReactFragment> = () => {
             Imagens
           </Typography>
 
-          <Box sx={{ width: '90%' }}>
-            <ProductImages productImages={states.productImages} setProductImages={states.setProductImages} />
-          </Box>
+          {
+            typeof (states.productId) !== 'undefined' &&
+            <Box sx={{ width: '90%', mb: theme.spacing(2), }}>
+              <ProductImages productImages={states.productImages} setProductImages={states.setProductImages} />
+            </Box>
+          }
 
-          <Box sx={{ width: '90%', my: theme.spacing(2) }}>
-            <FormControl
-              variant="outlined"
-              size="small"
-              fullWidth={true}
-              error={!!(methods.formState.errors['files'])}
-            >
-              <input
-                {...methods.register("files", { required: typeof (states.productId) === 'undefined' ? "É obrigatório o envio de pelo menos uma imagem" : false })}
-                accept="image/*"
-                multiple
-                type="file"
-              />
-              <FormHelperText>{methods.formState.errors['files'] && methods.formState.errors['files'].message}</FormHelperText>
-            </FormControl>
+          <Box sx={{ width: '90%', mb: theme.spacing(2), }}>
+            <ImageUpload images={states.images} setImages={states.setImages} />
           </Box>
 
           <Button
@@ -291,7 +283,7 @@ const ProductSet: React.FC<React.ReactFragment> = () => {
             sx={{ mt: { xs: theme.spacing(2), md: theme.spacing(2) } }}
             fullWidth
           >
-            Cadastrar
+            {typeof (states.productId) === 'undefined' ? 'Cadastrar' : 'Salvar'}
           </Button>
 
         </Box>
