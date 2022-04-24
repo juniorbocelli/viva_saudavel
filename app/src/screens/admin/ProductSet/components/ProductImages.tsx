@@ -3,6 +3,9 @@ import {
   Paper,
   Stack,
   Button,
+  Typography,
+
+  useTheme,
 } from '@mui/material';
 import { styled } from '@mui/material/styles';
 
@@ -24,6 +27,8 @@ interface IProductImagesProps {
 };
 
 const ProductImages: React.FC<IProductImagesProps> = ({ productImages, setProductImages }) => {
+  const theme = useTheme();
+
   const [id, setId] = React.useState<number | null>(null);
   const removeImage = (id: number) => {
     let currentImages = productImages.slice();
@@ -40,6 +45,10 @@ const ProductImages: React.FC<IProductImagesProps> = ({ productImages, setProduc
         onClose={() => setId(null)}
         onConfirm={() => { if (id !== null) removeImage(id) }}
       />
+
+      <Typography variant='h6' component='div' sx={{ mb: theme.spacing(2) }}>
+        Imagens já cadastradas
+      </Typography>
 
       <Stack
         direction="row"

@@ -1,3 +1,5 @@
+import { ImageListType } from 'react-images-uploading';
+
 export type ProductProducerCode = 'aviacao' | 'agua-na-caixa' | 'beta-mel' | 'bufala-almeida-prado' | 'capril-do-bosque' |
   'fazenda-do-bem' | 'goldy' | 'jaguacy' | 'keiff' | 'letti' | 'la-ferme-moderne' | 'mister-rabbit' | 'naturegg' |
   'pardinho-artesanal' | 'piracanjuba' | 'ralston' | 'urakami' | 'verde-campo' | 'villa-piva' | 'xando' | 'yorgus';
@@ -58,9 +60,12 @@ export type ProductFormData = {
   price: string;
   isActive: boolean;
   quantity: string;
-
-  files: FileList;
 };
 
 export type ProductIdState = string | undefined;
+
+// List of images from registered products
 export type ProductImagesState = Product['images'];
+
+// List of new images
+export type ImagesState = ImageListType;

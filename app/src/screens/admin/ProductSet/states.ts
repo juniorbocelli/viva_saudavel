@@ -5,7 +5,11 @@ import {
   DialogMessageState,
 } from '../../../ui/components/pages/AdminMainContentBox/types';
 
-import { ProductIdState, ProductImagesState } from './types';
+import {
+  ProductIdState,
+  ProductImagesState,
+  ImagesState,
+} from './types';
 
 export interface IUseStates {
   isQueryingAPI: IsQueryingAPIState;
@@ -17,8 +21,13 @@ export interface IUseStates {
   productId: ProductIdState;
   setProductId: React.Dispatch<React.SetStateAction<ProductIdState>>;
 
+  // List of images from registered products
   productImages: ProductImagesState;
   setProductImages: React.Dispatch<React.SetStateAction<ProductImagesState>>;
+
+  // List of new images
+  images: ImagesState;
+  setImages: React.Dispatch<React.SetStateAction<ImagesState>>;
 };
 
 export default function useStates(): IUseStates {
@@ -27,6 +36,8 @@ export default function useStates(): IUseStates {
 
   const [productId, setProductId] = React.useState<ProductIdState>(undefined);
   const [productImages, setProductImages] = React.useState<ProductImagesState>([]);
+
+  const [images, setImages] = React.useState<ImagesState>([]);
 
   return {
     isQueryingAPI,
@@ -40,5 +51,8 @@ export default function useStates(): IUseStates {
 
     productImages,
     setProductImages,
+
+    images,
+    setImages,
   };
 };

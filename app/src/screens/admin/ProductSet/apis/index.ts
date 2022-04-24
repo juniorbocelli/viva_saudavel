@@ -75,7 +75,6 @@ export default function useAPIs(states: IUseStates, methods: UseFormReturn<Produ
           methods.setValue('isActive', !!product.isActive);
 
           product.images.forEach(image => {
-            console.log('image', image)
             states.setProductImages(state => [...state, image]);
           });
 
