@@ -1,8 +1,13 @@
 import axios from '../../../../globals/axios';
 import { API_PRODUCT_UPDATE } from '../../../../globals/routes';
+import { Product } from '../types';
 
-export default function updateProductAPI(product: FormData) {
-  return axios.put(API_PRODUCT_UPDATE, product, {
+export default function updateProductAPI(product: FormData, id: Product['id']) {
+  return axios.put(API_PRODUCT_UPDATE.replace(':id', id as string),
+  {
+    product,
+  },
+  {
     headers: {
       "Content-Type": `multipart/form-data; boundary=&`,
     },

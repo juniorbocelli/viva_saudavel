@@ -46,7 +46,7 @@ class UploadImages {
 
   public handleArrayUploadFile = async (req: Request, res: Response): Promise<any> => {
     return new Promise((resolve, reject): void => {
-      let uploader = this.uploadFile.array('files', 1);
+      let uploader = this.uploadFile.array('files', undefined);
       uploader(req, res, (error: any) => {
         if (error) {
           reject(error);
@@ -66,6 +66,19 @@ class UploadImages {
         };
 
         resolve({ file: req.file, body: req.body });
+      });
+    });
+  };
+
+  public handleGetBody = async (req: Request, res: Response): Promise<any> => {
+    return new Promise((resolve, reject): void => {
+      let uploader = this.uploadFile.none();
+      uploader(req, res, (error: any) => {
+        if (error) {
+          reject(error);
+        };
+
+        resolve({ body: req.body });
       });
     });
   };
