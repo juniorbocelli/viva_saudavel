@@ -10,7 +10,7 @@ export interface IUseEffects {
 export default function useEffects(apis: IUseAPIs): IUseEffects {
   const useComponentDidMount = (client: LoggedClientState) => {
     React.useEffect(() => {
-      if (client !== null)
+      if (typeof(client) !== 'undefined' && client !== null)
         apis.getClient(client.id);
     }, [client]);
   };

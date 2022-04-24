@@ -43,7 +43,7 @@ const AdminMainContentBox: React.FC<IAdminMainContentBoxProps> = (props) => {
   const navigation = useNavigate();
 
   React.useEffect(() => {
-    if (!auth.isAdmin() && auth.loggedClient !== null)
+    if (auth.isAdmin() === false)
       navigation(Routes.API_CLIENT_LOGIN, { replace: true });
   }, [auth.isAdmin()]);
 
