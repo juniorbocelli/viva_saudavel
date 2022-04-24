@@ -75,7 +75,8 @@ export default function useAPIs(states: IUseStates, methods: UseFormReturn<Produ
           methods.setValue('isActive', !!product.isActive);
 
           product.images.forEach(image => {
-            states.setProductImages([...states.productImages, image]);
+            console.log('image', image)
+            states.setProductImages(state => [...state, image]);
           });
 
           methods.setValue('quantity', typeof (product.quantity) !== 'undefined' ? String(product.quantity) : '');
@@ -103,7 +104,29 @@ export default function useAPIs(states: IUseStates, methods: UseFormReturn<Produ
   };
 
   const updateProduct = (product: FormData) => {
-    
+    states.setIsQueryingAPI(true);
+
+    updateProductAPI(product, states.productId)
+    .then((response) => {
+      console.log('response => updateProductAPI', response);
+
+      if (typeof (response.data.error) !== 'undefined') {
+        states.setDialogMessage({ title: "Erro", message: response.data.error });
+        return;
+      };
+
+    })
+    .catch((error) => {
+      console.error('error => updateProductAPI', error);
+
+      if (typeof (error.message) !== 'undefined')
+            states.setDialogMessage({ title: "Erro", message: error.message });
+          else
+            states.setDialogMessage({ title: "Erro", message: "Ocorreu um erro ao tentar atualizar o produto" });
+    })
+    .finally(() => {
+      states.setIsQueryingAPI(false);
+    });
   };
 
   return {

@@ -66,11 +66,15 @@ class ProductController {
   static async update(req: Request, res: Response) {
     const daoProduct = new DAOProduct();
     const ucManagerProduct = new UCManagerProduct(daoProduct);
+    const uploadImages = new UploadImages();
 
     try {
       const { id } = req.params;
       const previousProduct = await ucManagerProduct.get(id);
       // const receivedProduct = new Product(JSON.parse(uploadResult.body.product) as Product);
+
+      res.status(200).json({ bosta: await uploadImages.handleGetBody(req, res) });
+      return;
 
       res.status(200).json({ product: await ucManagerProduct.get(id) });
     } catch (error: any) {
