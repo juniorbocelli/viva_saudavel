@@ -17,7 +17,7 @@ class UCManagerProduct {
 
     let newProduct = await this.daoProduct.save(product);
 
-    return await newProduct.save();
+    return newProduct;
   };
 
   public async get(id: Product['id']) {
@@ -27,6 +27,18 @@ class UCManagerProduct {
       throw new Error("Produto inválido");
       
     return product;
+  };
+
+  public async update(product: Product) {
+    // Test name product
+    let sameName = await this.daoProduct.selectBy({ name: product.name, isActive: true });
+
+    if (sameName.length > 0 && sameName[0].id !== product.id)
+      throw new Error("Já existe um produto ativo com este nome");
+
+    let uploadedProduct = await this.daoProduct.update(product);
+
+    return this.daoProduct.update(product);
   };
 };
 

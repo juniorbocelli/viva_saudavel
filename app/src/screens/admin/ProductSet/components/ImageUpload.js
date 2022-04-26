@@ -86,7 +86,7 @@ const ImageUpload = ({ images, setImages }) => {
               {
                 imageList.map((image, key) => {
                   return (
-                    <Item key={image} sx={{ display: 'flex', flexDirection: 'column' }}>
+                    <Item key={image.data_url} sx={{ display: 'flex', flexDirection: 'column' }}>
                       <img src={image.data_url} alt={`Imagem ${key}`} width='180px' />
                       <Button
                         color='error'

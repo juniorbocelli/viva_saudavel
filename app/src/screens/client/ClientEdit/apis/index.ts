@@ -67,11 +67,6 @@ export default function useAPIs(states: IUseStates, setValue: UseFormSetValue<Cl
     updateClientAPI(client)
       .then((response) => {
         console.log('response => updateClientAPI', response);
-        if (typeof (response.data) === 'undefined') {
-          states.setDialogMessage({ title: "Erro", message: "Erro na requisição" });
-
-          return;
-        };
 
         if (typeof (response.data.error) !== 'undefined') {
           states.setDialogMessage({ title: "Erro", message: response.data.error });

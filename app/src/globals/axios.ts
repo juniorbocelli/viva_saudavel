@@ -20,13 +20,13 @@ apiAxios.interceptors.response.use(
     return response;
   },
   error => {
+    if (typeof (error.data) === 'undefined')
+      error.data = { error: "Erro em chamada a aPI" };
+      
     if (error.response.status === 401 || error.response.status === 403) {
       console.log("é pra deslogar!");
       globalAuth.logout();
     };
-
-    if (typeof (error.data) === 'undefined')
-      error.data = { error: "Erro em chamada a aPI" };
 
     return error;
   },

@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import multer, { StorageEngine, Multer } from 'multer';
 import crypto from 'crypto';
 import * as path from 'path';
+import fs from 'fs';
 
 export type UploadedFile = {
   fieldname: string; // file
@@ -78,9 +79,83 @@ class UploadImages {
           reject(error);
         };
 
-        resolve({ body: req.body });
+        resolve({ files: req.files, body: req.body });
       });
     });
+  };
+
+  public fileExist = async (path: string) => {
+    return fs.promises.access(path, fs.constants.F_OK)
+      .then(() => true)
+      .catch(() => false)
+  };
+
+  public deleteFile = async (path: string) => {
+    if (!(await this.fileExist(path)))
+      return;
+
+    fs.unlink(path, (error) => {
+      if (error) {
+        throw new Error(`Erro ao tentar deletar imagem: ${error.message}`);
+      };
+    });
+  };
+
+  /**
+   * Return file name list of not deleted images and remove deleted images pron disk
+   * @param previousImages 
+   * @param notDeletedImages 
+   * @returns 
+   */
+  public deleteRemovedImages = async (previousImages: Array<string>, notDeletedImages: Array<string>): Promise<Array<string>> => {
+    let remainingImages: Array<string> = [];
+
+    previousImages = previousImages.map(image => {
+      let splited = image.split('/');
+      return splited[splited.length - 1];
+    });
+
+    notDeletedImages = notDeletedImages.map(image => {
+      let splited = image.split('/');
+      return splited[splited.length - 1];
+    });
+
+    // No files deleted
+    if (previousImages.length === notDeletedImages.length)
+      return previousImages;
+
+    previousImages.forEach((image) => {
+      if (notDeletedImages.indexOf(image) === -1)
+        this.deleteFile(`${this.uploadFilePath}/${image}`);
+      else
+        remainingImages.push(image);
+    });
+
+    return remainingImages;
+  };
+
+  /**
+   * Verify if thumb  shoulf be removed and remove returning the name of thumb or null
+   * @param remainingImages 
+   * @param previousThumb 
+   * @returns 
+   */
+  public syncThumb = async (remainingImages: Array<string>, previousThumb: string): Promise<string | null> => {
+    const thumbFileName = previousThumb.split('/').at(-1);
+
+    if (typeof (thumbFileName) === 'undefined')
+      throw new Error("Nome de miniatura inválido");
+
+    for (let image of remainingImages) {
+      let regExp = new RegExp(image.split('.')[0], 'g');
+
+      if (regExp.test(thumbFileName))
+        return image;
+    };
+
+    this.deleteFile(`${this.uploadFilePath}/${thumbFileName}`);
+
+    return null;
   };
 };
 
