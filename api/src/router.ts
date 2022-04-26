@@ -1,4 +1,4 @@
-import { Router, Request, Response } from 'express';
+import { Router } from 'express';
 
 import ClientController from './controllers/ClientController';
 import ProductController from './controllers/ProductController';
@@ -19,5 +19,7 @@ router.put(Routes.API_CLIENT_UPDATE, Auth.tokenVerify, ClientController.update);
 router.post(Routes.API_PRODUCT_NEW, Auth.tokenVerify, ProductController.new);
 router.get(Routes.API_PRODUCT_GET, Auth.tokenVerify, ProductController.get);
 router.put(Routes.API_PRODUCT_UPDATE, Auth.tokenVerify, ProductController.update);
+router.get(Routes.API_PRODUCT_GET_ALL, Auth.tokenVerify, ProductController.getAll);
+router.get(Routes.API_PRODUCT_GET_BY_FILTER, Auth.tokenVerify, ProductController.getByFilter);
 
 export default router;

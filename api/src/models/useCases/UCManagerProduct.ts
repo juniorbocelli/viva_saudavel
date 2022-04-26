@@ -25,7 +25,7 @@ class UCManagerProduct {
 
     if (product === null)
       throw new Error("Produto inválido");
-      
+
     return product;
   };
 
@@ -36,10 +36,16 @@ class UCManagerProduct {
     if (sameName.length > 0 && sameName[0].id !== product.id)
       throw new Error("Já existe um produto ativo com este nome");
 
-    let uploadedProduct = await this.daoProduct.update(product);
-
     return this.daoProduct.update(product);
   };
+
+  public async getAll() {
+    return await this.daoProduct.selectAll();
+  };
+
+  public async getByFilter(filters: Object) {
+    return await this.daoProduct.selectBy(filters);
+  }
 };
 
 export default UCManagerProduct;
