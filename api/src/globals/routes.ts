@@ -12,3 +12,5 @@ export const API_CLIENT_UPDATE = `${API_ROOT}/client/:id/`; // PUT
 export const API_PRODUCT_NEW = `${API_ROOT}/product/`;  // POST
 export const API_PRODUCT_GET = `${API_ROOT}/product/:id/`;  // GET
 export const API_PRODUCT_UPDATE = `${API_ROOT}/product/:id/`;  // PUT
+export const API_PRODUCT_GET_ALL = `${API_ROOT}/products/`;  // GET
+export const API_PRODUCT_GET_BY_FILTER = `${API_ROOT}/products/filtered/`;  // GET

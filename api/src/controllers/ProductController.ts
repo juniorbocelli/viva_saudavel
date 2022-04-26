@@ -120,10 +120,39 @@ class ProductController {
               throw new Error(`Ocorreu um erro ao tentar criar miniatura da imagem principal: ${error}`);
           });
 
-        previousProduct.thumb = `${firstImage.split('.')[0]}_thumb.${firstImage.split('.')[1]}`;
+        previousProduct.thumb = `${process.env.DEFAULT_IMAGE_PRODUCT_STORAGE_FOLDER?.replace(".", "")}/${thumbName}`;
       };
 
       res.status(200).json({ product: await ucManagerProduct.update(previousProduct) });
+    } catch (error: any) {
+      res.status(200).json({ error: error.message });
+    };
+  };
+
+  static async getAll(req: Request, res: Response) {
+    const daoProduct = new DAOProduct();
+    const ucManagerProduct = new UCManagerProduct(daoProduct);
+
+    try {
+      res.status(200).json({ products: await ucManagerProduct.getAll() });
+    } catch (error: any) {
+      res.status(200).json({ error: error.message });
+    };
+  };
+
+  static async getByFilter(req: Request, res: Response) {
+    const daoProduct = new DAOProduct();
+    const ucManagerProduct = new UCManagerProduct(daoProduct);
+
+    try {
+      const params = req.query;
+      const filterToSearch = {};
+
+      Object.keys(params).forEach(key => {
+        Object.defineProperty(filterToSearch, `filters.${key}`, { value: params[key] });
+      });
+
+      res.status(200).json({ products: await ucManagerProduct.getByFilter(filterToSearch) });
     } catch (error: any) {
       res.status(200).json({ error: error.message });
     };
