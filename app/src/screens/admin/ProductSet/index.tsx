@@ -4,13 +4,12 @@ import {
   Box,
   Grid,
   Typography,
-  FormControl,
-  FormHelperText,
 
   useTheme,
 } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import { useParams } from 'react-router-dom';
+import { ImageType } from 'react-images-uploading';
 
 import AdminMainContentBox from '../../../ui/components/pages/AdminMainContentBox';
 import ControlledTextInput from '../../../ui/components/form/ControlledTextInput';
@@ -77,7 +76,7 @@ const ProductSet: React.FC<React.ReactFragment> = () => {
 
     formData.append('product', JSON.stringify(productToSend));
 
-    states.images.forEach(image => {
+    states.images.forEach((image: ImageType) => {
       formData.append('files', image.file as Blob);
     });
 

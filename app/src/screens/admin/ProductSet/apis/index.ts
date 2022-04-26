@@ -32,6 +32,14 @@ export default function useAPIs(states: IUseStates, methods: UseFormReturn<Produ
           return;
         };
 
+        const product: Product = response.data.product;
+
+        states.setProductImages([]);
+        product.images.forEach(image => {
+          states.setProductImages(state => [...state, image]);
+        });
+        states.setImages([]);
+
         navigation(`${Routes.SCREEN_ADMIN_PRODUCT_EDIT.replace(":id", response.data.product._id)}`, { replace: true });
       })
       .catch((error: AxiosError) => {
@@ -53,9 +61,6 @@ export default function useAPIs(states: IUseStates, methods: UseFormReturn<Produ
       getProductAPI(states.productId)
         .then((response) => {
           console.log('response => getProductAPI', response);
-
-          if(typeof(response.data) === 'undefined')
-            return;
 
           if (typeof (response.data.error) !== 'undefined') {
             states.setDialogMessage({ title: "Erro", message: response.data.error });
@@ -106,26 +111,34 @@ export default function useAPIs(states: IUseStates, methods: UseFormReturn<Produ
     states.setIsQueryingAPI(true);
 
     updateProductAPI(product, states.productId)
-    .then((response) => {
-      console.log('response => updateProductAPI', response);
+      .then((response) => {
+        console.log('response => updateProductAPI', response);
 
-      if (typeof (response.data.error) !== 'undefined') {
-        states.setDialogMessage({ title: "Erro", message: response.data.error });
-        return;
-      };
+        if (typeof (response.data.error) !== 'undefined') {
+          states.setDialogMessage({ title: "Erro", message: response.data.error });
+          return;
+        };
 
-    })
-    .catch((error) => {
-      console.error('error => updateProductAPI', error);
+        const product: Product = response.data.product;
 
-      if (typeof (error.message) !== 'undefined')
-            states.setDialogMessage({ title: "Erro", message: error.message });
-          else
-            states.setDialogMessage({ title: "Erro", message: "Ocorreu um erro ao tentar atualizar o produto" });
-    })
-    .finally(() => {
-      states.setIsQueryingAPI(false);
-    });
+        states.setProductImages([]);
+        product.images.forEach(image => {
+          states.setProductImages(state => [...state, image]);
+        });
+        states.setImages([]);
+
+      })
+      .catch((error) => {
+        console.error('error => updateProductAPI', error);
+
+        if (typeof (error.message) !== 'undefined')
+          states.setDialogMessage({ title: "Erro", message: error.message });
+        else
+          states.setDialogMessage({ title: "Erro", message: "Ocorreu um erro ao tentar atualizar o produto" });
+      })
+      .finally(() => {
+        states.setIsQueryingAPI(false);
+      });
   };
 
   return {
