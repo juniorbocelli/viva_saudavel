@@ -1,6 +1,6 @@
 import axios from '../../../../globals/axios';
 import { API_CLIENT_UPDATE } from '../../../../globals/routes';
-import { Client } from '../../../../features/auth/types';
+import { Client } from '../../../../globals/interfaces/client';
 
 export interface IClientUpdateProps extends Client {
   id: string;
