@@ -10,6 +10,7 @@ import {
   Collapse,
   Box,
 } from '@mui/material';
+import { matchPath, useLocation } from 'react-router-dom';
 
 import IconExpandLess from '@mui/icons-material/ExpandLess'
 import IconExpandMore from '@mui/icons-material/ExpandMore'
@@ -20,19 +21,55 @@ import * as Routes from '../../../../globals/routes';
 
 const drawerWidth = 240;
 
-interface IOpenMenu {
-  [index: string]: boolean;
-};
+interface MenuItem {
+  label: string;
+  to: string;
+}
+const clientMenu: Array<MenuItem> = [
+  {
+    label: "Todos os clientes",
+    to: Routes.SCREEN_ADMIN_CLIENTS,
+  },
+];
+
+const productMenu: Array<MenuItem> = [
+  {
+    label: "Todos os produtos",
+    to: Routes.SCREEN_ADMIN_PRODUCTS,
+  },
+  {
+    label: "Novo produto",
+    to: Routes.SCREEN_ADMIN_PRODUCT_CREATE,
+  }
+];
 
 export default function Navbar() {
-  const [open, setOpen] = React.useState<IOpenMenu>({
-    "clientMenu": false,
-    "productMenu": false,
-  });
+  const location = useLocation();
+  const buceta = matchPath(Routes.SCREEN_ADMIN_CLIENTS, location.pathname);
+  const [anchorEl, setAnchorEl] = React.useState<HTMLElement | null>(null);
 
-  function handleClick(event: React.MouseEvent<HTMLElement>) {
-    let controllerName = event.currentTarget.getAttribute('data-control') || '';
-    setOpen({ ...open, [controllerName]: !open[controllerName] });
+  console.log('buceta', buceta);
+
+  const handlePopoverOpen = (event: React.MouseEvent<HTMLElement>) => {
+    if (isOpen(event.currentTarget.getAttribute('data-control')))
+      setAnchorEl(null);
+    else
+      setAnchorEl(event.currentTarget);
+  };
+
+  const isOpen = (dataControl: string | null): boolean => {
+    if (anchorEl !== null)
+      return anchorEl.getAttribute('data-control') === dataControl;
+    else
+      return false;
+  };
+
+  const isActive = (list: Array<MenuItem>): boolean => {
+    for (let i = 0; i < list.length; i++)
+      if (!!matchPath(list[i].to, location.pathname))
+        return true;
+
+    return false;
   };
 
   return (
@@ -55,22 +92,26 @@ export default function Navbar() {
            * Clients
            */}
           <ListItem
-            button onClick={handleClick}
+            button onClick={handlePopoverOpen}
             sx={{ width: `${drawerWidth - 1}px`, }}
-            data-control='clientMenu'
-            selected={false}
+            data-control='client'
+            selected={isOpen('client') || isActive(clientMenu)}
           >
             <ListItemIcon>
               <DescriptionIcon />
             </ListItemIcon>
             <ListItemText primary="Clientes" sx={{ fontSize: '1.0rem', }} />
-            {open.clientMenu ? <IconExpandLess /> : <IconExpandMore />}
+            {isOpen('client') ? <IconExpandLess /> : <IconExpandMore />}
           </ListItem>
 
-          <Collapse in={open.clientMenu} timeout="auto" unmountOnExit>
+          <Collapse in={isOpen('client')} timeout="auto" unmountOnExit>
             <Divider />
             <List component="div" disablePadding>
-              <ChildItem label="Todos os Clientes" to={Routes.SCREEN_ADMIN_CLIENTS} drawerWidth={drawerWidth} />
+              {
+                clientMenu.map((item, key) => {
+                  return (<ChildItem key={key} label={item.label} to={item.to} drawerWidth={drawerWidth} />)
+                })
+              }
               <Divider />
             </List>
           </Collapse>
@@ -79,23 +120,26 @@ export default function Navbar() {
            * Products
            */}
           <ListItem
-            button onClick={handleClick}
+            button onClick={handlePopoverOpen}
             sx={{ width: `${drawerWidth - 1}px`, }}
-            data-control='productMenu'
-            selected={false}
+            data-control='product'
+            selected={isOpen('product') || isActive(productMenu)}
           >
             <ListItemIcon>
               <DescriptionIcon />
             </ListItemIcon>
             <ListItemText primary="Produtos" sx={{ fontSize: '1.0rem', }} />
-            {open.productMenu ? <IconExpandLess /> : <IconExpandMore />}
+            {isOpen('product') ? <IconExpandLess /> : <IconExpandMore />}
           </ListItem>
 
-          <Collapse in={open.productMenu} timeout="auto" unmountOnExit>
+          <Collapse in={isOpen('product')} timeout="auto" unmountOnExit>
             <Divider />
             <List component="div" disablePadding>
-              <ChildItem label="Todos os Produtos" to={Routes.SCREEN_ADMIN_PRODUCTS} drawerWidth={drawerWidth} />
-              <ChildItem label="Novo Produto" to={Routes.SCREEN_ADMIN_PRODUCT_CREATE} drawerWidth={drawerWidth} />
+              {
+                productMenu.map((item, key) => {
+                  return (<ChildItem key={key} label={item.label} to={item.to} drawerWidth={drawerWidth} />)
+                })
+              }
               <Divider />
             </List>
           </Collapse>

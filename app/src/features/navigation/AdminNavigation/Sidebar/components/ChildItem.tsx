@@ -4,7 +4,7 @@ import {
 
   useTheme,
 } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useMatch } from 'react-router-dom';
 
 
 interface IChildItemProps {
@@ -29,6 +29,8 @@ const ChildItem: React.FC<IChildItemProps> = ({ to, label, drawerWidth }) => {
       }
 
       onClick={() => navigation(to)}
+
+      selected={!!useMatch(to)}
     >
       {label}
     </ListItem>
