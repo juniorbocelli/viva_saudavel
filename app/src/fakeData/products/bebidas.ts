@@ -50,7 +50,7 @@ export const products_bebidas: Products = [
       isLactoseFree: true,
 
       producerCode: 'xando',
-      categories: 'bebidas',
+      category: 'bebidas',
     },
     price: 15.63,
     images: [bebidas_01_img_01, bebidas_01_img_02, bebidas_01_img_03],
@@ -92,7 +92,7 @@ export const products_bebidas: Products = [
       isLactoseFree: true,
 
       producerCode: 'villa-piva',
-      categories: 'bebidas',
+      category: 'bebidas',
     },
     price: 18.0,
     images: [bebidas_02_img_01, bebidas_02_img_02, bebidas_02_img_03],
@@ -133,7 +133,7 @@ export const products_bebidas: Products = [
       isLactoseFree: true,
 
       producerCode: 'villa-piva',
-      categories: 'bebidas',
+      category: 'bebidas',
     },
     price: 21.0,
     images: [bebidas_03_img_01, bebidas_03_img_02, bebidas_03_img_03],
@@ -162,7 +162,7 @@ export const products_bebidas: Products = [
       isLactoseFree: true,
 
       producerCode: 'agua-na-caixa',
-      categories: 'bebidas',
+      category: 'bebidas',
     },
     price: 5.99,
     images: [bebidas_04_img_01, bebidas_04_img_02, bebidas_04_img_03],
@@ -203,7 +203,7 @@ export const products_bebidas: Products = [
       isLactoseFree: true,
 
       producerCode: 'xando',
-      categories: 'bebidas',
+      category: 'bebidas',
     },
     price: 15.63,
     images: [bebidas_01_img_01, bebidas_01_img_02, bebidas_01_img_03],
@@ -245,7 +245,7 @@ export const products_bebidas: Products = [
       isLactoseFree: true,
 
       producerCode: 'villa-piva',
-      categories: 'bebidas',
+      category: 'bebidas',
     },
     price: 18.0,
     images: [bebidas_02_img_01, bebidas_02_img_02, bebidas_02_img_03],
@@ -286,7 +286,7 @@ export const products_bebidas: Products = [
       isLactoseFree: true,
 
       producerCode: 'villa-piva',
-      categories: 'bebidas',
+      category: 'bebidas',
     },
     price: 21.0,
     images: [bebidas_03_img_01, bebidas_03_img_02, bebidas_03_img_03],
@@ -315,7 +315,7 @@ export const products_bebidas: Products = [
       isLactoseFree: true,
 
       producerCode: 'agua-na-caixa',
-      categories: 'bebidas',
+      category: 'bebidas',
     },
     price: 5.99,
     images: [bebidas_04_img_01, bebidas_04_img_02, bebidas_04_img_03],

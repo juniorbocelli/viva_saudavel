@@ -1,4 +1,4 @@
-import { Filter, Products } from "../../features/globalContext/types";
+import { Filter, Product } from "../../globals/interfaces/product";
 
 import { products_leite_e_derivados } from '../../fakeData/products/leite-e-derivados';
 import { products_queijos } from '../../fakeData/products/queijos';
@@ -11,10 +11,10 @@ export type FilterCodes = 'a2a2' | 'sem-gluten' | 'kosher' | 'sem-lactose' | 'na
 const products = products_leite_e_derivados.concat(products_queijos).concat(products_hortifruti).concat(products_bebidas).concat(products_doces_e_geleias);
 
 export interface IUseAPIs {
-  getAllProducts: () => Products;
-  getProductsByCategory: (category: Filter['categories']) => Products;
-  getProductByFilter: (filter: FilterCodes) => Products;
-  getProductsByProducer: (producer: Filter['producerCode']) => Products;
+  getAllProducts: () => Array<Product>;
+  getProductsByCategory: (category: Filter['category']) => Array<Product>;
+  getProductByFilter: (filter: FilterCodes) => Array<Product>;
+  getProductsByProducer: (producer: Filter['producerCode']) => Array<Product>;
 };
 
 export default function useAPIs(): IUseAPIs {
@@ -22,11 +22,11 @@ export default function useAPIs(): IUseAPIs {
     return products;
   };
 
-  const getProductsByCategory = (category: Filter['categories']) => {
-    let productsList: Products = [];
+  const getProductsByCategory = (category: Filter['category']) => {
+    let productsList: Array<Product> = [];
 
     products.forEach((item, key) => {
-      if (item.filters.categories === category)
+      if (item.filters.category === category)
         productsList.push(item);
     });
 
@@ -34,7 +34,7 @@ export default function useAPIs(): IUseAPIs {
   };
 
   const getProductByFilter = (filter: FilterCodes) => {
-    let productsList: Products = [];
+    let productsList: Array<Product> = [];
 
     switch (filter) {
       case 'a2a2':
@@ -87,7 +87,7 @@ export default function useAPIs(): IUseAPIs {
   };
 
   const getProductsByProducer = (producer: Filter['producerCode']) => {
-    let productsList: Products = [];
+    let productsList: Array<Product> = [];
 
     products.forEach((item, key) => {
       if (item.filters.producerCode === producer)

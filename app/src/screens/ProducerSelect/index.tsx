@@ -16,7 +16,7 @@ import ProductModal from '../../ui/components/ProductModal';
 
 import useAPIs from '../../services/products/apis';
 import useStates from './states';
-import { Filter } from '../../features/globalContext/types';
+import { Filter } from '../../globals/interfaces/product';
 
 const ProducerSelect: React.FC<React.ReactFragment> = () => {
   const states = useStates();

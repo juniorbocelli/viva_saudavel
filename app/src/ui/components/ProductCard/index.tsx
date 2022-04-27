@@ -15,7 +15,8 @@ import {
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 
 import MaskApply from '../../../features/utils/MaskApply';
-import { Product, CartItem } from '../../../features/globalContext/types';
+import { Product } from '../../../globals/interfaces/product'
+import { CartItem } from '../../../globals/interfaces/cart';
 import { useGlobalContext } from '../../../features/globalContext/context';
 
 interface IProductCardProps {
@@ -38,7 +39,7 @@ const ProductCard: React.FC<IProductCardProps> = ({ product, setProduct }) => {
     setAnchorEl(null);
 
     if (typeof (product) !== 'undefined' && typeof (frequency) !== 'undefined')
-      globalContext.addItem(product, frequency);
+      globalContext['cart'].addItem(product, frequency);
   };
 
   return (

@@ -11,14 +11,14 @@ import ProductModal from '../../ui/components/ProductModal';
 
 import useAPIs from '../../services/products/apis';
 import useStates from './states';
-import { Filter } from '../../features/globalContext/types';
+import { Filter } from '../../globals/interfaces/product';
 
 const Category: React.FC<React.ReactFragment> = () => {
   const states = useStates();
   const params = useParams();
   const apis = useAPIs();
 
-  const getCategoryName = (categoryName: Filter['categories']): string => {
+  const getCategoryName = (categoryName: Filter['category']): string => {
     switch (categoryName) {
       case 'leite-e-derivados':
         return "Leite e Derivados";
@@ -45,11 +45,11 @@ const Category: React.FC<React.ReactFragment> = () => {
 
   React.useEffect(() => {
     if (typeof (params) !== 'undefined')
-      states.setProducts(apis.getProductsByCategory(params.category as Filter['categories']));
+      states.setProducts(apis.getProductsByCategory(params.category as Filter['category']));
   }, [params]);
 
   return (
-    <MainContentBox primary={getCategoryName(params.category as Filter['categories'])}>
+    <MainContentBox primary={getCategoryName(params.category as Filter['category'])}>
       <ProductModal product={states.selectedProduct} setProduct={states.setSelectedProduct} />
 
       <div style={{ width: '100%' }}>

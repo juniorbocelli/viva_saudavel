@@ -4,7 +4,7 @@ import { UseFormReturn } from 'react-hook-form';
 
 import SelectInput from '../../../../ui/components/form/SelectInput';
 import { requiredSelect } from '../../../../features/validation/rules';
-import { ProductProducerCode } from '../../../../features/globalContext/types_new';
+import { ProductProducerCode } from '../../../../globals/interfaces/product';
 import { ProductFormData } from '../types';
 
 interface IProducerSelectProps {
