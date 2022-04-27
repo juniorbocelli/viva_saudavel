@@ -8,7 +8,8 @@ import updateProductAPI from './updateProductAPI';
 
 import { IUseStates } from '../states';
 import * as Routes from '../../../../globals/routes';
-import { ProductFormData, Product, } from '../types';
+import { ProductFormData, } from '../types';
+import { Product } from '../../../../globals/interfaces/product';
 import MaskApply from '../../../../features/utils/MaskApply';
 
 export interface IUseAPIs {
@@ -58,7 +59,7 @@ export default function useAPIs(states: IUseStates, methods: UseFormReturn<Produ
     states.setIsQueryingAPI(true);
 
     if (typeof (states.productId) !== 'undefined')
-    getProductAPI(states.productId)
+      getProductAPI(states.productId)
         .then((response) => {
           console.log('response => getProductAPI', response);
 

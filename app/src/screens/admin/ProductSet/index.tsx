@@ -22,7 +22,8 @@ import ProductImages from './components/ProductImages';
 import ImageUpload from './components/ImageUpload';
 
 import * as Rules from '../../../features/validation/rules';
-import { ProductFormData, ProductProducerCode, ProductCategory, Product } from './types';
+import { Product, ProductProducerCode, ProductCategory, } from '../../../globals/interfaces/product';
+import { ProductFormData, } from './types';
 import useStates from './states';
 import useAPIs from './apis';
 import useEffects from './effects';

@@ -1,4 +1,4 @@
-import { Client } from '../../../features/auth/types';
+import { Client } from '../../../globals/interfaces/client';
 
 export type IsQueryingAPIState = boolean;
 export type ErrorMessageState = string | undefined;
