@@ -8,7 +8,8 @@ import checkSessionAPI from './checkSessionAPI';
 
 
 // Types ============================================================================================================================================
-import { IAuthStates, LoggedClient, Client } from '../types';
+import { IAuthStates, LoggedClient, } from '../types';
+import { Client } from '../../../globals/interfaces/client';
 import LocalStorage from '../../storage/LocalStorage';
 
 export interface IUseAPI {
