@@ -9,8 +9,6 @@ import {
   Toolbar,
   Collapse,
   Box,
-
-  useTheme,
 } from '@mui/material';
 
 import IconExpandLess from '@mui/icons-material/ExpandLess'
@@ -24,17 +22,18 @@ const drawerWidth = 240;
 
 interface IOpenMenu {
   [index: string]: boolean;
-}
+};
 
 export default function Navbar() {
   const [open, setOpen] = React.useState<IOpenMenu>({
+    "clientMenu": false,
     "productMenu": false,
   });
 
   function handleClick(event: React.MouseEvent<HTMLElement>) {
     let controllerName = event.currentTarget.getAttribute('data-control') || '';
     setOpen({ ...open, [controllerName]: !open[controllerName] });
-  }
+  };
 
   return (
     <Drawer
@@ -53,7 +52,31 @@ export default function Navbar() {
         <List sx={{ width: `${drawerWidth}px`, }}>
 
           {/**
-           * NFSe - Prestador
+           * Clients
+           */}
+          <ListItem
+            button onClick={handleClick}
+            sx={{ width: `${drawerWidth - 1}px`, }}
+            data-control='clientMenu'
+            selected={false}
+          >
+            <ListItemIcon>
+              <DescriptionIcon />
+            </ListItemIcon>
+            <ListItemText primary="Clientes" sx={{ fontSize: '1.0rem', }} />
+            {open.clientMenu ? <IconExpandLess /> : <IconExpandMore />}
+          </ListItem>
+
+          <Collapse in={open.clientMenu} timeout="auto" unmountOnExit>
+            <Divider />
+            <List component="div" disablePadding>
+              <ChildItem label="Todos os Clientes" to={Routes.SCREEN_ADMIN_CLIENTS} drawerWidth={drawerWidth} />
+              <Divider />
+            </List>
+          </Collapse>
+
+          {/**
+           * Products
            */}
           <ListItem
             button onClick={handleClick}
@@ -65,17 +88,18 @@ export default function Navbar() {
               <DescriptionIcon />
             </ListItemIcon>
             <ListItemText primary="Produtos" sx={{ fontSize: '1.0rem', }} />
-            {open.nfTakerMenu ? <IconExpandLess /> : <IconExpandMore />}
+            {open.productMenu ? <IconExpandLess /> : <IconExpandMore />}
           </ListItem>
 
           <Collapse in={open.productMenu} timeout="auto" unmountOnExit>
             <Divider />
             <List component="div" disablePadding>
-              <ChildItem label="Lista de Produtos" to={Routes.SCREEN_ADMIN_PRODUCTS} drawerWidth={drawerWidth} />
+              <ChildItem label="Todos os Produtos" to={Routes.SCREEN_ADMIN_PRODUCTS} drawerWidth={drawerWidth} />
               <ChildItem label="Novo Produto" to={Routes.SCREEN_ADMIN_PRODUCT_CREATE} drawerWidth={drawerWidth} />
               <Divider />
             </List>
           </Collapse>
+
         </List>
       </Box>
     </Drawer>

@@ -35,7 +35,7 @@ const NavbarMenu: React.FC<React.ReactFragment> = (props) => {
       return null;
     else
       return anchorEl.getAttribute('data-id');
-  }
+  };
 
   const companyMenu = <Popover
     id="company-menu"

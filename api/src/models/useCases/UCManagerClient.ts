@@ -136,6 +136,14 @@ class UCManagerClient {
 
     return await this.daoClient.update(client);
   };
+
+  public async getAll() {
+    return await this.daoClient.selectAll();
+  };
+
+  public async getByFilter(filters: Object) {
+    return await this.daoClient.selectBy(filters);
+  }
 };
 
 export default UCManagerClient;
