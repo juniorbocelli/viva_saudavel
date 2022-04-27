@@ -131,6 +131,17 @@ class ClientController {
       res.status(200).json({ error: error.message });
     };
   };
+
+  static async getAll(req: Request, res: Response) {
+    const daoClient = new DAOClient;
+    const ucManagerClient = new UCManagerClient(daoClient);
+
+    try {
+      res.status(200).json({ clients: await ucManagerClient.getAll() });
+    } catch (error: any) {
+      res.status(200).json({ error: error.message });
+    };
+  };
 };
 
 export default ClientController;

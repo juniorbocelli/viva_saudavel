@@ -16,33 +16,33 @@ const columns: any = [
     name: "Nome",
     selector: (row: Client) => row.name,
     sortable: true,
-    width: "350px",
+    width: "200px",
     wrap: true,
   },
   {
     name: "CPF",
     selector: (row: Client) => row.cpf,
-    sortable: true,
+    sortable: false,
 
   },
   {
     name: "E-mail",
     selector: (row: Client) => row.email,
     sortable: true,
-    wrap: true,
+    wrap: false,
 
   },
   {
     name: "Celular",
-    selector: (row: Client) => `R$ ${MaskApply.maskCellPhone(row.cellPhone)}`,
+    selector: (row: Client) => MaskApply.maskCellPhone(row.cellPhone),
     sortable: true,
-    wrap: true
+    wrap: false
   },
   {
     name: "CEP",
     selector: (row: Client) => MaskApply.maskCep(row.address.cep),
     sortable: true,
-    wrap: true
+    wrap: false
   },
   {
     name: "Ações",
@@ -85,7 +85,7 @@ const ClientsListTable: React.FC<IProductsListTableProps> = ({ clients }) => {
   return (
     <div>
       <DataTable
-        title="Lista de clients"
+        title="Lista de clientes"
         responsive={false}
 
         columns={columns}
