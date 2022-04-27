@@ -21,7 +21,8 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { TransitionProps } from '@mui/material/transitions';
 
 import MaskApply from '../../../features/utils/MaskApply';
-import { Product, CartItem } from '../../../features/globalContext/types';
+import { Product } from '../../../globals/interfaces/product';
+import { CartItem } from '../../../globals/interfaces/cart';
 import { useGlobalContext } from '../../../features/globalContext/context';
 
 import isA2A2 from '../../../assets/images/product-categories-icons/a2a2.svg';
@@ -160,7 +161,7 @@ const ProductModal: React.FC<IProductModalProps> = ({ product, setProduct }) => 
     setAnchorEl(null);
 
     if (typeof (product) !== 'undefined' && typeof (frequency) !== 'undefined')
-      globalContext.addItem(product, frequency);
+      globalContext['cart'].addItem(product, frequency);
   };
 
   const handleClose = () => {

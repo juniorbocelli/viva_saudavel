@@ -40,7 +40,7 @@ export const products_leite_e_derivados: Products = [
       isLactoseFree: false,
 
       producerCode: 'letti',
-      categories: 'leite-e-derivados',
+      category: 'leite-e-derivados',
     },
     price: 40.5,
     images: [leite_e_derivados_01_img_01, leite_e_derivados_01_img_02, leite_e_derivados_01_img_03],
@@ -72,7 +72,7 @@ export const products_leite_e_derivados: Products = [
       isLactoseFree: false,
 
       producerCode: 'letti',
-      categories: 'leite-e-derivados',
+      category: 'leite-e-derivados',
     },
     price: 9.8,
     images: [leite_e_derivados_02_img_01, leite_e_derivados_02_img_02, leite_e_derivados_02_img_03],
@@ -105,7 +105,7 @@ export const products_leite_e_derivados: Products = [
       isLactoseFree: false,
 
       producerCode: 'letti',
-      categories: 'leite-e-derivados',
+      category: 'leite-e-derivados',
     },
     price: 20.2,
     images: [leite_e_derivados_03_img_01, leite_e_derivados_03_img_02, leite_e_derivados_03_img_03],
@@ -141,7 +141,7 @@ export const products_leite_e_derivados: Products = [
       isLactoseFree: false,
 
       producerCode: 'letti',
-      categories: 'leite-e-derivados',
+      category: 'leite-e-derivados',
     },
     price: 40.5,
     images: [leite_e_derivados_01_img_01, leite_e_derivados_01_img_02, leite_e_derivados_01_img_03],
@@ -173,7 +173,7 @@ export const products_leite_e_derivados: Products = [
       isLactoseFree: false,
 
       producerCode: 'letti',
-      categories: 'leite-e-derivados',
+      category: 'leite-e-derivados',
     },
     price: 9.8,
     images: [leite_e_derivados_02_img_01, leite_e_derivados_02_img_02, leite_e_derivados_02_img_03],
@@ -206,7 +206,7 @@ export const products_leite_e_derivados: Products = [
       isLactoseFree: false,
 
       producerCode: 'letti',
-      categories: 'leite-e-derivados',
+      category: 'leite-e-derivados',
     },
     price: 20.2,
     images: [leite_e_derivados_03_img_01, leite_e_derivados_03_img_02, leite_e_derivados_03_img_03],
@@ -237,7 +237,7 @@ export const products_leite_e_derivados: Products = [
       isLactoseFree: false,
 
       producerCode: 'letti',
-      categories: 'leite-e-derivados',
+      category: 'leite-e-derivados',
     },
     price: 40.5,
     images: [leite_e_derivados_01_img_01, leite_e_derivados_01_img_02, leite_e_derivados_01_img_03],
@@ -269,7 +269,7 @@ export const products_leite_e_derivados: Products = [
       isLactoseFree: false,
 
       producerCode: 'letti',
-      categories: 'leite-e-derivados',
+      category: 'leite-e-derivados',
     },
     price: 9.8,
     images: [leite_e_derivados_02_img_01, leite_e_derivados_02_img_02, leite_e_derivados_02_img_03],
@@ -302,7 +302,7 @@ export const products_leite_e_derivados: Products = [
       isLactoseFree: false,
 
       producerCode: 'letti',
-      categories: 'leite-e-derivados',
+      category: 'leite-e-derivados',
     },
     price: 20.2,
     images: [leite_e_derivados_03_img_01, leite_e_derivados_03_img_02, leite_e_derivados_03_img_03],

@@ -53,7 +53,7 @@ export const products_hortifruti: Products = [
       isLactoseFree: true,
 
       producerCode: 'urakami',
-      categories: 'hortifruti',
+      category: 'hortifruti',
     },
     price: 45.0,
     images: [hortifruti_01_img_01, hortifruti_01_img_02, hortifruti_01_img_03],
@@ -85,7 +85,7 @@ export const products_hortifruti: Products = [
       isLactoseFree: true,
 
       producerCode: 'naturegg',
-      categories: 'hortifruti',
+      category: 'hortifruti',
     },
     price: 13.10,
     images: [hortifruti_02_img_01, hortifruti_02_img_02, hortifruti_02_img_03],
@@ -112,7 +112,7 @@ export const products_hortifruti: Products = [
       isLactoseFree: true,
 
       producerCode: 'fazenda-do-bem',
-      categories: 'hortifruti',
+      category: 'hortifruti',
     },
     price: 7.7,
     images: [hortifruti_03_img_01, hortifruti_03_img_02, hortifruti_03_img_03],
@@ -143,7 +143,7 @@ export const products_hortifruti: Products = [
       isLactoseFree: true,
 
       producerCode: 'jaguacy',
-      categories: 'hortifruti',
+      category: 'hortifruti',
     },
     price: 29.99,
     images: [hortifruti_04_img_01, hortifruti_04_img_02, hortifruti_04_img_03],
@@ -182,7 +182,7 @@ export const products_hortifruti: Products = [
       isLactoseFree: true,
 
       producerCode: 'urakami',
-      categories: 'hortifruti',
+      category: 'hortifruti',
     },
     price: 13.5,
     images: [hortifruti_05_img_01, hortifruti_05_img_02, hortifruti_05_img_03],
@@ -220,7 +220,7 @@ export const products_hortifruti: Products = [
       isLactoseFree: true,
 
       producerCode: 'urakami',
-      categories: 'hortifruti',
+      category: 'hortifruti',
     },
     price: 45.0,
     images: [hortifruti_01_img_01, hortifruti_01_img_02, hortifruti_01_img_03],
@@ -252,7 +252,7 @@ export const products_hortifruti: Products = [
       isLactoseFree: true,
 
       producerCode: 'naturegg',
-      categories: 'hortifruti',
+      category: 'hortifruti',
     },
     price: 13.10,
     images: [hortifruti_02_img_01, hortifruti_02_img_02, hortifruti_02_img_03],
@@ -279,7 +279,7 @@ export const products_hortifruti: Products = [
       isLactoseFree: true,
 
       producerCode: 'fazenda-do-bem',
-      categories: 'hortifruti',
+      category: 'hortifruti',
     },
     price: 7.7,
     images: [hortifruti_03_img_01, hortifruti_03_img_02, hortifruti_03_img_03],
@@ -310,7 +310,7 @@ export const products_hortifruti: Products = [
       isLactoseFree: true,
 
       producerCode: 'jaguacy',
-      categories: 'hortifruti',
+      category: 'hortifruti',
     },
     price: 29.99,
     images: [hortifruti_04_img_01, hortifruti_04_img_02, hortifruti_04_img_03],
@@ -349,7 +349,7 @@ export const products_hortifruti: Products = [
       isLactoseFree: true,
 
       producerCode: 'urakami',
-      categories: 'hortifruti',
+      category: 'hortifruti',
     },
     price: 13.5,
     images: [hortifruti_05_img_01, hortifruti_05_img_02, hortifruti_05_img_03],

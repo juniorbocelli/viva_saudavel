@@ -13,7 +13,7 @@ import AddCircleIcon from '@mui/icons-material/AddCircle';
 import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
 import DeleteIcon from '@mui/icons-material/Delete';
 
-import { CartItem as CartItemType } from '../../../features/globalContext/types';
+import { CartItem as CartItemType } from '../../../globals/interfaces/cart';
 import { useGlobalContext } from '../../../features/globalContext/context';
 import MaskApply from '../../../features/utils/MaskApply';
 
@@ -145,7 +145,7 @@ const CartItem: React.FC<ICartItemProps> = ({ cartItem, itemKey }) => {
                 }
               }
             >
-              <IconButton onClick={() => globalContext.removeItemByKey(itemKey)}>
+              <IconButton onClick={() => globalContext['cart'].removeItemByKey(itemKey)}>
                 {
                   cartItem.quantity === 1 ?
                     <DeleteIcon color='error' />
@@ -167,7 +167,7 @@ const CartItem: React.FC<ICartItemProps> = ({ cartItem, itemKey }) => {
                 {cartItem.quantity}
               </Typography>
 
-              <IconButton onClick={() => globalContext.addItemByKey(itemKey)}>
+              <IconButton onClick={() => globalContext['cart'].addItemByKey(itemKey)}>
                 <AddCircleIcon color='primary' />
               </IconButton>
             </Box>

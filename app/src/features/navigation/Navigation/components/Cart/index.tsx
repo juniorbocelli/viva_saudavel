@@ -23,10 +23,10 @@ const Cart: React.FC<IUseStates> = (states) => {
   const globalContext = useGlobalContext();
 
   // Itens by frequency
-  const onceItems = globalContext.getProductsByFrequency('once');
-  const weeklyItems = globalContext.getProductsByFrequency('weekly');
-  const biweeklyItems = globalContext.getProductsByFrequency('biweekly');
-  const monthlyItems = globalContext.getProductsByFrequency('monthly');
+  const onceItems = globalContext['cart'].getProductsByFrequency('once');
+  const weeklyItems = globalContext['cart'].getProductsByFrequency('weekly');
+  const biweeklyItems = globalContext['cart'].getProductsByFrequency('biweekly');
+  const monthlyItems = globalContext['cart'].getProductsByFrequency('monthly');
 
   const {
     isMobileCartOpen,
@@ -117,7 +117,7 @@ const Cart: React.FC<IUseStates> = (states) => {
           >
             {/* No products */}
             {
-              globalContext.getCartLenght() === 0 &&
+              globalContext['cart'].getCartLenght() === 0 &&
               <Typography variant='h6' component='div' color='text.secondary'>
                 Você ainda não adicionou produtos ao carrinho
               </Typography>
@@ -264,7 +264,7 @@ const Cart: React.FC<IUseStates> = (states) => {
                 variant='body2'
                 color='text.secondary'
               >
-                {`${globalContext.getCartLenght()} itens`}
+                {`${globalContext['cart'].getCartLenght()} itens`}
               </Typography>
 
               <Typography
@@ -279,7 +279,7 @@ const Cart: React.FC<IUseStates> = (states) => {
                   }
                 }
               >
-                {`R$ ${MaskApply.maskMoney(globalContext.getCartValue())}`}
+                {`R$ ${MaskApply.maskMoney(globalContext['cart'].getCartValue())}`}
               </Typography>
             </Box>
 
@@ -293,7 +293,7 @@ const Cart: React.FC<IUseStates> = (states) => {
                 }
               }
 
-              disabled={globalContext.getCartLenght() === 0}
+              disabled={globalContext['cart'].getCartLenght() === 0}
             >
               Finalizar Compra
             </Button>

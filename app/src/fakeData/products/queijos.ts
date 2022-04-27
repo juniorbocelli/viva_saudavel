@@ -49,7 +49,7 @@ export const products_queijos: Products = [
       isLactoseFree: false,
 
       producerCode: 'piracanjuba',
-      categories: 'queijos',
+      category: 'queijos',
     },
     price: 28.0,
     images: [queijos_01_img_01, queijos_01_img_02, queijos_01_img_03],
@@ -80,7 +80,7 @@ export const products_queijos: Products = [
       isLactoseFree: false,
 
       producerCode: 'piracanjuba',
-      categories: 'queijos',
+      category: 'queijos',
     },
     price: 31.81,
     images: [queijos_02_img_01, queijos_02_img_02, queijos_02_img_03],
@@ -116,7 +116,7 @@ export const products_queijos: Products = [
       isLactoseFree: false,
 
       producerCode: 'piracanjuba',
-      categories: 'queijos',
+      category: 'queijos',
     },
     price: 16.0,
     images: [queijos_03_img_01, queijos_03_img_02, queijos_03_img_03],
@@ -156,7 +156,7 @@ export const products_queijos: Products = [
       isLactoseFree: false,
 
       producerCode: 'goldy',
-      categories: 'queijos',
+      category: 'queijos',
     },
     price: 33.35,
     images: [queijos_04_img_01, queijos_04_img_02, queijos_04_img_03],
@@ -195,7 +195,7 @@ export const products_queijos: Products = [
       isLactoseFree: false,
 
       producerCode: 'piracanjuba',
-      categories: 'queijos',
+      category: 'queijos',
     },
     price: 28.0,
     images: [queijos_01_img_01, queijos_01_img_02, queijos_01_img_03],
@@ -226,7 +226,7 @@ export const products_queijos: Products = [
       isLactoseFree: false,
 
       producerCode: 'piracanjuba',
-      categories: 'queijos',
+      category: 'queijos',
     },
     price: 31.81,
     images: [queijos_02_img_01, queijos_02_img_02, queijos_02_img_03],
@@ -262,7 +262,7 @@ export const products_queijos: Products = [
       isLactoseFree: false,
 
       producerCode: 'piracanjuba',
-      categories: 'queijos',
+      category: 'queijos',
     },
     price: 16.0,
     images: [queijos_03_img_01, queijos_03_img_02, queijos_03_img_03],
@@ -302,7 +302,7 @@ export const products_queijos: Products = [
       isLactoseFree: false,
 
       producerCode: 'goldy',
-      categories: 'queijos',
+      category: 'queijos',
     },
     price: 33.35,
     images: [queijos_04_img_01, queijos_04_img_02, queijos_04_img_03],

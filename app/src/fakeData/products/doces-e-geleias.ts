@@ -44,7 +44,7 @@ export const products_doces_e_geleias: Products = [
       isLactoseFree: true,
 
       producerCode: 'ralston',
-      categories: 'doces-e-geleias',
+      category: 'doces-e-geleias',
     },
     price: 17.65,
     images: [doces_e_geleias_01_img_01, doces_e_geleias_01_img_02, doces_e_geleias_01_img_03],
@@ -79,7 +79,7 @@ export const products_doces_e_geleias: Products = [
       isLactoseFree: true,
 
       producerCode: 'ralston',
-      categories: 'doces-e-geleias',
+      category: 'doces-e-geleias',
     },
     price: 27.95,
     images: [doces_e_geleias_02_img_01, doces_e_geleias_02_img_02, doces_e_geleias_02_img_03],
@@ -111,7 +111,7 @@ export const products_doces_e_geleias: Products = [
       isLactoseFree: true,
 
       producerCode: 'beta-mel',
-      categories: 'doces-e-geleias',
+      category: 'doces-e-geleias',
     },
     price: 45.5,
     images: [doces_e_geleias_03_img_01, doces_e_geleias_03_img_02, doces_e_geleias_03_img_03],
@@ -141,7 +141,7 @@ export const products_doces_e_geleias: Products = [
       isLactoseFree: true,
 
       producerCode: 'ralston',
-      categories: 'doces-e-geleias',
+      category: 'doces-e-geleias',
     },
     price: 5.99,
     images: [doces_e_geleias_04_img_01, doces_e_geleias_04_img_02, doces_e_geleias_04_img_03],
@@ -176,7 +176,7 @@ export const products_doces_e_geleias: Products = [
       isLactoseFree: true,
 
       producerCode: 'ralston',
-      categories: 'doces-e-geleias',
+      category: 'doces-e-geleias',
     },
     price: 17.65,
     images: [doces_e_geleias_01_img_01, doces_e_geleias_01_img_02, doces_e_geleias_01_img_03],
@@ -211,7 +211,7 @@ export const products_doces_e_geleias: Products = [
       isLactoseFree: true,
 
       producerCode: 'ralston',
-      categories: 'doces-e-geleias',
+      category: 'doces-e-geleias',
     },
     price: 27.95,
     images: [doces_e_geleias_02_img_01, doces_e_geleias_02_img_02, doces_e_geleias_02_img_03],
@@ -243,7 +243,7 @@ export const products_doces_e_geleias: Products = [
       isLactoseFree: true,
 
       producerCode: 'beta-mel',
-      categories: 'doces-e-geleias',
+      category: 'doces-e-geleias',
     },
     price: 45.5,
     images: [doces_e_geleias_03_img_01, doces_e_geleias_03_img_02, doces_e_geleias_03_img_03],
@@ -273,7 +273,7 @@ export const products_doces_e_geleias: Products = [
       isLactoseFree: true,
 
       producerCode: 'ralston',
-      categories: 'doces-e-geleias',
+      category: 'doces-e-geleias',
     },
     price: 14.45,
     images: [doces_e_geleias_04_img_01, doces_e_geleias_04_img_02, doces_e_geleias_04_img_03],

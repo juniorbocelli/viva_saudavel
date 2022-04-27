@@ -173,7 +173,7 @@ export default function Navbar(states: IUseStates) {
           color="inherit"
         >
           {/* Mobile cart icon */}
-          <Badge badgeContent={globalContext.getCartLenght()} color="error">
+          <Badge badgeContent={globalContext['cart'].getCartLenght()} color="error">
             <ShoppingCartIcon />
           </Badge>
         </IconButton>
@@ -262,7 +262,7 @@ export default function Navbar(states: IUseStates) {
               onClick={handleCartDrawerToggle}
             >
               {/* Desktop cart icon */}
-              <Badge badgeContent={globalContext.getCartLenght()} color="error">
+              <Badge badgeContent={globalContext['cart'].getCartLenght()} color="error">
                 <ShoppingCartIcon sx={{ fontSize: '2.2rem' }} />
               </Badge>
               <Typography

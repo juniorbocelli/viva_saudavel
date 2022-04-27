@@ -18,14 +18,17 @@ export const GlobalContextProvider: React.FC<IProps> = ({ children }) => {
     <GlobalContext.Provider
       value={
         {
-          cart: states.cart,
-          addItem: cart.addProduct,
-          getCartLenght: cart.getCartLenght,
-          getCartValue: cart.getCartValue,
-          getQuantityFromItem: cart.getQuantityFromItem,
-          addItemByKey: cart.addItemByKey,
-          removeItemByKey: cart.removeItemByKey,
-          getProductsByFrequency: cart.getProductsByFrequency,
+          cart: {
+            cart: states.cart,
+            
+            addItem: cart.addProduct,
+            getCartLenght: cart.getCartLenght,
+            getCartValue: cart.getCartValue,
+            getQuantityFromItem: cart.getQuantityFromItem,
+            addItemByKey: cart.addItemByKey,
+            removeItemByKey: cart.removeItemByKey,
+            getProductsByFrequency: cart.getProductsByFrequency,
+          }
         }
       }
     >

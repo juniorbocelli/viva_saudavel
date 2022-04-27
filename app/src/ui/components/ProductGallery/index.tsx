@@ -6,11 +6,11 @@ import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import { Box, useTheme } from '@mui/material';
 
-import { Products, Product } from '../../../features/globalContext/types';
+import { Product } from '../../../globals/interfaces/product';
 import ProductCard from '../../../ui/components/ProductCard';
 
 interface IProductGalleryProps {
-  products: Products;
+  products: Array<Product>;
   setProduct: React.Dispatch<React.SetStateAction<Product | null>>;
   filters?: Array<string>;
 };

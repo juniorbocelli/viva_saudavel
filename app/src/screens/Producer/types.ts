@@ -1,3 +1,3 @@
-import { Product, Products } from '../../features/globalContext/types';
+import { Product, } from '../../globals/interfaces/product';
 export type SelectedProductState = null | Product;
-export type ProductsState = Products;
+export type ProductsState = Array<Product>;

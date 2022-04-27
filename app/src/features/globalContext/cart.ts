@@ -1,9 +1,6 @@
-import {
-  IUseStates,
-
-  Product,
-  CartItem,
-} from './types';
+import { IUseStates, } from './types';
+import { Product } from '../../globals/interfaces/product';
+import { CartItem } from '../../globals/interfaces/cart';
 
 interface IUseCart {
   addProduct: (product: Product, frequency: CartItem['frequency']) => void;
@@ -33,7 +30,7 @@ export default function useCart(states: IUseStates): IUseCart {
     if (modifiedItens.length === 0)
       newCart.push(
         {
-          id: product.id,
+          id: product.id as string,
           name: product.name,
           price: product.price,
           image: product.images[0],

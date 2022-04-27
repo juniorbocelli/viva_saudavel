@@ -1,4 +1,4 @@
-import { Product, Products, Filter } from '../../features/globalContext/types';
+import { Product, Filter } from '../../globals/interfaces/product';
 export type SelectedProductState = null | Product;
-export type ProductsState = Products;
+export type ProductsState = Array<Product>;
 export type SelectedProducerState = '' | Filter['producerCode'];
