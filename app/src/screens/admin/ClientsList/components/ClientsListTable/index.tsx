@@ -6,53 +6,47 @@ import DataTable from "react-data-table-component";
 import SortIcon from "@mui/icons-material/ArrowDownward";
 import { useNavigate } from 'react-router-dom';
 
-import { Product } from '../../../../../globals/interfaces/product';
+import { Client } from '../../../../../globals/interfaces/client';
 import { IUseStates } from '../../states';
 import MaskApply from '../../../../../features/utils/MaskApply';
 import * as Routes from '../../../../../globals/routes';
 
 const columns: any = [
   {
-    name: "Imagem",
-    cell: (row: Product) => {
-      return (<img src={row.thumb} alt={`Thumb de ${row.id}`} height='80px' />);
-    },
-  },
-  {
     name: "Nome",
-    selector: (row: Product) => row.name,
+    selector: (row: Client) => row.name,
     sortable: true,
     width: "350px",
     wrap: true,
   },
   {
-    name: "Quantidade",
-    selector: (row: Product) => row.measure,
+    name: "CPF",
+    selector: (row: Client) => row.cpf,
     sortable: true,
 
   },
   {
-    name: "Produtor",
-    selector: (row: Product) => row.producer,
+    name: "E-mail",
+    selector: (row: Client) => row.email,
     sortable: true,
     wrap: true,
 
   },
   {
-    name: "Preço",
-    selector: (row: Product) => `R$ ${MaskApply.maskMoney(row.price)}`,
+    name: "Celular",
+    selector: (row: Client) => `R$ ${MaskApply.maskCellPhone(row.cellPhone)}`,
     sortable: true,
     wrap: true
   },
   {
-    name: "Estoque",
-    selector: (row: Product) => row.quantity,
+    name: "CEP",
+    selector: (row: Client) => MaskApply.maskCep(row.address.cep),
     sortable: true,
     wrap: true
   },
   {
     name: "Ações",
-    cell: (row: Product) => {
+    cell: (row: Client) => {
 
       return (
         <div key={row.id}>
@@ -77,13 +71,13 @@ const columns: any = [
 ];
 
 interface IProductsListTableProps {
-  products: IUseStates['products'];
+  clients: IUseStates['clients'];
 };
 
-const ProductsListTable: React.FC<IProductsListTableProps> = ({ products }) => {
+const ClientsListTable: React.FC<IProductsListTableProps> = ({ clients }) => {
   const navigation = useNavigate();
 
-  const handleRowClick = (row: Product) => {
+  const handleRowClick = (row: Client) => {
     console.log("Row data", row);
     navigation(Routes.SCREEN_ADMIN_PRODUCT_EDIT.replace(':id', row.id as string));
   };
@@ -91,11 +85,11 @@ const ProductsListTable: React.FC<IProductsListTableProps> = ({ products }) => {
   return (
     <div>
       <DataTable
-        title="Lista de produtos"
+        title="Lista de clients"
         responsive={false}
 
         columns={columns}
-        data={products}
+        data={clients}
         defaultSortAsc={true}
         sortIcon={<SortIcon />}
         pagination
@@ -103,9 +97,8 @@ const ProductsListTable: React.FC<IProductsListTableProps> = ({ products }) => {
         striped
         onRowClicked={handleRowClick}
       />
-
     </div>
   );
 };
 
-export default ProductsListTable;
+export default ClientsListTable;
