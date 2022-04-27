@@ -6,7 +6,7 @@ import updateClientAPI, { IClientUpdateProps } from './updateClientAPI';
 
 import { IUseStates } from '../states';
 import { ClientDataForm } from '../types';
-import { Client } from '../../../../features/auth/types';
+import { Client } from '../../../../globals/interfaces/client';
 
 import MaskApply from '../../../../features/utils/MaskApply';
 

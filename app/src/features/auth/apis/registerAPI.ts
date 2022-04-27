@@ -1,6 +1,6 @@
 import axios from '../../../globals/axios';
 import { API_CLIENT_REGISTER } from '../../../globals/routes';
-import { Client } from '../types';
+import { Client } from '../../../globals/interfaces/client';
 
 export default function registerAPI(client: Client) {
   return axios.post(API_CLIENT_REGISTER,

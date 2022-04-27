@@ -1,5 +1,7 @@
 import React from "react";
 
+import { Client } from '../../globals/interfaces/client';
+
 export type LoggedClient = {
   id: string;
   name: string;
@@ -11,27 +13,6 @@ export type IsCheckingSessionState = boolean;
 
 export type IsQueryingAPIState = boolean;
 export type ErrorMessageState = null | string;
-
-export type Address = {
-  cep: string;
-  street: string;
-  district: string;
-  state: string;
-  city: string;
-  number: string;
-  complement?: string;
-};
-
-export type Client = {
-  name: string;
-  cpf: string;
-  email: string;
-  password: string;
-  cellPhone: string;
-  phone?: string;
-
-  address: Address;
-};
 
 export interface IAuthStates {
   loggedClient: LoggedClientState;

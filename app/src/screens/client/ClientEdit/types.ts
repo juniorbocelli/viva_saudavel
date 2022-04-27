@@ -1,6 +1,4 @@
-export type Client = {
-  name: string;
-};
+import { Client } from '../../../globals/interfaces/client';
 
 export type ClientState = Client | null;
 
