@@ -24,7 +24,7 @@ apiAxios.interceptors.response.use(
       error.data = { error: "Erro em chamada a aPI" };
       
     if (error.response.status === 401 || error.response.status === 403) {
-      console.log("é pra deslogar!");
+      console.log("Cliente foi deslogado");
       globalAuth.logout();
     };
 

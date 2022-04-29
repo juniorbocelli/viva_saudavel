@@ -140,7 +140,8 @@ function useAPIs(states: IAuthStates): IUseAPI {
         console.log('response => checkSessionAPI', response);
         // Verify if exist errors
         if (typeof (response.data.error) !== 'undefined') {
-          logout();
+          setNotLogged();
+          states.setErrorMessage(response.data.error);
 
           return;
         };
