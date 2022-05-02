@@ -49,7 +49,7 @@ const Category: React.FC<React.ReactFragment> = () => {
   };
 
   return (
-    <MainContentBox primary={getCategoryName(params.category as Filter['category'])}>
+    <MainContentBox primary={getCategoryName(params.category as Filter['category'])} states={states}>
       <ProductModal product={states.selectedProduct} setProduct={states.setSelectedProduct} />
 
       <div style={{ width: '100%' }}>

@@ -9,7 +9,9 @@ export interface IUseAPIs {
 
 export default function useAPIs(states: IUseStates): IUseAPIs {
   const getProductsByFilters = (filter: FilterSearch) => {
-    if (typeof (filter) !== 'undefined')
+    if (typeof (filter) !== 'undefined') {
+      states.setIsQueryingAPI(true);
+
       getProductsByFiltersAPI(filter)
         .then((response) => {
           console.log('response => getProductsByFiltersAPI', response);
@@ -47,6 +49,7 @@ export default function useAPIs(states: IUseStates): IUseAPIs {
         .finally(() => {
           states.setIsQueryingAPI(false);
         });
+    };
   };
 
   return {

@@ -9,6 +9,8 @@ export interface IUseAPIs {
 
 export default function useAPIs(states: IUseStates): IUseAPIs {
   const getProducts = () => {
+    states.setIsQueryingAPI(true);
+    
     getProductsAPI()
       .then((response) => {
         console.log('response => getProductsAPI', response);
