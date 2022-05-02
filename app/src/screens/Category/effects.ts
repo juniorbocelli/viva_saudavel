@@ -12,10 +12,10 @@ export default function useEffects(apis: IUseAPIs): IUseEffects {
     React.useEffect(() => {
       if (typeof (filter) !== 'undefined')
         apis.getProductsByFilters(filter);
-    }, [filter]);
+    }, []);
   };
 
   return {
     useComponentDidMount,
-  }
+  };
 };
