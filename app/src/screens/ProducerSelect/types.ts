@@ -1,4 +1,7 @@
-import { Product, Filter } from '../../globals/interfaces/product';
+import { Product, ProductCard, ProductProducerCode } from '../../globals/interfaces/product';
+
 export type SelectedProductState = null | Product;
-export type ProductsState = Array<Product>;
-export type SelectedProducerState = '' | Filter['producerCode'];
+
+export type CardsState = Array<ProductCard>;
+;
+export type SelectedProducerState = '' | ProductProducerCode;

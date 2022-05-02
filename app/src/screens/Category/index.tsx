@@ -9,14 +9,19 @@ import MainContentBox from '../../ui/components/pages/MainContentBox';
 import ProductCard from '../../ui/components/ProductCard';
 import ProductModal from '../../ui/components/ProductModal';
 
-import useAPIs from '../../services/products/apis';
+
 import useStates from './states';
-import { Filter } from '../../globals/interfaces/product';
+import useAPIs from './apis';
+import useEffects from './effects';
+import { FilterSearch, Filter } from '../../globals/interfaces/product';
 
 const Category: React.FC<React.ReactFragment> = () => {
   const states = useStates();
   const params = useParams();
-  const apis = useAPIs();
+  const apis = useAPIs(states);
+  const effects = useEffects(apis);
+
+  effects.useComponentDidMount({ category: params.category as FilterSearch['category'] });
 
   const getCategoryName = (categoryName: Filter['category']): string => {
     switch (categoryName) {
@@ -39,14 +44,9 @@ const Category: React.FC<React.ReactFragment> = () => {
         return "Doces e Geléias";
 
       default:
-        return "Catgoria não especificada";
+        return "Categoria não especificada";
     };
   };
-
-  React.useEffect(() => {
-    if (typeof (params) !== 'undefined')
-      states.setProducts(apis.getProductsByCategory(params.category as Filter['category']));
-  }, [params]);
 
   return (
     <MainContentBox primary={getCategoryName(params.category as Filter['category'])}>
@@ -54,33 +54,33 @@ const Category: React.FC<React.ReactFragment> = () => {
 
       <div style={{ width: '100%' }}>
         {
-          states.products.length > 0 ?
-          <Box
-          sx={
-            {
-              display: 'grid',
-              gap: 1,
-              gridTemplateColumns: {
-                xs: 'repeat(2, 1fr)', // 0
-                sm: 'repeat(2, 1fr)', // 600
-                md: 'repeat(3, 1fr)', // 900
-                lg: 'repeat(4, 1fr)', // 1200
-                xl: 'repeat(5, 1fr)', // 1536
-              },
-            }
-          }
-        >
-          {
-            states.products.map((item, key) => {
-              return <ProductCard product={item} setProduct={states.setSelectedProduct} key={key} />;
-            })
-          }
-        </Box>
+          states.cards.length > 0 ?
+            <Box
+              sx={
+                {
+                  display: 'grid',
+                  gap: 1,
+                  gridTemplateColumns: {
+                    xs: 'repeat(2, 1fr)', // 0
+                    sm: 'repeat(2, 1fr)', // 600
+                    md: 'repeat(3, 1fr)', // 900
+                    lg: 'repeat(4, 1fr)', // 1200
+                    xl: 'repeat(5, 1fr)', // 1536
+                  },
+                }
+              }
+            >
+              {
+                states.cards.map((item, key) => {
+                  return <ProductCard productCard={item} setProduct={states.setSelectedProduct} key={key} />;
+                })
+              }
+            </Box>
 
-        :
+            :
 
-        <Typography variant='h6' component='div' color='text.secondary'>
-          Ainda não há produtos cadastrados nesta categoria
+            <Typography variant='h6' component='div' color='text.secondary'>
+              Ainda não há produtos cadastrados nesta categoria
         </Typography>
 
         }

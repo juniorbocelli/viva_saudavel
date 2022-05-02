@@ -1,50 +1,64 @@
 import React from 'react';
 
 import {
-  SelectedProductState,
+  IsQueryingAPIState,
+  DialogMessageState,
+} from '../../ui/components/pages/AdminMainContentBox/types';
 
-  LeiteEDerivadosState,
-  QueijosState,
-  FriosState,
-  HortifrutiState,
-  BebidasState,
-  DocesEGeleiasState,
+import {
+  SelectedProductState,
+  CardsState,
 } from './types';
 
 export interface IUseStates {
+  isQueryingAPI: IsQueryingAPIState;
+  setIsQueryingAPI: React.Dispatch<React.SetStateAction<IsQueryingAPIState>>;
+
+  dialogMessage: DialogMessageState;
+  setDialogMessage: React.Dispatch<React.SetStateAction<DialogMessageState>>;
+
   selectedProduct: SelectedProductState;
   setSelectedProduct: React.Dispatch<React.SetStateAction<SelectedProductState>>;
 
-  leiteEDerivados: LeiteEDerivadosState;
-  setLeiteEDerivados: React.Dispatch<React.SetStateAction<LeiteEDerivadosState>>;
+  leiteEDerivados: CardsState;
+  setLeiteEDerivados: React.Dispatch<React.SetStateAction<CardsState>>;
 
-  queijos: QueijosState;
-  setQueijos: React.Dispatch<React.SetStateAction<QueijosState>>;
+  queijos: CardsState;
+  setQueijos: React.Dispatch<React.SetStateAction<CardsState>>;
 
-  frios: FriosState;
-  setFrios: React.Dispatch<React.SetStateAction<FriosState>>;
+  frios: CardsState;
+  setFrios: React.Dispatch<React.SetStateAction<CardsState>>;
 
-  hortifruti: HortifrutiState;
-  setHortifruti: React.Dispatch<React.SetStateAction<HortifrutiState>>;
+  hortifruti: CardsState;
+  setHortifruti: React.Dispatch<React.SetStateAction<CardsState>>;
 
-  bebidas: BebidasState;
-  setBebidas: React.Dispatch<React.SetStateAction<BebidasState>>;
+  bebidas: CardsState;
+  setBebidas: React.Dispatch<React.SetStateAction<CardsState>>;
 
-  docesEGeleias: DocesEGeleiasState;
-  setDocesEGeleias: React.Dispatch<React.SetStateAction<DocesEGeleiasState>>;
+  docesEGeleias: CardsState;
+  setDocesEGeleias: React.Dispatch<React.SetStateAction<CardsState>>;
 };
 
 export default function useStates(): IUseStates {
+  const [isQueryingAPI, setIsQueryingAPI] = React.useState<IsQueryingAPIState>(false);
+  const [dialogMessage, setDialogMessage] = React.useState<DialogMessageState>(undefined);
+
   const [selectedProduct, setSelectedProduct] = React.useState<SelectedProductState>(null);
   
-  const [leiteEDerivados, setLeiteEDerivados] = React.useState<LeiteEDerivadosState>([]);
-  const [queijos, setQueijos] = React.useState<QueijosState>([]);
-  const [frios, setFrios] = React.useState<FriosState>([]);
-  const [hortifruti, setHortifruti] = React.useState<HortifrutiState>([]);
-  const [bebidas, setBebidas] = React.useState<BebidasState>([]);
-  const [docesEGeleias, setDocesEGeleias] = React.useState<DocesEGeleiasState>([]);
+  const [leiteEDerivados, setLeiteEDerivados] = React.useState<CardsState>([]);
+  const [queijos, setQueijos] = React.useState<CardsState>([]);
+  const [frios, setFrios] = React.useState<CardsState>([]);
+  const [hortifruti, setHortifruti] = React.useState<CardsState>([]);
+  const [bebidas, setBebidas] = React.useState<CardsState>([]);
+  const [docesEGeleias, setDocesEGeleias] = React.useState<CardsState>([]);
 
   return {
+    isQueryingAPI,
+    setIsQueryingAPI,
+
+    dialogMessage,
+    setDialogMessage,
+
     selectedProduct,
     setSelectedProduct,
 

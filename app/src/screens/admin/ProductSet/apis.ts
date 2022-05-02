@@ -2,15 +2,17 @@ import { useNavigate } from 'react-router-dom';
 import { UseFormReturn } from 'react-hook-form';
 import { AxiosError } from 'axios';
 
-import newProductAPI from './newProductAPI';
-import getProductAPI from './getProductAPI';
-import updateProductAPI from './updateProductAPI';
+import {
+  newProductAPI,
+  getProductAPI,
+  updateProductAPI,
+} from '../../../services/products';
 
-import { IUseStates } from '../states';
-import * as Routes from '../../../../globals/routes';
-import { ProductFormData, } from '../types';
-import { Product } from '../../../../globals/interfaces/product';
-import MaskApply from '../../../../features/utils/MaskApply';
+import { IUseStates } from './states';
+import * as Routes from '../../../globals/routes';
+import { ProductFormData, } from './types';
+import { Product } from '../../../globals/interfaces/product';
+import MaskApply from '../../../features/utils/MaskApply';
 
 export interface IUseAPIs {
   newProduct: (product: FormData) => void;

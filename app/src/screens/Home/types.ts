@@ -1,4 +1,7 @@
-import { Product, } from '../../globals/interfaces/product';
+import { Product, ProductCard, } from '../../globals/interfaces/product';
+
+export type CardsState = Array<ProductCard>;
+
 export type SelectedProductState = null | Product;
 
 export type LeiteEDerivadosState = Array<Product>;

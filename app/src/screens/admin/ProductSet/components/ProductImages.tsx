@@ -11,7 +11,6 @@ import { styled } from '@mui/material/styles';
 
 import ConfirmationDialog from '../../../../ui/components/ConfirmationDialog';
 import { IUseStates } from '../states';
-import { IUseAPIs } from '../apis';
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',

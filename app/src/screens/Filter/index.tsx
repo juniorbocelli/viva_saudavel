@@ -9,13 +9,19 @@ import MainContentBox from '../../ui/components/pages/MainContentBox';
 import ProductCard from '../../ui/components/ProductCard';
 import ProductModal from '../../ui/components/ProductModal';
 
-import useAPIs, { FilterCodes } from '../../services/products/apis';
+import { FilterCodes, FilterSearch } from '../../globals/interfaces/product';
 import useStates from './states';
+import useAPIs from './apis';
+import useEffects from './effects';
 
 const Filter: React.FC<React.ReactFragment> = () => {
   const states = useStates();
+  const apis = useAPIs(states);
+  const effects = useEffects(apis);
   const params = useParams();
-  const apis = useAPIs();
+
+  if (typeof (params.filter) !== 'undefined')
+    effects.useComponentDidMount({ [params.filter]: true as FilterSearch })
 
   const getFilterName = (filterName: FilterCodes): string => {
     switch (filterName) {
@@ -42,18 +48,13 @@ const Filter: React.FC<React.ReactFragment> = () => {
     };
   };
 
-  React.useEffect(() => {
-    if (typeof (params) !== 'undefined')
-      states.setProducts(apis.getProductByFilter(params.filter as FilterCodes));
-  }, [params]);
-
   return (
     <MainContentBox primary={`Filtrado por: ${getFilterName(params.filter as FilterCodes)}`}>
       <ProductModal product={states.selectedProduct} setProduct={states.setSelectedProduct} />
 
       <div style={{ width: '100%' }}>
         {
-          states.products.length > 0 ?
+          states.cards.length > 0 ?
             <Box
               sx={
                 {
@@ -70,8 +71,8 @@ const Filter: React.FC<React.ReactFragment> = () => {
               }
             >
               {
-                states.products.map((item, key) => {
-                  return <ProductCard product={item} setProduct={states.setSelectedProduct} key={key} />;
+                states.cards.map((item, key) => {
+                  return <ProductCard productCard={item} setProduct={states.setSelectedProduct} key={key} />;
                 })
               }
             </Box>
