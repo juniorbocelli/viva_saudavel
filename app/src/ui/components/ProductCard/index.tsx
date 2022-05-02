@@ -7,7 +7,6 @@ import {
   Button,
   Typography,
   Menu,
-  MenuItem,
   Fade,
 
   useTheme,
@@ -18,15 +17,14 @@ import MaskApply from '../../../features/utils/MaskApply';
 import { Product } from '../../../globals/interfaces/product'
 import { CartItem } from '../../../globals/interfaces/cart';
 import { useGlobalContext } from '../../../features/globalContext/context';
+import { IProductCardProps } from './types';
 
-interface IProductCardProps {
-  product: Product;
-  setProduct: React.Dispatch<React.SetStateAction<null | Product>>;
-}
+import useAPIs from './apis';
 
-const ProductCard: React.FC<IProductCardProps> = ({ product, setProduct }) => {
+const ProductCard: React.FC<IProductCardProps> = ({ productCard, setProduct }) => {
   const theme = useTheme();
   const globalContext = useGlobalContext();
+  const apis = useAPIs(setProduct);
 
   // Menu controller
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -47,29 +45,11 @@ const ProductCard: React.FC<IProductCardProps> = ({ product, setProduct }) => {
       <CardMedia
         component="img"
         sx={{ height: { xs: 300, md: 220 }, cursor: 'pointer' }}
-        image={product.thumb}
-        alt={`Imagem - ${product.name} - ${product.producer}`}
-        onClick={() => setProduct(product)}
+        image={productCard.thumb}
+        alt={`Imagem - ${productCard.name} - ${productCard.producer}`}
+        onClick={() => apis.getProduct(productCard.id)}
       />
-      <CardContent sx={{ cursor: 'pointer', }} onClick={() => setProduct(product)}>
-        {/* Mobile name */}
-        {/* <Typography
-          gutterBottom variant="h5"
-          component="div"
-          sx={
-            {
-              display: { xs: 'block', md: 'none' },
-              fontWeight: '500',
-              fontSize: { xs: '1.5rem', md: '1.3rem' },
-              mb: { xs: theme.spacing(0.5), md: 0 },
-              mt: theme.spacing(-0.5)
-            }
-          }
-          color={theme.palette.primary.main}
-        >
-          {product.name.length < 21 ? product.name : `${product.name.slice(0, 18)}...`}
-        </Typography> */}
-
+      <CardContent sx={{ cursor: 'pointer', }} onClick={() => apis.getProduct(productCard.id)}>
         {/* Desktop and mobile name */}
         <Typography
           gutterBottom variant="h5"
@@ -86,7 +66,7 @@ const ProductCard: React.FC<IProductCardProps> = ({ product, setProduct }) => {
           color={theme.palette.primary.main}
           noWrap
         >
-          {product.name}
+          {productCard.name}
         </Typography>
 
         <Typography
@@ -101,7 +81,7 @@ const ProductCard: React.FC<IProductCardProps> = ({ product, setProduct }) => {
             }
           }
         >
-          {product.producer}
+          {productCard.producer}
         </Typography>
 
         <Typography
@@ -110,13 +90,13 @@ const ProductCard: React.FC<IProductCardProps> = ({ product, setProduct }) => {
           color="text.secondary"
           sx={{ fontWeight: 'bold', mb: 0 }}
         >
-          {`R$ ${MaskApply.maskMoney(product.price)}`}
+          {`R$ ${MaskApply.maskMoney(productCard.price)}`}
         </Typography>
       </CardContent>
       <CardActions sx={{ mt: theme.spacing(-1) }}>
         <Button
-          id={`fade-button-${product.id}`}
-          aria-controls={open ? `fade-menu-${product.id}` : undefined}
+          id={`fade-button-${productCard.id}`}
+          aria-controls={open ? `fade-menu-${productCard.id}` : undefined}
           aria-haspopup="true"
           aria-expanded={open ? 'true' : undefined}
           onClick={handleClick}
@@ -131,10 +111,10 @@ const ProductCard: React.FC<IProductCardProps> = ({ product, setProduct }) => {
         </Button>
 
         <Menu
-          id={`fade-menu-${product.id}`}
+          id={`fade-menu-${productCard.id}`}
           MenuListProps={
             {
-              'aria-labelledby': `fade-button-${product.id}`,
+              'aria-labelledby': `fade-button-${productCard.id}`,
             }
           }
           anchorEl={anchorEl}
@@ -142,10 +122,10 @@ const ProductCard: React.FC<IProductCardProps> = ({ product, setProduct }) => {
           onClose={() => handleClose()}
           TransitionComponent={Fade}
         >
-          <MenuItem onClick={() => handleClose(product, 'once')}>Uma vez</MenuItem>
+          {/* <MenuItem onClick={() => handleClose(product, 'once')}>Uma vez</MenuItem>
           <MenuItem onClick={() => handleClose(product, 'weekly')}>Semanal</MenuItem>
           <MenuItem onClick={() => handleClose(product, 'biweekly')}>Quinzenal</MenuItem>
-          <MenuItem onClick={() => handleClose(product, 'monthly')}>Mensal</MenuItem>
+          <MenuItem onClick={() => handleClose(product, 'monthly')}>Mensal</MenuItem> */}
         </Menu>
       </CardActions>
     </Card>

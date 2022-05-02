@@ -4,6 +4,8 @@ export type ProductProducerCode = 'aviacao' | 'agua-na-caixa' | 'beta-mel' | 'bu
 
 export type ProductCategory = 'leite-e-derivados' | 'queijos' | 'frios' | 'hortifruti' | 'bebidas' | 'doces-e-geleias';
 
+export type FilterCodes = 'a2a2' | 'sem-gluten' | 'kosher' | 'sem-lactose' | 'natural' | 'sem-adicao-de-acucar'
+
 export interface Filter {
   isKosher: boolean;
   isLactoseFree: boolean;
@@ -35,4 +37,24 @@ export interface Product {
   isActive?: boolean;
   quantity?: number;
   createdAT?: Date;
+};
+
+export interface FilterSearch {
+  isKosher?: boolean;
+  isLactoseFree?: boolean;
+  isA2A2?: boolean;
+  isGlutenFree?: boolean;
+  isSugarFree?: boolean;
+  isNatural?: boolean;
+
+  producerCode?: ProductProducerCode;
+  category?: ProductCategory;
+};
+
+export interface ProductCard {
+  id: string;
+  name: string;
+  producer: string;
+  price: string;
+  thumb: string;
 };

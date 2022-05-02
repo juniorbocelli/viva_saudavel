@@ -9,22 +9,17 @@ import MainContentBox from '../../ui/components/pages/MainContentBox';
 import ProductGallery from '../../ui/components/ProductGallery';
 import ProductModal from '../../ui/components/ProductModal';
 
-import useAPIs from '../../services/products/apis';
-
 import useStates from './states';
+import useAPIs from './apis';
+import useEffects from './effects';
 
 const Home: React.FC<React.ReactFragment> = (props) => {
   const states = useStates();
-  const apis = useAPIs();
+  const apis = useAPIs(states);
+  const effects = useEffects(apis);
   const theme = useTheme();
 
-  React.useEffect(() => {
-    states.setLeiteEDerivados(apis.getProductsByCategory('leite-e-derivados'));
-    states.setQueijos(apis.getProductsByCategory('queijos'));
-    states.setHortifruti(apis.getProductsByCategory('hortifruti'));
-    states.setBebidas(apis.getProductsByCategory('bebidas'));
-    states.setDocesEGeleias(apis.getProductsByCategory('doces-e-geleias'));
-  }, []);
+  effects.useComponentDidMount();
 
   return (
     <MainContentBox>
@@ -46,7 +41,7 @@ const Home: React.FC<React.ReactFragment> = (props) => {
       >
         Leite e Derivados
       </Typography>
-      <ProductGallery products={states.leiteEDerivados} setProduct={states.setSelectedProduct} />
+      <ProductGallery productCards={states.leiteEDerivados} setProduct={states.setSelectedProduct} />
 
       {/* Queijos Gallery */}
       <Typography
@@ -65,7 +60,7 @@ const Home: React.FC<React.ReactFragment> = (props) => {
       >
         Queijos
       </Typography>
-      <ProductGallery products={states.queijos} setProduct={states.setSelectedProduct} />
+      {/* <ProductGallery products={states.queijos} setProduct={states.setSelectedProduct} /> */}
 
       {/* Hortifruti Gallery */}
       <Typography
@@ -84,7 +79,7 @@ const Home: React.FC<React.ReactFragment> = (props) => {
       >
         Hortifruti
       </Typography>
-      <ProductGallery products={states.hortifruti} setProduct={states.setSelectedProduct} />
+      {/* <ProductGallery products={states.hortifruti} setProduct={states.setSelectedProduct} /> */}
 
       {/* Bebidas Gallery */}
       <Typography
@@ -103,7 +98,7 @@ const Home: React.FC<React.ReactFragment> = (props) => {
       >
         Bebidas
       </Typography>
-      <ProductGallery products={states.bebidas} setProduct={states.setSelectedProduct} />
+      {/* <ProductGallery products={states.bebidas} setProduct={states.setSelectedProduct} /> */}
 
 
       {/* Doces e Geléias Gallery */}
@@ -123,7 +118,7 @@ const Home: React.FC<React.ReactFragment> = (props) => {
       >
         Doces e Geléias
       </Typography>
-      <ProductGallery products={states.docesEGeleias} setProduct={states.setSelectedProduct} />
+      {/* <ProductGallery products={states.docesEGeleias} setProduct={states.setSelectedProduct} /> */}
     </MainContentBox >
   );
 };

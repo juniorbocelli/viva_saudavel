@@ -9,14 +9,16 @@ import MainContentBox from '../../ui/components/pages/MainContentBox';
 import ProductCard from '../../ui/components/ProductCard';
 import ProductModal from '../../ui/components/ProductModal';
 
-import useAPIs from '../../services/products/apis';
 import useStates from './states';
-import { Filter } from '../../globals/interfaces/product';
+import useAPIs from './apis';
+import useEffects from './effects';
+import { FilterSearch, Filter } from '../../globals/interfaces/product';
 
 const Producer: React.FC<React.ReactFragment> = () => {
   const states = useStates();
   const params = useParams();
-  const apis = useAPIs();
+  const apis = useAPIs(states);
+  const effects = useEffects(apis);
 
   const getProducerName = (producerName: Filter['producerCode']): string => {
     switch (producerName) {
@@ -84,14 +86,11 @@ const Producer: React.FC<React.ReactFragment> = () => {
         return "Yorgus";
 
       default:
-        return "Catgoria não especificada";
+        return "Produtor não especificado";
     };
   };
 
-  React.useEffect(() => {
-    if (typeof (params) !== 'undefined')
-      states.setProducts(apis.getProductsByProducer(params.producer as Filter['producerCode']));
-  }, [params]);
+  effects.useComponentDidMount({ producerCode: params.producer as FilterSearch['producerCode'] });
 
   return (
     <MainContentBox primary={`Produtos de: ${getProducerName(params.producer as Filter['producerCode'])}`}>
@@ -99,7 +98,7 @@ const Producer: React.FC<React.ReactFragment> = () => {
 
       <div style={{ width: '100%' }}>
         {
-          states.products.length > 0 ?
+          states.cards.length > 0 ?
           <Box
           sx={
             {
@@ -116,8 +115,8 @@ const Producer: React.FC<React.ReactFragment> = () => {
           }
         >
           {
-            states.products.map((item, key) => {
-              return <ProductCard product={item} setProduct={states.setSelectedProduct} key={key} />;
+            states.cards.map((item, key) => {
+              return <ProductCard productCard={item} setProduct={states.setSelectedProduct} key={key} />;
             })
           }
         </Box>

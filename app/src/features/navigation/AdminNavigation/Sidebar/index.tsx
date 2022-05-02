@@ -10,11 +10,14 @@ import {
   Collapse,
   Box,
 } from '@mui/material';
-import { matchPath, useLocation } from 'react-router-dom';
+import { matchPath, useLocation, useNavigate } from 'react-router-dom';
 
 import IconExpandLess from '@mui/icons-material/ExpandLess'
 import IconExpandMore from '@mui/icons-material/ExpandMore'
 import DescriptionIcon from '@mui/icons-material/Description';
+import HomeIcon from '@mui/icons-material/Home';
+import AssignmentIndIcon from '@mui/icons-material/AssignmentInd';
+import ShoppingBasketIcon from '@mui/icons-material/ShoppingBasket';
 
 import ChildItem from './components/ChildItem';
 import * as Routes from '../../../../globals/routes';
@@ -45,10 +48,8 @@ const productMenu: Array<MenuItem> = [
 
 export default function Navbar() {
   const location = useLocation();
-  const buceta = matchPath(Routes.SCREEN_ADMIN_CLIENTS, location.pathname);
+  const navigate = useNavigate();
   const [anchorEl, setAnchorEl] = React.useState<HTMLElement | null>(null);
-
-  console.log('buceta', buceta);
 
   const handlePopoverOpen = (event: React.MouseEvent<HTMLElement>) => {
     if (isOpen(event.currentTarget.getAttribute('data-control')))
@@ -87,6 +88,20 @@ export default function Navbar() {
       <Box sx={{ overflow: 'auto', }}
       >
         <List sx={{ width: `${drawerWidth}px`, }}>
+          {/**
+           * Home
+           */}
+          <ListItem
+            button onClick={handlePopoverOpen}
+            sx={{ width: `${drawerWidth - 1}px`, }}
+            data-control='home'
+            selected={!!matchPath(Routes.SCREEN_ADMIN_INDEX, location.pathname)}
+          >
+            <ListItemIcon>
+              <HomeIcon />
+            </ListItemIcon>
+            <ListItemText primary="Home" sx={{ fontSize: '1.0rem', }} />
+          </ListItem>
 
           {/**
            * Clients
@@ -98,7 +113,7 @@ export default function Navbar() {
             selected={isOpen('client') || isActive(clientMenu)}
           >
             <ListItemIcon>
-              <DescriptionIcon />
+              <AssignmentIndIcon />
             </ListItemIcon>
             <ListItemText primary="Clientes" sx={{ fontSize: '1.0rem', }} />
             {isOpen('client') ? <IconExpandLess /> : <IconExpandMore />}
@@ -144,6 +159,19 @@ export default function Navbar() {
             </List>
           </Collapse>
 
+          {/**
+           * Shop
+           */}
+          <ListItem
+            button onClick={() => navigate(Routes.SCREEN_INDEX)}
+            sx={{ width: `${drawerWidth - 1}px`, }}
+            data-control='shop'
+          >
+            <ListItemIcon>
+              <ShoppingBasketIcon />
+            </ListItemIcon>
+            <ListItemText primary="Loja" sx={{ fontSize: '1.0rem', }} />
+          </ListItem>
         </List>
       </Box>
     </Drawer>

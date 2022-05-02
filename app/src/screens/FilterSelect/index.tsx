@@ -14,13 +14,15 @@ import MainContentBox from '../../ui/components/pages/MainContentBox';
 import ProductCard from '../../ui/components/ProductCard';
 import ProductModal from '../../ui/components/ProductModal';
 
-import useAPIs from '../../services/products/apis';
 import useStates from './states';
-import { FilterCodes } from '../../services/products/apis';
+import useAPIs from './apis';
+import useEffects from './effects';
+import { FilterCodes, } from '../../globals/interfaces/product';
 
 const FilterSelect: React.FC<React.ReactFragment> = () => {
   const states = useStates();
-  const apis = useAPIs();
+  const apis = useAPIs(states);
+  const effects = useEffects(apis);
   const theme = useTheme();
 
   const getFilterName = (filterName: FilterCodes): string => {
@@ -44,18 +46,15 @@ const FilterSelect: React.FC<React.ReactFragment> = () => {
         return "Sem Lactose";
 
       default:
-        return "Catgoria não especificada";
+        return "Categoria não especificada";
     };
   };
-
-  React.useEffect(() => {
-    if (states.selectedFilter !== '')
-      states.setProducts(apis.getProductByFilter(states.selectedFilter));
-  }, [states.selectedFilter]);
 
   const handleChangeFilter = (event: SelectChangeEvent) => {
     states.setSelectedFilter(event.target.value as FilterCodes);
   };
+
+  effects.useFilterDidChanged(states.selectedFilter);
 
   return (
     <MainContentBox primary={states.selectedFilter ? `Filtro de: ${getFilterName(states.selectedFilter)}` : `Selecione um Filtro`}>
@@ -80,7 +79,7 @@ const FilterSelect: React.FC<React.ReactFragment> = () => {
 
       <div style={{ width: '100%' }}>
         {
-          states.products.length > 0 ?
+          states.cards.length > 0 ?
             <Box
               sx={
                 {
@@ -97,14 +96,14 @@ const FilterSelect: React.FC<React.ReactFragment> = () => {
               }
             >
               {
-                states.products.map((item, key) => {
-                  return <ProductCard product={item} setProduct={states.setSelectedProduct} key={key} />;
+                states.cards.map((item, key) => {
+                  return <ProductCard productCard={item} setProduct={states.setSelectedProduct} key={key} />;
                 })
               }
             </Box>
 
             :
-            states.selectedFilter !== '' &&
+            typeof(states.selectedFilter) !== 'undefined'  &&
             <Typography variant='h6' component='div' color='text.secondary'>
               Ainda não há produtos cadastrados para este filtro
             </Typography>

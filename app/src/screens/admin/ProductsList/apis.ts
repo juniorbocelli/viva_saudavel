@@ -1,8 +1,10 @@
-import getProductsAPI from './getProductsAPI';
-import getProductsByFiltersAPI from './getProductsByFiltersAPI';
+import {
+  getProductsAPI,
+  getProductsByFiltersAPI,
+} from '../../../services/products';
 
-import { IUseStates } from '../states';
-import { FilterSearch } from '../types';
+import { IUseStates } from './states';
+import { FilterSearch } from '../../../globals/interfaces/product';
 
 export interface IUseAPIs {
   getProducts: () => void;

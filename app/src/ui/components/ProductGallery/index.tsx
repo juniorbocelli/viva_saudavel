@@ -6,11 +6,11 @@ import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import { Box, useTheme } from '@mui/material';
 
-import { Product } from '../../../globals/interfaces/product';
-import ProductCard from '../../../ui/components/ProductCard';
+import { Product, ProductCard } from '../../../globals/interfaces/product';
+import ProductCardComponent from '../../../ui/components/ProductCard';
 
 interface IProductGalleryProps {
-  products: Array<Product>;
+  productCards: Array<ProductCard>;
   setProduct: React.Dispatch<React.SetStateAction<Product | null>>;
   filters?: Array<string>;
 };
@@ -19,7 +19,7 @@ const SlickButtonFix: React.FC<CustomArrowProps> = ({ currentSlide, slideCount, 
   <span  {...props}> {children} </span>
 );
 
-const ProductGallery: React.FC<IProductGalleryProps> = ({ products, setProduct, filters }) => {
+const ProductGallery: React.FC<IProductGalleryProps> = ({ productCards, setProduct, filters }) => {
   const theme = useTheme();
 
   const settings_xl = {
@@ -60,9 +60,9 @@ const ProductGallery: React.FC<IProductGalleryProps> = ({ products, setProduct, 
       <Box sx={{ width: '90%', display: { xs: 'block', md: 'none', xl: 'none' } }}>
         <Slider {...settings_sx}>
           {
-            products.map((product, key) => {
+            productCards.map((card, key) => {
               return (
-                <ProductCard product={product} setProduct={setProduct} key={key} />
+                <ProductCardComponent productCard={card} setProduct={setProduct} key={key} />
               );
             })
           }
@@ -72,9 +72,9 @@ const ProductGallery: React.FC<IProductGalleryProps> = ({ products, setProduct, 
       <Box sx={{ width: '90%', display: { xs: 'none', md: 'block', xl: 'none' } }}>
         <Slider {...settings_md}>
           {
-            products.map((product, key) => {
+            productCards.map((card, key) => {
               return (
-                <ProductCard product={product} setProduct={setProduct} key={key} />
+                <ProductCardComponent productCard={card} setProduct={setProduct} key={key} />
               );
             })
           }
@@ -84,9 +84,9 @@ const ProductGallery: React.FC<IProductGalleryProps> = ({ products, setProduct, 
       <Box sx={{ width: '90%', display: { xs: 'none', md: 'none', xl: 'block' } }}>
         <Slider {...settings_xl}>
           {
-            products.map((product, key) => {
+            productCards.map((card, key) => {
               return (
-                <ProductCard product={product} setProduct={setProduct} key={key} />
+                <ProductCardComponent productCard={card} setProduct={setProduct} key={key} />
               );
             })
           }

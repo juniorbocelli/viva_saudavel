@@ -62,5 +62,8 @@
     "@types/react-slick": "^0.23.8",
     "@types/react-text-mask": "^5.4.10"
   },
-  "proxy": "http://localhost:5000"
+  "proxy": "http://localhost:5000",
+  "browser": {
+    "crypto": false
+  }
 }
