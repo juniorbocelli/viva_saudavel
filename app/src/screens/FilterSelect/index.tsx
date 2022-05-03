@@ -17,7 +17,6 @@ import ProductModal from '../../ui/components/ProductModal';
 import useStates from './states';
 import useAPIs from './apis';
 import useEffects from './effects';
-import { FilterCodes, } from '../../globals/interfaces/product';
 
 const FilterSelect: React.FC<React.ReactFragment> = () => {
   const states = useStates();
@@ -25,7 +24,7 @@ const FilterSelect: React.FC<React.ReactFragment> = () => {
   const effects = useEffects(apis);
   const theme = useTheme();
 
-  const getFilterName = (filterName: FilterCodes): string => {
+  const getFilterName = (filterName: string): string => {
     switch (filterName) {
       case 'a2a2':
         return "A2A2";
@@ -51,13 +50,13 @@ const FilterSelect: React.FC<React.ReactFragment> = () => {
   };
 
   const handleChangeFilter = (event: SelectChangeEvent) => {
-    states.setSelectedFilter(event.target.value as FilterCodes);
+    states.setSelectedFilter(event.target.value);
   };
 
   effects.useFilterDidChanged(states.selectedFilter);
 
   return (
-    <MainContentBox primary={states.selectedFilter ? `Filtro de: ${getFilterName(states.selectedFilter)}` : `Selecione um Filtro`}>
+    <MainContentBox primary={states.selectedFilter ? `Filtro de: ${getFilterName(states.selectedFilter)}` : `Selecione um Filtro`} states={states}>
       <ProductModal product={states.selectedProduct} setProduct={states.setSelectedProduct} />
 
       <FormControl fullWidth sx={{ mb: theme.spacing(1) }}>
@@ -103,7 +102,7 @@ const FilterSelect: React.FC<React.ReactFragment> = () => {
             </Box>
 
             :
-            typeof(states.selectedFilter) !== 'undefined'  &&
+            typeof (states.selectedFilter) !== 'undefined' &&
             <Typography variant='h6' component='div' color='text.secondary'>
               Ainda não há produtos cadastrados para este filtro
             </Typography>

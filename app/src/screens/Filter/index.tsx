@@ -12,16 +12,11 @@ import ProductModal from '../../ui/components/ProductModal';
 import { FilterCodes, FilterSearch } from '../../globals/interfaces/product';
 import useStates from './states';
 import useAPIs from './apis';
-import useEffects from './effects';
 
 const Filter: React.FC<React.ReactFragment> = () => {
   const states = useStates();
   const apis = useAPIs(states);
-  const effects = useEffects(apis);
   const params = useParams();
-
-  if (typeof (params.filter) !== 'undefined')
-    effects.useComponentDidMount({ [params.filter]: true as FilterSearch })
 
   const getFilterName = (filterName: FilterCodes): string => {
     switch (filterName) {
@@ -44,12 +39,43 @@ const Filter: React.FC<React.ReactFragment> = () => {
         return "Sem adição de açúcar";
 
       default:
-        return "Catgoria não especificada";
+        return "Filtro não especificado";
     };
   };
 
+  const getFilterCode = (filterName: FilterCodes): string => {
+    switch (filterName) {
+      case 'a2a2':
+        return "isA2A2";
+
+      case 'sem-gluten':
+        return "isGlutenFree";
+
+      case 'kosher':
+        return "isKosher";
+
+      case 'sem-lactose':
+        return "isLactoseFree";
+
+      case 'natural':
+        return "isNatural";
+
+      case 'sem-adicao-de-acucar':
+        return "isSugarFree";
+
+      default:
+        return "default";
+    };
+  };
+
+  React.useEffect(() => {
+    console.log("merda", [params.filter])
+    if (typeof (params.filter) !== 'undefined')
+      apis.getProductsByFilters({ [getFilterCode(params.filter as FilterCodes)]: true as FilterSearch })
+  }, [params.filter]);
+
   return (
-    <MainContentBox primary={`Filtrado por: ${getFilterName(params.filter as FilterCodes)}`}>
+    <MainContentBox primary={`Filtrado por: ${getFilterName(params.filter as FilterCodes)}`} states={states}>
       <ProductModal product={states.selectedProduct} setProduct={states.setSelectedProduct} />
 
       <div style={{ width: '100%' }}>

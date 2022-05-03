@@ -12,16 +12,17 @@ import ProductModal from '../../ui/components/ProductModal';
 
 import useStates from './states';
 import useAPIs from './apis';
-import useEffects from './effects';
 import { FilterSearch, Filter } from '../../globals/interfaces/product';
 
 const Category: React.FC<React.ReactFragment> = () => {
   const states = useStates();
   const params = useParams();
   const apis = useAPIs(states);
-  const effects = useEffects(apis);
 
-  effects.useComponentDidMount({ category: params.category as FilterSearch['category'] });
+  React.useEffect(() => {
+    if (typeof (params.category) !== 'undefined')
+      apis.getProductsByFilters({ category: params.category as FilterSearch['category'] });
+  }, [params.category]);
 
   const getCategoryName = (categoryName: Filter['category']): string => {
     switch (categoryName) {
