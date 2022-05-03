@@ -60,7 +60,26 @@ const Home: React.FC<React.ReactFragment> = (props) => {
       >
         Queijos
       </Typography>
-      {/* <ProductGallery products={states.queijos} setProduct={states.setSelectedProduct} /> */}
+      <ProductGallery productCards={states.queijos} setProduct={states.setSelectedProduct} />
+
+      {/* Frios Gallery */}
+      <Typography
+        variant='h3'
+        component='div'
+        color='primary'
+
+        sx={
+          {
+            fontSize: { xs: '1.6rem', md: '2.6rem' },
+            mt: { xs: theme.spacing(1.0), md: theme.spacing(2) },
+            ml: { md: theme.spacing(2) },
+            mb: { xs: theme.spacing(1.0), md: theme.spacing(2) },
+          }
+        }
+      >
+        Frios
+      </Typography>
+      <ProductGallery productCards={states.frios} setProduct={states.setSelectedProduct} />
 
       {/* Hortifruti Gallery */}
       <Typography
@@ -79,7 +98,7 @@ const Home: React.FC<React.ReactFragment> = (props) => {
       >
         Hortifruti
       </Typography>
-      {/* <ProductGallery products={states.hortifruti} setProduct={states.setSelectedProduct} /> */}
+      <ProductGallery productCards={states.hortifruti} setProduct={states.setSelectedProduct} />
 
       {/* Bebidas Gallery */}
       <Typography
@@ -98,7 +117,7 @@ const Home: React.FC<React.ReactFragment> = (props) => {
       >
         Bebidas
       </Typography>
-      {/* <ProductGallery products={states.bebidas} setProduct={states.setSelectedProduct} /> */}
+      <ProductGallery productCards={states.bebidas} setProduct={states.setSelectedProduct} />
 
 
       {/* Doces e Geléias Gallery */}
@@ -118,7 +137,7 @@ const Home: React.FC<React.ReactFragment> = (props) => {
       >
         Doces e Geléias
       </Typography>
-      {/* <ProductGallery products={states.docesEGeleias} setProduct={states.setSelectedProduct} /> */}
+      <ProductGallery productCards={states.docesEGeleias} setProduct={states.setSelectedProduct} />
     </MainContentBox >
   );
 };

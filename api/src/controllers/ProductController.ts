@@ -82,6 +82,7 @@ class ProductController {
       // Get registered and updated products
       const previousProduct = await ucManagerProduct.get(id);
       const receivedProduct = new Product(JSON.parse(uploadResult.body.product) as Product);
+      receivedProduct.id = previousProduct.id;
 
       // Delete removed images and return the list of remaining images
       const remainingImages = await manageImages.deleteRemovedImages(previousProduct.images, receivedProduct.images);
@@ -92,22 +93,22 @@ class ProductController {
       uploadedFiles = uploadResult.files;
 
       // New images are pushed after of already registered
-      previousProduct.images = [];
+      receivedProduct.images = [];
 
       remainingImages.forEach(image => {
-        previousProduct.images.push(`${process.env.DEFAULT_IMAGE_PRODUCT_STORAGE_FOLDER?.replace(".", "")}/${image}`);
+        receivedProduct.images.push(`${process.env.DEFAULT_IMAGE_PRODUCT_STORAGE_FOLDER?.replace(".", "")}/${image}`);
       });
 
       // Register new images
       uploadedFiles.forEach(file => {
-        previousProduct.images.push(`${process.env.DEFAULT_IMAGE_PRODUCT_STORAGE_FOLDER?.replace(".", "")}/${file.filename}`);
+        receivedProduct.images.push(`${process.env.DEFAULT_IMAGE_PRODUCT_STORAGE_FOLDER?.replace(".", "")}/${file.filename}`);
       });
 
       // If currentThumb = null, else define new thumb
       if (currentThumb === null) {
-        previousProduct.thumb = null;
+        receivedProduct.thumb = null;
 
-        let firstImage = `${previousProduct.images[0].split('/').at(-1)}`;
+        let firstImage = `${receivedProduct.images[0].split('/').at(-1)}`;
         let thumbName = `${firstImage.split('.')[0]}_thumb.${firstImage.split('.')[1]}`;
 
         // res.status(200).json({ caralho: thumbName })
@@ -120,10 +121,10 @@ class ProductController {
               throw new Error(`Ocorreu um erro ao tentar criar miniatura da imagem principal: ${error}`);
           });
 
-        previousProduct.thumb = `${process.env.DEFAULT_IMAGE_PRODUCT_STORAGE_FOLDER?.replace(".", "")}/${thumbName}`;
+        receivedProduct.thumb = `${process.env.DEFAULT_IMAGE_PRODUCT_STORAGE_FOLDER?.replace(".", "")}/${thumbName}`;
       };
 
-      res.status(200).json({ product: await ucManagerProduct.update(previousProduct) });
+      res.status(200).json({ product: await ucManagerProduct.update(receivedProduct) });
     } catch (error: any) {
       res.status(200).json({ error: error.message });
     };
