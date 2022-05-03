@@ -4,4 +4,4 @@ export type SelectedProductState = null | Product;
 
 export type CardsState = Array<ProductCard>;
 ;
-export type SelectedFilterState = '' | FilterCodes;
+export type SelectedFilterState = string;

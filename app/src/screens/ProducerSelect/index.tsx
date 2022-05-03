@@ -102,7 +102,7 @@ const ProducerSelect: React.FC<React.ReactFragment> = () => {
   effects.useFilterDidChanged(states.selectedProducer);
 
   return (
-    <MainContentBox primary={states.selectedProducer ? `Produtos de: ${getProducerName(states.selectedProducer)}` : `Selecione uma Marca`}>
+    <MainContentBox primary={states.selectedProducer ? `Produtos de: ${getProducerName(states.selectedProducer)}` : `Selecione uma Marca`} states={states}>
       <ProductModal product={states.selectedProduct} setProduct={states.setSelectedProduct} />
 
       <FormControl fullWidth sx={{ mb: theme.spacing(1) }}>

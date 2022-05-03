@@ -146,10 +146,10 @@ class ProductController {
 
     try {
       const params = req.query;
-      const filterToSearch = {};
+      const filterToSearch: Object = {};
 
       Object.keys(params).forEach(key => {
-        Object.defineProperty(filterToSearch, `filters.${key}`, { value: params[key] });
+        Object.defineProperty(filterToSearch, `filters.${key}`, { value: params[key], enumerable: true });
       });
 
       res.status(200).json({ products: await ucManagerProduct.getByFilter(filterToSearch) });
