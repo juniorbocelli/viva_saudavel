@@ -10,7 +10,7 @@ export interface IUseAPIs {
 export default function useAPIs(states: IUseStates): IUseAPIs {
   const getProducts = () => {
     states.setIsQueryingAPI(true);
-    
+
     getProductsAPI()
       .then((response) => {
         console.log('response => getProductsAPI', response);
@@ -22,6 +22,11 @@ export default function useAPIs(states: IUseStates): IUseAPIs {
 
         const allProducts: Array<Product> = response.data.products;
         let leitesEDerivados: Array<ProductCard> = [];
+        let queijos: Array<ProductCard> = [];
+        let frios: Array<ProductCard> = [];
+        let hortifruti: Array<ProductCard> = [];
+        let bebidas: Array<ProductCard> = [];
+        let docesEGeleias: Array<ProductCard> = [];
 
         allProducts.forEach(product => {
           let card: ProductCard = {
@@ -32,9 +37,29 @@ export default function useAPIs(states: IUseStates): IUseAPIs {
             thumb: product.thumb!,
           };
 
-          switch(product.filters.category) {
+          switch (product.filters.category) {
             case 'leite-e-derivados':
               leitesEDerivados.push(card);
+              break;
+
+            case 'queijos':
+              queijos.push(card);
+              break;
+
+            case 'frios':
+              frios.push(card);
+              break;
+
+            case 'hortifruti':
+              hortifruti.push(card);
+              break;
+
+            case 'bebidas':
+              bebidas.push(card);
+              break;
+
+            case 'doces-e-geleias':
+              docesEGeleias.push(card);
               break;
 
             default:
@@ -43,6 +68,11 @@ export default function useAPIs(states: IUseStates): IUseAPIs {
         });
 
         states.setLeiteEDerivados(leitesEDerivados);
+        states.setQueijos(queijos);
+        states.setFrios(frios);
+        states.setHortifruti(hortifruti);
+        states.setBebidas(bebidas);
+        states.setDocesEGeleias(docesEGeleias);
       })
       .catch((error) => {
         console.log('error => getProductsAPI', error);

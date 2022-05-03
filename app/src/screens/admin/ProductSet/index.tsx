@@ -27,6 +27,7 @@ import { ProductFormData, } from './types';
 import useStates from './states';
 import useAPIs from './apis';
 import useEffects from './effects';
+import Math from '../../../features/utils/Math';
 
 const ProductSet: React.FC<React.ReactFragment> = () => {
   const theme = useTheme();
@@ -36,8 +37,14 @@ const ProductSet: React.FC<React.ReactFragment> = () => {
   const effects = useEffects(apis);
   const params = useParams();
 
+  const resetForm = () => {
+    methods.reset();
+    states.setImages([]);
+    states.setProductImages([]);
+  }
+
   effects.useComponentDidMount(params.id, states.setProductId);
-  effects.useProductIdDidChanged(states.productId);
+  effects.useProductIdDidChanged(states.productId, resetForm);
 
   const onSubmit = (data: ProductFormData) => {
     console.log('onSubmit', data);
@@ -67,8 +74,8 @@ const ProductSet: React.FC<React.ReactFragment> = () => {
         category: data.category as ProductCategory,
       },
 
-      price: parseFloat(data.price),
-      quantity: data.quantity ? parseFloat(data.quantity) : undefined,
+      price: Math.currencyToFloat(data.price),
+      quantity: Math.floatOrUndefined(data.quantity),
 
       images: states.productImages,
     };

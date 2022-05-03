@@ -35,14 +35,6 @@ export default function useAPIs(states: IUseStates, methods: UseFormReturn<Produ
           return;
         };
 
-        const product: Product = response.data.product;
-
-        states.setProductImages([]);
-        product.images.forEach(image => {
-          states.setProductImages(state => [...state, image]);
-        });
-        states.setImages([]);
-
         navigation(`${Routes.SCREEN_ADMIN_PRODUCT_EDIT.replace(":id", response.data.product._id)}`, { replace: true });
       })
       .catch((error: AxiosError) => {

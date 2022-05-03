@@ -5,7 +5,7 @@ import { IUseStates } from './states';
 
 export interface IUseEffects {
   useComponentDidMount: (id: string | undefined, setProductId: IUseStates['setProductId']) => void;
-  useProductIdDidChanged: (id: IUseStates['productId']) => void;
+  useProductIdDidChanged: (id: IUseStates['productId'], resetForm: () => void) => void;
 };
 
 export default function useEffects(apis: IUseAPIs): IUseEffects {
@@ -15,8 +15,10 @@ export default function useEffects(apis: IUseAPIs): IUseEffects {
     }, [id, setProductId]);
   };
 
-  const useProductIdDidChanged = (id: IUseStates['productId']) => {
+  const useProductIdDidChanged = (id: IUseStates['productId'], resetForm: () => void) => {
     React.useEffect(() => {
+      resetForm();
+
       if (typeof (id) !== 'undefined')
         apis.getProduct();
     }, [id]);
