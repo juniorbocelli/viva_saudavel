@@ -1,8 +1,12 @@
 export interface CartItem {
-  id: string;
+  productId: string;
+  frequency: 'once' | 'weekly' | 'biweekly' | 'monthly';
+  
   name: string;
   price: number;
-  image: string;
-  frequency: 'once' | 'weekly' | 'biweekly' | 'monthly';
+  thumb: string;
+};
+
+export interface CartItemContainer extends CartItem {
   quantity: number;
 };

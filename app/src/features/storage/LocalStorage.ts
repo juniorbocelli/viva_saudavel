@@ -1,4 +1,4 @@
-import crypto from 'crypto';
+import * as CryptoJS from 'crypto-js';
 
 class StoragedValues {
   private static instance: StoragedValues;
@@ -41,7 +41,7 @@ class StoragedValues {
     if (!localStorage.getItem('cart_key'))
       this.setCartKey();
 
-  return localStorage.getItem('cart_key') || this.getDefaultCartKey();
+    return localStorage.getItem('cart_key') || this.getDefaultCartKey();
   };
 
 
@@ -53,8 +53,20 @@ class StoragedValues {
   };
 
   private getDefaultCartKey(): string {
-    return crypto.randomBytes(16).toString('hex');
-  }
+    return this.getHash();
+  };
+
+
+
+  getHash(): string {
+    let date = new Date();
+    let string = CryptoJS.SHA224(`${date.toUTCString()}${new Date().getMilliseconds() ** date.getUTCSeconds()}`).toString();
+
+    for (let i = 0; i < parseInt(String(date.getMilliseconds()).slice(-2)); i++)
+      string = CryptoJS.SHA224(string).toString();
+
+    return string;
+  };
 };
 
 export default StoragedValues.getInstance();

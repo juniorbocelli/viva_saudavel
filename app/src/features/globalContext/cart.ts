@@ -1,117 +1,29 @@
-import { IUseStates, } from './types';
-import { Product } from '../../globals/interfaces/product';
-import { CartItem } from '../../globals/interfaces/cart';
-
-interface IUseCart {
-  addProduct: (product: Product, frequency: CartItem['frequency']) => void;
-  getCartLenght: () => number;
-  getCartValue: () => number;
-  getQuantityFromItem: (productId: Product['id']) => number;
-  addItemByKey: (itemKey: number) => void;
-  removeItemByKey: (itemKey: number) => void;
-  getProductsByFrequency: (frequency: CartItem['frequency']) => { quantity: number, items: Array<[CartItem, number]> };
-};
+import { IUseStates, IUseCart } from './types';
+import { CartItem, CartItemContainer } from '../../globals/interfaces/cart';
 
 export default function useCart(states: IUseStates): IUseCart {
-  // Adiciona novo produto ao carrinho
-  const addProduct = (product: Product, frequency: CartItem['frequency']) => {
-    let newCart = states.cart.slice();
-    let modifiedItens = [];
+  const getTotalItems = (items: Array<CartItemContainer>): number => {
+    let total: number = 0;
 
-    // Passa por cada produto para ver se cria uma nova entrada ou altera uma existente
-    modifiedItens = states.cart.filter((item, key) => {
-      if (item.id === product.id && item.frequency === frequency) {
-        newCart[key] = { ...newCart[key], quantity: newCart[key].quantity + 1 };
-        states.setCart(newCart);
-        return item;
-      };
+    items.forEach((item) => {
+      total = total + item.quantity;
     });
 
-    if (modifiedItens.length === 0)
-      newCart.push(
-        {
-          id: product.id as string,
-          name: product.name,
-          price: product.price,
-          image: product.images[0],
-          frequency: frequency,
-          quantity: 1,
-        }
-      );
-
-    states.setCart(newCart)
+    return total;
   };
 
-  const getCartLenght = (): number => {
-    let products = 0;
+  const getTotalCartPrice = (items: Array<CartItem>): number => {
+    let total: number = 0;
 
-    states.cart.forEach((item) => {
-      products += item.quantity;
+    items.forEach((item) => {
+      total = total + item.price;
     });
 
-    return products;
-  };
-
-  const getCartValue = (): number => {
-    let value = 0;
-
-    states.cart.forEach((item) => {
-      value += item.quantity * item.price;
-    });
-
-    return value;
-  };
-
-  const getQuantityFromItem = (productId: Product['id']): number => {
-    let quantity = 0;
-
-    states.cart.forEach((item) => {
-      if (item.id === productId)
-        quantity += item.quantity;
-    });
-
-    return quantity;
-  };
-
-  const addItemByKey = (itemKey: number) => {
-    let newCart = states.cart.slice();
-
-    newCart[itemKey] = { ...newCart[itemKey], quantity: newCart[itemKey].quantity + 1 }
-
-    states.setCart(newCart);
-  };
-
-  const removeItemByKey = (itemKey: number) => {
-    let newCart = states.cart.slice();
-
-    if (newCart[itemKey].quantity > 1)
-      newCart[itemKey] = { ...newCart[itemKey], quantity: newCart[itemKey].quantity - 1 }
-    else
-      newCart.splice(itemKey, 1);
-
-    states.setCart(newCart);
-  };
-
-  const getProductsByFrequency = (frequency: CartItem['frequency']) => {
-    let itemsCategoty: Array<[CartItem, number]> = [];
-    let quantity = 0;
-
-    states.cart.forEach((item, key) => {
-      if (item.frequency === frequency) {
-        quantity += item.quantity;
-        itemsCategoty.push([item, key]);
-      };
-    });
-    return { quantity: quantity, items: itemsCategoty };
+    return total;
   };
 
   return {
-    addProduct,
-    getCartLenght,
-    getCartValue,
-    getQuantityFromItem,
-    addItemByKey,
-    removeItemByKey,
-    getProductsByFrequency,
+    getTotalItems,
+    getTotalCartPrice,
   };
 };

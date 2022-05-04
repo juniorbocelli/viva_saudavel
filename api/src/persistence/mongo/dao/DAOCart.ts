@@ -25,7 +25,7 @@ class DAOCart implements DAO<Cart, string> {
       createdAt: cart.createdAt,
       isRegistered: cart.isRegistered,
 
-      itens: cart.itens,
+      items: cart.items,
     });
     await cartSchema.save();
 
@@ -49,7 +49,7 @@ class DAOCart implements DAO<Cart, string> {
       createdAt: foundedCart.createdAt,
       isRegistered: cart.isRegistered || cart.isRegistered,
 
-      itens: cart.itens || foundedCart.itens,
+      items: cart.items || foundedCart.items,
     };
 
     return await CartSchema.findByIdAndUpdate(cart.id, updatedCartData, { new: true });
@@ -97,7 +97,7 @@ class DAOCart implements DAO<Cart, string> {
       createdAt: cart.createdAt,
       isRegistered: cart.isRegistered,
 
-      itens: cart.itens,
+      items: cart.items,
     };
 
     return new Cart(foundedCart);
@@ -115,7 +115,7 @@ class DAOCart implements DAO<Cart, string> {
         createdAt: cart.createdAt,
         isRegistered: cart.isRegistered,
 
-        itens: cart.itens,
+        items: cart.items,
       };
       cartsToReturn.push(new Cart(foundedCart));
     });
@@ -134,7 +134,7 @@ class DAOCart implements DAO<Cart, string> {
         createdAt: cart.createdAt,
         isRegistered: cart.isRegistered,
 
-        itens: cart.itens,
+        items: cart.items,
       };
       cartsToReturn.push(new Cart(foundedCart));
     });

@@ -54,3 +54,9 @@ export const API_PRODUCT_GET = `${API_ROOT}/product/:id/`;  // GET
 export const API_PRODUCT_UPDATE = `${API_ROOT}/product/:id/`;  // PUT
 export const API_PRODUCT_GET_ALL = `${API_ROOT}/products/`;  // GET
 export const API_PRODUCT_GET_BY_FILTER = `${API_ROOT}/products/filtered/`;  // GET
+
+export const API_CART_GET = `${API_ROOT}/clients/:id/carts/`;    // GET
+export const API_CART_ADD_ITEM = `${API_ROOT}/clients/:id/carts/add-item/`;    // PATH
+export const API_CART_REMOVE_ITEM = `${API_ROOT}/clients/:id/carts/remove-item`;   // PATH
+export const API_CART_CHANGE_CIENT_ID = `${API_ROOT}/clients/:id/cart/change-client/`;  // PATH
+export const API_CART_DELETE = `${API_ROOT}clients/:id/carts/`   // DELETE

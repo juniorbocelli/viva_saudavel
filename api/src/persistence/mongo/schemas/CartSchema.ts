@@ -3,7 +3,7 @@ import Cart from '../../../models/entities/Cart';
 
 const cartSchema = new mongoose.Schema<Cart>({
   clientId: {
-    type: mongoose.Types.ObjectId,
+    type: String,
     required: [true, 'O id do cliente é obrigatório'],
   },
   isRegistered: {
@@ -14,14 +14,12 @@ const cartSchema = new mongoose.Schema<Cart>({
     type: Date,
     default: new Date(),
   },
-  itens: [
+  items: [
     {
       productId: {
         type: mongoose.Types.ObjectId,
         required: [true, 'O id do produto é obrigatório'],
-      }
-    },
-    {
+      },
       frequency: {
         type: String,
         enum: {
@@ -29,7 +27,16 @@ const cartSchema = new mongoose.Schema<Cart>({
           message: 'O valor {VALUE} é inválido',
         },
         required: [true, 'A frequência do produto é obrigatória'],
-      }
+      },
+      name: {
+        type: String,
+      },
+      price: {
+        type: Number,
+      },
+      thumb: {
+        type: String,
+      },
     },
   ],
 });

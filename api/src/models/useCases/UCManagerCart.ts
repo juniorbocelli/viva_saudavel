@@ -4,8 +4,8 @@ import DAOCart from '../../persistence/mongo/dao/DAOCart';
 import DAOProduct from '../../persistence/mongo/dao/DAOProduct';
 
 class UCManagerCart {
-  daoCart: DAOCart;
-  daoProduct: DAOProduct;
+  private daoCart: DAOCart;
+  private daoProduct: DAOProduct;
 
   constructor(daoCart: DAOCart, daoProduct: DAOProduct) {
     this.daoCart = daoCart;
@@ -22,7 +22,7 @@ class UCManagerCart {
       createdAt: null,
       isRegistered: null,
 
-      itens: null,
+      items: null,
     };
     let cart: Cart;
 
@@ -31,30 +31,31 @@ class UCManagerCart {
     else
       cart = carts[0];
 
-    let itens: Array<CartItem> = []
+    if (cart.items === null)
+      cart.items = [];
 
     // Previne invalid products products in cart
-    cart.itens?.forEach(async (item) => {
-      let product = await this.daoProduct.select(item.productId as string);
+    for (let i = 0; i < cart.items.length; i++) {
+      let product = await this.daoProduct.select(cart.items[i].productId as string);
 
       if (product !== null) {
         if (product.name)
-          item.name = product.name;
+          cart.items[i].name = product.name;
 
         if (product.price)
-          item.price = product.price;
+          cart.items[i].price = product.price;
 
-        if (product.isActive)
-          itens.push(item);
+        if (product.thumb)
+          cart.items[i].thumb = product.thumb;
+      } else {
+        cart.items.splice(i, 1);
       };
-    });
-
-    cart.itens = itens;
+    };
 
     return await this.daoCart.saveOrUpdate(cart);
   };
 
-  public async addProduct(cartItem: CartItem, clientId: string) {
+  public async addItem(cartItem: CartItem, clientId: string) {
     const cart = await this.get(clientId);
 
     if (cart === null)
@@ -74,21 +75,24 @@ class UCManagerCart {
     if (product.price)
       cartItem.price = product.price;
 
-    cart.itens?.push(cartItem);
+    if (product.thumb)
+      cartItem.thumb = product.thumb;
 
-    return await this.daoCart.update(cart);
+    cart.items?.push(cartItem);
+
+    return this.daoCart.update(cart);
   };
 
-  public async removeProduct(cartItem: CartItem, clientId: string) {
+  public async removeItem(cartItem: CartItem, clientId: string) {
     const cart = await this.get(clientId);
 
     if (cart === null)
       throw new Error("Carrinho inválido");
 
-    if (cart?.itens)
-      for (let i = 0; i < cart?.itens.length; i++) {
-        if (cartItem.productId === cart.itens[i].productId && cartItem.frequency === cart.itens[i].frequency)
-          cart.itens.splice(i, 1);
+    if (cart?.items)
+      for (let i = 0; i < cart?.items.length; i++) {
+        if (cartItem.productId === cart.items[i].productId && cartItem.frequency === cart.items[i].frequency)
+          cart.items.splice(i, 1);
       };
 
     return await this.daoCart.save(cart);

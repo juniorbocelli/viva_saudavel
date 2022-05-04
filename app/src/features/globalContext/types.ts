@@ -1,27 +1,71 @@
-import React from 'react';
-import { Product } from '../../globals/interfaces/product';
-import { CartItem } from '../../globals/interfaces/cart';
+import { CartItem, CartItemContainer } from '../../globals/interfaces/cart';
 
-export type Cart = Array<CartItem>;
+export type CartState = Array<CartItem>;
 
-export type Products = Array<Product>;
+export type OnceItemsState = Array<CartItemContainer>;
+
+export type WeeklyItemsState = Array<CartItemContainer>;
+export type BiweeklyItemsState = Array<CartItemContainer>;
+export type MonthlyItemsState = Array<CartItemContainer>;
+
+export type IsQueryingAPIState = boolean;
+
+export type DialogMessage = {
+  title?: string;
+  message: string;
+};
+export type DialogMessageState = undefined | DialogMessage;
 
 export interface IUseStates {
-  cart: Cart;
-  setCart: React.Dispatch<React.SetStateAction<Cart>>;
+  isQueryingAPI: IsQueryingAPIState;
+  setIsQueryingAPI: React.Dispatch<React.SetStateAction<IsQueryingAPIState>>;
+
+  dialogMessage: DialogMessageState;
+  setDialogMessage: React.Dispatch<React.SetStateAction<DialogMessageState>>;
+  
+  cart: CartState;
+  setCart: React.Dispatch<React.SetStateAction<CartState>>;
+
+  onceItems: OnceItemsState;
+  setOnceItems: React.Dispatch<React.SetStateAction<OnceItemsState>>;
+
+  weeklyItems: WeeklyItemsState;
+  setWeeklyItems: React.Dispatch<React.SetStateAction<WeeklyItemsState>>;
+
+  biweeklyItems: BiweeklyItemsState;
+  setBiweeklyItems: React.Dispatch<React.SetStateAction<BiweeklyItemsState>>;
+
+  monthlyItems: MonthlyItemsState;
+  setMonthlyItems: React.Dispatch<React.SetStateAction<MonthlyItemsState>>;
 };
 
 export interface CartProvider {
-  cart: Cart;
-  addItem: (product: Product, frequency: CartItem['frequency']) => void;
-  getCartLenght: () => number;
-  getCartValue: () => number;
-  getQuantityFromItem: (productId: Product['id']) => number
-  addItemByKey: (itemKey: number) => void;
-  removeItemByKey: (itemKey: number) => void;
-  getProductsByFrequency: (frequency: CartItem['frequency']) => { quantity: number, items: Array<[CartItem, number]> };
-}
+  cart: CartState;
+
+  onceItems: OnceItemsState;
+  weeklyItems: WeeklyItemsState;
+  biweeklyItems: BiweeklyItemsState;
+  monthlyItems: MonthlyItemsState;
+
+  getCart: (clientId: string) => void;
+  addItem: (id: string, productId: CartItem['productId'], frequency: CartItem['frequency']) => void;
+  removeItem: (id: string, productId: CartItem['productId'], frequency: CartItem['frequency']) => void;
+
+  getTotalItems: (items: Array<CartItemContainer>) => number;
+  getTotalCartPrice: (items: Array<CartItem>) => number; 
+};
 
 export interface IGlobalContext {
   cart: CartProvider;
+};
+
+export interface IUseCartAPIs {
+  getCart: (clientId: string) => void;
+  addItem: (id: string, productId: CartItem['productId'], frequency: CartItem['frequency']) => void;
+  removeItem: (id: string, productId: CartItem['productId'], frequency: CartItem['frequency']) => void;
+};
+
+export interface IUseCart {
+  getTotalItems: (items: Array<CartItemContainer>) => number;
+  getTotalCartPrice: (items: Array<CartItem>) => number; 
 };

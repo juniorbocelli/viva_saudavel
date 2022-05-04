@@ -1,8 +1,9 @@
 import React from 'react';
 
-import useStates from './states';
-import useCart from './cart';
 import { IGlobalContext } from './types';
+import useStates from './states';
+import useCartAPIs from './apis/cart';
+import useCart from './cart';
 
 const GlobalContext = React.createContext({} as IGlobalContext);
 
@@ -12,6 +13,7 @@ interface IProps {
 
 export const GlobalContextProvider: React.FC<IProps> = ({ children }) => {
   const states = useStates();
+  const cartAPIs = useCartAPIs(states);
   const cart = useCart(states);
 
   return (
@@ -20,14 +22,18 @@ export const GlobalContextProvider: React.FC<IProps> = ({ children }) => {
         {
           cart: {
             cart: states.cart,
-            
-            addItem: cart.addProduct,
-            getCartLenght: cart.getCartLenght,
-            getCartValue: cart.getCartValue,
-            getQuantityFromItem: cart.getQuantityFromItem,
-            addItemByKey: cart.addItemByKey,
-            removeItemByKey: cart.removeItemByKey,
-            getProductsByFrequency: cart.getProductsByFrequency,
+
+            onceItems: states.onceItems,
+            weeklyItems: states.weeklyItems,
+            biweeklyItems: states.biweeklyItems,
+            monthlyItems: states.monthlyItems,
+
+            getCart: cartAPIs.getCart,
+            addItem: cartAPIs.addItem,
+            removeItem: cartAPIs.removeItem,
+
+            getTotalItems: cart.getTotalItems,
+            getTotalCartPrice: cart.getTotalCartPrice,
           }
         }
       }

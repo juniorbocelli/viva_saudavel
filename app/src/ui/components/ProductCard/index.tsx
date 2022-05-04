@@ -8,23 +8,26 @@ import {
   Typography,
   Menu,
   Fade,
+  MenuItem,
 
   useTheme,
 } from '@mui/material';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 
 import MaskApply from '../../../features/utils/MaskApply';
-import { Product } from '../../../globals/interfaces/product'
 import { CartItem } from '../../../globals/interfaces/cart';
-import { useGlobalContext } from '../../../features/globalContext/context';
 import { IProductCardProps } from './types';
+import { useAuth } from '../../../features/auth/context';
+import LocalStorage from '../../../features/storage/LocalStorage';
+import { useGlobalContext } from '../../../features/globalContext/context';
 
 import useAPIs from './apis';
 
 const ProductCard: React.FC<IProductCardProps> = ({ productCard, setProduct }) => {
   const theme = useTheme();
-  const globalContext = useGlobalContext();
   const apis = useAPIs(setProduct);
+  const auth = useAuth();
+  const globalContext = useGlobalContext();
 
   // Menu controller
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -33,11 +36,14 @@ const ProductCard: React.FC<IProductCardProps> = ({ productCard, setProduct }) =
     setAnchorEl(event.currentTarget);
   };
 
-  const handleClose = (product?: Product, frequency?: CartItem['frequency']) => {
+  const handleClose = (productId?: CartItem['productId'], frequency?: CartItem['frequency']) => {
     setAnchorEl(null);
 
-    if (typeof (product) !== 'undefined' && typeof (frequency) !== 'undefined')
-      globalContext['cart'].addItem(product, frequency);
+    if (typeof (productId) !== 'undefined' && typeof (frequency) !== 'undefined')
+      if (auth.isSignedIn())
+        globalContext['cart'].addItem(auth.loggedClient?.id!, productId, frequency);
+      else
+        globalContext['cart'].addItem(LocalStorage.getCartKey(), productId, frequency);
   };
 
   return (
@@ -122,10 +128,10 @@ const ProductCard: React.FC<IProductCardProps> = ({ productCard, setProduct }) =
           onClose={() => handleClose()}
           TransitionComponent={Fade}
         >
-          {/* <MenuItem onClick={() => handleClose(product, 'once')}>Uma vez</MenuItem>
-          <MenuItem onClick={() => handleClose(product, 'weekly')}>Semanal</MenuItem>
-          <MenuItem onClick={() => handleClose(product, 'biweekly')}>Quinzenal</MenuItem>
-          <MenuItem onClick={() => handleClose(product, 'monthly')}>Mensal</MenuItem> */}
+          <MenuItem onClick={() => handleClose(productCard.id, 'once')}>Uma vez</MenuItem>
+          <MenuItem onClick={() => handleClose(productCard.id, 'weekly')}>Semanal</MenuItem>
+          <MenuItem onClick={() => handleClose(productCard.id, 'biweekly')}>Quinzenal</MenuItem>
+          <MenuItem onClick={() => handleClose(productCard.id, 'monthly')}>Mensal</MenuItem>
         </Menu>
       </CardActions>
     </Card>
