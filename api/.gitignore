@@ -5,6 +5,6 @@
 /seeders/
 /dist/
 
-/src/public/images/products/
+# /src/public/images/products/
 
 package-lock.json
