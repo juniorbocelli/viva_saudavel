@@ -13,25 +13,22 @@ import {
 import { Close as CloseIcon } from '@mui/icons-material';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 
-import { IUseStates } from '../../states';
+import { IUseStates as IUseNavigationStates } from '../../states';
 import CartItem from '../../../../../ui/components/CartItem';
+import MaskApply from '../../../../utils/MaskApply';
+import { useAuth } from '../../../../auth/context';
+import LocalStorage from '../../../../storage/LocalStorage';
 import { useGlobalContext } from '../../../../globalContext/context';
-import MaskApply from '../../../../../features/utils/MaskApply';
 
-const Cart: React.FC<IUseStates> = (states) => {
+const Cart: React.FC<IUseNavigationStates> = (naviStates) => {
   const theme = useTheme();
   const globalContext = useGlobalContext();
-
-  // Itens by frequency
-  const onceItems = globalContext['cart'].getProductsByFrequency('once');
-  const weeklyItems = globalContext['cart'].getProductsByFrequency('weekly');
-  const biweeklyItems = globalContext['cart'].getProductsByFrequency('biweekly');
-  const monthlyItems = globalContext['cart'].getProductsByFrequency('monthly');
+  const auth = useAuth();
 
   const {
     isMobileCartOpen,
     setIsMobileCartOpen,
-  } = states;
+  } = naviStates;
 
   const toggleDrawer = (open: boolean) =>
     (event: React.KeyboardEvent | React.MouseEvent) => {
@@ -96,8 +93,8 @@ const Cart: React.FC<IUseStates> = (states) => {
                 component='div'
                 color={theme.palette.primary.dark}
 
-                sx={{fontWeight: 600}}
-                >
+                sx={{ fontWeight: 600 }}
+              >
                 Carrinho
               </Typography>
             </Box>
@@ -117,7 +114,7 @@ const Cart: React.FC<IUseStates> = (states) => {
           >
             {/* No products */}
             {
-              globalContext['cart'].getCartLenght() === 0 &&
+              globalContext['cart'].cart.length === 0 &&
               <Typography variant='h6' component='div' color='text.secondary'>
                 Você ainda não adicionou produtos ao carrinho
               </Typography>
@@ -125,7 +122,7 @@ const Cart: React.FC<IUseStates> = (states) => {
 
             {/* Once itens */}
             {
-              onceItems.quantity > 0 &&
+              globalContext['cart'].onceItems.length > 0 &&
               <Box sx={{ mb: { xs: theme.spacing(2.0), md: theme.spacing(2.0) } }}>
                 <Box sx={{ display: 'flex', alignItems: 'center', mb: { xs: theme.spacing(1.0), md: theme.spacing(1.0) } }}>
                   <CalendarMonthIcon sx={{ fontSize: { md: '2.0rem' } }} color='primary' />
@@ -141,13 +138,13 @@ const Cart: React.FC<IUseStates> = (states) => {
                       }
                     }
                   >
-                    {`Apenas uma vez (${onceItems.quantity} itens)`}
+                    {`Apenas uma vez (${globalContext['cart'].getTotalItems(globalContext['cart'].onceItems)} itens)`}
                   </Typography>
                 </Box>
 
                 {
-                  onceItems.items.map((item) => {
-                    return <CartItem cartItem={item[0]} itemKey={item[1]} key={item[1]} />;
+                  globalContext['cart'].onceItems.map((item) => {
+                    return <CartItem cartItem={item} key={`${item.frequency}-${item.productId}`} />;
                   })
                 }
               </Box>
@@ -155,7 +152,7 @@ const Cart: React.FC<IUseStates> = (states) => {
 
             {/* Weekly itens */}
             {
-              weeklyItems.quantity > 0 &&
+              globalContext['cart'].weeklyItems.length > 0 &&
               <Box sx={{ mb: { xs: theme.spacing(2.0), md: theme.spacing(2.0) } }}>
                 <Box sx={{ display: 'flex', alignItems: 'center', mb: { xs: theme.spacing(1.0), md: theme.spacing(1.0) } }}>
                   <CalendarMonthIcon sx={{ fontSize: { md: '2.0rem' } }} color='primary' />
@@ -171,13 +168,13 @@ const Cart: React.FC<IUseStates> = (states) => {
                       }
                     }
                   >
-                    {`Semanal (${weeklyItems.quantity} itens)`}
+                    {`Semanal (${globalContext['cart'].getTotalItems(globalContext['cart'].weeklyItems)} itens)`}
                   </Typography>
                 </Box>
 
                 {
-                  weeklyItems.items.map((item) => {
-                    return <CartItem cartItem={item[0]} itemKey={item[1]} key={item[1]} />;
+                  globalContext['cart'].weeklyItems.map((item) => {
+                    return <CartItem cartItem={item} key={`${item.frequency}-${item.productId}`} />;
                   })
                 }
               </Box>
@@ -185,7 +182,7 @@ const Cart: React.FC<IUseStates> = (states) => {
 
             {/* Biweekly itens */}
             {
-              biweeklyItems.quantity > 0 &&
+              globalContext['cart'].biweeklyItems.length > 0 &&
               <Box sx={{ mb: { xs: theme.spacing(2.0), md: theme.spacing(2.0) } }}>
                 <Box sx={{ display: 'flex', alignItems: 'center', mb: { xs: theme.spacing(1.0), md: theme.spacing(1.0) } }}>
                   <CalendarMonthIcon sx={{ fontSize: { md: '2.0rem' } }} color='primary' />
@@ -201,13 +198,13 @@ const Cart: React.FC<IUseStates> = (states) => {
                       }
                     }
                   >
-                    {`Quinzenal (${biweeklyItems.quantity} itens)`}
+                    {`Quinzenal (${globalContext['cart'].getTotalItems(globalContext['cart'].biweeklyItems)} itens)`}
                   </Typography>
                 </Box>
 
                 {
-                  biweeklyItems.items.map((item) => {
-                    return <CartItem cartItem={item[0]} itemKey={item[1]} key={item[1]} />;
+                  globalContext['cart'].biweeklyItems.map((item) => {
+                    return <CartItem cartItem={item} key={`${item.frequency}-${item.productId}`} />;
                   })
                 }
               </Box>
@@ -215,7 +212,7 @@ const Cart: React.FC<IUseStates> = (states) => {
 
             {/* Monthly itens */}
             {
-              monthlyItems.quantity > 0 &&
+              globalContext['cart'].monthlyItems.length > 0 &&
               <Box sx={{ mb: { xs: theme.spacing(2.0), md: theme.spacing(2.0) } }}>
                 <Box sx={{ display: 'flex', alignItems: 'center', mb: { xs: theme.spacing(1.0), md: theme.spacing(1.0) } }}>
                   <CalendarMonthIcon sx={{ fontSize: { md: '2.0rem' } }} color='primary' />
@@ -231,13 +228,13 @@ const Cart: React.FC<IUseStates> = (states) => {
                       }
                     }
                   >
-                    {`Mensal (${monthlyItems.quantity} itens)`}
+                    {`Mensal (${globalContext['cart'].getTotalItems(globalContext['cart'].monthlyItems)} itens)`}
                   </Typography>
                 </Box>
 
                 {
-                  monthlyItems.items.map((item) => {
-                    return <CartItem cartItem={item[0]} itemKey={item[1]} key={item[1]} />;
+                  globalContext['cart'].monthlyItems.map((item) => {
+                    return <CartItem cartItem={item} key={`${item.frequency}-${item.productId}`} />;
                   })
                 }
               </Box>
@@ -264,7 +261,7 @@ const Cart: React.FC<IUseStates> = (states) => {
                 variant='body2'
                 color='text.secondary'
               >
-                {`${globalContext['cart'].getCartLenght()} itens`}
+                {`${globalContext['cart'].cart.length} itens`}
               </Typography>
 
               <Typography
@@ -279,7 +276,7 @@ const Cart: React.FC<IUseStates> = (states) => {
                   }
                 }
               >
-                {`R$ ${MaskApply.maskMoney(globalContext['cart'].getCartValue())}`}
+                {`R$ ${MaskApply.maskMoney(globalContext['cart'].getTotalCartPrice(globalContext['cart'].cart))}`}
               </Typography>
             </Box>
 
@@ -293,7 +290,7 @@ const Cart: React.FC<IUseStates> = (states) => {
                 }
               }
 
-              disabled={globalContext['cart'].getCartLenght() === 0}
+              disabled={globalContext['cart'].cart.length === 0}
             >
               Finalizar Compra
             </Button>

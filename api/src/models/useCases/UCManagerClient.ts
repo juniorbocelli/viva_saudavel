@@ -5,7 +5,7 @@ import Client from '../entities/Client';
 import DAOClient from '../../persistence/mongo/dao/DAOClient';
 
 class UCManagerClient {
-  daoClient: DAOClient;
+  private daoClient: DAOClient;
 
   constructor(daoClient: DAOClient) {
     this.daoClient = daoClient;

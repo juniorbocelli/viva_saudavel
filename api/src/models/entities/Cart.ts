@@ -9,7 +9,7 @@ class Cart {
   createdAt: Date | null;
   isRegistered: boolean | null;
 
-  itens: Array<CartItem> | null;
+  items: Array<CartItem> | null;
 
   constructor(cart: Cart) {
     this.id = cart.id;
@@ -18,7 +18,7 @@ class Cart {
     this.createdAt = cart.createdAt === null ? new Date() : cart.createdAt;
     this.isRegistered = cart.isRegistered === null ? false : cart.isRegistered;
 
-    this.itens = cart.itens === null ? [] : cart.itens;
+    this.items = cart.items === null ? [] : cart.items;
   };
 };
 

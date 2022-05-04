@@ -2,6 +2,7 @@ import { Router } from 'express';
 
 import ClientController from './controllers/ClientController';
 import ProductController from './controllers/ProductController';
+import CartController from './controllers/CartController';
 import Auth from './middlewares/Auth';
 import * as Routes from './globals/routes';
 
@@ -26,5 +27,8 @@ router.get(Routes.API_PRODUCT_GET_BY_FILTER, ProductController.getByFilter);
 
 router.post(Routes.API_PRODUCT_NEW, Auth.adminVerify, ProductController.new);
 router.put(Routes.API_PRODUCT_UPDATE, Auth.adminVerify, ProductController.update);
+
+router.get(Routes.API_CART_GET, CartController.get);
+router.patch(Routes.API_CART_ADD_ITEM, CartController.addItem);
 
 export default router;

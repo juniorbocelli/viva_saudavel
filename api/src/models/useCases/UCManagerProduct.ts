@@ -2,7 +2,7 @@ import Product from '../entities/Product';
 import DAOProduct from '../../persistence/mongo/dao/DAOProduct';
 
 class UCManagerProduct {
-  daoProduct: DAOProduct;
+  private daoProduct: DAOProduct;
 
   constructor(daoProduct: DAOProduct) {
     this.daoProduct = daoProduct;

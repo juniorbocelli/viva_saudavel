@@ -23,7 +23,6 @@ import { TransitionProps } from '@mui/material/transitions';
 import MaskApply from '../../../features/utils/MaskApply';
 import { Product } from '../../../globals/interfaces/product';
 import { CartItem } from '../../../globals/interfaces/cart';
-import { useGlobalContext } from '../../../features/globalContext/context';
 
 import isA2A2 from '../../../assets/images/product-categories-icons/a2a2.svg';
 import isGlutenFree from '../../../assets/images/product-categories-icons/glutenFree.svg';
@@ -148,7 +147,6 @@ interface IProductModalProps {
 
 const ProductModal: React.FC<IProductModalProps> = ({ product, setProduct }) => {
   const theme = useTheme();
-  const globalContext = useGlobalContext();
 
   // Menu controller
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -161,7 +159,7 @@ const ProductModal: React.FC<IProductModalProps> = ({ product, setProduct }) => 
     setAnchorEl(null);
 
     if (typeof (product) !== 'undefined' && typeof (frequency) !== 'undefined')
-      globalContext['cart'].addItem(product, frequency);
+      return;
   };
 
   const handleClose = () => {

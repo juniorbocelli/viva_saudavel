@@ -13,18 +13,15 @@ import AddCircleIcon from '@mui/icons-material/AddCircle';
 import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
 import DeleteIcon from '@mui/icons-material/Delete';
 
-import { CartItem as CartItemType } from '../../../globals/interfaces/cart';
-import { useGlobalContext } from '../../../features/globalContext/context';
+import { CartItemContainer } from '../../../globals/interfaces/cart';
 import MaskApply from '../../../features/utils/MaskApply';
 
 interface ICartItemProps {
-  cartItem: CartItemType;
-  itemKey: number;
+  cartItem: CartItemContainer;
 };
 
-const CartItem: React.FC<ICartItemProps> = ({ cartItem, itemKey }) => {
+const CartItem: React.FC<ICartItemProps> = ({ cartItem }) => {
   const theme = useTheme();
-  const globalContext = useGlobalContext();
 
   return (
     <Box>
@@ -45,7 +42,7 @@ const CartItem: React.FC<ICartItemProps> = ({ cartItem, itemKey }) => {
                 }
               }
             >
-              <img width='100%' src={cartItem.image} alt={`Imagem de produto ${itemKey} do carrinho`} />
+              <img width='100%' src={cartItem.thumb} alt={`Imagem de produto ${cartItem.productId} do carrinho`} />
             </Box>
 
             <Box
@@ -145,7 +142,7 @@ const CartItem: React.FC<ICartItemProps> = ({ cartItem, itemKey }) => {
                 }
               }
             >
-              <IconButton onClick={() => globalContext['cart'].removeItemByKey(itemKey)}>
+              <IconButton onClick={() => {}}>
                 {
                   cartItem.quantity === 1 ?
                     <DeleteIcon color='error' />
@@ -167,7 +164,7 @@ const CartItem: React.FC<ICartItemProps> = ({ cartItem, itemKey }) => {
                 {cartItem.quantity}
               </Typography>
 
-              <IconButton onClick={() => globalContext['cart'].addItemByKey(itemKey)}>
+              <IconButton onClick={() => {}}>
                 <AddCircleIcon color='primary' />
               </IconButton>
             </Box>
