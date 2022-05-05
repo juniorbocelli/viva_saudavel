@@ -28,6 +28,13 @@ export const GlobalContextProvider: React.FC<IProps> = ({ children }) => {
             biweeklyItems: states.biweeklyItems,
             monthlyItems: states.monthlyItems,
 
+            feedbacks: {
+              isQueryingAPI: states.isQueryingAPI,
+
+              dialogMessage: states.dialogMessage,
+              setDialogMessage: states.setDialogMessage,
+            },
+
             getCart: cartAPIs.getCart,
             addItem: cartAPIs.addItem,
             removeItem: cartAPIs.removeItem,

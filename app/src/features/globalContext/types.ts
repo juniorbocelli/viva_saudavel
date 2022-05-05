@@ -22,7 +22,7 @@ export interface IUseStates {
 
   dialogMessage: DialogMessageState;
   setDialogMessage: React.Dispatch<React.SetStateAction<DialogMessageState>>;
-  
+
   cart: CartState;
   setCart: React.Dispatch<React.SetStateAction<CartState>>;
 
@@ -47,12 +47,19 @@ export interface CartProvider {
   biweeklyItems: BiweeklyItemsState;
   monthlyItems: MonthlyItemsState;
 
+  feedbacks: {
+    isQueryingAPI: IsQueryingAPIState;
+
+    dialogMessage: DialogMessageState;
+    setDialogMessage: React.Dispatch<React.SetStateAction<DialogMessageState>>;
+  };
+
   getCart: (clientId: string) => void;
   addItem: (id: string, productId: CartItem['productId'], frequency: CartItem['frequency']) => void;
   removeItem: (id: string, productId: CartItem['productId'], frequency: CartItem['frequency']) => void;
 
   getTotalItems: (items: Array<CartItemContainer>) => number;
-  getTotalCartPrice: (items: Array<CartItem>) => number; 
+  getTotalCartPrice: (items: Array<CartItem>) => number;
 };
 
 export interface IGlobalContext {
@@ -67,5 +74,5 @@ export interface IUseCartAPIs {
 
 export interface IUseCart {
   getTotalItems: (items: Array<CartItemContainer>) => number;
-  getTotalCartPrice: (items: Array<CartItem>) => number; 
+  getTotalCartPrice: (items: Array<CartItem>) => number;
 };

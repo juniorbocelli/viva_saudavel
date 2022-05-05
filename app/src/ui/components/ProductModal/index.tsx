@@ -33,6 +33,10 @@ import isNatural from '../../../assets/images/product-categories-icons/natural.s
 
 import ProductImageGallery from '../../../ui/components/ProductImageGallery';
 
+import { useAuth } from '../../../features/auth/context';
+import LocalStorage from '../../../features/storage/LocalStorage';
+import { useGlobalContext } from '../../../features/globalContext/context';
+
 const Filters: React.FC<Product | null> = (product) => {
   return (
     <Box sx={{ display: 'flex' }}>
@@ -147,6 +151,8 @@ interface IProductModalProps {
 
 const ProductModal: React.FC<IProductModalProps> = ({ product, setProduct }) => {
   const theme = useTheme();
+  const auth = useAuth();
+  const globalContext = useGlobalContext();
 
   // Menu controller
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -159,7 +165,7 @@ const ProductModal: React.FC<IProductModalProps> = ({ product, setProduct }) => 
     setAnchorEl(null);
 
     if (typeof (product) !== 'undefined' && typeof (frequency) !== 'undefined')
-      return;
+      globalContext['cart'].addItem(auth.loggedClient?.id || LocalStorage.getCartKey(), product.id!, frequency);
   };
 
   const handleClose = () => {

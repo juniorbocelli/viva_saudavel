@@ -6,6 +6,8 @@ import {
   IconButton,
   Typography,
   Button,
+  CircularProgress,
+  LinearProgress,
 
   useTheme,
   colors,
@@ -24,6 +26,10 @@ const Cart: React.FC<IUseNavigationStates> = (naviStates) => {
   const theme = useTheme();
   const globalContext = useGlobalContext();
   const auth = useAuth();
+
+  React.useEffect(() => {
+    globalContext['cart'].getCart(auth.loggedClient?.id || LocalStorage.getCartKey());
+  }, []);
 
   const {
     isMobileCartOpen,
@@ -112,6 +118,14 @@ const Cart: React.FC<IUseNavigationStates> = (naviStates) => {
             }
             aria-label="Itens do carrinho de compra"
           >
+            {/* Sync cart feedback */}
+            {
+              globalContext['cart'].feedbacks.isQueryingAPI &&
+              <Box>
+                <LinearProgress />
+              </Box>
+            }
+
             {/* No products */}
             {
               globalContext['cart'].cart.length === 0 &&
@@ -276,7 +290,12 @@ const Cart: React.FC<IUseNavigationStates> = (naviStates) => {
                   }
                 }
               >
-                {`R$ ${MaskApply.maskMoney(globalContext['cart'].getTotalCartPrice(globalContext['cart'].cart))}`}
+                {
+                  globalContext['cart'].feedbacks.isQueryingAPI ?
+                    <CircularProgress color='primary' />
+                    :
+                    `R$ ${MaskApply.maskMoney(globalContext['cart'].getTotalCartPrice(globalContext['cart'].cart))}`
+                }
               </Typography>
             </Box>
 
@@ -290,7 +309,7 @@ const Cart: React.FC<IUseNavigationStates> = (naviStates) => {
                 }
               }
 
-              disabled={globalContext['cart'].cart.length === 0}
+              disabled={globalContext['cart'].cart.length === 0 || globalContext['cart'].feedbacks.isQueryingAPI}
             >
               Finalizar Compra
             </Button>
