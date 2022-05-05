@@ -39,6 +39,23 @@ class CartController {
       res.status(200).json({ error: error.message });
     };
   };
+
+  static async removeItem(req: Request, res: Response) {
+    const daoCart = new DAOCart();
+    const daoProduct = new DAOProduct();
+    const ucManagerCart = new UCManagerCart(daoCart, daoProduct);
+
+    const { id } = req.params;
+    const { productId, frequency } = req.body;
+
+    try {
+      const newItem = new CartItem(productId, frequency);
+
+      res.status(200).json({ cart: await ucManagerCart.removeItem(newItem, id) });
+    } catch (error: any) {
+      res.status(200).json({ error: error.message });
+    };
+  };
 };
 
 export default CartController;

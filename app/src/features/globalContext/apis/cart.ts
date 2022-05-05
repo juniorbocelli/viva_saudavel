@@ -1,4 +1,4 @@
-import { getCartAPI, addItemAPI } from '../../../services/cart';
+import { getCartAPI, addItemAPI, removeItemAPI } from '../../../services/cart';
 
 import { IUseStates, IUseCartAPIs } from '../types';
 import { CartItem, CartItemContainer } from '../../../globals/interfaces/cart';
@@ -152,7 +152,27 @@ export default function useCartAPIs(states: IUseStates): IUseCartAPIs {
   };
 
   const removeItem = (id: string, productId: CartItem['productId'], frequency: CartItem['frequency']) => {
+    states.setIsQueryingAPI(true);
 
+    removeItemAPI(id, productId, frequency)
+      .then((response) => {
+        console.log('response => removeItemAPI', response);
+
+        if (typeof (response.data.error) !== 'undefined') {
+          states.setDialogMessage({ title: "Erro", message: response.data.error });
+          return;
+        };
+
+        const cartItems: Array<CartItem> = response.data.cart.items;
+        syncCart(cartItems);
+      })
+      .catch((error) => {
+        console.error('error => removeItemAPI', error);
+        states.setDialogMessage({ title: "Erro", message: error as string });
+      })
+      .finally(() => {
+        states.setIsQueryingAPI(false);
+      });
   };
 
   return {
