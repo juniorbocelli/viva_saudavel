@@ -15,6 +15,9 @@ import DeleteIcon from '@mui/icons-material/Delete';
 
 import { CartItemContainer } from '../../../globals/interfaces/cart';
 import MaskApply from '../../../features/utils/MaskApply';
+import LocalStorage from '../../../features/storage/LocalStorage';
+import { useAuth } from '../../../features/auth/context';
+import { useGlobalContext } from '../../../features/globalContext/context';
 
 interface ICartItemProps {
   cartItem: CartItemContainer;
@@ -22,6 +25,16 @@ interface ICartItemProps {
 
 const CartItem: React.FC<ICartItemProps> = ({ cartItem }) => {
   const theme = useTheme();
+  const auth = useAuth();
+  const globalContext = useGlobalContext();
+
+  const addItem = (productId: CartItemContainer['productId'], frequency: CartItemContainer['frequency']) => {
+    globalContext['cart'].addItem(auth.loggedClient?.id || LocalStorage.getCartKey(), productId, frequency);
+  };
+
+  const removeItem = (productId: CartItemContainer['productId'], frequency: CartItemContainer['frequency']) => {
+    globalContext['cart'].removeItem(auth.loggedClient?.id || LocalStorage.getCartKey(), productId, frequency);
+  };
 
   return (
     <Box>
@@ -142,7 +155,7 @@ const CartItem: React.FC<ICartItemProps> = ({ cartItem }) => {
                 }
               }
             >
-              <IconButton onClick={() => {}}>
+              <IconButton onClick={() => removeItem(cartItem.productId, cartItem.frequency)}>
                 {
                   cartItem.quantity === 1 ?
                     <DeleteIcon color='error' />
@@ -164,7 +177,7 @@ const CartItem: React.FC<ICartItemProps> = ({ cartItem }) => {
                 {cartItem.quantity}
               </Typography>
 
-              <IconButton onClick={() => {}}>
+              <IconButton onClick={() => addItem(cartItem.productId, cartItem.frequency)}>
                 <AddCircleIcon color='primary' />
               </IconButton>
             </Box>

@@ -40,10 +40,7 @@ const ProductCard: React.FC<IProductCardProps> = ({ productCard, setProduct }) =
     setAnchorEl(null);
 
     if (typeof (productId) !== 'undefined' && typeof (frequency) !== 'undefined')
-      if (auth.isSignedIn())
-        globalContext['cart'].addItem(auth.loggedClient?.id!, productId, frequency);
-      else
-        globalContext['cart'].addItem(LocalStorage.getCartKey(), productId, frequency);
+      globalContext['cart'].addItem(auth.loggedClient?.id || LocalStorage.getCartKey(), productId, frequency);
   };
 
   return (
