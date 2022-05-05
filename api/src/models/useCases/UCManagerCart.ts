@@ -95,7 +95,7 @@ class UCManagerCart {
           cart.items.splice(i, 1);
       };
 
-    return await this.daoCart.save(cart);
+    return this.daoCart.update(cart);
   };
 };
 

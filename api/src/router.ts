@@ -30,5 +30,6 @@ router.put(Routes.API_PRODUCT_UPDATE, Auth.adminVerify, ProductController.update
 
 router.get(Routes.API_CART_GET, CartController.get);
 router.patch(Routes.API_CART_ADD_ITEM, CartController.addItem);
+router.patch(Routes.API_CART_REMOVE_ITEM, CartController.removeItem);
 
 export default router;

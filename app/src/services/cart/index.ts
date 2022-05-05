@@ -13,3 +13,11 @@ export function addItemAPI(id: string, productId: CartItem['productId'], frequen
     frequency: frequency,
   });
 };
+
+export function removeItemAPI(id: string, productId: CartItem['productId'], frequency: CartItem['frequency']) {
+  return axios.patch(Routes.API_CART_REMOVE_ITEM.replace(':id', id),
+  {
+    productId: productId,
+    frequency: frequency,
+  });
+};
