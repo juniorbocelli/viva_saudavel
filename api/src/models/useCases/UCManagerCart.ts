@@ -12,7 +12,7 @@ class UCManagerCart {
     this.daoProduct = daoProduct;
   };
 
-  public async get(clientId: string) {
+  private async getNewOrPrevious(clientId: string): Promise<Cart | null> {
     // Verify if already exist cart
     const carts = await this.daoCart.selectBy({ clientId: clientId });
     const newCart: Cart = {
@@ -30,6 +30,15 @@ class UCManagerCart {
       cart = new Cart(newCart);
     else
       cart = carts[0];
+
+    return await this.daoCart.saveOrUpdate(cart);
+  };
+
+  public async get(clientId: string) {
+    const cart = await this.getNewOrPrevious(clientId);
+
+    if (cart === null)
+      throw new Error("Erro ao criar carrinho");
 
     if (cart.items === null)
       cart.items = [];
@@ -52,11 +61,11 @@ class UCManagerCart {
       };
     };
 
-    return await this.daoCart.saveOrUpdate(cart);
+    return this.daoCart.saveOrUpdate(cart);
   };
 
-  public async addItem(cartItem: CartItem, clientId: string) {
-    const cart = await this.get(clientId);
+  public async addItem(cartItem: CartItem, clientId: string): Promise<CartItem> {
+    const cart = await this.getNewOrPrevious(clientId);
 
     if (cart === null)
       throw new Error("Carrinho inválido");
@@ -80,22 +89,29 @@ class UCManagerCart {
 
     cart.items?.push(cartItem);
 
-    return this.daoCart.update(cart);
+    this.daoCart.update(cart);
+
+    return cartItem;
   };
 
-  public async removeItem(cartItem: CartItem, clientId: string) {
-    const cart = await this.get(clientId);
+  public async removeItem(cartItem: CartItem, clientId: string): Promise<CartItem> {
+    const cart = await this.getNewOrPrevious(clientId);
 
     if (cart === null)
       throw new Error("Carrinho inválido");
 
     if (cart?.items)
       for (let i = 0; i < cart?.items.length; i++) {
-        if (cartItem.productId === cart.items[i].productId && cartItem.frequency === cart.items[i].frequency)
+        if (cartItem.productId === cart.items[i].productId && cartItem.frequency === cart.items[i].frequency) {
           cart.items.splice(i, 1);
+
+          break;
+        };
       };
 
-    return this.daoCart.update(cart);
+    this.daoCart.update(cart);
+
+    return cartItem;
   };
 };
 
