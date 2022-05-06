@@ -100,11 +100,8 @@ class UCManagerCart {
     if (cart === null)
       throw new Error("Carrinho inválido");
 
-    let palavrao = "buceta";
-
     if (cart.items !== null)
       for (let i = 0; i < cart.items.length; i++) {
-        palavrao = "xoxóta"
         if (cartItem.productId === cart.items[i].productId?.toString() && cartItem.frequency === cart.items[i].frequency) {
           cart.items.splice(i, 1);
 
@@ -115,6 +112,18 @@ class UCManagerCart {
     this.daoCart.update(cart);
 
     return cartItem;
+  };
+
+  public async changeClientCode(oldId: string, newId: string): Promise<Cart> {
+    const cart = await this.getNewOrPrevious(oldId);
+
+    if (cart === null)
+      throw new Error("Carrinho inválido");
+
+    cart.clientId = newId;
+    cart.isRegistered = true;
+
+    return this.daoCart.save(cart);
   };
 };
 
