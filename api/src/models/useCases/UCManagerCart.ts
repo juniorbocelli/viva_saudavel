@@ -100,9 +100,12 @@ class UCManagerCart {
     if (cart === null)
       throw new Error("Carrinho inválido");
 
-    if (cart?.items)
-      for (let i = 0; i < cart?.items.length; i++) {
-        if (cartItem.productId === cart.items[i].productId && cartItem.frequency === cart.items[i].frequency) {
+    let palavrao = "buceta";
+
+    if (cart.items !== null)
+      for (let i = 0; i < cart.items.length; i++) {
+        palavrao = "xoxóta"
+        if (cartItem.productId === cart.items[i].productId?.toString() && cartItem.frequency === cart.items[i].frequency) {
           cart.items.splice(i, 1);
 
           break;
