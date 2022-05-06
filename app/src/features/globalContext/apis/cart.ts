@@ -228,7 +228,69 @@ export default function useCartAPIs(states: IUseStates): IUseCartAPIs {
         };
 
         const cartItem: { productId: CartItem['productId'], frequency: CartItem['frequency'] } = response.data.cartItem;
-        
+
+        for (let i = 0; i < states.cart.length; i++) {
+          if (cartItem.productId === states.cart[i].productId && cartItem.frequency === states.cart[i].frequency) {
+            states.setCart(items => { items.splice(i, 1); return items; });
+
+            break;
+          };
+        };
+
+        switch (cartItem.frequency) {
+          case 'once':
+            for (let i = 0; i < states.onceItems.length; i++)
+              if (cartItem.productId === states.onceItems[i].productId && cartItem.frequency === states.onceItems[i].frequency) {
+                if (states.onceItems[i].quantity === 1)
+                  states.setOnceItems(items => { items.splice(i, 1); return items; });
+                else
+                  states.setOnceItems(items => { items[i].quantity--; return items; });
+
+                break;
+              };
+
+            break;
+
+          case 'weekly':
+            for (let i = 0; i < states.weeklyItems.length; i++)
+              if (cartItem.productId === states.weeklyItems[i].productId && cartItem.frequency === states.weeklyItems[i].frequency) {
+                if (states.weeklyItems[i].quantity === 1)
+                  states.setWeeklyItems(items => { items.splice(i, 1); return items; });
+                else
+                  states.setWeeklyItems(items => { items[i].quantity--; return items; });
+
+                break;
+              };
+
+            break;
+
+          case 'biweekly':
+            for (let i = 0; i < states.biweeklyItems.length; i++)
+              if (cartItem.productId === states.biweeklyItems[i].productId && cartItem.frequency === states.biweeklyItems[i].frequency) {
+                if (states.biweeklyItems[i].quantity === 1)
+                  states.setBiweeklyItems(items => { items.splice(i, 1); return items; });
+                else
+                  states.setBiweeklyItems(items => { items[i].quantity--; return items; });
+
+                break;
+              };
+
+            break;
+
+          case 'monthly':
+            for (let i = 0; i < states.monthlyItems.length; i++)
+              if (cartItem.productId === states.monthlyItems[i].productId && cartItem.frequency === states.monthlyItems[i].frequency) {
+                if (states.monthlyItems[i].quantity === 1)
+                  states.setMonthlyItems(items => { items.splice(i, 1); return items; });
+                else
+                  states.setMonthlyItems(items => { items[i].quantity--; return items; });
+
+                break;
+              };
+
+            break;
+        };
+
       })
       .catch((error) => {
         console.error('error => removeItemAPI', error);
