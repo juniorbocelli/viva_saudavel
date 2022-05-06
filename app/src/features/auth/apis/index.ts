@@ -3,6 +3,7 @@ import registerAPI from './registerAPI';
 import loginAPI from './loginAPI';
 import logoutAPI from './logoutAPI';
 import checkSessionAPI from './checkSessionAPI';
+import { changeClientCodeAPI } from '../../../services/cart';
 
 // Hooks ============================================================================================================================================
 
@@ -21,8 +22,30 @@ export interface IUseAPI {
 
 // APIs =============================================================================================================================================
 function useAPIs(states: IAuthStates): IUseAPI {
+  const changeClientCode = (oldCartClientId: string, clientId: string) => {
+    states.setIsQueryingAPI(true);
+
+    changeClientCodeAPI(oldCartClientId, clientId)
+      .then((response) => {
+        console.log('response => changeClientCodeAPI', response);
+        // Verify if exist errors
+        if (typeof (response.data.error) !== 'undefined') {
+          setNotLogged();
+          states.setErrorMessage(response.data.error);
+
+          return;
+        };
+      })
+      .catch((error) => {
+        console.error('error => changeClientCodeAPI', error);
+        states.setErrorMessage(error.data.message);
+      })
+      .finally(() => {
+        states.setIsQueryingAPI(false);
+      });
+  };
+
   const setLogged = (client: LoggedClient, token: string) => {
-    console.log('setLogged', client, token);
     states.setLoggedClient({
       id: client.id,
       name: client.name,
@@ -31,6 +54,8 @@ function useAPIs(states: IAuthStates): IUseAPI {
     });
 
     LocalStorage.setToken(token);
+
+    changeClientCode(LocalStorage.getCartKey(), client.id);
   };
 
   const setNotLogged = () => {

@@ -8,16 +8,23 @@ export function getCartAPI(id: string) {
 
 export function addItemAPI(id: string, productId: CartItem['productId'], frequency: CartItem['frequency']) {
   return axios.patch(Routes.API_CART_ADD_ITEM.replace(':id', id),
-  {
-    productId: productId,
-    frequency: frequency,
-  });
+    {
+      productId: productId,
+      frequency: frequency,
+    });
 };
 
 export function removeItemAPI(id: string, productId: CartItem['productId'], frequency: CartItem['frequency']) {
   return axios.patch(Routes.API_CART_REMOVE_ITEM.replace(':id', id),
-  {
-    productId: productId,
-    frequency: frequency,
-  });
+    {
+      productId: productId,
+      frequency: frequency,
+    });
+};
+
+export function changeClientCodeAPI(id: string, clientId: string) {
+  return axios.patch(Routes.API_CART_CHANGE_CLIENT_ID.replace(':id', id),
+    {
+      clientId: clientId,
+    });
 };
