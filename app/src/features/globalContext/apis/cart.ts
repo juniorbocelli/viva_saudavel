@@ -139,8 +139,72 @@ export default function useCartAPIs(states: IUseStates): IUseCartAPIs {
           return;
         };
 
-        const cartItems: Array<CartItem> = response.data.cart.items;
-        syncCart(cartItems);
+        const cartItem: CartItem = response.data.cartItem;
+        states.setCart(cart => [...cart, cartItem]);
+
+        let array: Array<CartItemContainer> = [];
+
+        switch (frequency) {
+          case 'once':
+            array = states.onceItems.slice();
+            for (let i = 0; i < array.length; i++) {
+              if (productId === array[i].productId) {
+                array[i].quantity++;
+                states.setOnceItems(array);
+
+                return;
+              };
+            };
+
+            states.setOnceItems(i => [...i, { ...cartItem, quantity: 1 }]);
+
+            break;
+
+          case 'weekly':
+            array = states.weeklyItems.slice();
+            for (let i = 0; i < array.length; i++) {
+              if (productId === array[i].productId) {
+                array[i].quantity++;
+                states.setWeeklyItems(array);
+
+                return;
+              };
+            };
+
+            states.setWeeklyItems(i => [...i, { ...cartItem, quantity: 1 }]);
+
+            break;
+
+          case 'biweekly':
+            array = states.biweeklyItems.slice();
+            for (let i = 0; i < array.length; i++) {
+              if (productId === array[i].productId) {
+                array[i].quantity++;
+                states.setBiweeklyItems(array);
+
+                return;
+              };
+            };
+
+            states.setBiweeklyItems(i => [...i, { ...cartItem, quantity: 1 }]);
+
+            break;
+
+          case 'monthly':
+            array = states.monthlyItems.slice();
+            for (let i = 0; i < array.length; i++) {
+              if (productId === array[i].productId) {
+                array[i].quantity++;
+                states.setMonthlyItems(array);
+
+                return;
+              };
+            };
+
+            states.setMonthlyItems(i => [...i, { ...cartItem, quantity: 1 }]);
+
+            break;
+        };
       })
       .catch((error) => {
         console.error('error => addItemAPI', error);
@@ -163,8 +227,8 @@ export default function useCartAPIs(states: IUseStates): IUseCartAPIs {
           return;
         };
 
-        const cartItems: Array<CartItem> = response.data.cart.items;
-        syncCart(cartItems);
+        const cartItem: { productId: CartItem['productId'], frequency: CartItem['frequency'] } = response.data.cartItem;
+        
       })
       .catch((error) => {
         console.error('error => removeItemAPI', error);

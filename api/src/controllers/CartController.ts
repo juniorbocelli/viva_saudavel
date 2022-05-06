@@ -34,7 +34,7 @@ class CartController {
     try {
       const newItem = new CartItem(productId, frequency);
 
-      res.status(200).json({ cart: await ucManagerCart.addItem(newItem, id) });
+      res.status(200).json({ cartItem: await ucManagerCart.addItem(newItem, id) });
     } catch (error: any) {
       res.status(200).json({ error: error.message });
     };
@@ -49,9 +49,9 @@ class CartController {
     const { productId, frequency } = req.body;
 
     try {
-      const newItem = new CartItem(productId, frequency);
+      const itemToRemove = new CartItem(productId, frequency);
 
-      res.status(200).json({ cart: await ucManagerCart.removeItem(newItem, id) });
+      res.status(200).json({ cartItem: await ucManagerCart.removeItem(itemToRemove, id) });
     } catch (error: any) {
       res.status(200).json({ error: error.message });
     };
