@@ -18,6 +18,10 @@ class Address {
     this.number = SanitizerString.removeSpaces(number);
     this.complement = SanitizerString.stringOrUndefined(complement);
   };
+
+  static getAddressByCep(cep: string, number: string, complement?: string) {
+    
+  };
 };
 
 export default Address;

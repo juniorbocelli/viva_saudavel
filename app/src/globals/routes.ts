@@ -32,7 +32,8 @@ export const SCREEN_ADMIN_PRODUCT_EDIT = `${APP_ROOT}/${ADMIN_PREFIX}/produto/:i
 
 export const SCREEN_ADMIN_CLIENTS = `${APP_ROOT}/${ADMIN_PREFIX}/clientes/`;
 
-export const SCREEN_CLIENT_GET = `${APP_ROOT}/meu-perfil/`;
+export const SCREEN_CLIENT_GET = `${APP_ROOT}/meus-dados/`;
+export const SCREEN_CLIENT_CHECKOUT = `${APP_ROOT}/finalizar-compra/`;
 
 /**
  * APIs
@@ -60,3 +61,5 @@ export const API_CART_ADD_ITEM = `${API_ROOT}/clients/:id/carts/add-item/`;    /
 export const API_CART_REMOVE_ITEM = `${API_ROOT}/clients/:id/carts/remove-item`;   // PATH
 export const API_CART_CHANGE_CLIENT_ID = `${API_ROOT}/clients/:id/cart/change-client-id/`;  // PATH
 export const API_CART_DELETE = `${API_ROOT}clients/:id/carts/`   // DELETE
+
+export const API_CLIENT_CHECKOUT = ``;

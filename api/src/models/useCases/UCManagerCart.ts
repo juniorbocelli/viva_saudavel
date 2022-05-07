@@ -114,7 +114,7 @@ class UCManagerCart {
     return cartItem;
   };
 
-  public async changeClientCode(oldId: string, newId: string): Promise<Cart> {
+  public async changeClientCode(oldId: string, newId: string): Promise<Cart | null> {
     const cart = await this.getNewOrPrevious(oldId);
 
     if (cart === null)
@@ -123,7 +123,7 @@ class UCManagerCart {
     cart.clientId = newId;
     cart.isRegistered = true;
 
-    return this.daoCart.save(cart);
+    return this.daoCart.update(cart);
   };
 };
 
