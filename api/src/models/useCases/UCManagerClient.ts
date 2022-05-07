@@ -2,7 +2,7 @@ import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 
 import Client from '../entities/Client';
-import DAOClient from '../../persistence/mongo/dao/DAOClient';
+import DAOClient from '../../data/persistence/mongo/dao/DAOClient';
 
 class UCManagerClient {
   private daoClient: DAOClient;

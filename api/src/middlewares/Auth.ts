@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
 
-import DAOClient from '../persistence/mongo/dao/DAOClient';
+import DAOClient from '../data/persistence/mongo/dao/DAOClient';
 import UCManagerClient from '../models/useCases/UCManagerClient';
 
 class Auth {

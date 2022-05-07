@@ -3,7 +3,7 @@ import * as path from 'path';
 import sharp from 'sharp';
 
 import Product from '../models/entities/Product';
-import DAOProduct from '../persistence/mongo/dao/DAOProduct';
+import DAOProduct from '../data/persistence/mongo/dao/DAOProduct';
 import UCManagerProduct from '../models/useCases/UCManagerProduct';
 import ManageImages, { UploadedFile } from './utils/ManageImages';
 
