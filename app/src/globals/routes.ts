@@ -39,6 +39,10 @@ export const SCREEN_CLIENT_CHECKOUT = `${APP_ROOT}/finalizar-compra/`;
  * APIs
  */
 
+// External APIs
+export const API_CEP_GET_ADDRESS = `${API_ROOT}/cep/:cep/address/`; // GET
+export const API_SHIPPING_VALUE = `${API_ROOT}/shipping/:cep/`; // GET
+
 // Auth APIs
 export const API_CLIENT_REGISTER = `${API_ROOT}/client/`;
 export const API_CLIENT_LOGIN = `${API_ROOT}/client/login/`;

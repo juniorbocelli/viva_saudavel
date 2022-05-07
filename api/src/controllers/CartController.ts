@@ -2,8 +2,8 @@ import { Request, Response } from 'express';
 
 import Cart from '../models/entities/Cart';
 import CartItem from '../models/entities/CartItem';
-import DAOCart from '../persistence/mongo/dao/DAOCart';
-import DAOProduct from '../persistence/mongo/dao/DAOProduct';
+import DAOCart from '../data/persistence/mongo/dao/DAOCart';
+import DAOProduct from '../data/persistence/mongo/dao/DAOProduct';
 import UCManagerCart from '../models/useCases/UCManagerCart';
 
 class CartController {

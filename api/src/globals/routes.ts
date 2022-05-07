@@ -1,5 +1,9 @@
 export const API_ROOT = `/api`;
 
+// External APIs
+export const API_CEP_GET_ADDRESS = `${API_ROOT}/cep/:cep/address/`; // GET
+export const API_SHIPPING_VALUE = `${API_ROOT}/shipping/:cep/`; // GET
+
 // Auth routes
 export const API_CLIENT_REGISTER = `${API_ROOT}/client/`;   // POST
 export const API_CLIENT_LOGIN = `${API_ROOT}/client/login/`;   // POST

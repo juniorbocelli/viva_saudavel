@@ -3,7 +3,7 @@ import jwt from 'jsonwebtoken';
 
 import Client from '../models/entities/Client';
 import Address from '../models/entities/Address';
-import DAOClient from '../persistence/mongo/dao/DAOClient';
+import DAOClient from '../data/persistence/mongo/dao/DAOClient';
 import UCManagerClient from '../models/useCases/UCManagerClient';
 
 class ClientController {

@@ -1,5 +1,5 @@
 import Product from '../entities/Product';
-import DAOProduct from '../../persistence/mongo/dao/DAOProduct';
+import DAOProduct from '../../data/persistence/mongo/dao/DAOProduct';
 
 class UCManagerProduct {
   private daoProduct: DAOProduct;

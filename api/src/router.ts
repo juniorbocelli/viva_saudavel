@@ -3,10 +3,16 @@ import { Router } from 'express';
 import ClientController from './controllers/ClientController';
 import ProductController from './controllers/ProductController';
 import CartController from './controllers/CartController';
+import AddressController from './controllers/AddressController';
+import ShippingController from './controllers/ShippingController';
 import Auth from './middlewares/Auth';
 import * as Routes from './globals/routes';
 
 const router = Router();
+
+// External APIs routes
+router.get(Routes.API_CEP_GET_ADDRESS, AddressController.getByCep);
+router.get(Routes.API_SHIPPING_VALUE, ShippingController.getValueByCep)
 
 // User routes
 router.post(Routes.API_CLIENT_REGISTER, ClientController.register);

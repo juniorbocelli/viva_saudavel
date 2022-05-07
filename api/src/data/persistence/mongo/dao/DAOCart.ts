@@ -1,8 +1,8 @@
 import mongoose from 'mongoose';
 
-import DAO from '../../utils/DAO';
-import CartSchema from '../schemas/CartSchema';
-import Cart from '../../../models/entities/Cart';
+import DAO from '../../../utils/DAO';
+import CartSchema from '../../schemas/CartSchema';
+import Cart from '../../../../models/entities/Cart';
 
 class DAOCart implements DAO<Cart, string> {
   isValidObjectId(cart: Cart | string): boolean {

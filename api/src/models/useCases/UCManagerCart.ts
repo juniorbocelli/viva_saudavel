@@ -1,7 +1,7 @@
 import Cart from '../entities/Cart';
 import CartItem from '../entities/CartItem';
-import DAOCart from '../../persistence/mongo/dao/DAOCart';
-import DAOProduct from '../../persistence/mongo/dao/DAOProduct';
+import DAOCart from '../../data/persistence/mongo/dao/DAOCart';
+import DAOProduct from '../../data/persistence/mongo/dao/DAOProduct';
 
 class UCManagerCart {
   private daoCart: DAOCart;
