@@ -1,6 +1,6 @@
-import axios from '../../globals/axios';
-import * as Routes from '../../globals/routes';
-import { CartItem } from '../../globals/interfaces/cart';
+import axios from '../globals/axios';
+import * as Routes from '../globals/routes';
+import { CartItem } from '../globals/interfaces/cart';
 
 export function getCartAPI(id: string) {
   return axios.get(Routes.API_CART_GET.replace(':id', id));
