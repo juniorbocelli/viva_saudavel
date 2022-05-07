@@ -1,6 +1,6 @@
-import axios from '../../globals/axios';
-import * as Routes from '../../globals/routes';
-import { Product, FilterSearch } from '../../globals/interfaces/product';
+import axios from '../globals/axios';
+import * as Routes from '../globals/routes';
+import { Product, FilterSearch } from '../globals/interfaces/product';
 
 export function getProductsAPI() {
   return axios.get(Routes.API_PRODUCT_GET_ALL,);
