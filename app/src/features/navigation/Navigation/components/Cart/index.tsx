@@ -14,6 +14,7 @@ import {
 } from '@mui/material';
 import { Close as CloseIcon } from '@mui/icons-material';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
+import { useNavigate } from 'react-router-dom';
 
 import { IUseStates as IUseNavigationStates } from '../../states';
 import CartItem from '../../../../../ui/components/CartItem';
@@ -21,11 +22,13 @@ import MaskApply from '../../../../utils/MaskApply';
 import { useAuth } from '../../../../auth/context';
 import LocalStorage from '../../../../storage/LocalStorage';
 import { useGlobalContext } from '../../../../globalContext/context';
+import * as Routes from '../../../../../globals/routes';
 
 const Cart: React.FC<IUseNavigationStates> = (naviStates) => {
   const theme = useTheme();
   const globalContext = useGlobalContext();
   const auth = useAuth();
+  const navigate = useNavigate();
 
   React.useEffect(() => {
     globalContext['cart'].getCart(auth.loggedClient?.id || LocalStorage.getCartKey());
@@ -309,6 +312,14 @@ const Cart: React.FC<IUseNavigationStates> = (naviStates) => {
                 }
               }
 
+              onClick={
+                () => {
+                  if (auth.isSignedIn())
+                    navigate(Routes.SCREEN_CLIENT_CHECKOUT);
+                  else
+                    navigate(Routes.SCREEN_CLIENT_LOGIN);
+                }
+              }
               disabled={globalContext['cart'].cart.length === 0 || globalContext['cart'].feedbacks.isQueryingAPI}
             >
               Finalizar Compra

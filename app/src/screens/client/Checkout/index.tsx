@@ -2,21 +2,203 @@ import React from 'react';
 import {
   Grid,
   Box,
+  Typography,
+  LinearProgress,
+
+  useTheme,
 } from '@mui/material';
+import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
+import { useNavigate } from 'react-router-dom';
+
+import MainContentBox from '../../../ui/components/pages/MainContentBox';
+import CartItem from '../../../ui/components/CartItem';
+
+import useStates from './states';
+import { useAuth } from '../../../features/auth/context';
+import { useGlobalContext } from '../../../features/globalContext/context';
 
 const Checkout: React.FC<React.ReactFragment> = () => {
-  return (
-    <Grid container>
-      {/* Cart Items */}
-      <Grid item xs={6} sm={12}>
-        Buceta
-      </Grid>
+  const states = useStates();
+  const auth = useAuth();
+  const globalContext = useGlobalContext();
+  const theme = useTheme();
 
-      {/* Checkout Informations */}
-      <Grid item xs={6} sm={12}>
-        Xoxóta
+  return (
+    <MainContentBox primary="Carrinho" states={states} isLoggedIn={true}>
+      <Grid container spacing={1} sx={{ width: { xs: '100%', md: '90%' }, m: 'auto' }}>
+        {/* Cart Items */}
+        <Grid item xs={12} sm={7}>
+          {/* Cart itens */}
+          <Box
+            sx={
+              {
+                p: theme.spacing(1),
+                pt: { xs: '60px', md: '60px' },
+                pb: { xs: '70px', md: '90px' }
+              }
+            }
+            aria-label="Itens do carrinho de compra"
+          >
+            {/* Sync cart feedback */}
+            {
+              globalContext['cart'].feedbacks.isQueryingAPI &&
+              <Box>
+                <LinearProgress />
+              </Box>
+            }
+
+            {/* No products */}
+            {
+              globalContext['cart'].cart.length === 0 &&
+              <Typography variant='h6' component='div' color='text.secondary'>
+                Você ainda não adicionou produtos ao carrinho
+              </Typography>
+            }
+
+            {/* Once itens */}
+            {
+              globalContext['cart'].onceItems.length > 0 &&
+              <Box sx={{ mb: { xs: theme.spacing(2.0), md: theme.spacing(3.0) } }}>
+                <Box sx={{ display: 'flex', alignItems: 'center', mb: { xs: theme.spacing(1.0), md: theme.spacing(2.0) } }}>
+                  <CalendarMonthIcon sx={{ fontSize: { md: '2.0rem' } }} color='primary' />
+
+                  <Typography
+                    variant='h6'
+                    component='div'
+                    sx={
+                      {
+                        fontWeight: 600,
+                        fontSize: { xs: '1.0rem', md: '1.6rem' },
+                        ml: theme.spacing(1.0),
+                      }
+                    }
+                  >
+                    {`Apenas uma vez (${globalContext['cart'].getTotalItems(globalContext['cart'].onceItems)} itens)`}
+                  </Typography>
+                </Box>
+
+                {
+                  globalContext['cart'].onceItems.map((item) => {
+                    return <CartItem cartItem={item} key={`${item.frequency}-${item.productId}`} />;
+                  })
+                }
+              </Box>
+            }
+
+            {/* Weekly itens */}
+            {
+              globalContext['cart'].weeklyItems.length > 0 &&
+              <Box sx={{ mb: { xs: theme.spacing(2.0), md: theme.spacing(3.0) } }}>
+                <Box sx={{ display: 'flex', alignItems: 'center', mb: { xs: theme.spacing(1.0), md: theme.spacing(2.0) } }}>
+                  <CalendarMonthIcon sx={{ fontSize: { md: '2.0rem' } }} color='primary' />
+
+                  <Typography
+                    variant='h6'
+                    component='div'
+                    sx={
+                      {
+                        fontWeight: 600,
+                        fontSize: { xs: '1.0rem', md: '1.6rem' },
+                        ml: theme.spacing(1.0),
+                      }
+                    }
+                  >
+                    {`Semanal (${globalContext['cart'].getTotalItems(globalContext['cart'].weeklyItems)} itens)`}
+                  </Typography>
+                </Box>
+
+                {
+                  globalContext['cart'].weeklyItems.map((item) => {
+                    return <CartItem cartItem={item} key={`${item.frequency}-${item.productId}`} />;
+                  })
+                }
+              </Box>
+            }
+
+            {/* Biweekly itens */}
+            {
+              globalContext['cart'].biweeklyItems.length > 0 &&
+              <Box sx={{ mb: { xs: theme.spacing(2.0), md: theme.spacing(3.0) } }}>
+                <Box sx={{ display: 'flex', alignItems: 'center', mb: { xs: theme.spacing(1.0), md: theme.spacing(2.0) } }}>
+                  <CalendarMonthIcon sx={{ fontSize: { md: '2.0rem' } }} color='primary' />
+
+                  <Typography
+                    variant='h6'
+                    component='div'
+                    sx={
+                      {
+                        fontWeight: 600,
+                        fontSize: { xs: '1.0rem', md: '1.6rem' },
+                        ml: theme.spacing(1.0),
+                      }
+                    }
+                  >
+                    {`Quinzenal (${globalContext['cart'].getTotalItems(globalContext['cart'].biweeklyItems)} itens)`}
+                  </Typography>
+                </Box>
+
+                {
+                  globalContext['cart'].biweeklyItems.map((item) => {
+                    return <CartItem cartItem={item} key={`${item.frequency}-${item.productId}`} />;
+                  })
+                }
+              </Box>
+            }
+
+            {/* Monthly itens */}
+            {
+              globalContext['cart'].monthlyItems.length > 0 &&
+              <Box sx={{ mb: { xs: theme.spacing(2.0), md: theme.spacing(3.0) } }}>
+                <Box sx={{ display: 'flex', alignItems: 'center', mb: { xs: theme.spacing(1.0), md: theme.spacing(2.0) } }}>
+                  <CalendarMonthIcon sx={{ fontSize: { md: '2.0rem' } }} color='primary' />
+
+                  <Typography
+                    variant='h6'
+                    component='div'
+                    sx={
+                      {
+                        fontWeight: 600,
+                        fontSize: { xs: '1.0rem', md: '1.6rem' },
+                        ml: theme.spacing(1.0),
+                      }
+                    }
+                  >
+                    {`Mensal (${globalContext['cart'].getTotalItems(globalContext['cart'].monthlyItems)} itens)`}
+                  </Typography>
+                </Box>
+
+                {
+                  globalContext['cart'].monthlyItems.map((item) => {
+                    return <CartItem cartItem={item} key={`${item.frequency}-${item.productId}`} />;
+                  })
+                }
+              </Box>
+            }
+          </Box>
+        </Grid>
+
+        {/* Checkout Informations */}
+        <Grid item xs={12} sm={5}>
+          <Box
+            sx={
+              {
+                backgroundColor: theme.palette.grey['300'],
+                p: theme.spacing(1),
+                fontWeight: 600,
+              }
+            }
+          >
+            <Typography
+              variant='h4'
+              color='primary'
+              component='div'
+            >
+              Resumo do pedido
+            </Typography>
+          </Box>
+        </Grid>
       </Grid>
-    </Grid>
+    </MainContentBox>
   );
 };
 
