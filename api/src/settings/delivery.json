@@ -1,0 +1,5 @@
+{
+    "minDaysToFirstDelivery": 2,
+    "isDeliveryInHolidays": false,
+    "isDeliveryInWeekends": false
+}
