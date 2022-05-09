@@ -13,11 +13,12 @@ export interface Client {
   name: string;
   cpf: string;
   email: string;
-  password: string;
+  password?: string;
   cellPhone: string;
   phone?: string;
 
   isActive?: boolean;
+  isAdmin?: boolean;
   isMailConfirmed?: boolean;
   createdAt?: Date;
 

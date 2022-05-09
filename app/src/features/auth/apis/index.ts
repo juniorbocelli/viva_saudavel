@@ -9,7 +9,7 @@ import { changeClientCodeAPI } from '../../../services/cart';
 
 
 // Types ============================================================================================================================================
-import { IAuthStates, LoggedClient, } from '../types';
+import { IAuthStates, } from '../types';
 import { Client } from '../../../globals/interfaces/client';
 import LocalStorage from '../../storage/LocalStorage';
 
@@ -45,13 +45,32 @@ function useAPIs(states: IAuthStates): IUseAPI {
       });
   };
 
-  const setLogged = (client: LoggedClient, token: string) => {
-    states.setLoggedClient({
+  const setLogged = (client: Client, token: string) => {
+    const clientToLoggin: Client = {
       id: client.id,
+
       name: client.name,
+      cpf: client.cpf,
+
       email: client.email,
+      cellPhone: client.cellPhone,
+      phone: client.phone,
+
+      isActive: client.isActive,
       isAdmin: client.isAdmin,
-    });
+
+      address: {
+        cep: client.address.cep,
+        street: client.address.street,
+        district: client.address.district,
+        state: client.address.state,
+        city: client.address.city,
+        number: client.address.number,
+        complement: client.address.complement,
+      },
+    };
+
+    states.setLoggedClient(clientToLoggin);
 
     LocalStorage.setToken(token);
   };
@@ -76,19 +95,14 @@ function useAPIs(states: IAuthStates): IUseAPI {
         };
 
         // Verify if client exist
-        if (typeof (response.data.client)) {
-          const user: LoggedClient = {
-            id: response.data.client.id,
-            name: response.data.client.name,
-            email: response.data.client.email,
-            isAdmin: response.data.client.isAdmin,
-          };
+        if (typeof (response.data.client) !== 'undefined') {
+          const client: Client = response.data.client;
 
           // Change default cart key to client id
-          changeClientCode(LocalStorage.getCartKey(), response.data.client.id);
+          changeClientCode(LocalStorage.getCartKey(), client.id as string);
 
           // Set loggedIn routines
-          setLogged(user, response.data.client.token);
+          setLogged(client, response.data.client.token);
         };
       })
       .catch((error) => {
@@ -116,18 +130,14 @@ function useAPIs(states: IAuthStates): IUseAPI {
         };
 
         // Verify if client exist
-        if (typeof (response.data.client)) {
-          const user: LoggedClient = {
-            id: response.data.client.id,
-            name: response.data.client.name,
-            email: response.data.client.email,
-            isAdmin: response.data.client.isAdmin,
-          };
+        if (typeof (response.data.client) !== 'undefined') {
+          const client: Client = response.data.client;
+
           // Change default cart key to client id
-          changeClientCode(LocalStorage.getCartKey(), response.data.client.id);
+          changeClientCode(LocalStorage.getCartKey(), client.id as string);
 
           // Set loggedIn routines
-          setLogged(user, response.data.client.token);
+          setLogged(client, response.data.client.token);
         };
 
       })
@@ -177,15 +187,11 @@ function useAPIs(states: IAuthStates): IUseAPI {
         };
 
         // Verify if client exist
-        if (typeof (response.data.client)) {
-          const user: LoggedClient = {
-            id: response.data.client.id,
-            name: response.data.client.name,
-            email: response.data.client.email,
-            isAdmin: response.data.client.isAdmin,
-          };
+        if (typeof (response.data.client) !== 'undefined') {
+          const client: Client = response.data.client;
 
-          setLogged(user, response.data.client.token);
+          // Set loggedIn routines
+          setLogged(client, response.data.client.token);
         };
       })
       .catch(error => {

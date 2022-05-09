@@ -13,7 +13,7 @@ class Dates {
     'saturday',
   ];
 
-  private static holidays = JSON.parse(brazilHolidays.toString());
+  private static holidays = JSON.parse(JSON.stringify(brazilHolidays));
 
   public static dateToString(date: Date): string {
     return `${date.getUTCFullYear()}-${date.getUTCMonth()}-${date.getUTCDay()}`;

@@ -36,7 +36,7 @@ const ClientEdit: React.FC<React.ReactFragment> = () => {
   const onSubmit = (data: ClientDataForm) => {
     console.log('data', data);
     const client: IClientUpdateProps = {
-      id: auth.loggedClient ? auth.loggedClient.id : '',
+      id: auth.loggedClient ? auth.loggedClient.id! : '',
       name: data.name,
       cpf: data.cpf,
       email: data.email,

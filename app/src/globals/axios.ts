@@ -15,14 +15,17 @@ apiAxios.interceptors.request.use(function (config) {
 apiAxios.interceptors.response.use(
   response => {
     if (typeof (response.data) === 'undefined')
-      response.data = { error: "Erro em chamada a aPI" }
+      response.data = { error: "Erro em chamada da aPI" }
 
     return response;
   },
   error => {
     if (typeof (error.data) === 'undefined')
-      error.data = { error: "Erro em chamada a aPI" };
-      
+      error.data = { error: "Erro em chamada da API" };
+
+    if (typeof (error.response) === 'undefined')
+      error.response = { error: "Erro em chamada da API" };
+
     if (error.response.status === 401 || error.response.status === 403) {
       console.log("Cliente foi deslogado");
       globalAuth.logout();
