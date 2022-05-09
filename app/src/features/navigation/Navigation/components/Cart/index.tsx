@@ -30,9 +30,12 @@ const Cart: React.FC<IUseNavigationStates> = (naviStates) => {
   const auth = useAuth();
   const navigate = useNavigate();
 
+  // Load cart data when render page or chenge logged client
   React.useEffect(() => {
-    globalContext['cart'].getCart(auth.loggedClient?.id || LocalStorage.getCartKey());
-  }, []);
+    // If loggedClient is undefined, we not know if user is logged or not
+    if (typeof (auth.loggedClient) !== 'undefined')
+      globalContext['cart'].getCart(auth.loggedClient?.id || LocalStorage.getCartKey());
+  }, [auth.loggedClient]);
 
   const {
     isMobileCartOpen,
@@ -313,7 +316,11 @@ const Cart: React.FC<IUseNavigationStates> = (naviStates) => {
               }
 
               onClick={
-                () => {
+                (event: React.KeyboardEvent | React.MouseEvent) => {
+                  setIsMobileCartOpen(false)
+
+                  console.log()
+
                   if (auth.isSignedIn())
                     navigate(Routes.SCREEN_CLIENT_CHECKOUT);
                   else
