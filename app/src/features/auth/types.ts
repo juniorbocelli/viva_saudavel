@@ -2,13 +2,7 @@ import React from "react";
 
 import { Client } from '../../globals/interfaces/client';
 
-export type LoggedClient = {
-  id: string;
-  name: string;
-  email: string;
-  isAdmin: boolean;
-};
-export type LoggedClientState = LoggedClient | null | undefined;
+export type LoggedClientState = Client | null | undefined;
 export type IsCheckingSessionState = boolean;
 
 export type IsQueryingAPIState = boolean;

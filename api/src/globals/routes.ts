@@ -29,3 +29,6 @@ export const API_CART_ADD_ITEM = `${API_ROOT}/clients/:id/carts/add-item/`;    /
 export const API_CART_REMOVE_ITEM = `${API_ROOT}/clients/:id/carts/remove-item`;   // PATH
 export const API_CART_CHANGE_CLIENT_ID = `${API_ROOT}/clients/:id/cart/change-client-id/`;  // PATH
 export const API_CART_DELETE = `${API_ROOT}clients/:id/carts/`   // DELETE
+
+// checkout routes
+export const API_CHECKOUT_GET_DELIVERY_DAY = `${API_ROOT}/checkout/delivery-day/:weekDay/`; // GET

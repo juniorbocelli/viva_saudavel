@@ -1,7 +1,10 @@
+import mongoose from 'mongoose';
+
 import Cart from '../entities/Cart';
 import CartItem from '../entities/CartItem';
 import DAOCart from '../../data/persistence/mongo/dao/DAOCart';
 import DAOProduct from '../../data/persistence/mongo/dao/DAOProduct';
+import DAOClient from '../../data/persistence/mongo/dao/DAOClient';
 
 class UCManagerCart {
   private daoCart: DAOCart;
@@ -28,8 +31,17 @@ class UCManagerCart {
 
     if (carts.length !== 1)
       cart = new Cart(newCart);
-    else
+    else {
       cart = carts[0];
+
+      if (!cart.isRegistered && mongoose.isValidObjectId(cart.clientId)) {
+        let daoClient = new DAOClient();
+        let client = await daoClient.select(cart.clientId as string);
+
+        if (client !== null)
+          cart.isRegistered = true;
+      };
+    };
 
     return await this.daoCart.saveOrUpdate(cart);
   };

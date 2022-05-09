@@ -2,16 +2,16 @@ import { Request, Response } from 'express';
 
 import DELIVERY_SETTINGS from '../settings/delivery.json'
 import Delivery from '../models/utils/Delivery';
+import { WeekDaysName } from '../models/utils/Dates';
 
 class CheckoutController {
-  static async get(req: Request, res: Response) {
-    const dates = new Delivery(DELIVERY_SETTINGS.minDaysToFirstDelivery, DELIVERY_SETTINGS.isDeliveryInHolidays, DELIVERY_SETTINGS.isDeliveryInWeekends);
+  static async getDeliveryDate(req: Request, res: Response) {
+    const delivery = new Delivery(DELIVERY_SETTINGS.minDaysToFirstDelivery, DELIVERY_SETTINGS.isDeliveryInHolidays, DELIVERY_SETTINGS.isDeliveryInWeekends);
 
     try {
-      let dates: Array<Date> = [];
-      const weekDays = req.query;
+      const weekDay: WeekDaysName = req.params.weedDay as WeekDaysName;
 
-      res.status(200).json({ firstDelivery: '' });
+      res.status(200).json({ firstDelivery: delivery.getFirstDeliveryDate(weekDay) });
     } catch (error: any) {
       res.status(200).json({ error: error.message });
     };

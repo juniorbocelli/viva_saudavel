@@ -5,6 +5,7 @@ import ProductController from './controllers/ProductController';
 import CartController from './controllers/CartController';
 import AddressController from './controllers/AddressController';
 import ShippingController from './controllers/ShippingController';
+import CheckoutController from './controllers/CheckoutController';
 import Auth from './middlewares/Auth';
 import * as Routes from './globals/routes';
 
@@ -38,5 +39,7 @@ router.get(Routes.API_CART_GET, CartController.get);
 router.patch(Routes.API_CART_ADD_ITEM, CartController.addItem);
 router.patch(Routes.API_CART_REMOVE_ITEM, CartController.removeItem);
 router.patch(Routes.API_CART_CHANGE_CLIENT_ID, CartController.changeClientCode);
+
+router.get(Routes.API_CHECKOUT_GET_DELIVERY_DAY, CheckoutController.getDeliveryDate);
 
 export default router;
