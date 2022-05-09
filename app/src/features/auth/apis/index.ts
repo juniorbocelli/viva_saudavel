@@ -54,8 +54,6 @@ function useAPIs(states: IAuthStates): IUseAPI {
     });
 
     LocalStorage.setToken(token);
-
-    changeClientCode(LocalStorage.getCartKey(), client.id);
   };
 
   const setNotLogged = () => {
@@ -86,6 +84,10 @@ function useAPIs(states: IAuthStates): IUseAPI {
             isAdmin: response.data.client.isAdmin,
           };
 
+          // Change default cart key to client id
+          changeClientCode(LocalStorage.getCartKey(), response.data.client.id);
+
+          // Set loggedIn routines
           setLogged(user, response.data.client.token);
         };
       })
@@ -121,7 +123,10 @@ function useAPIs(states: IAuthStates): IUseAPI {
             email: response.data.client.email,
             isAdmin: response.data.client.isAdmin,
           };
+          // Change default cart key to client id
+          changeClientCode(LocalStorage.getCartKey(), response.data.client.id);
 
+          // Set loggedIn routines
           setLogged(user, response.data.client.token);
         };
 
