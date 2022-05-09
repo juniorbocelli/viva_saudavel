@@ -1,6 +1,5 @@
 import { Request, Response } from 'express';
 
-import Cart from '../models/entities/Cart';
 import CartItem from '../models/entities/CartItem';
 import DAOCart from '../data/persistence/mongo/dao/DAOCart';
 import DAOProduct from '../data/persistence/mongo/dao/DAOProduct';
