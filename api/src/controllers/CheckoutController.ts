@@ -9,7 +9,7 @@ class CheckoutController {
     const delivery = new Delivery(DELIVERY_SETTINGS.minDaysToFirstDelivery, DELIVERY_SETTINGS.isDeliveryInHolidays, DELIVERY_SETTINGS.isDeliveryInWeekends);
 
     try {
-      const weekDay: WeekDaysName = req.params.weedDay as WeekDaysName;
+      const weekDay: WeekDaysName = req.params.weekDay as WeekDaysName;
 
       res.status(200).json({ firstDelivery: delivery.getFirstDeliveryDate(weekDay) });
     } catch (error: any) {

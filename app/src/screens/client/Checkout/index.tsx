@@ -5,6 +5,7 @@ import {
   Typography,
   LinearProgress,
   Stack,
+  Button,
 
   useTheme,
 } from '@mui/material';
@@ -17,31 +18,63 @@ import CartItem from '../../../ui/components/CartItem';
 import DeliveryDaySelect from './components/DeliveryDaySelect';
 
 import useStates from './states';
-import { useAuth } from '../../../features/auth/context';
 import { useGlobalContext } from '../../../features/globalContext/context';
-import * as Rules from '../../../features/validation/rules';
+import { useAuth } from '../../../features/auth/context';
 import MaskApply from '../../../features/utils/MaskApply';
 import { CheckoutFormData } from './types';
+import useAPIs from './apis';
+import { WeekDaysName } from '../../../globals/interfaces/checkout';
+import * as Routes from '../../../globals/routes';
 
 const Checkout: React.FC<React.ReactFragment> = () => {
   const states = useStates();
-  const auth = useAuth();
+  const apis = useAPIs(states);
   const globalContext = useGlobalContext();
+  const auth = useAuth();
   const theme = useTheme();
   const methods = useForm<CheckoutFormData>({ mode: 'onBlur', reValidateMode: 'onBlur' });
+  const navigate = useNavigate();
+
+  // Evaluate delivery day when change week day field
+  React.useEffect(() => {
+    if (methods.getValues('deliveryDay') !== ' ')
+      apis.getDeliveryDate(methods.getValues('deliveryDay') as WeekDaysName);
+  }, [methods.watch('deliveryDay')]);
+
+  React.useEffect(() => {
+    if (auth.loggedClient)
+      apis.getShippingValueByCep(auth.loggedClient.address.cep);
+  }, [auth.loggedClient]);
+
+  const cartVaLue = (): number => {
+    return globalContext['cart'].getTotalCartPrice(globalContext['cart'].cart);
+  };
+
+  const invoiceValue = (): number => {
+    let value: number = 0;
+
+    if (states.shippingValue !== null)
+      value = value + states.shippingValue;
+
+    value = value + cartVaLue();
+
+    return value;
+  };
+
+  const onSubmit = (data: CheckoutFormData) => {
+    console.log('onSubmit', data);
+  };
 
   return (
     <MainContentBox primary="Carrinho" states={states} isLoggedIn={true}>
-      <Grid container spacing={1} sx={{ width: { xs: '100%', md: '90%' }, m: 'auto' }}>
+      <Grid container spacing={{xs: 0, md: 3}} sx={{ width: { xs: '100%', md: '90%' }, m: 'auto' }}>
         {/* Cart Items */}
         <Grid item xs={12} sm={7}>
           {/* Cart itens */}
           <Box
             sx={
               {
-                p: theme.spacing(1),
-                pt: { xs: '60px', md: '60px' },
-                pb: { xs: '70px', md: '90px' }
+                pb: { xs: theme.spacing(1), md: '90px' },
               }
             }
             aria-label="Itens do carrinho de compra"
@@ -182,6 +215,23 @@ const Checkout: React.FC<React.ReactFragment> = () => {
               </Box>
             }
           </Box>
+
+          <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+            <Button
+              variant='outlined'
+              size='large'
+              onClick={() => navigate(Routes.SCREEN_INDEX)}
+
+              sx={
+                {
+                  width: { xs: '100%', md: '70%' },
+                  mb: theme.spacing(5),
+                }
+              }
+            >
+              Continuar comprando
+          </Button>
+          </Box>
         </Grid>
 
         {/* Checkout Informations */}
@@ -210,21 +260,55 @@ const Checkout: React.FC<React.ReactFragment> = () => {
               Resumo do pedido
             </Typography>
 
-            <form>
+            <form onSubmit={methods.handleSubmit(onSubmit)}>
               <DeliveryDaySelect methods={methods} sx={{ mb: theme.spacing(2) }} />
-            </form>
 
-            <Stack
-              direction={{ xs: 'column', sm: 'row' }}
-              spacing={{ xs: 1, sm: 2, md: 4 }}
+              <Stack
+                direction={{ xs: 'column', sm: 'row' }}
+                spacing={{ xs: 1, sm: 2, md: 4 }}
 
-              sx={
-                {
-                  mb: theme.spacing(3)
+                sx={
+                  {
+                    mb: theme.spacing(3)
+                  }
                 }
-              }
-            >
-              <Box>
+              >
+                <Box>
+                  <Typography
+                    variant='h6'
+                    component='span'
+                    color='primary'
+
+                    sx={
+                      {
+                        fontSize: { xs: '1.3rem', md: '1.5rem' }
+                      }
+                    }
+                  >
+                    Próxima entrega:
+                </Typography>
+                </Box>
+                <Box>
+                  <Typography
+                    variant='h6'
+                    component='span'
+                    color={states.deliveryDay === null ? 'error' : 'secondary'}
+
+                    sx={
+                      {
+                        fontSize: { xs: '1.4rem', md: '1.6rem' }
+                      }
+                    }
+                  >
+                    {
+                      states.deliveryDay === null ?
+                        'Escolha o dia da entrega...' :
+                        MaskApply.printDateFromTimestamp(states.deliveryDay)}
+                  </Typography>
+                </Box>
+              </Stack>
+
+              <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: theme.spacing(1.0) }}>
                 <Typography
                   variant='h6'
                   component='span'
@@ -232,89 +316,88 @@ const Checkout: React.FC<React.ReactFragment> = () => {
 
                   sx={
                     {
-                      fontSize: { xs: '1.3rem', md: '1.5rem' }
+                      fontSize: { xs: '1.5rem', md: '1.7rem' }
                     }
                   }
                 >
-                  Próxima entrega:
+                  {`${globalContext['cart'].cart.length} itens`}
                 </Typography>
-              </Box>
-              <Box>
+
                 <Typography
                   variant='h6'
                   component='span'
-                  color='secondary'
+                  color='primary'
 
                   sx={
                     {
-                      fontSize: { xs: '1.4rem', md: '1.6rem' }
+                      fontSize: { xs: '1.5rem', md: '1.7rem' }
                     }
                   }
                 >
-                  06/06/2022
+                  {`R$ ${MaskApply.maskMoney(globalContext['cart'].getTotalCartPrice(globalContext['cart'].cart))}`}
                 </Typography>
               </Box>
-            </Stack>
 
-            <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: theme.spacing(1.8) }}>
-              <Typography
-                variant='h6'
-                component='span'
-                color='primary'
+              <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: theme.spacing(3) }}>
+                <Typography
+                  variant='h6'
+                  component='span'
+                  color='primary'
 
-                sx={
-                  {
-                    fontSize: { xs: '1.5rem', md: '1.7rem' }
+                  sx={
+                    {
+                      fontSize: { xs: '1.5rem', md: '1.7rem' }
+                    }
                   }
-                }
-              >
-                {`${globalContext['cart'].cart.length} itens`}
+                >
+                  Frete
               </Typography>
 
-              <Typography
-                variant='h6'
-                component='span'
-                color='primary'
+                <Typography
+                  variant='h6'
+                  component='span'
+                  color='primary'
 
-                sx={
-                  {
-                    fontSize: { xs: '1.5rem', md: '1.7rem' }
+                  sx={
+                    {
+                      fontSize: { xs: '1.5rem', md: '1.7rem' }
+                    }
                   }
-                }
-              >
-                {`R$ ${MaskApply.maskMoney(globalContext['cart'].getTotalCartPrice(globalContext['cart'].cart))}`}
-              </Typography>
-            </Box>
+                >
+                  {states.shippingValue !== null ? `R$ ${MaskApply.maskMoney(states.shippingValue)}` : ''}
+                </Typography>
+              </Box>
 
-            <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: theme.spacing(0) }}>
-              <Typography
-                variant='h6'
-                component='span'
-                color='primary'
+              <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: theme.spacing(3) }}>
+                <Typography
+                  variant='h6'
+                  component='span'
+                  color='primary'
 
-                sx={
-                  {
-                    fontSize: { xs: '1.5rem', md: '1.7rem' }
+                  sx={
+                    {
+                      fontSize: { xs: '1.6rem', md: '1.8rem' }
+                    }
                   }
-                }
-              >
-                Frete
+                >
+                  Total
               </Typography>
 
-              <Typography
-                variant='h6'
-                component='span'
-                color='primary'
+                <Typography
+                  variant='h6'
+                  component='span'
+                  color='primary'
 
-                sx={
-                  {
-                    fontSize: { xs: '1.5rem', md: '1.7rem' }
+                  sx={
+                    {
+                      fontSize: { xs: '1.6rem', md: '1.8rem' }
+                    }
                   }
-                }
-              >
-                {`R$ ${MaskApply.maskMoney(globalContext['cart'].getTotalCartPrice(globalContext['cart'].cart))}`}
-              </Typography>
-            </Box>
+                >
+                  {states.shippingValue !== null ? `R$ ${MaskApply.maskMoney(invoiceValue())}` : ''}
+                </Typography>
+              </Box>
+            </form>
 
           </Box>
         </Grid>

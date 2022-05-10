@@ -1,8 +1,9 @@
 import { calcularPrecoPrazo } from 'correios-brasil';
 
 class APIShipping {
-  constructor() {
-
+  minValToFreeShipping: number | null;
+  constructor(minValToFreeShipping: APIShipping['minValToFreeShipping']) {
+    this.minValToFreeShipping = minValToFreeShipping;
   };
 
   public async getValueByCep(originCep: string, destinationCep: string): Promise<string> {

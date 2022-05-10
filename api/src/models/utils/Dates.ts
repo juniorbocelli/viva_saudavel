@@ -28,15 +28,15 @@ class Dates {
   };
 
   public static sumDays(date: Date, days: number): Date {
-    let result = new Date(date);
-    result.setUTCDate(result.getUTCDate() + days);
+    let result = date;
+    result.setUTCDate(date.getUTCDate() + days);
 
     return result;
   };
 
   public static subDays(date: Date, days: number): Date {
-    let result = new Date(date);
-    result.setUTCDate(result.getUTCDate() - days);
+    let result = date;
+    result.setUTCDate(date.getUTCDate() - days);
 
     return result;
   };
@@ -44,10 +44,10 @@ class Dates {
   public static getNextDay(from: Date, day: WeekDaysName): Date {
     const numberDay = this.weekDays.indexOf(day);
 
-    if (numberDay > from.getUTCDate())
-      return this.sumDays(from, numberDay - from.getUTCDate());
-    else if (numberDay < from.getUTCDate())
-      return this.subDays(from, from.getUTCDate() - numberDay);
+    if (numberDay > from.getUTCDay())
+      return this.sumDays(from, numberDay - from.getUTCDay());
+    else if (numberDay < from.getUTCDay())
+      return this.sumDays(from, 7 - from.getUTCDay() + numberDay);
 
     return from;
   };
