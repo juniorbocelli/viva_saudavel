@@ -1,0 +1,28 @@
+import axios from '../globals/axios';
+import * as Routes from '../globals/routes';
+import { CreditCard } from '../globals/interfaces/creditCard';
+
+export function getCreditCardsAPI() {
+  return axios.get(Routes.API_CREDIT_CARD_GET_ALL,);
+};
+
+export function getCreditCardAPI(id: CreditCard['id'], clientId: CreditCard['clientId'], decrypt = false) {
+  return axios.get(Routes.API_CREDIT_CARD_GET.replace(':clientId', clientId).replace(':id', id as string),
+    {
+      params: {
+        decrypt: decrypt,
+      }
+    });
+};
+
+export function newCreditCardAPI(clientId: string, creditCard: CreditCard) {
+  return axios.post(Routes.API_CREDIT_CARD_NEW.replace(':client_id', clientId), creditCard, {});
+};
+
+export function updateCreditCardAPI(clientId: string, creditCard: CreditCard) {
+  return axios.put(Routes.API_CREDIT_CARD_UPDATE.replace(':clientId', clientId).replace(':id', creditCard.id as string), creditCard, {});
+};
+
+export function activateCreditCardAPI(clientId: string, id: string) {
+  return axios.patch(Routes.API_CREDIT_CARD_ACTIVATE.replace(':clientId', clientId).replace(':id', id), {});
+};
