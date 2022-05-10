@@ -45,7 +45,7 @@ class UCManagerProduct {
 
   public async getByFilter(filters: Object) {
     return await this.daoProduct.selectBy(filters);
-  }
+  };
 };
 
 export default UCManagerProduct;

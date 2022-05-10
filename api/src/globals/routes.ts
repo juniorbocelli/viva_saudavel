@@ -30,5 +30,12 @@ export const API_CART_REMOVE_ITEM = `${API_ROOT}/clients/:id/carts/remove-item`;
 export const API_CART_CHANGE_CLIENT_ID = `${API_ROOT}/clients/:id/cart/change-client-id/`;  // PATH
 export const API_CART_DELETE = `${API_ROOT}clients/:id/carts/`   // DELETE
 
+// Credit Cards routes
+export const API_CREDIT_CARD_NEW = `${API_ROOT}/client/:clientId/credit-card/`;  // POST
+export const API_CREDIT_CARD_GET = `${API_ROOT}/client/:clientId/credit-card/:id/`;  // GET
+export const API_CREDIT_CARD_UPDATE = `${API_ROOT}/client/:clientId/credit-card/:id/`;  // PUT
+export const API_CREDIT_CARD_GET_ALL = `${API_ROOT}/client/:clientId/credit-card/`;  // GET
+export const API_CREDIT_CARD_ACTIVATE = `${API_ROOT}/client/:clientId/credit-card/:id/activate/`;  // PATH
+
 // checkout routes
 export const API_CHECKOUT_GET_DELIVERY_DAY = `${API_ROOT}/checkout/delivery-day/:weekDay/`; // GET
