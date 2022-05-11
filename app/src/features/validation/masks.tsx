@@ -70,19 +70,19 @@ export function TextMaskPis(props: MaskProps): JSX.Element { // TODO: formato de
 }
 
 
-// DATE Mask ========================================================================================================================================
+// DATE Mask =======================================================================================================================================
 export function TextMaskDate(props: MaskProps): JSX.Element {
   const maskDate: MaskType = [/\d/, /\d/, '/', /\d/, /\d/, '/', /\d/, /\d/, /\d/, /\d/];
   return TextMaskBase(maskDate, props);
 }
 
-// COMPETENCE Mask ========================================================================================================================================
+// COMPETENCE Mask =================================================================================================================================
 export function TextMaskCompetence(props: MaskProps): JSX.Element {
   const maskDate: MaskType = [/\d/, /\d/, '/', /\d/, /\d/, /\d/, /\d/];
   return TextMaskBase(maskDate, props);
 }
 
-// TIME Mask ========================================================================================================================================
+// TIME Mask =======================================================================================================================================
 export function TextMaskTime(props: MaskProps): JSX.Element {
   const maskTime: MaskType = [/\d/, /\d/, ':', /\d/, /\d/];
   return TextMaskBase(maskTime, props);
@@ -91,5 +91,11 @@ export function TextMaskTime(props: MaskProps): JSX.Element {
 // CEP Mask ========================================================================================================================================
 export function TextMaskCep(props: MaskProps): JSX.Element {
   const maskTime: MaskType = [/\d/, /\d/, '.', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/];
+  return TextMaskBase(maskTime, props);
+}
+
+// Credit Card Mask ================================================================================================================================
+export function TextMaskCreditCard(props: MaskProps): JSX.Element {
+  const maskTime: MaskType = [/\d/, /\d/, /\d/, /\d/, ' ', /\d/, /\d/, /\d/, /\d/, ' ', /\d/, /\d/, /\d/, /\d/];
   return TextMaskBase(maskTime, props);
 }
