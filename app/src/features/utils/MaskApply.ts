@@ -220,6 +220,12 @@ class MaskApply {
     else
       return this.maskCellPhone(digits);
   };
+
+  public static maskCreditCard(s: string): string {
+    let digits = SanitizerString.onlyNumbers(s);
+
+    return `${digits.slice(0, 4)} ${digits.slice(4, 7)} ${digits.slice(7, 10)} ${digits.slice(10, 13)}`;
+  };
 };
 
 export default MaskApply;

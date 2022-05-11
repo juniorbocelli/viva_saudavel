@@ -23,21 +23,21 @@ export const optionalNumber = (min: number | undefined, max: number | undefined,
   const validate = (value: string) => {
     let number: number;
 
-    if(!!integer)
-      if(isNaN(parseFloat(value)))
+    if (!!integer)
+      if (isNaN(parseFloat(value)))
         return "Formato inválido";
       else
         number = parseFloat(value);
     else
-    if(isNaN(parseInt(value)))
+      if (isNaN(parseInt(value)))
         return "Formato inválido";
       else
         number = parseInt(value);
 
-    if (typeof(min) !== 'undefined' && number < min)
+    if (typeof (min) !== 'undefined' && number < min)
       return `O valor mínimo é ${min}`;
 
-      if (typeof(max) !== 'undefined' && number > max)
+    if (typeof (max) !== 'undefined' && number > max)
       return `O valor máximo é ${min}`;
   };
 
@@ -101,13 +101,13 @@ export const optionalDate = {
   },
 };
 
-export const requiredCompetence = {
+export const requiredMonthYear = {
   required: required,
   pattern: (value: string) => {
     // Verificação básica do formato da data por REGEX e obtenção dos grupos
     const d = value.match(/^(\d\d)\/(\d\d\d\d)$/);
     if (!d)
-      return "Competência inválida";
+      return "Data inválida";
   },
   validate: (value: string) => {
     const d = value.split("/");
@@ -119,15 +119,21 @@ export const requiredCompetence = {
     // Verificar se foi possível converter a data
     const dNum = dUTC.getTime();
     if (!dNum && dNum !== 0)
-      return "Competência inválida"; // NaN, data inválida
+      return "Data inválida"; // NaN, data inválida
 
     // A data UTC deve retornar uma data idêntica à data ISO
     if (dUTC.toISOString().slice(0, 10) !== dISO)
-      return "Competência inválida"; // Algum campo com valores inválidos (mês 13, dia 32, etc)
+      return "Data inválida"; // Algum campo com valores inválidos (mês 13, dia 32, etc)
+  },
+};
 
-    if ((dUTC.getUTCFullYear() > new Date().getUTCFullYear()) && (dUTC.getUTCMonth() > new Date().getUTCMonth())) {
-      return "A competência não pode ser superior a atual"
-    };
+export const requiredCreditCard = {
+  required: required,
+  pattern: (value: string) => {
+    // Verificação básica do formato da data por REGEX e obtenção dos grupos
+    const d = value.match(/^(\d\d\d\d)\s(\d\d\d\d)\s(\d\d\d\d)\s(\d\d\d\d)$/);
+    if (!d)
+      return "Número de cartão de crédito inválido";
   },
 };
 

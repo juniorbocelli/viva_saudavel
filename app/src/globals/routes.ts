@@ -35,6 +35,9 @@ export const SCREEN_ADMIN_CLIENTS = `${APP_ROOT}/${ADMIN_PREFIX}/clientes/`;
 export const SCREEN_CLIENT_GET = `${APP_ROOT}/meus-dados/`;
 export const SCREEN_CLIENT_CHECKOUT = `${APP_ROOT}/finalizar-compra/`;
 
+export const SCREEN_CREDIT_CARD_NEW = `${APP_ROOT}/cartao-de-credito/`;
+export const SCREEN_CREDIT_CARD_UPDATE = `${APP_ROOT}/cartao-de-credito/:id/`;
+
 /**
  * APIs
  */
