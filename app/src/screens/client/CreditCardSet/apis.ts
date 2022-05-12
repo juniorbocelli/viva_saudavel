@@ -12,6 +12,9 @@ import {
   updateCreditCardAPI,
 } from '../../../services/creditCard';
 
+import SanitizerString from '../../../features/utils/SanitizerString';
+import MaskApply from '../../../features/utils/MaskApply';
+
 export interface IUseAPIs {
   getCreditCards: (clientId: string) => void;
   getCreditCard: (clientId: string, id: string) => void;
@@ -32,9 +35,16 @@ export default function useAPIs(states: IUseStates, methods: UseFormReturn<Credi
           return;
         };
 
-        const creditCards = response.data.creditCards;
+        const creditCards: Array<CreditCard> = response.data.creditCards;
+        let cards: Array<CreditCard> = [];
 
-        states.setCards(creditCards)
+        creditCards.forEach(card => {
+          card.expiryDate = new Date(card.expiryDate);
+
+          cards.push(card);
+        });
+
+        states.setCards(cards)
       })
       .catch((error: any) => {
         console.error('error => getCreditCardsAPI', error);
@@ -56,6 +66,17 @@ export default function useAPIs(states: IUseStates, methods: UseFormReturn<Credi
           states.setDialogMessage({ title: "Erro", message: response.data.error });
           return;
         };
+
+        console.log(typeof (response.data.creditCard.expiryDate))
+
+        const creditCard: CreditCard = response.data.creditCard;
+        creditCard.expiryDate = new Date(creditCard.expiryDate);
+
+        // Set values form
+        methods.setValue('number', SanitizerString.onlyNumbers(creditCard.number.join()));
+        methods.setValue('name', SanitizerString.stringOrEmpty(creditCard.name));
+        methods.setValue('expiryDate', MaskApply.maskCompetenceFromTimestamp(creditCard.expiryDate));
+        methods.setValue('cvv', SanitizerString.onlyNumbers(creditCard.cvv));
       })
       .catch((error: AxiosError) => {
         console.error('error => getCreditCardAPI', error);

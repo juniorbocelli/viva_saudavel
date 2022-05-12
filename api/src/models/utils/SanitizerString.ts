@@ -27,6 +27,13 @@ class SanitizerString {
 
     return this.removeSpaces(value);
   };
+
+  public static stringOrEmpty(value: any): string {
+    if (toString.call(value) !== '[object String]')
+      return '';
+    else
+      return this.removeSpaces(value);
+  };
 };
 
 export default SanitizerString;

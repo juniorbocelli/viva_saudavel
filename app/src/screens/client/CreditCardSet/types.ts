@@ -1,6 +1,6 @@
 import { CreditCard } from '../../../globals/interfaces/creditCard';
 
-export type CreditCardIdState = string | undefined;
+export type SelectedCardState = string | undefined;
 
 export interface CreditCardFormData {
   number: string;

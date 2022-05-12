@@ -10,37 +10,66 @@ import {
 } from '@mui/material';
 
 import { IUseStates } from '../states';
-
-const Item = styled(Paper)(({ theme }) => ({
-  backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
-  ...theme.typography.body2,
-  padding: theme.spacing(1),
-  textAlign: 'center',
-  color: theme.palette.text.secondary,
-
-  height: '100px',
-}));
+import Card from './Card';
+import ConfirmationDialog from '../../../../ui/components/ConfirmationDialog';
 
 interface ICardsListProps {
   cards: IUseStates['cards'];
 
-  creditCardId: IUseStates['creditCardId'];
-  setCreditCardId: IUseStates['setCreditCardId'];
+  selectedCard: IUseStates['selectedCard'];
+  setSelectedCard: IUseStates['setSelectedCard'];
 };
 
-const CardsList: React.FC<ICardsListProps> = ({ cards, creditCardId, setCreditCardId }) => {
+const CardsList: React.FC<ICardsListProps> = ({ cards, selectedCard, setSelectedCard }) => {
   const theme = useTheme();
 
+  const [payload, setPayload] = React.useState<{ cardNumber: string, cardId: string, action: 'activate' | 'remove' } | null>(null);
+
+  const handleConfirmDialog = () => {
+    switch (payload?.cardId) {
+      case 'activate':
+        break;
+
+      case 'remove':
+        break;
+
+      default:
+        return;
+    }
+  };
+
+  const handleCloseDialog = () => {
+    setPayload(null);
+  };
+
   return (
-    <Box sx={{ width: '100%' }}>
+    <Box sx={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
+      <ConfirmationDialog
+        open={Boolean(payload)}
+
+        title='Confirme a ação'
+        content={
+          payload?.action === 'activate'
+            ?
+            `Deseja ativar o cartão final ${payload.cardNumber}?`
+            :
+            payload?.action === 'remove'
+              ?
+              `Deseja excluir o cartão final ${payload.cardNumber}`
+              :
+              ''
+        }
+
+        onClose={handleCloseDialog}
+        onConfirm={handleConfirmDialog}
+      />
+
       <Stack spacing={2}>
         {
           cards.map(card => {
             return (
-              <Item key={`${card.number.join()}`}>
-                {card.name}
-              </Item>
-            )
+              <Card card={card} selectedCard={selectedCard} setSelectedCard={setSelectedCard} setPayload={setPayload} />
+            );
           })
         }
       </Stack>
