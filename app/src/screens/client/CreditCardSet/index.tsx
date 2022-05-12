@@ -16,7 +16,6 @@ import BrandCardSelect from './components/BrandCardSelect';
 
 import useStates from './states';
 import useAPIs from './apis';
-import useEffects from './effects';
 import { useAuth } from '../../../features/auth/context';
 import { CreditCardFormData } from './types';
 import { CreditCard } from '../../../globals/interfaces/creditCard';
@@ -27,11 +26,20 @@ const CreditCardSet: React.FC<React.ReactFragment> = () => {
   const methods = useForm<CreditCardFormData>({ mode: 'onBlur', reValidateMode: 'onBlur' });
   const states = useStates();
   const apis = useAPIs(states, methods);
-  const effects = useEffects(apis);
   const auth = useAuth();
   const theme = useTheme();
 
-  effects.useComponentDidMount(auth.loggedClient?.id!);
+  // Effects
+  React.useEffect(() => {
+    if (typeof (auth.loggedClient?.id) !== 'undefined' && auth.loggedClient?.id !== null)
+      apis.getCreditCards(auth.loggedClient?.id);
+  }, [auth.loggedClient?.id,]);
+
+  React.useEffect(() => {
+    if (typeof (auth.loggedClient?.id) !== 'undefined' && auth.loggedClient?.id !== null)
+      if (typeof (states.selectedCard) !== 'undefined')
+        apis.getCreditCard(auth.loggedClient.id, states.selectedCard);
+  }, [states.selectedCard]);
 
   const handleSubmit = (data: CreditCardFormData) => {
     const dateParts = data.expiryDate.split('/')
@@ -40,10 +48,10 @@ const CreditCardSet: React.FC<React.ReactFragment> = () => {
       name: data.name,
       expiryDate: new Date(parseInt(dateParts[1]), parseInt(dateParts[0]), 1),
       brand: data.brand,
-      cvv: data.brand,
+      cvv: data.cvv,
     };
 
-    if (typeof (states.creditCardId) === 'undefined')
+    if (typeof (states.selectedCard) === 'undefined')
       apis.newCreditCard(auth.loggedClient?.id!, creditCard);
   };
 
@@ -62,7 +70,12 @@ const CreditCardSet: React.FC<React.ReactFragment> = () => {
 
                 sx={{ fontSize: '2.0rem', m: 0 }}
               >
-                Cadastrar outro
+                {
+                  typeof (states.selectedCard) === 'undefined' ?
+                    'Cadastrar outro'
+                    :
+                    'Editar dados'
+                }
               </Typography>
 
               <ControlledTextInput
@@ -109,7 +122,7 @@ const CreditCardSet: React.FC<React.ReactFragment> = () => {
               </Box>
 
               <Button variant='contained' sx={{ mt: theme.spacing(2) }} type='submit'>
-                {typeof (states.creditCardId) === 'undefined' ? 'Cadastrar novo' : 'Salvar dados'}
+                {typeof (states.selectedCard) === 'undefined' ? 'Cadastrar novo' : 'Salvar dados'}
               </Button>
             </Box>
           </form>
@@ -127,7 +140,7 @@ const CreditCardSet: React.FC<React.ReactFragment> = () => {
           >
             Cartões cadastrados
           </Typography>
-          <CardsList cards={states.cards} creditCardId={states.creditCardId} setCreditCardId={states.setCreditCardId} />
+          <CardsList cards={states.cards} selectedCard={states.selectedCard} setSelectedCard={states.setSelectedCard} />
         </Grid>
       </Grid>
     </MainContentBox>
