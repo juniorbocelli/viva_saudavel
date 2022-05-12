@@ -137,6 +137,16 @@ export const requiredCreditCard = {
   },
 };
 
+export const requiredCreditCardCvv = {
+  required: required,
+  pattern: (value: string) => {
+    // Verificação básica do formato da data por REGEX e obtenção dos grupos
+    const d = value.match(/^(\d\d\d)$/);
+    if (!d)
+      return "Número CVV inválido";
+  },
+};
+
 export const requiredCellPhone = {
   required: required,
   pattern: (value: string) => {

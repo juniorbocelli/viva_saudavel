@@ -44,7 +44,7 @@ router.patch(Routes.API_CART_CHANGE_CLIENT_ID, CartController.changeClientCode);
 // Credit cards routes
 router.get(Routes.API_CREDIT_CARD_GET, Auth.tokenVerify, CreditCardController.get);
 router.get(Routes.API_CREDIT_CARD_GET_ALL, Auth.tokenVerify, CreditCardController.getAll);
-router.post(Routes.API_PRODUCT_NEW, Auth.tokenVerify, CreditCardController.new);
+router.post(Routes.API_CREDIT_CARD_NEW, Auth.tokenVerify, CreditCardController.new);
 router.put(Routes.API_CREDIT_CARD_UPDATE, Auth.adminVerify, CreditCardController.update);
 router.patch(Routes.API_CREDIT_CARD_ACTIVATE, CreditCardController.activateCard);
 

@@ -96,6 +96,12 @@ export function TextMaskCep(props: MaskProps): JSX.Element {
 
 // Credit Card Mask ================================================================================================================================
 export function TextMaskCreditCard(props: MaskProps): JSX.Element {
-  const maskTime: MaskType = [/\d/, /\d/, /\d/, /\d/, ' ', /\d/, /\d/, /\d/, /\d/, ' ', /\d/, /\d/, /\d/, /\d/];
+  const maskTime: MaskType = [/\d/, /\d/, /\d/, /\d/, ' ', /\d/, /\d/, /\d/, /\d/, ' ', /\d/, /\d/, /\d/, /\d/, ' ', /\d/, /\d/, /\d/, /\d/];
+  return TextMaskBase(maskTime, props);
+}
+
+// Credit Card CVV Mask ============================================================================================================================
+export function TextMaskCreditCardCvv(props: MaskProps): JSX.Element {
+  const maskTime: MaskType = [/\d/, /\d/, /\d/];
   return TextMaskBase(maskTime, props);
 }
