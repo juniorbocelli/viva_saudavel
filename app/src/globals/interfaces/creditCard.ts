@@ -1,6 +1,6 @@
 export interface CreditCard {
   id?: string;
-  clientId: string;
+  clientId?: string;
 
   brand: string;
   name: string | null;

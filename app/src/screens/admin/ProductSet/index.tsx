@@ -41,7 +41,7 @@ const ProductSet: React.FC<React.ReactFragment> = () => {
     methods.reset();
     states.setImages([]);
     states.setProductImages([]);
-  }
+  };
 
   effects.useComponentDidMount(params.id, states.setProductId);
   effects.useProductIdDidChanged(states.productId, resetForm);

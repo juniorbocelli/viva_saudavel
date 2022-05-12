@@ -15,7 +15,7 @@ const creditCardSchema = new mongoose.Schema<CreditCard>({
     type: String,
     required: [true, 'O nome do cartão é obrigatória'],
   },
-  number: [Number],
+  number: [String],
   expiryDate: {
     type: Date,
     required: [true, 'A data de vencimento do cartão é obrigatória'],

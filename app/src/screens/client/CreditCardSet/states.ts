@@ -4,7 +4,7 @@ import {
   DialogMessageState,
 } from '../../../ui/components/pages/MainContentBox/types';
 
-import { CreditCardIdState } from './types';
+import { CreditCardIdState, CardsState } from './types';
 
 export interface IUseStates {
   isQueryingAPI: IsQueryingAPIState;
@@ -15,6 +15,9 @@ export interface IUseStates {
 
   creditCardId: CreditCardIdState;
   setCreditCardId: React.Dispatch<React.SetStateAction<CreditCardIdState>>;
+
+  cards: CardsState;
+  setCards: React.Dispatch<React.SetStateAction<CardsState>>
 };
 
 export default function useStates(): IUseStates {
@@ -22,6 +25,7 @@ export default function useStates(): IUseStates {
   const [dialogMessage, setDialogMessage] = React.useState<DialogMessageState>(undefined);
 
   const [creditCardId, setCreditCardId] = React.useState<CreditCardIdState>(undefined);
+  const [cards, setCards] = React.useState<CardsState>([]);
 
   return {
     isQueryingAPI,
@@ -32,5 +36,8 @@ export default function useStates(): IUseStates {
 
     creditCardId,
     setCreditCardId,
+
+    cards,
+    setCards,
   };
 };

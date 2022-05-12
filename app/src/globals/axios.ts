@@ -21,10 +21,10 @@ apiAxios.interceptors.response.use(
   },
   error => {
     if (typeof (error.data) === 'undefined')
-      error.data = { error: "Erro em chamada da API" };
+      error.data = { error: "Erro em chamada de API" };
 
     if (typeof (error.response) === 'undefined')
-      error.response = { error: "Erro em chamada da API" };
+      error.response = { error: "Erro em chamada de API" };
 
     if (error.response.status === 401 || error.response.status === 403) {
       console.log("Cliente foi deslogado");
