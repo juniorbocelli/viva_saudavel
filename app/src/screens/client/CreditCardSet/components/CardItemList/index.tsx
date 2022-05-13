@@ -13,7 +13,7 @@ interface ICardProps {
   setPayload: React.Dispatch<React.SetStateAction<{ cardNumber: string, cardId: string, action: 'activate' | 'remove' } | null>>;
 };
 
-const Card: React.FC<ICardProps> = ({ card, selectedCard, setSelectedCard, setPayload }) => {
+const CardItemList: React.FC<ICardProps> = ({ card, selectedCard, setSelectedCard, setPayload }) => {
   const getCardStyle = (): React.CSSProperties => {
     if (card.isActive)
       return { background: '#3B3' };
@@ -72,4 +72,4 @@ const Card: React.FC<ICardProps> = ({ card, selectedCard, setSelectedCard, setPa
   );
 };
 
-export default Card;
+export default CardItemList;

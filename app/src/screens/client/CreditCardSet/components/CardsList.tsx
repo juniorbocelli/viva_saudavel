@@ -2,15 +2,10 @@ import React from 'react';
 import {
   Stack,
   Box,
-  Paper,
-  Typography,
-
-  styled,
-  useTheme,
 } from '@mui/material';
 
 import { IUseStates } from '../states';
-import Card from './Card';
+import CardItemList from './CardItemList';
 import ConfirmationDialog from '../../../../ui/components/ConfirmationDialog';
 
 interface ICardsListProps {
@@ -21,8 +16,6 @@ interface ICardsListProps {
 };
 
 const CardsList: React.FC<ICardsListProps> = ({ cards, selectedCard, setSelectedCard }) => {
-  const theme = useTheme();
-
   const [payload, setPayload] = React.useState<{ cardNumber: string, cardId: string, action: 'activate' | 'remove' } | null>(null);
 
   const handleConfirmDialog = () => {
@@ -68,7 +61,7 @@ const CardsList: React.FC<ICardsListProps> = ({ cards, selectedCard, setSelected
         {
           cards.map(card => {
             return (
-              <Card card={card} selectedCard={selectedCard} setSelectedCard={setSelectedCard} setPayload={setPayload} />
+              <CardItemList key={card.number.join()} card={card} selectedCard={selectedCard} setSelectedCard={setSelectedCard} setPayload={setPayload} />
             );
           })
         }
