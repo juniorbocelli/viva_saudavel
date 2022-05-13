@@ -84,7 +84,7 @@ const CreditCardSet: React.FC<React.ReactFragment> = () => {
 
               <Grid container>
                 <Grid item xs={12} md={6}>
-                  <Card number='' name={methods.watch('name') || ''} expiry={methods.watch('expiryDate') || ''} cvc={methods.watch('cvv') || ''} focus={null} />
+                  <Card number={methods.watch('number') || ''}  name={methods.watch('name') || ''} expiry={methods.watch('expiryDate') || ''} cvc={methods.watch('cvv') || ''} focus={null} />
                 </Grid>
 
                 <Grid item xs={12} md={6}>
@@ -94,7 +94,7 @@ const CreditCardSet: React.FC<React.ReactFragment> = () => {
                       label="Número do cartão"
                       placeholder="0000 0000 0000 0000"
                       fullWidth={true}
-                      //mask={React.forwardRef((props, ref) => Masks.TextMaskCreditCard({ ...props, ...ref }))}
+                      mask={Masks.TextMaskCreditCard}
                     />
 
                     <ControlledTextInput
@@ -112,7 +112,7 @@ const CreditCardSet: React.FC<React.ReactFragment> = () => {
                           label="Validade"
                           placeholder="00/00"
                           fullWidth={true}
-                          mask={React.forwardRef((props, ref) => Masks.TextMaskCompetence({ ...props, ...ref }))}
+                          mask={Masks.TextMaskCompetence}
 
                           sx={{ mr: theme.spacing(1), width: '100px' }}
                         />
@@ -122,7 +122,7 @@ const CreditCardSet: React.FC<React.ReactFragment> = () => {
                         hookForm={["cvv", methods.control, methods.formState.errors, Rules.requiredCreditCardCvv]}
                         label="CVV"
                         placeholder="000"
-                        mask={React.forwardRef((props, ref) => Masks.TextMaskCreditCardCvv({ ...props, ...ref }))}
+                        mask={Masks.TextMaskCreditCardCvv}
 
                         sx={{ width: '70px', mr: 0 }}
                       />

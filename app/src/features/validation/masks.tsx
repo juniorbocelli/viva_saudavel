@@ -17,10 +17,10 @@ type MaskType = (string | RegExp)[] | ((s: string) => Array<string | RegExp>);
 
 
 // BASE Mask ========================================================================================================================================
-function TextMaskBase(mask: MaskType, { inputRef, ...rest }: MaskProps): JSX.Element {
+function TextMaskBase(mask: MaskType, { inputRef, ...rest }: MaskProps): React.ReactElement {
   return (
     <MaskedInput
-      ref={(ref) => { inputRef && inputRef(ref ? ref.inputElement : null) }}
+
       mask={mask}
       guide={false}
       {...rest}
@@ -102,7 +102,7 @@ export function TextMaskCreditCard(props: MaskProps): JSX.Element {
 }
 
 // Credit Card CVV Mask ============================================================================================================================
-export function TextMaskCreditCardCvv(props: MaskProps): JSX.Element {
+export function TextMaskCreditCardCvv(props: MaskProps): React.ReactElement {
   const maskTime: MaskType = [/\d/, /\d/, /\d/];
   return TextMaskBase(maskTime, props);
 }

@@ -97,5 +97,5 @@ export default function ControlledTextInput({
 
 ControlledTextInput.propTypes = {
   hookForm: PropTypes.array, // [name, register, errors, validate]
-  mask: PropTypes.object,
+  mask: PropTypes.any,
 };
