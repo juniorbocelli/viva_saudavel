@@ -9,7 +9,7 @@ import MaskedInput from 'react-text-mask';
 
 // Types ============================================================================================================================================
 type MaskProps = {
-  inputRef?: Function;
+  inputRef?: any;
   children?: ReactNode;
 };
 
@@ -20,9 +20,10 @@ type MaskType = (string | RegExp)[] | ((s: string) => Array<string | RegExp>);
 function TextMaskBase(mask: MaskType, { inputRef, ...rest }: MaskProps): JSX.Element {
   return (
     <MaskedInput
-      {...rest}
       ref={(ref) => { inputRef && inputRef(ref ? ref.inputElement : null) }}
       mask={mask}
+      guide={false}
+      {...rest}
     />
   );
 };

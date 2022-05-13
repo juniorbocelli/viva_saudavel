@@ -13,6 +13,7 @@ import MainContentBox from '../../../ui/components/pages/MainContentBox';
 import ControlledTextInput from '../../../ui/components/form/ControlledTextInput';
 import CardsList from './components/CardsList';
 import BrandCardSelect from './components/BrandCardSelect';
+import Card from './components/Card';
 
 import useStates from './states';
 import useAPIs from './apis';
@@ -39,6 +40,8 @@ const CreditCardSet: React.FC<React.ReactFragment> = () => {
     if (typeof (auth.loggedClient?.id) !== 'undefined' && auth.loggedClient?.id !== null)
       if (typeof (states.selectedCard) !== 'undefined')
         apis.getCreditCard(auth.loggedClient.id, states.selectedCard);
+      else
+        methods.reset();
   }, [states.selectedCard]);
 
   const handleSubmit = (data: CreditCardFormData) => {
@@ -60,15 +63,16 @@ const CreditCardSet: React.FC<React.ReactFragment> = () => {
       <Grid container spacing={2}>
         {/* Form  */}
         <Grid item xs={12} md={6}>
-          <form onSubmit={methods.handleSubmit(handleSubmit)}>
-            <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', }}>
 
+          <form onSubmit={methods.handleSubmit(handleSubmit)}>
               <Typography
                 variant='h6'
                 component='div'
                 color={theme.palette.text.secondary}
 
-                sx={{ fontSize: '2.0rem', m: 0 }}
+                sx={{ fontSize: '2.0rem', mb: theme.spacing(3) }}
+
+                align='center'
               >
                 {
                   typeof (states.selectedCard) === 'undefined' ?
@@ -78,53 +82,60 @@ const CreditCardSet: React.FC<React.ReactFragment> = () => {
                 }
               </Typography>
 
-              <ControlledTextInput
-                hookForm={["number", methods.control, methods.formState.errors, Rules.requiredCreditCard]}
-                label="Número do cartão"
-                placeholder="0000 0000 0000 0000"
-                fullWidth={true}
-                mask={React.forwardRef((props, ref) => Masks.TextMaskCreditCard({ ...props, ...ref }))}
-              />
+              <Grid container>
+                <Grid item xs={12} md={6}>
+                  <Card number='' name={methods.watch('name') || ''} expiry={methods.watch('expiryDate') || ''} cvc={methods.watch('cvv') || ''} focus={null} />
+                </Grid>
 
-              <ControlledTextInput
-                hookForm={["name", methods.control, methods.formState.errors, Rules.requiredText]}
-                label="Nome impresso"
-                placeholder="Digite o nome impresso no cartão..."
-                fullWidth={true}
-              />
+                <Grid item xs={12} md={6}>
+                  <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', }}>
+                    <ControlledTextInput
+                      hookForm={["number", methods.control, methods.formState.errors, Rules.requiredText]}
+                      label="Número do cartão"
+                      placeholder="0000 0000 0000 0000"
+                      fullWidth={true}
+                      //mask={React.forwardRef((props, ref) => Masks.TextMaskCreditCard({ ...props, ...ref }))}
+                    />
 
-              <Box sx={{ display: 'flex', width: '100%', }}>
+                    <ControlledTextInput
+                      hookForm={["name", methods.control, methods.formState.errors, Rules.requiredText]}
+                      label="Nome impresso"
+                      placeholder="Digite o nome impresso no cartão..."
+                      fullWidth={true}
+                    />
 
-                <Box>
-                  <ControlledTextInput
-                    hookForm={["expiryDate", methods.control, methods.formState.errors, Rules.requiredMonthYear]}
-                    label="Validade"
-                    placeholder="00/0000"
-                    fullWidth={true}
-                    mask={React.forwardRef((props, ref) => Masks.TextMaskCompetence({ ...props, ...ref }))}
+                    <Box sx={{ display: 'flex', width: '100%', }}>
 
-                    sx={{ mr: theme.spacing(1), width: '100px' }}
-                  />
-                </Box>
+                      <Box>
+                        <ControlledTextInput
+                          hookForm={["expiryDate", methods.control, methods.formState.errors, Rules.requiredMonthYear]}
+                          label="Validade"
+                          placeholder="00/00"
+                          fullWidth={true}
+                          mask={React.forwardRef((props, ref) => Masks.TextMaskCompetence({ ...props, ...ref }))}
 
-                <BrandCardSelect methods={methods} sx={{ flexGrow: 1, mt: '16px' }} />
-              </Box>
+                          sx={{ mr: theme.spacing(1), width: '100px' }}
+                        />
+                      </Box>
 
-              <Box sx={{ width: '100%', }}>
-                <ControlledTextInput
-                  hookForm={["cvv", methods.control, methods.formState.errors, Rules.requiredCreditCardCvv]}
-                  label="CVV"
-                  placeholder="000"
-                  mask={React.forwardRef((props, ref) => Masks.TextMaskCreditCardCvv({ ...props, ...ref }))}
+                      <ControlledTextInput
+                        hookForm={["cvv", methods.control, methods.formState.errors, Rules.requiredCreditCardCvv]}
+                        label="CVV"
+                        placeholder="000"
+                        mask={React.forwardRef((props, ref) => Masks.TextMaskCreditCardCvv({ ...props, ...ref }))}
 
-                  sx={{ width: '70px', mr: 0 }}
-                />
-              </Box>
+                        sx={{ width: '70px', mr: 0 }}
+                      />
+                    </Box>
 
-              <Button variant='contained' sx={{ mt: theme.spacing(2) }} type='submit'>
-                {typeof (states.selectedCard) === 'undefined' ? 'Cadastrar novo' : 'Salvar dados'}
-              </Button>
-            </Box>
+                    <Button variant='contained' sx={{ mt: theme.spacing(2) }} type='submit'>
+                      {typeof (states.selectedCard) === 'undefined' ? 'Cadastrar novo' : 'Salvar dados'}
+                    </Button>
+
+                  </Box>
+                </Grid>
+              </Grid>
+
           </form>
         </Grid>
 
