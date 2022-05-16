@@ -2,6 +2,9 @@ import React from 'react';
 import {
   Stack,
   Box,
+  Typography,
+
+  useTheme,
 } from '@mui/material';
 
 import { IUseStates } from '../states';
@@ -17,6 +20,7 @@ interface ICardsListProps {
 
 const CardsList: React.FC<ICardsListProps> = ({ cards, selectedCard, setSelectedCard }) => {
   const [payload, setPayload] = React.useState<{ cardNumber: string, cardId: string, action: 'activate' | 'remove' } | null>(null);
+  const theme = useTheme();
 
   const handleConfirmDialog = () => {
     switch (payload?.cardId) {
@@ -57,15 +61,22 @@ const CardsList: React.FC<ICardsListProps> = ({ cards, selectedCard, setSelected
         onConfirm={handleConfirmDialog}
       />
 
-      <Stack spacing={2}>
-        {
-          cards.map(card => {
-            return (
-              <CardItemList key={card.number.join()} card={card} selectedCard={selectedCard} setSelectedCard={setSelectedCard} setPayload={setPayload} />
-            );
-          })
-        }
-      </Stack>
+      {
+        cards.length === 0 ?
+          <Typography variant='h6' component='span' color={theme.palette.grey['400']}>
+            Ainda não há cartões cadastrados
+        </Typography>
+          :
+          <Stack spacing={2}>
+            {
+              cards.map(card => {
+                return (
+                  <CardItemList key={card.number.join()} card={card} selectedCard={selectedCard} setSelectedCard={setSelectedCard} setPayload={setPayload} />
+                );
+              })
+            }
+          </Stack>
+      }
     </Box>
   );
 };
