@@ -17,9 +17,20 @@ type MaskType = (string | RegExp)[] | ((s: string) => Array<string | RegExp>);
 
 
 // BASE Mask ========================================================================================================================================
-function TextMaskBase(mask: MaskType, { inputRef, ...rest }: MaskProps): React.ReactElement {
+function TextMaskBase(mask: MaskType, { inputRef, ...rest }: MaskProps): JSX.Element {
+  React.useImperativeHandle(inputRef, () => ({
+    focus: () => {
+      // lógica para focar o componente de terceiro renderizado deve ser feita aqui
+    },
+    // ocultando o valor, por exemplo, react-stripe-elements
+  }));
+
   return (
     <MaskedInput
+
+      ref={ref => {
+        inputRef(ref ? ref.inputElement : null);
+      }}
 
       mask={mask}
       guide={false}
@@ -30,31 +41,31 @@ function TextMaskBase(mask: MaskType, { inputRef, ...rest }: MaskProps): React.R
 
 
 // CPF Mask ========================================================================================================================================
-export function TextMaskCpf(props: MaskProps): JSX.Element {
+export function TextMaskCpf(props: MaskProps): React.ReactElement {
   const maskCpf: MaskType = [/\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '-', /\d/, /\d/];
   return TextMaskBase(maskCpf, props);
 };
 
 // Mobile Phone Mask ========================================================================================================================================
-export function TextMaskCellPhone(props: MaskProps): JSX.Element {
+export function TextMaskCellPhone(props: MaskProps): React.ReactElement {
   const maskCpf: MaskType = ['(', /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/];
   return TextMaskBase(maskCpf, props);
 };
 
 // Phone Mask ========================================================================================================================================
-export function TextMaskPhone(props: MaskProps): JSX.Element {
+export function TextMaskPhone(props: MaskProps): React.ReactElement {
   const maskCpf: MaskType = ['(', /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/];
   return TextMaskBase(maskCpf, props);
 };
 
 // CNPJ Mask ========================================================================================================================================
-export function TextMaskCnpj(props: MaskProps): JSX.Element {
+export function TextMaskCnpj(props: MaskProps): React.ReactElement {
   const maskCnpj: MaskType = [/\d/, /\d/, '.', /\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '/', /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/];
   return TextMaskBase(maskCnpj, props);
 }
 
 // CNPJ or CPF Mask ========================================================================================================================================
-export function TextMaskCnpjOrCpf(props: MaskProps): JSX.Element {
+export function TextMaskCnpjOrCpf(props: MaskProps): React.ReactElement {
   const maskCnpj = [/\d/, /\d/, '.', /\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '/', /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/];
   const maskCpf: MaskType = [/\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, '-', /\d/, /\d/];
 
@@ -65,44 +76,49 @@ export function TextMaskCnpjOrCpf(props: MaskProps): JSX.Element {
 };
 
 // PIS Mask ========================================================================================================================================
-export function TextMaskPis(props: MaskProps): JSX.Element { // TODO: formato de PIS pode estar errado, deve-se testar isso com usuários antes de enviar para produção
+export function TextMaskPis(props: MaskProps): React.ReactElement { // TODO: formato de PIS pode estar errado, deve-se testar isso com usuários antes de enviar para produção
   const maskPis: MaskType = [/\d/, /\d/, /\d/, '.', /\d/, /\d/, /\d/, /\d/, /\d/, '.', /\d/, /\d/, '-', /\d/];
   return TextMaskBase(maskPis, props);
-}
-
+};
 
 // DATE Mask =======================================================================================================================================
-export function TextMaskDate(props: MaskProps): JSX.Element {
+export function TextMaskDate(props: MaskProps): React.ReactElement {
   const maskDate: MaskType = [/\d/, /\d/, '/', /\d/, /\d/, '/', /\d/, /\d/, /\d/, /\d/];
   return TextMaskBase(maskDate, props);
-}
+};
 
 // COMPETENCE Mask =================================================================================================================================
-export function TextMaskCompetence(props: MaskProps): JSX.Element {
+export function TextMaskCompetence(props: MaskProps): React.ReactElement {
   const maskDate: MaskType = [/\d/, /\d/, '/', /\d/, /\d/, /\d/, /\d/];
   return TextMaskBase(maskDate, props);
-}
+};
 
 // TIME Mask =======================================================================================================================================
-export function TextMaskTime(props: MaskProps): JSX.Element {
+export function TextMaskTime(props: MaskProps): React.ReactElement {
   const maskTime: MaskType = [/\d/, /\d/, ':', /\d/, /\d/];
   return TextMaskBase(maskTime, props);
-}
+};
 
 // CEP Mask ========================================================================================================================================
-export function TextMaskCep(props: MaskProps): JSX.Element {
-  const maskTime: MaskType = [/\d/, /\d/, '.', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/];
-  return TextMaskBase(maskTime, props);
-}
+export function TextMaskCep(props: MaskProps): React.ReactElement {
+  const maskCep: MaskType = [/\d/, /\d/, '.', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/];
+  return TextMaskBase(maskCep, props);
+};
 
-// Credit Card Mask ================================================================================================================================
-export function TextMaskCreditCard(props: MaskProps): JSX.Element {
-  const maskTime: MaskType = [/\d/, /\d/, /\d/, /\d/, ' ', /\d/, /\d/, /\d/, /\d/, ' ', /\d/, /\d/, /\d/, /\d/, ' ', /\d/, /\d/, /\d/, /\d/];
-  return TextMaskBase(maskTime, props);
-}
+// Credit Card Mask 0000 0000 0000 0000 ============================================================================================================
+export function TextMaskCreditCard(props: MaskProps): React.ReactElement {
+  const maskCreditCard: MaskType = [/\d/, /\d/, /\d/, /\d/, ' ', /\d/, /\d/, /\d/, /\d/, ' ', /\d/, /\d/, /\d/, /\d/, ' ', /\d/, /\d/, /\d/, /\d/];
+  return TextMaskBase(maskCreditCard, props);
+};
 
-// Credit Card CVV Mask ============================================================================================================================
+// Credit Card CVV Mask 000 ========================================================================================================================
 export function TextMaskCreditCardCvv(props: MaskProps): React.ReactElement {
-  const maskTime: MaskType = [/\d/, /\d/, /\d/];
-  return TextMaskBase(maskTime, props);
-}
+  const maskCreditCardCvv: MaskType = [/\d/, /\d/, /\d/];
+  return TextMaskBase(maskCreditCardCvv, props);
+};
+
+// Expiry Date Mask ================================================================================================================================
+export function TextMaskExpiryDate(props: MaskProps): React.ReactElement {
+  const maskExpiryDate: MaskType = [/\d/, /\d/, '/', /\d/, /\d/];
+  return TextMaskBase(maskExpiryDate, props);
+};
