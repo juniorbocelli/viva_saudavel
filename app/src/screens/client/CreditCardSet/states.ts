@@ -4,7 +4,7 @@ import {
   DialogMessageState,
 } from '../../../ui/components/pages/MainContentBox/types';
 
-import { SelectedCardState, CardsState } from './types';
+import { SelectedCardState, CardsState, CardValuesEstate } from './types';
 
 export interface IUseStates {
   isQueryingAPI: IsQueryingAPIState;
@@ -18,6 +18,9 @@ export interface IUseStates {
 
   cards: CardsState;
   setCards: React.Dispatch<React.SetStateAction<CardsState>>
+
+  cardValues: CardValuesEstate;
+  setCardValues: React.Dispatch<React.SetStateAction<CardValuesEstate>>;
 };
 
 export default function useStates(): IUseStates {
@@ -26,6 +29,18 @@ export default function useStates(): IUseStates {
 
   const [selectedCard, setSelectedCard] = React.useState<SelectedCardState>(undefined);
   const [cards, setCards] = React.useState<CardsState>([]);
+
+  const [cardValues, setCardValues] = React.useState<CardValuesEstate>({
+    number: '',
+    name: '',
+    expiry: '',
+    cvc: '',
+
+    issuer: 'unknown',
+    isValid: false,
+
+    focused: null,
+  });
 
   return {
     isQueryingAPI,
@@ -39,5 +54,8 @@ export default function useStates(): IUseStates {
 
     cards,
     setCards,
+
+    cardValues,
+    setCardValues,
   };
 };

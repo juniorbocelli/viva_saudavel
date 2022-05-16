@@ -14,11 +14,12 @@ import ControlledTextInput from '../../../ui/components/form/ControlledTextInput
 import CardsList from './components/CardsList';
 import BrandCardSelect from './components/BrandCardSelect';
 import Card from './components/Card';
+import * as CardUtils from './cardUtils';
 
 import useStates from './states';
 import useAPIs from './apis';
 import { useAuth } from '../../../features/auth/context';
-import { CreditCardFormData } from './types';
+import { CreditCardFormData, CardValuesEstate } from './types';
 import { CreditCard } from '../../../globals/interfaces/creditCard';
 import * as Rules from '../../../features/validation/rules';
 import * as Masks from '../../../features/validation/masks';
@@ -45,24 +46,48 @@ const CreditCardSet: React.FC<React.ReactFragment> = () => {
   }, [states.selectedCard]);
 
   const handleSubmit = (data: CreditCardFormData) => {
-    const dateParts = data.expiryDate.split('/')
+    // Varify if card is valid
+    
+
+    const dateParts = data.expiry.split('/')
     const creditCard: CreditCard = {
       number: data.number.split(' '),
       name: data.name,
-      expiryDate: new Date(parseInt(dateParts[1]), parseInt(dateParts[0]), 1),
+      expiry: new Date(parseInt('20' + dateParts[1]), parseInt(dateParts[0]), 1),
       brand: data.brand,
-      cvv: data.cvv,
+      cvc: data.cvc,
     };
 
     if (typeof (states.selectedCard) === 'undefined')
       apis.newCreditCard(auth.loggedClient?.id!, creditCard);
   };
 
-  const [number, setNumber] = React.useState('')
+  const handleCallback = (type: { issuer: string, MaxLength: number }, isValid: boolean) => {
+    if (states.cardValues.isValid !== isValid)
+      states.setCardValues({ ...states.cardValues, isValid: isValid });
 
-  const buceta = (e: any) => {
-    setNumber(e.target.value)
-  }
+    if (states.cardValues.issuer !== type.issuer)
+      states.setCardValues({ ...states.cardValues, issuer: type.issuer });
+  };
+
+  const handleInputFocus = (e: React.FocusEvent<HTMLInputElement>) => {
+    states.setCardValues({ ...states.cardValues, focused: e.target.name });
+  };
+
+  const handleInputChange = (e: React.FocusEvent<HTMLInputElement>) => {
+    if (e.target.name === 'number') {
+      methods.setValue('number', CardUtils.formatCreditCardNumber(e.target.value));
+      states.setCardValues({ ...states.cardValues, number: e.target.value });
+    } else if (e.target.name === 'expiry') {
+      methods.setValue('expiry', CardUtils.formatExpirationDate(e.target.value));
+      states.setCardValues({ ...states.cardValues, expiry: e.target.value });
+    } else if (e.target.name === 'cvc') {
+      methods.setValue('cvc', CardUtils.formatCVC(e.target.value));
+      states.setCardValues({ ...states.cardValues, cvc: e.target.value });
+    } else if (e.target.name === 'name') {
+      states.setCardValues({ ...states.cardValues, name: e.target.value });
+    }
+  };
 
   return (
     <MainContentBox states={states} isLoggedIn={true} primary='Cartão de Crédito'>
@@ -90,7 +115,14 @@ const CreditCardSet: React.FC<React.ReactFragment> = () => {
 
             <Grid container>
               <Grid item xs={12} md={6}>
-                <Card number='' name={methods.watch('name') || ''} expiry={methods.watch('expiryDate') || ''} cvc={methods.watch('cvv') || ''} focus={null} />
+                <Card
+                  number={states.cardValues.number}
+                  name={states.cardValues.name}
+                  expiry={states.cardValues.expiry}
+                  cvc={states.cardValues.cvc}
+                  focus={states.cardValues.focused}
+                  callback={handleCallback}
+                />
               </Grid>
 
               <Grid item xs={12} md={6}>
@@ -101,7 +133,8 @@ const CreditCardSet: React.FC<React.ReactFragment> = () => {
                     placeholder="0000 0000 0000 0000"
                     fullWidth={true}
 
-                    mask={React.forwardRef((props, inputRef) => Masks.TextMaskCreditCard({ ...props, inputRef }))}
+                    onFocus={handleInputFocus}
+                    onChange={handleInputChange}
                   />
 
                   <ControlledTextInput
@@ -109,29 +142,36 @@ const CreditCardSet: React.FC<React.ReactFragment> = () => {
                     label="Nome impresso"
                     placeholder="Digite o nome impresso no cartão..."
                     fullWidth={true}
+
+                    onFocus={handleInputFocus}
+                    onChange={handleInputChange}
                   />
 
                   <Box sx={{ display: 'flex', width: '100%', }}>
 
                     <Box>
                       <ControlledTextInput
-                        hookForm={["expiryDate", methods.control, methods.formState.errors, Rules.requiredMonthYear]}
+                        hookForm={["expiry", methods.control, methods.formState.errors, Rules.requiredMonthYear]}
                         label="Validade"
                         placeholder="00/00"
                         fullWidth={true}
-                        mask={React.forwardRef((props, inputRef) => Masks.TextMaskCompetence({ ...props, inputRef }))}
 
                         sx={{ mr: theme.spacing(1), width: '100px' }}
+
+                        onFocus={handleInputFocus}
+                        onChange={handleInputChange}
                       />
                     </Box>
 
                     <ControlledTextInput
-                      hookForm={["cvv", methods.control, methods.formState.errors, Rules.requiredCreditCardCvv]}
-                      label="CVV"
+                      hookForm={["cvc", methods.control, methods.formState.errors, Rules.requiredCreditCardCvv]}
+                      label="CVC"
                       placeholder="000"
-                      mask={React.forwardRef((props, inputRef) => Masks.TextMaskCreditCardCvv({ ...props, inputRef }))}
 
                       sx={{ width: '70px', mr: 0 }}
+
+                      onFocus={handleInputFocus}
+                      onChange={handleInputChange}
                     />
                   </Box>
 

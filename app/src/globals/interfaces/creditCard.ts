@@ -5,8 +5,8 @@ export interface CreditCard {
   brand: string;
   name: string | null;
   number: Array<string>;
-  expiryDate: Date;
-  cvv: string;
+  expiry: Date;
+  cvc: string;
 
   createdAt?: Date;
   isActive?: boolean;

@@ -39,7 +39,7 @@ export default function useAPIs(states: IUseStates, methods: UseFormReturn<Credi
         let cards: Array<CreditCard> = [];
 
         creditCards.forEach(card => {
-          card.expiryDate = new Date(card.expiryDate);
+          card.expiry = new Date(card.expiry);
 
           cards.push(card);
         });
@@ -70,13 +70,22 @@ export default function useAPIs(states: IUseStates, methods: UseFormReturn<Credi
         console.log(typeof (response.data.creditCard.expiryDate))
 
         const creditCard: CreditCard = response.data.creditCard;
-        creditCard.expiryDate = new Date(creditCard.expiryDate);
+        creditCard.expiry = new Date(creditCard.expiry);
 
         // Set values form
         methods.setValue('number', SanitizerString.onlyNumbers(creditCard.number.join()));
         methods.setValue('name', SanitizerString.stringOrEmpty(creditCard.name));
-        methods.setValue('expiryDate', MaskApply.maskCompetenceFromTimestamp(creditCard.expiryDate));
-        methods.setValue('cvv', SanitizerString.onlyNumbers(creditCard.cvv));
+        methods.setValue('expiry', MaskApply.maskCompetenceFromTimestamp(creditCard.expiry));
+        methods.setValue('cvc', SanitizerString.onlyNumbers(creditCard.cvc));
+
+        // Set state for card model
+        states.setCardValues({
+          ...states.cardValues,
+          number: SanitizerString.onlyNumbers(creditCard.number.join()),
+          name: SanitizerString.stringOrEmpty(creditCard.name),
+          expiry: MaskApply.maskCompetenceFromTimestamp(creditCard.expiry),
+          cvc: SanitizerString.onlyNumbers(creditCard.cvc),
+        });
       })
       .catch((error: AxiosError) => {
         console.error('error => getCreditCardAPI', error);
