@@ -101,6 +101,34 @@ export const optionalDate = {
   },
 };
 
+export const requiredExpiryDate = {
+  required: required,
+  pattern: (value: string) => {
+    // Verificação básica do formato da data por REGEX e obtenção dos grupos
+    const d = value.match(/^(\d\d)\/(\d\d)$/);
+    if (!d)
+      return "Data inválida";
+  },
+  validate: (value: string) => {
+    const d = value.split("/");
+    // Admitindo século 21
+    d[1] = '20' + String(d[1])
+
+    // Salvando a data em 2 formatos distintos para verificação posterior
+    const dISO = `${d[1]}-${d[0]}-0${1}`;
+    const dUTC = new Date(Date.UTC(+d[1], +d[0] - 1, + 1));
+
+    // Verificar se foi possível converter a data
+    const dNum = dUTC.getTime();
+    if (!dNum && dNum !== 0)
+      return "Data inválida"; // NaN, data inválida
+
+    // A data UTC deve retornar uma data idêntica à data ISO
+    if (dUTC.toISOString().slice(0, 10) !== dISO)
+      return "Data inválida"; // Algum campo com valores inválidos (mês 13, dia 32, etc)
+  },
+};
+
 export const requiredMonthYear = {
   required: required,
   pattern: (value: string) => {
