@@ -118,6 +118,7 @@
 }
 
 .card-buttons {
-  margin: auto;
-  margin-top: -19px;
+  position: absolute;
+  margin-top: 188px;
+  margin-left: 20px;
 }

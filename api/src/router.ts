@@ -46,6 +46,7 @@ router.get(Routes.API_CREDIT_CARD_GET, Auth.tokenVerify, CreditCardController.ge
 router.get(Routes.API_CREDIT_CARD_GET_ALL, Auth.tokenVerify, CreditCardController.getAll);
 router.post(Routes.API_CREDIT_CARD_NEW, Auth.tokenVerify, CreditCardController.new);
 router.put(Routes.API_CREDIT_CARD_UPDATE, Auth.adminVerify, CreditCardController.update);
-router.patch(Routes.API_CREDIT_CARD_ACTIVATE, CreditCardController.activateCard);
+router.patch(Routes.API_CREDIT_CARD_ACTIVATE, Auth.adminVerify, CreditCardController.activateCard);
+router.delete(Routes.API_CREDIT_CARD_REMOVE, Auth.adminVerify, CreditCardController.remove);
 
 export default router;

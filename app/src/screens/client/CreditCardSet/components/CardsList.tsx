@@ -8,6 +8,9 @@ import {
 } from '@mui/material';
 
 import { IUseStates } from '../states';
+import { IUseAPIs } from '../apis';
+import { useAuth } from '../../../../features/auth/context';
+
 import CardItemList from './CardItemList';
 import ConfirmationDialog from '../../../../ui/components/ConfirmationDialog';
 
@@ -16,18 +19,30 @@ interface ICardsListProps {
 
   selectedCard: IUseStates['selectedCard'];
   setSelectedCard: IUseStates['setSelectedCard'];
+
+  apis: {
+    activate: IUseAPIs['activateCreditCard'];
+    remove: IUseAPIs['removeCreditCard'];
+  };
 };
 
-const CardsList: React.FC<ICardsListProps> = ({ cards, selectedCard, setSelectedCard }) => {
+const CardsList: React.FC<ICardsListProps> = ({ cards, selectedCard, setSelectedCard, apis }) => {
   const [payload, setPayload] = React.useState<{ cardNumber: string, cardId: string, action: 'activate' | 'remove' } | null>(null);
   const theme = useTheme();
+  const auth = useAuth();
 
   const handleConfirmDialog = () => {
-    switch (payload?.cardId) {
+    switch (payload?.action) {
       case 'activate':
+        if (auth.loggedClient)
+          if (typeof (auth.loggedClient.id) !== 'undefined')
+            apis.activate(auth.loggedClient?.id, payload.cardId)
         break;
 
       case 'remove':
+        if (auth.loggedClient)
+          if (typeof (auth.loggedClient.id) !== 'undefined')
+            apis.remove(auth.loggedClient?.id, payload.cardId)
         break;
 
       default:

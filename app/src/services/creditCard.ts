@@ -26,3 +26,7 @@ export function updateCreditCardAPI(clientId: string, creditCard: CreditCard) {
 export function activateCreditCardAPI(clientId: string, id: string) {
   return axios.patch(Routes.API_CREDIT_CARD_ACTIVATE.replace(':clientId', clientId).replace(':id', id), {});
 };
+
+export function removeCreditCardAPI(clientId: string, id: string) {
+  return axios.delete(Routes.API_CREDIT_CARD_REMOVE.replace(':clientId', clientId).replace(':id', id), {});
+};
