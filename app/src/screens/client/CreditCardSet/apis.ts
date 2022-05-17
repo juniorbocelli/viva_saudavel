@@ -11,6 +11,7 @@ import {
   newCreditCardAPI,
   updateCreditCardAPI,
   activateCreditCardAPI,
+  removeCreditCardAPI,
 } from '../../../services/creditCard';
 
 import SanitizerString from '../../../features/utils/SanitizerString';
@@ -24,6 +25,7 @@ export interface IUseAPIs {
   newCreditCard: (clientid: string, creditCard: CreditCard) => void;
   updateCreditCard: (clientId: string, credictCard: CreditCard) => void;
   activateCreditCard: (clientId: string, id: string) => void;
+  removeCreditCard: (clientId: string, id: string) => void;
 };
 
 export default function useAPIs(states: IUseStates, methods: UseFormReturn<CreditCardFormData>): IUseAPIs {
@@ -197,6 +199,23 @@ export default function useAPIs(states: IUseStates, methods: UseFormReturn<Credi
           states.setDialogMessage({ title: "Erro", message: response.data.error });
           return;
         };
+
+        const updatedCard = response.data.creditCard;
+
+        // Append new card
+        let cards: Array<CreditCard> = [];
+        states.cards.forEach(card => {
+          if (card.id !== updatedCard.id)
+            cards.push(card);
+          else
+            cards.push(updatedCard);
+        });
+
+        states.setCards(sortCards(cards));
+
+        states.setSelectedCard(undefined);
+
+        resetForm();
       })
       .catch((error: AxiosError) => {
         console.error('error => updateCreditCardAPI', error);
@@ -218,9 +237,55 @@ export default function useAPIs(states: IUseStates, methods: UseFormReturn<Credi
           states.setDialogMessage({ title: "Erro", message: response.data.error });
           return;
         };
+
+        const activatedCard = response.data.creditCard;
+
+        // Append new card
+        let cards: Array<CreditCard> = [];
+        states.cards.forEach(card => {
+          if (card.id !== activatedCard.id)
+            card.isActive = false;
+          else card.isActive = true;
+
+          cards.push(card);
+        });
+
+        states.setCards(sortCards(cards));
       })
       .catch((error: AxiosError) => {
         console.error('error => activateCreditCardAPI', error);
+        states.setDialogMessage({ title: "Erro", message: error.message });
+      })
+      .finally(() => {
+        states.setIsQueryingAPI(false);
+      });
+  };
+
+  const removeCreditCard = (clientId: string, id: string) => {
+    states.setIsQueryingAPI(true);
+
+    removeCreditCardAPI(clientId, id)
+      .then((response) => {
+        console.log('response => removeCreditCardAPI', response);
+
+        if (typeof (response.data.error) !== 'undefined') {
+          states.setDialogMessage({ title: "Erro", message: response.data.error });
+          return;
+        };
+
+        const removedCard = response.data.creditCard;
+
+        // Append new card
+        let cards: Array<CreditCard> = [];
+        states.cards.forEach(card => {
+          if (card.id !== removedCard.id)
+            cards.push(card);
+        });
+
+        states.setCards(sortCards(cards));
+      })
+      .catch((error: AxiosError) => {
+        console.error('error => removeCreditCardAPI', error);
         states.setDialogMessage({ title: "Erro", message: error.message });
       })
       .finally(() => {
@@ -234,5 +299,6 @@ export default function useAPIs(states: IUseStates, methods: UseFormReturn<Credi
     newCreditCard,
     updateCreditCard,
     activateCreditCard,
+    removeCreditCard,
   };
 };

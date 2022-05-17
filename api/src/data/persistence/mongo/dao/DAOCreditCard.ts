@@ -40,31 +40,36 @@ class DAOCreditCard implements DAO<CreditCard, string> {
     return creditCard;
   };
 
-  async update(creditCard: CreditCard) {
-    if (!this.isValidObjectId(creditCard))
+  async update(creditCardToEdit: CreditCard) {
+    if (!this.isValidObjectId(creditCardToEdit))
       throw 'O id do cartão é inválido';
 
-    const foundedCreditCard = await CreditCardSchema.findById(creditCard.id);
+    const foundedCreditCard = await CreditCardSchema.findById(creditCardToEdit.id);
 
     if (foundedCreditCard === null)
       throw 'Cartão inválido'
 
     const updatedCreditCard = {
-      clientId: creditCard.clientId,
+      id: foundedCreditCard._id,
+      clientId: foundedCreditCard.clientId,
 
-      brand: creditCard.brand || foundedCreditCard.brand,
-      name: creditCard.name || foundedCreditCard.name,
-      number: creditCard.number || foundedCreditCard.number,
-      expiry: creditCard.expiry || foundedCreditCard.expiry,
-      cvv: creditCard.cvc || foundedCreditCard.cvc,
+      brand: creditCardToEdit.brand || foundedCreditCard.brand,
+      name: creditCardToEdit.name || foundedCreditCard.name,
+      number: creditCardToEdit.number || foundedCreditCard.number,
+      expiry: creditCardToEdit.expiry || foundedCreditCard.expiry,
+      cvv: creditCardToEdit.cvc || foundedCreditCard.cvc,
 
-      cardHash: creditCard.cardHash,
+      cardHash: creditCardToEdit.cardHash,
 
-      createdAt: creditCard.createdAt,
-      isActive: creditCard.isActive !== null ? creditCard.isActive : foundedCreditCard.isActive,
+      createdAt: foundedCreditCard.createdAt,
+      isActive: creditCardToEdit.isActive !== null ? creditCardToEdit.isActive : foundedCreditCard.isActive,
     };
 
-    return await CreditCardSchema.findByIdAndUpdate(creditCard.id, updatedCreditCard, { new: true });
+    const creditCard = await CreditCardSchema.findByIdAndUpdate(creditCardToEdit.id, updatedCreditCard, { new: true });
+
+    if (creditCard !== null)
+      return new CreditCard(creditCard.id, creditCard.clientId, creditCard.brand, creditCard.name, creditCard.number, creditCard.expiry, creditCard.cvc, creditCard.cardHash, creditCard.createdAt, creditCard.isActive);
+    return null;
   };
 
   async saveOrUpdate(creditCard: CreditCard) {

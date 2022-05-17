@@ -46,8 +46,9 @@ class UCManagerCreditCard {
     // Test card number
     let sameNumber = await this.daoCreditCard.selectBy({ cardHash: creditCard.cardHash });
 
-    if (sameNumber.length > 0 && sameNumber[0].id !== creditCard.id)
-      throw new Error("Já existe um cartão com este número");
+    if (sameNumber.length > 0)
+      if (sameNumber[0].id?.toString() !== creditCard.id)
+        throw new Error("Já existe um cartão com este número");
 
     return this.daoCreditCard.update(creditCard);
   };
@@ -76,6 +77,18 @@ class UCManagerCreditCard {
     });
 
     return this.get(id, clientId);
+  };
+
+  public async remove(id: string) {
+    // Verify if exist
+    const cardToremove = await this.daoCreditCard.select(id);
+
+    if (cardToremove === null)
+      throw new Error("Cartão inválido");
+
+    this.daoCreditCard.delete(cardToremove.id as string);
+
+    return cardToremove;
   };
 };
 

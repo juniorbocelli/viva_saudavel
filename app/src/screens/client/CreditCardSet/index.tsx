@@ -12,7 +12,7 @@ import { useForm } from 'react-hook-form';
 import MainContentBox from '../../../ui/components/pages/MainContentBox';
 import ControlledTextInput from '../../../ui/components/form/ControlledTextInput';
 import CardsList from './components/CardsList';
-import Card from './components/Card';
+import CardModel from './components/CardModel';
 import * as CardUtils from './cardUtils';
 
 import useStates from './states';
@@ -39,8 +39,24 @@ const CreditCardSet: React.FC<React.ReactFragment> = () => {
     if (typeof (auth.loggedClient?.id) !== 'undefined' && auth.loggedClient?.id !== null)
       if (typeof (states.selectedCard) !== 'undefined')
         apis.getCreditCard(auth.loggedClient.id, states.selectedCard);
-      else
+      else {
+        // Reset form
         methods.reset();
+
+        // Reset states from card model
+        states.setCardValues({
+          number: '',
+          name: '',
+          expiry: '',
+          cvc: '',
+
+          issuer: 'unknown',
+          isValid: false,
+
+          focused: null,
+        });
+      };
+
   }, [states.selectedCard]);
 
   const handleSubmit = (data: CreditCardFormData) => {
@@ -53,6 +69,7 @@ const CreditCardSet: React.FC<React.ReactFragment> = () => {
 
     const dateParts = data.expiry.split('/')
     const creditCard: CreditCard = {
+      id: states.selectedCard,
       number: data.number.split(' '),
       name: data.name,
       expiry: new Date(parseInt('20' + dateParts[1]), parseInt(dateParts[0]), 1),
@@ -62,6 +79,8 @@ const CreditCardSet: React.FC<React.ReactFragment> = () => {
 
     if (typeof (states.selectedCard) === 'undefined')
       apis.newCreditCard(auth.loggedClient?.id!, creditCard);
+    else
+      apis.updateCreditCard(auth.loggedClient?.id!, creditCard);
   };
 
   const handleCallback = (type: { issuer: string, MaxLength: number }, isValid: boolean) => {
@@ -118,7 +137,7 @@ const CreditCardSet: React.FC<React.ReactFragment> = () => {
 
             <Grid container>
               <Grid item xs={12} md={6}>
-                <Card
+                <CardModel
                   number={states.cardValues.number}
                   name={states.cardValues.name}
                   expiry={states.cardValues.expiry}
@@ -201,7 +220,13 @@ const CreditCardSet: React.FC<React.ReactFragment> = () => {
           >
             Cartões cadastrados
           </Typography>
-          <CardsList cards={states.cards} selectedCard={states.selectedCard} setSelectedCard={states.setSelectedCard} />
+          <CardsList
+            cards={states.cards}
+            selectedCard={states.selectedCard}
+            setSelectedCard={states.setSelectedCard}
+
+            apis={{ activate: apis.activateCreditCard, remove: apis.removeCreditCard }}
+          />
         </Grid>
       </Grid>
     </MainContentBox>

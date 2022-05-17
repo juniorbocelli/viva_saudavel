@@ -64,21 +64,19 @@ class CreditCardController {
     const daoCreditCard = new DAOCreditCard;
     const ucManegerCreditCard = new UCManagerCreditCard(daoCreditCard);
 
-    const { id } = req.params;
+    const { id, clientId, } = req.params;
     const {
-      clientId,
       brand,
       name,
       number,
       expiry,
       cvc,
-      isActive,
     } = req.body;
 
     try {
-      const creditCard = CreditCard.getUpdate(id, clientId, brand, name, number, expiry, cvc, isActive);
+      const creditCard = CreditCard.getUpdate(id, clientId, brand, name, number, expiry, cvc, null);
 
-      res.status(200).json({ client: await ucManegerCreditCard.update(creditCard) });
+      res.status(200).json({ creditCard: await ucManegerCreditCard.update(creditCard) });
     } catch (error: any) {
       res.status(200).json({ error: error.message });
     };
@@ -90,6 +88,18 @@ class CreditCardController {
 
     try {
       res.status(200).json({ creditCards: await ucManegerCreditCard.getAll() });
+    } catch (error: any) {
+      res.status(200).json({ error: error.message });
+    };
+  };
+
+  static async remove(req: Request, res: Response) {
+    const daoCreditCard = new DAOCreditCard();
+    const ucManegerCreditCard = new UCManagerCreditCard(daoCreditCard);
+    const { clientId, id } = req.params;
+
+    try {
+      res.status(200).json({ creditCard: await ucManegerCreditCard.remove(id) });
     } catch (error: any) {
       res.status(200).json({ error: error.message });
     };
