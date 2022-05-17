@@ -9,27 +9,36 @@ class CreditCard {
 
   brand: string | null;
   name: string | null;
-  number: Array<string> | null = new Array<string>(4);
-  expiryDate: Date | null;
-  cvv: string | null;
+  number: Array<string> = [];
+  expiry: Date | null;
+  cvc: string | null;
+
+  cardHash: string | null;
 
   createdAt: Date | null;
   isActive: boolean | null;
 
   private crypt: Crypt = new Crypt();
 
-  constructor(id: CreditCard['id'], clientId: CreditCard['clientId'], brand: CreditCard['brand'], name: CreditCard['name'], number: CreditCard['number'], expiryDate: CreditCard['expiryDate'], cvv: CreditCard['cvv'], createdAt: CreditCard['createdAt'], isActive: CreditCard['isActive']) {
+  constructor(id: CreditCard['id'], clientId: CreditCard['clientId'], brand: CreditCard['brand'], name: CreditCard['name'], number: CreditCard['number'], expiry: CreditCard['expiry'], cvc: CreditCard['cvc'], cardHash: CreditCard['cardHash'], createdAt: CreditCard['createdAt'], isActive: CreditCard['isActive']) {
     this.id = SanitizerString.stringOrUndefined(id);
     this.clientId = SanitizerString.stringOrNull(clientId);
 
     this.brand = SanitizerString.stringOrNull(brand);
     this.name = SanitizerString.stringOrNull(name);
     this.number = number;
-    this.expiryDate = expiryDate;
-    this.cvv = SanitizerString.stringOrNull(cvv);
+    this.expiry = expiry;
+    this.cvc = SanitizerString.stringOrNull(cvc);
+
+    this.cardHash = cardHash !== null ? cardHash : this.crypt.hashMD5(number.join());
 
     this.createdAt = createdAt;
     this.isActive = isActive;
+  };
+
+  public setNumber(number: CreditCard['number']) {
+    this.number = number;
+    this.cardHash = number !== null ? this.crypt.hashMD5(number.join()) : null;
   };
 
   private encryptNumber(): void {
@@ -38,7 +47,6 @@ class CreditCard {
         this.number[i] = this.crypt.cryptText(this.number[i])
     else
       throw new Error("Número do cartão não definido");
-
   };
 
   private decryptNumber(): void {
@@ -49,36 +57,36 @@ class CreditCard {
       throw new Error("Número do cartão não definido");
   };
 
-  private encryptCvv(): void {
-    if (this.cvv !== null)
-      this.cvv = this.crypt.cryptText(this.cvv);
+  private encryptCvc(): void {
+    if (this.cvc !== null)
+      this.cvc = this.crypt.cryptText(this.cvc);
     else
-      throw new Error("CVV do cartão não definido");
+      throw new Error("CVC do cartão não definido");
   };
 
-  private decryptCvv(): void {
-    if (this.cvv !== null)
-      this.cvv = this.crypt.decryptText(this.cvv);
+  private decryptCvc(): void {
+    if (this.cvc !== null)
+      this.cvc = this.crypt.decryptText(this.cvc);
     else
-      throw new Error("CVV do cartão não definido");
+      throw new Error("CVC do cartão não definido");
   };
 
   public encryptCard(): void {
     this.encryptNumber()
-    this.encryptCvv();
+    this.encryptCvc();
   };
 
   public decryptCard(): void {
     this.decryptNumber()
-    this.decryptCvv();
+    this.decryptCvc();
   };
 
-  public static getNew(clientId: CreditCard['clientId'], brand: CreditCard['brand'], name: CreditCard['name'], number: CreditCard['number'], expiryDate: CreditCard['expiryDate'], cvv: CreditCard['cvv']): CreditCard {
-    return new CreditCard(undefined, clientId, brand, name, number, expiryDate, cvv, new Date(), true);
+  public static getNew(clientId: CreditCard['clientId'], brand: CreditCard['brand'], name: CreditCard['name'], number: CreditCard['number'], expiry: CreditCard['expiry'], cvc: CreditCard['cvc']): CreditCard {
+    return new CreditCard(undefined, clientId, brand, name, number, expiry, cvc, null, new Date(), true);
   };
 
-  public static getUpdate(id: mongoose.Types.ObjectId | string, clientId: mongoose.Types.ObjectId | string, brand: CreditCard['brand'], name: CreditCard['name'], number: CreditCard['number'], expiryDate: CreditCard['expiryDate'], cvv: CreditCard['cvv'], isActive: CreditCard['isActive']) {
-    return new CreditCard(id, clientId, brand, name, number, expiryDate, cvv, null, isActive);
+  public static getUpdate(id: mongoose.Types.ObjectId | string, clientId: mongoose.Types.ObjectId | string, brand: CreditCard['brand'], name: CreditCard['name'], number: CreditCard['number'], expiry: CreditCard['expiry'], cvc: CreditCard['cvc'], isActive: CreditCard['isActive']) {
+    return new CreditCard(id, clientId, brand, name, number, expiry, cvc, null, null, isActive);
   };
 };
 

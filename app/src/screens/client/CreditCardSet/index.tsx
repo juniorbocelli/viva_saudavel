@@ -12,17 +12,15 @@ import { useForm } from 'react-hook-form';
 import MainContentBox from '../../../ui/components/pages/MainContentBox';
 import ControlledTextInput from '../../../ui/components/form/ControlledTextInput';
 import CardsList from './components/CardsList';
-import BrandCardSelect from './components/BrandCardSelect';
 import Card from './components/Card';
 import * as CardUtils from './cardUtils';
 
 import useStates from './states';
 import useAPIs from './apis';
 import { useAuth } from '../../../features/auth/context';
-import { CreditCardFormData, CardValuesEstate } from './types';
+import { CreditCardFormData, } from './types';
 import { CreditCard } from '../../../globals/interfaces/creditCard';
 import * as Rules from '../../../features/validation/rules';
-import * as Masks from '../../../features/validation/masks';
 
 const CreditCardSet: React.FC<React.ReactFragment> = () => {
   const methods = useForm<CreditCardFormData>({ mode: 'onBlur', reValidateMode: 'onBlur' });
@@ -47,14 +45,18 @@ const CreditCardSet: React.FC<React.ReactFragment> = () => {
 
   const handleSubmit = (data: CreditCardFormData) => {
     // Varify if card is valid
-    
+    if (!states.cardValues.isValid) {
+      states.setDialogMessage({ title: "Erro", message: "Cartão crédito inválido." });
+
+      return;
+    };
 
     const dateParts = data.expiry.split('/')
     const creditCard: CreditCard = {
       number: data.number.split(' '),
       name: data.name,
       expiry: new Date(parseInt('20' + dateParts[1]), parseInt(dateParts[0]), 1),
-      brand: data.brand,
+      brand: states.cardValues.issuer,
       cvc: data.cvc,
     };
 
@@ -85,6 +87,7 @@ const CreditCardSet: React.FC<React.ReactFragment> = () => {
       methods.setValue('cvc', CardUtils.formatCVC(e.target.value));
       states.setCardValues({ ...states.cardValues, cvc: e.target.value });
     } else if (e.target.name === 'name') {
+      methods.setValue('name', CardUtils.formatName(e.target.value));
       states.setCardValues({ ...states.cardValues, name: e.target.value });
     }
   };
@@ -151,7 +154,7 @@ const CreditCardSet: React.FC<React.ReactFragment> = () => {
 
                     <Box>
                       <ControlledTextInput
-                        hookForm={["expiry", methods.control, methods.formState.errors, Rules.requiredMonthYear]}
+                        hookForm={["expiry", methods.control, methods.formState.errors, Rules.requiredExpiryDate]}
                         label="Validade"
                         placeholder="00/00"
                         fullWidth={true}
@@ -164,7 +167,7 @@ const CreditCardSet: React.FC<React.ReactFragment> = () => {
                     </Box>
 
                     <ControlledTextInput
-                      hookForm={["cvc", methods.control, methods.formState.errors, Rules.requiredCreditCardCvv]}
+                      hookForm={["cvc", methods.control, methods.formState.errors, Rules.requiredCreditCardCvc]}
                       label="CVC"
                       placeholder="000"
 

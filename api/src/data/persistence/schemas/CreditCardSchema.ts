@@ -16,13 +16,17 @@ const creditCardSchema = new mongoose.Schema<CreditCard>({
     required: [true, 'O nome do cartão é obrigatória'],
   },
   number: [String],
-  expiryDate: {
+  expiry: {
     type: Date,
     required: [true, 'A data de vencimento do cartão é obrigatória'],
   },
-  cvv: {
+  cvc: {
     type: String,
-    required: [true, 'O código cvv do cartão é obrigatório'],
+    required: [true, 'O código cvc do cartão é obrigatório'],
+  },
+
+  cardHash: {
+    type: String
   },
 
   createdAt: {

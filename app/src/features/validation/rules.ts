@@ -126,6 +126,11 @@ export const requiredExpiryDate = {
     // A data UTC deve retornar uma data idêntica à data ISO
     if (dUTC.toISOString().slice(0, 10) !== dISO)
       return "Data inválida"; // Algum campo com valores inválidos (mês 13, dia 32, etc)
+
+    // Verifica se a data não é inferior a atuaal
+    const today = new Date();
+    if (dUTC.getUTCMonth() < today.getUTCMonth() && dUTC.getUTCFullYear() < today.getUTCFullYear())
+      return "Já vencido"
   },
 };
 
@@ -165,13 +170,13 @@ export const requiredCreditCard = {
   },
 };
 
-export const requiredCreditCardCvv = {
+export const requiredCreditCardCvc = {
   required: required,
   pattern: (value: string) => {
     // Verificação básica do formato da data por REGEX e obtenção dos grupos
-    const d = value.match(/^(\d\d\d)$/);
+    const d = value.match(/^(\d\d\d)$/) || value.match(/^(\d\d\d\d)$/);
     if (!d)
-      return "Número CVV inválido";
+      return "Número CVC inválido";
   },
 };
 

@@ -67,7 +67,7 @@ class DAOProduct implements DAO<Product, string> {
       images: product.images || foundedProduct.images,
       thumb: product.thumb || foundedProduct.thumb,
 
-      isActive: product.isActive || foundedProduct.isActive,
+      isActive: product.isActive !== null ? product.isActive : foundedProduct.isActive,
       quantity: product.quantity || foundedProduct.quantity,
       createdAt: product.createdAt || foundedProduct.createdAt,
     };

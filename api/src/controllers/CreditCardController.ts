@@ -12,12 +12,12 @@ class CreditCardController {
       brand,
       name,
       number,
-      expiryDate,
-      cvv,
+      expiry,
+      cvc,
     } = req.body;
 
     try {
-      const creditCard = CreditCard.getNew(clientId, brand, name, number, expiryDate, cvv);
+      const creditCard = CreditCard.getNew(clientId, brand, name, number, expiry, cvc);
       const ucManegerCreditCard = new UCManagerCreditCard(daoCreditCard);
 
       const newCard = await ucManegerCreditCard.new(creditCard);
@@ -70,13 +70,13 @@ class CreditCardController {
       brand,
       name,
       number,
-      expiryDate,
-      cvv,
+      expiry,
+      cvc,
       isActive,
     } = req.body;
 
     try {
-      const creditCard = CreditCard.getUpdate(id, clientId, brand, name, number, expiryDate, cvv, isActive);
+      const creditCard = CreditCard.getUpdate(id, clientId, brand, name, number, expiry, cvc, isActive);
 
       res.status(200).json({ client: await ucManegerCreditCard.update(creditCard) });
     } catch (error: any) {

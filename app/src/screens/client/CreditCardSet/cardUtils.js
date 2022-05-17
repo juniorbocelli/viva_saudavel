@@ -59,6 +59,10 @@ export function formatExpirationDate(value) {
   return clearValue;
 }
 
+export function formatName(value) {
+  return value.toUpperCase();
+};
+
 export function formatFormData(data) {
   return Object.keys(data).map(d => `${d}: ${data[d]}`);
 }
