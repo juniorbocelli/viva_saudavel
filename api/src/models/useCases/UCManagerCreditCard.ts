@@ -13,7 +13,7 @@ class UCManagerCreditCard {
     creditCard.encryptCard();
 
     // Test card number
-    let sameNumber = await this.daoCreditCard.selectBy({ number: creditCard.number });
+    let sameNumber = await this.daoCreditCard.selectBy({ cardHash: creditCard.cardHash });
 
     if (sameNumber.length > 0)
       throw new Error("Já existe um cartão com este número");
@@ -23,7 +23,7 @@ class UCManagerCreditCard {
 
   public async get(id: CreditCard['id'], clientId: CreditCard['clientId']) {
     // Verify if exist
-    const creditCards = await this.daoCreditCard.selectBy({ id: id, clientId: clientId });
+    const creditCards = await this.daoCreditCard.selectBy({ _id: id, clientId: clientId });
 
     if (creditCards.length === 0)
       throw new Error("Cartão não existe");
@@ -44,7 +44,7 @@ class UCManagerCreditCard {
     creditCard.encryptCard();
 
     // Test card number
-    let sameNumber = await this.daoCreditCard.selectBy({ number: creditCard.number });
+    let sameNumber = await this.daoCreditCard.selectBy({ cardHash: creditCard.cardHash });
 
     if (sameNumber.length > 0 && sameNumber[0].id !== creditCard.id)
       throw new Error("Já existe um cartão com este número");
@@ -62,21 +62,20 @@ class UCManagerCreditCard {
 
   public async inactiveOthers(id: CreditCard['id'], clientId: CreditCard['clientId']) {
     // Verify if exist
-    const retainedCard = await this.get(id, clientId);
+    await this.get(id, clientId);
 
     const others = await this.daoCreditCard.selectBy({ clientId: clientId });
 
     others.forEach(creditCard => {
-      if (creditCard.id?.toString() !== id) {
+      if (creditCard.id?.valueOf() !== id?.valueOf())
         creditCard.isActive = false;
+      else
+        creditCard.isActive = true;
 
-        this.daoCreditCard.update(creditCard);
-      };
+      this.daoCreditCard.update(creditCard);
     });
 
-    retainedCard.isActive = true;
-
-    return this.daoCreditCard.update(retainedCard);
+    return this.get(id, clientId);
   };
 };
 

@@ -113,6 +113,11 @@
 }
 
 .card-type {
-  margin-top: -15px;
+  margin-top: -45px;
   font-size: 14px;
+}
+
+.card-buttons {
+  margin: auto;
+  margin-top: -19px;
 }

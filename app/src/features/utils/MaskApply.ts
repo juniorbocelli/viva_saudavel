@@ -22,6 +22,22 @@ class MaskApply {
     return day + "/" + month + "/" + year;
   };
 
+  public static printMonthYearFromTimestamp(timestamp: Date | number | string): string {
+    var date: Date | number | string;
+    var year, month: string;
+
+    if (timestamp instanceof Date && !isNaN(timestamp.valueOf())) {
+      date = timestamp;
+    } else {
+      date = new Date(timestamp);
+    };
+
+    year = String(date.getUTCFullYear()).slice(2, 4);
+    month = this.twoZeros(date.getUTCMonth() + 1);
+
+    return month + "/" + year;
+  };
+
   public static maskCompetenceFromTimestamp(timestamp: Date | number | string): string {
     var date: Date | number | string;
     var year, month: string;

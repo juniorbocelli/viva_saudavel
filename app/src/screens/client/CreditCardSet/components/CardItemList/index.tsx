@@ -3,6 +3,17 @@ import React from 'react';
 import { IUseStates } from '../../states';
 import { CreditCard } from '../../../../../globals/interfaces/creditCard';
 import './styles.css';
+import MaskApply from '../../../../../features/utils/MaskApply';
+
+import mastercardIcon from '../../../../../assets/images/payment-methods/mastercard.svg';
+import visaIcon from '../../../../../assets/images/payment-methods/visa.svg';
+import eloIcon from '../../../../../assets/images/payment-methods/elo.svg';
+import americanExpressIcon from '../../../../../assets/images/payment-methods/american-express.svg';
+
+import hipercardIcon from '../../../../../assets/images/payment-methods/hipercard.svg';
+import jcbIcon from '../../../../../assets/images/payment-methods/jcb.svg';
+import discoverIcon from '../../../../../assets/images/payment-methods/discover.svg';
+import dinersIcon from '../../../../../assets/images/payment-methods/diners.svg';
 
 interface ICardProps {
   card: CreditCard;
@@ -24,6 +35,37 @@ const CardItemList: React.FC<ICardProps> = ({ card, selectedCard, setSelectedCar
     return { background: '#555' };
   };
 
+  const getIcon = () => {
+    switch (card.brand) {
+      case 'visa':
+        return visaIcon;
+
+      case 'mastercard':
+        return mastercardIcon;
+
+      case 'elo':
+        return eloIcon;
+
+      case 'hipercard':
+        return hipercardIcon;
+
+      case 'discover':
+        return discoverIcon;
+
+      case 'amex':
+        return americanExpressIcon;
+
+      case 'jcb':
+        return jcbIcon;
+
+      case 'dinersclub':
+        return dinersIcon;
+
+      default:
+        return undefined;
+    };
+  };
+
   return (
     <div className="container">
       <div className="sleeve">
@@ -42,9 +84,17 @@ const CardItemList: React.FC<ICardProps> = ({ card, selectedCard, setSelectedCar
           <div className="card-number">
             <div className="digit-group">**** **** **** {card.number[card.number.length - 1]}</div>
           </div>
-          <div className="card-expire"><span className="card-text">CVV</span> *** <span className="card-text">Expires</span> 12/24</div>
+          <div className="card-expire">
+            <span className="card-text">CVV</span> ***
+            <span className="card-text">Expires</span> {MaskApply.printMonthYearFromTimestamp(card.expiry)}
+          </div>
           <div className="card-holder">{card.name}</div>
+
           <div className="card-type">
+            <img src={getIcon()} width='60px' alt='' />
+          </div>
+
+          <div className='card-buttons'>
             {
               !card.isActive &&
               <button style={{ marginRight: '3px' }} onClick={() => setPayload({ cardId: card.id!, cardNumber: card.number[card.number.length - 1], action: 'activate' })}>
@@ -56,11 +106,11 @@ const CardItemList: React.FC<ICardProps> = ({ card, selectedCard, setSelectedCar
               card.id !== selectedCard ?
                 <button style={{ marginRight: '3px' }} onClick={() => setSelectedCard(card.id)}>
                   Editar
-            </button>
+                </button>
                 :
                 <button style={{ marginRight: '3px' }} onClick={() => setSelectedCard(undefined)}>
                   Cancelar
-            </button>
+                </button>
             }
             <button onClick={() => setPayload({ cardId: card.id!, cardNumber: card.number[card.number.length - 1], action: 'remove' })}>
               Excluir

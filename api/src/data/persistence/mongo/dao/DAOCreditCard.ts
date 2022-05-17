@@ -25,8 +25,10 @@ class DAOCreditCard implements DAO<CreditCard, string> {
       brand: creditCard.brand,
       name: creditCard.name,
       number: creditCard.number,
-      expiryDate: creditCard.expiryDate,
-      cvv: creditCard.cvv,
+      expiry: creditCard.expiry,
+      cvc: creditCard.cvc,
+
+      cardHash: creditCard.cardHash,
 
       createdAt: creditCard.createdAt,
       isActive: creditCard.isActive,
@@ -53,11 +55,13 @@ class DAOCreditCard implements DAO<CreditCard, string> {
       brand: creditCard.brand || foundedCreditCard.brand,
       name: creditCard.name || foundedCreditCard.name,
       number: creditCard.number || foundedCreditCard.number,
-      expiryDate: creditCard.expiryDate || foundedCreditCard.expiryDate,
-      cvv: creditCard.cvv || foundedCreditCard.cvv,
+      expiry: creditCard.expiry || foundedCreditCard.expiry,
+      cvv: creditCard.cvc || foundedCreditCard.cvc,
+
+      cardHash: creditCard.cardHash,
 
       createdAt: creditCard.createdAt,
-      isActive: creditCard.isActive || foundedCreditCard.isActive,
+      isActive: creditCard.isActive !== null ? creditCard.isActive : foundedCreditCard.isActive,
     };
 
     return await CreditCardSchema.findByIdAndUpdate(creditCard.id, updatedCreditCard, { new: true });
@@ -98,7 +102,7 @@ class DAOCreditCard implements DAO<CreditCard, string> {
     if (creditCard === null)
       return null;
 
-    return new CreditCard(creditCard.id, creditCard.clientId, creditCard.brand, creditCard.name, creditCard.number, creditCard.expiryDate, creditCard.cvv, creditCard.createdAt, creditCard.isActive);
+    return new CreditCard(creditCard.id, creditCard.clientId, creditCard.brand, creditCard.name, creditCard.number, creditCard.expiry, creditCard.cvc, creditCard.cardHash, creditCard.createdAt, creditCard.isActive);
   };
 
   async selectAll(): Promise<Array<CreditCard>> {
@@ -106,7 +110,7 @@ class DAOCreditCard implements DAO<CreditCard, string> {
     let creditCardsToReturn: Array<CreditCard> = [];
 
     creditCards.forEach((creditCard) => {
-      creditCardsToReturn.push(new CreditCard(creditCard.id, creditCard.clientId, creditCard.brand, creditCard.name, creditCard.number, creditCard.expiryDate, creditCard.cvv, creditCard.createdAt, creditCard.isActive));
+      creditCardsToReturn.push(new CreditCard(creditCard.id, creditCard.clientId, creditCard.brand, creditCard.name, creditCard.number, creditCard.expiry, creditCard.cvc, creditCard.cardHash, creditCard.createdAt, creditCard.isActive));
     });
     return creditCardsToReturn;
   };
@@ -116,7 +120,7 @@ class DAOCreditCard implements DAO<CreditCard, string> {
     let creditCardsToReturn: Array<CreditCard> = [];
 
     creditCards.forEach((creditCard) => {
-      creditCardsToReturn.push(new CreditCard(creditCard.id, creditCard.clientId, creditCard.brand, creditCard.name, creditCard.number, creditCard.expiryDate, creditCard.cvv, creditCard.createdAt, creditCard.isActive));
+      creditCardsToReturn.push(new CreditCard(creditCard.id, creditCard.clientId, creditCard.brand, creditCard.name, creditCard.number, creditCard.expiry, creditCard.cvc, creditCard.cardHash, creditCard.createdAt, creditCard.isActive));
     });
     return creditCardsToReturn;
   };

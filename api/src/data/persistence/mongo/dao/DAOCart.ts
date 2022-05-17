@@ -47,7 +47,7 @@ class DAOCart implements DAO<Cart, string> {
       clientId: cart.clientId,
 
       createdAt: foundedCart.createdAt,
-      isRegistered: cart.isRegistered || cart.isRegistered,
+      isRegistered: cart.isRegistered !== null ? cart.isRegistered : cart.isRegistered,
 
       items: cart.items || foundedCart.items,
     };

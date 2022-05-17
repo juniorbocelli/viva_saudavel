@@ -1,11 +1,12 @@
 import CryptoJS from 'crypto-js';
+import utf8 from 'utf8';
 
 class Crypt {
   public cryptText(plainText: string): string {
     if (typeof (process.env.CRYPT_KEY) === 'undefined')
       throw new Error("Key não definida");
 
-    return CryptoJS.AES.encrypt(plainText, process.env.CRYPT_KEY).toString();
+    return CryptoJS.AES.encrypt(JSON.stringify(plainText), process.env.CRYPT_KEY).toString();
   };
 
   public decryptText(cipherText: string): string {
@@ -26,6 +27,10 @@ class Crypt {
 
   public decryptObject(cipherText: string): Object {
     return JSON.parse(this.decryptText(cipherText));
+  };
+
+  public hashMD5(text: string): string {
+    return CryptoJS.MD5(text).toString();
   };
 };
 
