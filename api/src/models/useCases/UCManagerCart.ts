@@ -29,7 +29,7 @@ class UCManagerCart {
     };
     let cart: Cart;
 
-    if (carts.length !== 1)
+    if (carts.length === 0)
       cart = new Cart(newCart);
     else {
       cart = carts[0];
@@ -127,15 +127,33 @@ class UCManagerCart {
   };
 
   public async changeClientCode(oldId: string, newId: string): Promise<Cart | null> {
-    const cart = await this.getNewOrPrevious(oldId);
+    const notLoggedCart = await this.getNewOrPrevious(oldId);
 
-    if (cart === null)
+    // Verify if logged client already have a cart
+    const loggedCart = await this.daoCart.selectBy({ clientId: newId });
+
+    let ourCart: Cart;
+
+    if (notLoggedCart === null)
       throw new Error("Carrinho inválido");
 
-    cart.clientId = newId;
-    cart.isRegistered = true;
+    if (loggedCart.length > 0) {
+      ourCart = loggedCart[0];
 
-    return this.daoCart.update(cart);
+      // Concat product items
+      ourCart.items?.concat(notLoggedCart.items || []);
+
+      // Remove not logged cart
+      this.daoCart.delete(notLoggedCart.id as string);
+    } else {
+      // Update not logged cart data
+      ourCart = notLoggedCart;
+
+      ourCart.clientId = newId;
+      ourCart.isRegistered = true;
+    };
+
+    return this.daoCart.update(ourCart);
   };
 };
 
