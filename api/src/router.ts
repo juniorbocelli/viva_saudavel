@@ -49,4 +49,7 @@ router.put(Routes.API_CREDIT_CARD_UPDATE, Auth.adminVerify, CreditCardController
 router.patch(Routes.API_CREDIT_CARD_ACTIVATE, Auth.adminVerify, CreditCardController.activateCard);
 router.delete(Routes.API_CREDIT_CARD_REMOVE, Auth.adminVerify, CreditCardController.remove);
 
+// checkout routes
+router.get(Routes.API_CHECKOUT_GET_DELIVERY_DAY, Auth.tokenVerify, CheckoutController.getDeliveryDate);
+
 export default router;
