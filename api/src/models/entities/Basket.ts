@@ -1,24 +1,19 @@
 import mongoose from 'mongoose';
 
+import BasketItem from './BasketItem';
+import { WeekDaysName } from '../utils/Dates';
+
 class Basket {
-  id: Array<mongoose.Types.ObjectId | string>;
-  client: Array<mongoose.Types.ObjectId | string>;
+    id: mongoose.Types.ObjectId | string | undefined;
 
-  frequency: 'weekly' | 'biweekly' | 'monthly';
-  products: Array<mongoose.Types.ObjectId | string>;
-  createdAt: Date;
-  isActive: Boolean;
+    clientId: mongoose.Types.ObjectId | string | null;
+    creditCardId: mongoose.Types.ObjectId | string | null;
 
-  constructor(id: Basket['id'], client: Basket['client'], frequency: Basket['frequency'], products: Basket['products'] | undefined, createdAt: Basket['createdAt'] | undefined, isActive: Basket['isActive'] | undefined) {
-    this.id = id;
-    this.client = client;
-    
-    this.frequency = frequency;
-    this.products = products || [];
+    weekendDay: WeekDaysName | null;
+    items: Array<BasketItem> | null;
 
-    this.createdAt = createdAt || new Date();
-    this.isActive = isActive || true;
-  };
+    createdAt: Date | null;
+    isActive: boolean | null;
 };
 
 export default Basket;
