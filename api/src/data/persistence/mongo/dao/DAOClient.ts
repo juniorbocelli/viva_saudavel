@@ -8,7 +8,7 @@ class DAOClient implements DAO<Client, string> {
   isValidObjectId(client: Client | string): boolean {
 
     if (client instanceof Client)
-      if (typeof (client.id) !== "undefined")
+      if (client.id !== null)
         return mongoose.Types.ObjectId.isValid(client.id)
       else
         return false;
@@ -28,6 +28,8 @@ class DAOClient implements DAO<Client, string> {
       phone: client.phone,
 
       address: client.address,
+      creditCards: client.creditCards,
+      cart: client.cart,
 
       password: client.password,
       token: client.token,
@@ -61,11 +63,13 @@ class DAOClient implements DAO<Client, string> {
       phone: client.phone || foundedClient.phone,
 
       address: client.address || foundedClient.address,
+      creditCards: client.creditCards || foundedClient.creditCards,
+      cart: client.cart || foundedClient.cart,
 
       password: client.password || foundedClient.password,
       token: client.token || foundedClient.token,
 
-      createdAt: client.createdAt,
+      createdAt: foundedClient.createdAt,
       isActive: client.isActive,
       isAdmin: client.isAdmin,
     };
@@ -103,12 +107,12 @@ class DAOClient implements DAO<Client, string> {
   };
 
   async select(id: string): Promise<Client | null> {
-    const client = await ClientSchema.findById(id);
+    const foundedClient = await ClientSchema.findById(id);
 
-    if (client === null)
+    if (foundedClient === null)
       return null;
 
-    return new Client(client.id, client.name, client.cpf, client.email, client.cellPhone, client.phone, client.address, client.password as string, client.token, client.createdAt, client.isActive, client.isAdmin);
+    return Client.fromObject(foundedClient);
   };
 
   async selectAll(): Promise<Array<Client>> {
@@ -116,7 +120,7 @@ class DAOClient implements DAO<Client, string> {
     let clientsToReturn: Array<Client> = [];
 
     clients.forEach((client) => {
-      clientsToReturn.push(new Client(client.id, client.name, client.cpf, client.email, client.cellPhone, client.phone, client.address, client.password as string, client.token, client.createdAt, client.isActive, client.isAdmin));
+      clientsToReturn.push(Client.fromObject(client));
     });
     return clientsToReturn;
   };
@@ -126,9 +130,22 @@ class DAOClient implements DAO<Client, string> {
     let clientsToReturn: Array<Client> = [];
 
     clients.forEach((client) => {
-      clientsToReturn.push(new Client(client.id, client.name, client.cpf, client.email, client.cellPhone, client.phone, client.address, client.password as string, client.token, client.createdAt, client.isActive, client.isAdmin));
+      clientsToReturn.push(Client.fromObject(client));
     });
     return clientsToReturn;
+  };
+
+  async populate(client: Client, fields: Array<string>): Promise<Client> {
+    const foundedClient = await ClientSchema.findById(client.id);
+
+    if (foundedClient === null)
+      throw 'Cliente inválido'
+
+    fields.forEach(field => {
+      foundedClient.populate(field);
+    });
+
+    return Client.fromObject(foundedClient);
   };
 };
 

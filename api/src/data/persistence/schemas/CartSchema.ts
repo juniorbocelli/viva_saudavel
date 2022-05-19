@@ -2,8 +2,12 @@ import mongoose from 'mongoose';
 import Cart from '../../../models/entities/Cart';
 
 const cartSchema = new mongoose.Schema<Cart>({
+  client: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Client',
+  },
   clientId: {
-    type: String,
+    type: mongoose.Schema.Types.ObjectId,
     required: [true, 'O id do cliente é obrigatório'],
   },
   isRegistered: {

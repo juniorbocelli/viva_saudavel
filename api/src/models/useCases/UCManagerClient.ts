@@ -3,6 +3,7 @@ import jwt from 'jsonwebtoken';
 
 import Client from '../entities/Client';
 import DAOClient from '../../data/persistence/mongo/dao/DAOClient';
+import CreditCard from '../entities/CreditCard';
 
 class UCManagerClient {
   private daoClient: DAOClient;
@@ -99,7 +100,7 @@ class UCManagerClient {
   };
 
   public async getById(id: Client['id']) {
-    if (typeof (id) === 'undefined')
+    if (id === null)
       throw new Error("Cliente inválido");
 
     const clientData = await this.daoClient.select(id.toString());
@@ -127,7 +128,10 @@ class UCManagerClient {
   };
 
   public async update(client: Client) {
-    const clientToUpdate = await this.getById(client.id?.toString());
+    if (client.id === null)
+      throw new Error("Cliente inválido");
+
+    const clientToUpdate = await this.getById(client.id.toString());
 
     if (typeof (client.password) !== 'undefined')
       client.password = await bcrypt.hash(client.password as string, 10);
@@ -143,7 +147,53 @@ class UCManagerClient {
 
   public async getByFilter(filters: Object) {
     return await this.daoClient.selectBy(filters);
-  }
+  };
+
+  public async addCreditCard(c: CreditCard) {
+    // Get client
+    const client = await this.daoClient.select(c.client as string);
+
+    if (client === null)
+      throw new Error("Cliente inválido");
+
+    // Get client with credit cards
+    const clientWithCards = await this.daoClient.populate(client, ['creditCards']);
+
+    // Add new credit card
+    clientWithCards.creditCards?.push(c);
+
+    // Save client
+    return this.daoClient.update(clientWithCards);
+  };
+
+  public async removeCreditCard(c: CreditCard) {
+    // Get client
+    const client = await this.daoClient.select(c.client as string);
+
+    if (client === null)
+      throw new Error("Cliente inválido");
+
+    // Get client with credit cards
+    const clientWithCards = await this.daoClient.populate(client, ['creditCards']);
+    let cards = clientWithCards.creditCards || [];
+
+    // Remove credit card
+    cards.forEach((card) => {
+      if (card instanceof CreditCard) {
+        if (card.id === c.id) {
+          cards.splice(cards.indexOf(card), 1);
+        };
+      } else {
+        if (card?.toString() === c.id?.toString())
+          cards.splice(cards.indexOf(card), 1);
+      };
+    });
+
+    clientWithCards.creditCards = cards;
+
+    // Save client
+    return this.daoClient.update(clientWithCards);
+  };
 };
 
 export default UCManagerClient;

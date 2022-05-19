@@ -8,7 +8,7 @@ class DAOCart implements DAO<Cart, string> {
   isValidObjectId(cart: Cart | string): boolean {
 
     if (cart instanceof Cart)
-      if (typeof (cart.id) !== "undefined")
+      if (cart.id !== null)
         return mongoose.Types.ObjectId.isValid(cart.id)
       else
         return false;
@@ -20,7 +20,7 @@ class DAOCart implements DAO<Cart, string> {
     let cartSchema: Cart & mongoose.Document<any, any, Cart>;
 
     cartSchema = new CartSchema({
-      clientId: cart.clientId,
+      client: cart.client,
 
       createdAt: cart.createdAt,
       isRegistered: cart.isRegistered,
@@ -44,7 +44,8 @@ class DAOCart implements DAO<Cart, string> {
       throw 'Carrinho inválido'
 
     const updatedCartData = {
-      clientId: cart.clientId,
+      clientId: cart.client,
+      client: cart.clientId || foundedCart.clientId,
 
       createdAt: foundedCart.createdAt,
       isRegistered: cart.isRegistered !== null ? cart.isRegistered : cart.isRegistered,
@@ -93,6 +94,7 @@ class DAOCart implements DAO<Cart, string> {
     const foundedCart: Cart = {
       id: cart.id,
       clientId: cart.clientId,
+      client: cart.client,
 
       createdAt: cart.createdAt,
       isRegistered: cart.isRegistered,
@@ -100,7 +102,7 @@ class DAOCart implements DAO<Cart, string> {
       items: cart.items,
     };
 
-    return new Cart(foundedCart);
+    return Cart.fromObject(foundedCart);
   };
 
   async selectAll(): Promise<Array<Cart>> {
@@ -111,13 +113,14 @@ class DAOCart implements DAO<Cart, string> {
       let foundedCart: Cart = {
         id: cart.id,
         clientId: cart.clientId,
+        client: cart.client,
 
         createdAt: cart.createdAt,
         isRegistered: cart.isRegistered,
 
         items: cart.items,
       };
-      cartsToReturn.push(new Cart(foundedCart));
+      cartsToReturn.push(Cart.fromObject(foundedCart));
     });
     return cartsToReturn;
   };
@@ -130,15 +133,29 @@ class DAOCart implements DAO<Cart, string> {
       let foundedCart: Cart = {
         id: cart.id,
         clientId: cart.clientId,
+        client: cart.client,
 
         createdAt: cart.createdAt,
         isRegistered: cart.isRegistered,
 
         items: cart.items,
       };
-      cartsToReturn.push(new Cart(foundedCart));
+      cartsToReturn.push(Cart.fromObject(foundedCart));
     });
     return cartsToReturn;
+  };
+
+  async populate(cart: Cart, fields: Array<string>): Promise<Cart> {
+    const foundedCart = await CartSchema.findById(cart.id);
+
+    if (foundedCart === null)
+      throw 'Carrinho inválido'
+
+    fields.forEach(field => {
+      foundedCart.populate(field);
+    });
+
+    return Cart.fromObject(foundedCart);
   };
 };
 
