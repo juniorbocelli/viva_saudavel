@@ -1,18 +1,14 @@
 import Product from './Product';
 
 class CartItem {
-  productId: Product['id'];
+  product: Product | Product['id'];
   frequency: 'once' | 'weekly' | 'biweekly' | 'monthly';
 
-  name?: string;
-  price?: number;
-  thumb?: string;
-
-  constructor(productId: CartItem['productId'], frequency: CartItem['frequency']) {
-    if (typeof (this.productId) !== 'undefined')
+  constructor(product: CartItem['product'], frequency: CartItem['frequency']) {
+    if (typeof (this.product) !== 'undefined')
       throw new Error("Invalid cart item");
 
-    this.productId = productId;
+    this.product = product;
     this.frequency = frequency;
   };
 };

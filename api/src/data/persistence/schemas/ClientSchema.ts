@@ -2,6 +2,10 @@ import mongoose from 'mongoose';
 import Client from '../../../models/entities/Client';
 
 const clientSchema = new mongoose.Schema<Client>({
+  id: {
+    type: mongoose.Types.ObjectId,
+    required: [true, 'O id do cliente é obrigatório'],
+  },
   name: {
     type: String,
     required: [true, 'O nome é obrigatório'],
@@ -55,6 +59,14 @@ const clientSchema = new mongoose.Schema<Client>({
       type: String,
     },
   },
+
+  // https://mongoosejs.com/docs/typescript.html
+  creditCards: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'CreditCard',
+    }
+  ],
 
   password: {
     type: String,

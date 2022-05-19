@@ -16,9 +16,10 @@ const cartSchema = new mongoose.Schema<Cart>({
   },
   items: [
     {
-      productId: {
-        type: mongoose.Types.ObjectId,
+      product: {
+        type: mongoose.Schema.Types.ObjectId,
         required: [true, 'O id do produto é obrigatório'],
+        ref: 'Product',
       },
       frequency: {
         type: String,
@@ -27,15 +28,6 @@ const cartSchema = new mongoose.Schema<Cart>({
           message: 'O valor {VALUE} é inválido',
         },
         required: [true, 'A frequência do produto é obrigatória'],
-      },
-      name: {
-        type: String,
-      },
-      price: {
-        type: Number,
-      },
-      thumb: {
-        type: String,
       },
     },
   ],
