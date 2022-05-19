@@ -41,6 +41,10 @@ class Product {
     this.quantity = product?.quantity || null;
     this.createdAt = product?.createdAt || new Date();
   };
+
+  public static fromObject(p: Product): Product {
+    return new Product(p)
+  };
 };
 
 export default Product;

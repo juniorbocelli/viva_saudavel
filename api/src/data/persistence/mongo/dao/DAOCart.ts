@@ -157,6 +157,20 @@ class DAOCart implements DAO<Cart, string> {
 
     return Cart.fromObject(foundedCart);
   };
+
+  async selectAndPopulate(query: Object, fields: Array<string>): Promise<Array<Cart>> {
+    const carts = await CartSchema.find(query).exec();
+
+    let populatedCarts = carts.map(cart => {
+      fields.forEach(field => {
+        cart.populate(field);
+      });
+
+      return cart;
+    });
+
+    return populatedCarts;
+  };
 };
 
 export default DAOCart;

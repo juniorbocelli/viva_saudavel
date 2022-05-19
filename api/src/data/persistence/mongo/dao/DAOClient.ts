@@ -147,6 +147,20 @@ class DAOClient implements DAO<Client, string> {
 
     return Client.fromObject(foundedClient);
   };
+
+  async selectAndPopulate(query: Object, fields: Array<string>): Promise<Array<Client>> {
+    const clients = await ClientSchema.find(query).exec();
+
+    let populatedClients = clients.map(client => {
+      fields.forEach(field => {
+        client.populate(field);
+      });
+
+      return client;
+    });
+
+    return populatedClients;
+  };
 };
 
 export default DAOClient;
