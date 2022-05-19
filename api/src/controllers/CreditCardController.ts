@@ -3,10 +3,17 @@ import { Request, Response } from 'express';
 import CreditCard from '../models/entities/CreditCard';
 import DAOCreditCard from '../data/persistence/mongo/dao/DAOCreditCard';
 import UCManagerCreditCard from '../models/useCases/UCManagerCreditCard';
+import DAOClient from '../data/persistence/mongo/dao/DAOClient';
+import UCManagerClient from '../models/useCases/UCManagerClient';
 
 class CreditCardController {
   static async new(req: Request, res: Response) {
     const daoCreditCard = new DAOCreditCard();
+    const ucManagerCreditCard = new UCManagerCreditCard(daoCreditCard);
+
+    const daoClient = new DAOClient();
+    const ucManagerClient = new UCManagerClient(daoClient);
+
     const { clientId } = req.params;
     const {
       brand,
@@ -18,11 +25,15 @@ class CreditCardController {
 
     try {
       const creditCard = CreditCard.getNew(clientId, brand, name, number, expiry, cvc);
-      const ucManegerCreditCard = new UCManagerCreditCard(daoCreditCard);
 
-      const newCard = await ucManegerCreditCard.new(creditCard);
+      // Save credit card
+      const newCard = await ucManagerCreditCard.new(creditCard);
 
-      res.status(200).json({ creditCard: await ucManegerCreditCard.inactiveOthers(newCard.id, clientId) });
+      // Save client card from client
+      await ucManagerClient.addCreditCard(newCard);
+
+      // Inactive others and return active card
+      res.status(200).json({ creditCard: await ucManagerCreditCard.inactiveOthers(newCard.id, clientId) });
     } catch (error: any) {
       res.status(200).json({ error: error.message });
     };
@@ -74,7 +85,7 @@ class CreditCardController {
     } = req.body;
 
     try {
-      const creditCard = CreditCard.getUpdate(id, clientId, brand, name, number, expiry, cvc, null);
+      const creditCard = CreditCard.getUpdate(id, brand, name, number, expiry, cvc, null);
 
       res.status(200).json({ creditCard: await ucManegerCreditCard.update(creditCard) });
     } catch (error: any) {
@@ -96,10 +107,20 @@ class CreditCardController {
   static async remove(req: Request, res: Response) {
     const daoCreditCard = new DAOCreditCard();
     const ucManegerCreditCard = new UCManagerCreditCard(daoCreditCard);
+
+    const daoClient = new DAOClient();
+    const ucManagerClient = new UCManagerClient(daoClient);
+
     const { clientId, id } = req.params;
 
     try {
-      res.status(200).json({ creditCard: await ucManegerCreditCard.remove(id) });
+      // Remove card
+      const removedCard = await ucManegerCreditCard.remove(id);
+
+      // Remove card from client
+      await ucManagerClient.removeCreditCard(removedCard);
+      
+      res.status(200).json({ creditCard: removedCard });
     } catch (error: any) {
       res.status(200).json({ error: error.message });
     };

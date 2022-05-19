@@ -5,6 +5,7 @@ import CartItem from '../entities/CartItem';
 import DAOCart from '../../data/persistence/mongo/dao/DAOCart';
 import DAOProduct from '../../data/persistence/mongo/dao/DAOProduct';
 import DAOClient from '../../data/persistence/mongo/dao/DAOClient';
+import Product from '../entities/Product';
 
 class UCManagerCart {
   private daoCart: DAOCart;
@@ -19,8 +20,9 @@ class UCManagerCart {
     // Verify if already exist cart
     const carts = await this.daoCart.selectBy({ clientId: clientId });
     const newCart: Cart = {
-      id: undefined,
+      id: null,
       clientId: clientId,
+      client: null,
 
       createdAt: null,
       isRegistered: null,
@@ -38,8 +40,10 @@ class UCManagerCart {
         let daoClient = new DAOClient();
         let client = await daoClient.select(cart.clientId as string);
 
-        if (client !== null)
+        if (client !== null) {
           cart.isRegistered = true;
+          cart.client = client;
+        };
       };
     };
 
@@ -55,51 +59,41 @@ class UCManagerCart {
     if (cart.items === null)
       cart.items = [];
 
+    // Populate products
+    if (cart.items.length > 0)
+      this.daoCart.populate(cart, ['product']);
+
     // Previne invalid products products in cart
-    for (let i = 0; i < cart.items.length; i++) {
-      let product = await this.daoProduct.select(cart.items[i].productId as string);
-
-      if (product !== null) {
-        if (product.name)
-          cart.items[i].name = product.name;
-
-        if (product.price)
-          cart.items[i].price = product.price;
-
-        if (product.thumb)
-          cart.items[i].thumb = product.thumb;
-      } else {
-        cart.items.splice(i, 1);
-      };
-    };
+    let cartItems = cart.items;
+    cartItems.forEach(item => {
+      if (item.product instanceof Product)
+        if (!item.product.isActive || item.product.quantity === 0)
+          cartItems.splice(cartItems.indexOf(item), 1);
+    });
 
     return this.daoCart.saveOrUpdate(cart);
   };
 
   public async addItem(cartItem: CartItem, clientId: string): Promise<CartItem> {
-    const cart = await this.getNewOrPrevious(clientId);
+    let cart = await this.getNewOrPrevious(clientId);
 
     if (cart === null)
       throw new Error("Carrinho inválido");
 
-    const product = await this.daoProduct.select(cartItem.productId as string);
+    let product: Product | null;
+    if (cartItem.product instanceof Product) {
+      product = cartItem.product
+    } else {
+      product = await this.daoProduct.select(cartItem.product as string);
+    };
 
-    if (product === null)
-      throw new Error("Produto inválido");
+    if (product?.isActive && product.quantity! > 0) {
+      cart = await this.daoCart.populate(cart, ['product']);
+      let newItem = new CartItem(product, cartItem.frequency);
 
-    if (product.isActive === false)
-      throw new Error("Produto inválido");
-
-    if (product.name)
-      cartItem.name = product.name;
-
-    if (product.price)
-      cartItem.price = product.price;
-
-    if (product.thumb)
-      cartItem.thumb = product.thumb;
-
-    cart.items?.push(cartItem);
+      if (product)
+        cart.items?.push(newItem);
+    };
 
     this.daoCart.update(cart);
 
@@ -112,14 +106,17 @@ class UCManagerCart {
     if (cart === null)
       throw new Error("Carrinho inválido");
 
-    if (cart.items !== null)
-      for (let i = 0; i < cart.items.length; i++) {
-        if (cartItem.productId === cart.items[i].productId?.toString() && cartItem.frequency === cart.items[i].frequency) {
-          cart.items.splice(i, 1);
+    const cartWithItems = await this.daoCart.populate(cart, ['product']);
 
-          break;
-        };
+    let items = cartWithItems.items || []
+
+    items.forEach(item => {
+      if (item instanceof Product) {
+        
+      } else {
+
       };
+    });
 
     this.daoCart.update(cart);
 

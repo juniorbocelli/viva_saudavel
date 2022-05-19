@@ -14,7 +14,7 @@ class ClientController {
     try {
       const clientAddress = new Address(address.cep, address.street, address.district, address.state, address.city, address.number, address.complement);
 
-      const client = new Client(undefined, name, cpf, email, cellPhone, phone, clientAddress, password, undefined, undefined, undefined, undefined);
+      const client = Client.getNew(name, cpf, email, cellPhone, phone, clientAddress, password);
       const ucManagerClient = new UCManagerClient(daoClient);
 
       res.status(200).json({ client: await ucManagerClient.register(client) });
@@ -109,7 +109,7 @@ class ClientController {
 
     try {
       const receivedClientAddress = new Address(address.cep, address.street, address.district, address.state, address.city, address.number, address.complement);
-      const receivedClient = new Client(id, name, cpf, email, cellPhone, phone, receivedClientAddress, password, token as string, undefined, undefined, undefined);
+      const receivedClient = Client.getUpdate(id, name, cpf, email, cellPhone, phone, receivedClientAddress, null, null, password, token as string, null, null);
 
       const foundedClient = await ucManagerClient.getById(id);
       receivedClient.isActive = foundedClient.isActive;

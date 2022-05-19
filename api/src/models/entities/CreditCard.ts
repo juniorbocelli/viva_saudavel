@@ -86,8 +86,8 @@ class CreditCard {
     return new CreditCard(undefined, client, brand, name, number, expiry, cvc, null, new Date(), true);
   };
 
-  public static getUpdate(id: mongoose.Types.ObjectId | string, client: mongoose.Types.ObjectId | string, brand: CreditCard['brand'], name: CreditCard['name'], number: CreditCard['number'], expiry: CreditCard['expiry'], cvc: CreditCard['cvc'], isActive: CreditCard['isActive']) {
-    return new CreditCard(id, client, brand, name, number, expiry, cvc, null, null, isActive);
+  public static getUpdate(id: mongoose.Types.ObjectId | string, brand: CreditCard['brand'], name: CreditCard['name'], number: CreditCard['number'], expiry: CreditCard['expiry'], cvc: CreditCard['cvc'], isActive: CreditCard['isActive']) {
+    return new CreditCard(id, null, brand, name, number, expiry, cvc, null, null, isActive);
   };
 
   public static fromObject(creditCard: CreditCard) {
