@@ -10,6 +10,8 @@ interface DAO<T, K> {
   selectBy: (query: Object) => Promise<Array<T>>;
 
   populate: (entity: T, fields: Array<string>) => Promise<T>;
+
+  selectAndPopulate: (query: Object, fields: Array<string>) => Promise<Array<T>>;
 };
 
 export default DAO;

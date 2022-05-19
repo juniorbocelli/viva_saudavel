@@ -72,7 +72,12 @@ class DAOProduct implements DAO<Product, string> {
       createdAt: product.createdAt || foundedProduct.createdAt,
     };
 
-    return await ProductSchema.findByIdAndUpdate(product.id, updatedProductData, { new: true });
+    const updatedProduct = await ProductSchema.findByIdAndUpdate(product.id, updatedProductData, { new: true });
+
+    if (updatedProduct !== null)
+      return Product.fromObject(updatedProduct);
+
+    return updatedProduct;
   };
 
   async saveOrUpdate(product: Product) {
@@ -130,7 +135,7 @@ class DAOProduct implements DAO<Product, string> {
       createdAt: product.createdAt,
     };
 
-    return new Product(foundedProduct);
+    return Product.fromObject(foundedProduct);
   };
 
   async selectAll(): Promise<Array<Product>> {
@@ -157,7 +162,7 @@ class DAOProduct implements DAO<Product, string> {
         quantity: product.quantity,
         createdAt: product.createdAt,
       };
-      productsToReturn.push(new Product(foundedProduct));
+      productsToReturn.push(Product.fromObject(foundedProduct));
     });
     return productsToReturn;
   };
@@ -186,9 +191,36 @@ class DAOProduct implements DAO<Product, string> {
         quantity: product.quantity,
         createdAt: product.createdAt,
       };
-      productsToReturn.push(new Product(foundedProduct));
+      productsToReturn.push(Product.fromObject(foundedProduct));
     });
     return productsToReturn;
+  };
+
+  async populate(product: Product, fields: Array<string>): Promise<Product> {
+    const foundedProduct = await ProductSchema.findById(product.id);
+
+    if (foundedProduct === null)
+      throw 'Produto inválido'
+
+    fields.forEach(field => {
+      foundedProduct.populate(field);
+    });
+
+    return Product.fromObject(foundedProduct);
+  };
+
+  async selectAndPopulate(query: Object, fields: Array<string>): Promise<Array<Product>> {
+    const products = await ProductSchema.find(query).exec();
+
+    let populatedProducts = products.map(product => {
+      fields.forEach(field => {
+        product.populate(field);
+      });
+
+      return product;
+    });
+
+    return populatedProducts;
   };
 };
 

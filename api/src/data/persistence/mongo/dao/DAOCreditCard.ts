@@ -141,6 +141,20 @@ class DAOCreditCard implements DAO<CreditCard, string> {
 
     return CreditCard.fromObject(foundedCreditCard);
   };
+
+  async selectAndPopulate(query: Object, fields: Array<string>): Promise<Array<CreditCard>> {
+    const creditCards = await CreditCardSchema.find(query).exec();
+
+    let populatedCreditCards = creditCards.map(creditCard => {
+      fields.forEach(field => {
+        creditCard.populate(field);
+      });
+
+      return creditCard;
+    });
+
+    return populatedCreditCards;
+  };
 };
 
 export default DAOCreditCard;
