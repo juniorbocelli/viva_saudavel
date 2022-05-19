@@ -2,8 +2,9 @@ import mongoose from 'mongoose';
 import CreditCard from '../../../models/entities/CreditCard';
 
 const creditCardSchema = new mongoose.Schema<CreditCard>({
-  clientId: {
-    type: String,
+  client: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Client',
     required: [true, 'O id do cliente é obrigatório'],
   },
 

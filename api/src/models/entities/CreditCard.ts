@@ -2,10 +2,11 @@ import mongoose from 'mongoose';
 
 import Crypt from '../utils/Crypt';
 import SanitizerString from '../utils/SanitizerString';
+import Client from './Client';
 
 class CreditCard {
   id: mongoose.Types.ObjectId | string | undefined;
-  clientId: mongoose.Types.ObjectId | string | null;
+  client: Client | Client['id'];
 
   brand: string | null;
   name: string | null;
@@ -20,9 +21,9 @@ class CreditCard {
 
   private crypt: Crypt = new Crypt();
 
-  constructor(id: CreditCard['id'], clientId: CreditCard['clientId'], brand: CreditCard['brand'], name: CreditCard['name'], number: CreditCard['number'], expiry: CreditCard['expiry'], cvc: CreditCard['cvc'], cardHash: CreditCard['cardHash'], createdAt: CreditCard['createdAt'], isActive: CreditCard['isActive']) {
+  constructor(id: CreditCard['id'], client: CreditCard['client'], brand: CreditCard['brand'], name: CreditCard['name'], number: CreditCard['number'], expiry: CreditCard['expiry'], cvc: CreditCard['cvc'], cardHash: CreditCard['cardHash'], createdAt: CreditCard['createdAt'], isActive: CreditCard['isActive']) {
     this.id = SanitizerString.stringOrUndefined(id);
-    this.clientId = SanitizerString.stringOrNull(clientId);
+    this.client = client;
 
     this.brand = SanitizerString.stringOrNull(brand);
     this.name = SanitizerString.stringOrNull(name);
@@ -81,12 +82,16 @@ class CreditCard {
     this.decryptCvc();
   };
 
-  public static getNew(clientId: CreditCard['clientId'], brand: CreditCard['brand'], name: CreditCard['name'], number: CreditCard['number'], expiry: CreditCard['expiry'], cvc: CreditCard['cvc']): CreditCard {
-    return new CreditCard(undefined, clientId, brand, name, number, expiry, cvc, null, new Date(), true);
+  public static getNew(client: CreditCard['client'], brand: CreditCard['brand'], name: CreditCard['name'], number: CreditCard['number'], expiry: CreditCard['expiry'], cvc: CreditCard['cvc']): CreditCard {
+    return new CreditCard(undefined, client, brand, name, number, expiry, cvc, null, new Date(), true);
   };
 
-  public static getUpdate(id: mongoose.Types.ObjectId | string, clientId: mongoose.Types.ObjectId | string, brand: CreditCard['brand'], name: CreditCard['name'], number: CreditCard['number'], expiry: CreditCard['expiry'], cvc: CreditCard['cvc'], isActive: CreditCard['isActive']) {
-    return new CreditCard(id, clientId, brand, name, number, expiry, cvc, null, null, isActive);
+  public static getUpdate(id: mongoose.Types.ObjectId | string, client: mongoose.Types.ObjectId | string, brand: CreditCard['brand'], name: CreditCard['name'], number: CreditCard['number'], expiry: CreditCard['expiry'], cvc: CreditCard['cvc'], isActive: CreditCard['isActive']) {
+    return new CreditCard(id, client, brand, name, number, expiry, cvc, null, null, isActive);
+  };
+
+  public static fromObject(creditCard: CreditCard) {
+    return new CreditCard(creditCard.id, creditCard.client, creditCard.brand, creditCard.name, creditCard.number, creditCard.expiry, creditCard.cvc, creditCard.cardHash, creditCard.createdAt, creditCard.isActive);
   };
 };
 

@@ -20,7 +20,7 @@ class DAOCreditCard implements DAO<CreditCard, string> {
     let creditCardSchema: CreditCard & mongoose.Document<any, any, CreditCard>;
 
     creditCardSchema = new CreditCardSchema({
-      clientId: creditCard.clientId,
+      client: creditCard.client,
 
       brand: creditCard.brand,
       name: creditCard.name,
@@ -50,8 +50,7 @@ class DAOCreditCard implements DAO<CreditCard, string> {
       throw 'Cartão inválido'
 
     const updatedCreditCard = {
-      id: foundedCreditCard._id,
-      clientId: foundedCreditCard.clientId,
+      client: foundedCreditCard.client,
 
       brand: creditCardToEdit.brand || foundedCreditCard.brand,
       name: creditCardToEdit.name || foundedCreditCard.name,
@@ -68,7 +67,7 @@ class DAOCreditCard implements DAO<CreditCard, string> {
     const creditCard = await CreditCardSchema.findByIdAndUpdate(creditCardToEdit.id, updatedCreditCard, { new: true });
 
     if (creditCard !== null)
-      return new CreditCard(creditCard.id, creditCard.clientId, creditCard.brand, creditCard.name, creditCard.number, creditCard.expiry, creditCard.cvc, creditCard.cardHash, creditCard.createdAt, creditCard.isActive);
+      return new CreditCard(creditCard.id, creditCard.client, creditCard.brand, creditCard.name, creditCard.number, creditCard.expiry, creditCard.cvc, creditCard.cardHash, creditCard.createdAt, creditCard.isActive);
     return null;
   };
 
@@ -94,7 +93,7 @@ class DAOCreditCard implements DAO<CreditCard, string> {
     return creditCard.id!?.toString();
   };
 
-  async delete(id: string) {
+  async delete(id: string): Promise<void> {
     if (!this.isValidObjectId(id))
       throw `O id do cartão é inválido`;
 
@@ -107,7 +106,7 @@ class DAOCreditCard implements DAO<CreditCard, string> {
     if (creditCard === null)
       return null;
 
-    return new CreditCard(creditCard.id, creditCard.clientId, creditCard.brand, creditCard.name, creditCard.number, creditCard.expiry, creditCard.cvc, creditCard.cardHash, creditCard.createdAt, creditCard.isActive);
+    return CreditCard.fromObject(creditCard);
   };
 
   async selectAll(): Promise<Array<CreditCard>> {
@@ -115,7 +114,7 @@ class DAOCreditCard implements DAO<CreditCard, string> {
     let creditCardsToReturn: Array<CreditCard> = [];
 
     creditCards.forEach((creditCard) => {
-      creditCardsToReturn.push(new CreditCard(creditCard.id, creditCard.clientId, creditCard.brand, creditCard.name, creditCard.number, creditCard.expiry, creditCard.cvc, creditCard.cardHash, creditCard.createdAt, creditCard.isActive));
+      creditCardsToReturn.push(CreditCard.fromObject(creditCard));
     });
     return creditCardsToReturn;
   };
@@ -125,9 +124,22 @@ class DAOCreditCard implements DAO<CreditCard, string> {
     let creditCardsToReturn: Array<CreditCard> = [];
 
     creditCards.forEach((creditCard) => {
-      creditCardsToReturn.push(new CreditCard(creditCard.id, creditCard.clientId, creditCard.brand, creditCard.name, creditCard.number, creditCard.expiry, creditCard.cvc, creditCard.cardHash, creditCard.createdAt, creditCard.isActive));
+      creditCardsToReturn.push(CreditCard.fromObject(creditCard));
     });
     return creditCardsToReturn;
+  };
+
+  async populate(creditCard: CreditCard, fields: Array<string>): Promise<CreditCard> {
+    const foundedCreditCard = await CreditCardSchema.findById(creditCard.id);
+
+    if (foundedCreditCard === null)
+      throw 'Cartão inválido'
+
+    fields.forEach(field => {
+      foundedCreditCard.populate(field);
+    });
+
+    return CreditCard.fromObject(foundedCreditCard);
   };
 };
 
