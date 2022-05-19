@@ -8,6 +8,8 @@ interface DAO<T, K> {
   selectAll: () => Promise<Array<T>>;
   // https://mongoosejs.com/docs/api.html#model_Model.find
   selectBy: (query: Object) => Promise<Array<T>>;
+
+  populate: (entity: T, fields: Array<string>) => Promise<T>;
 };
 
 export default DAO;
