@@ -1,6 +1,7 @@
 import mongoose from 'mongoose';
 
 import Address from './Address';
+import CreditCard from './CreditCard';
 import SanitizerString from '../utils/SanitizerString';
 
 class Client {
@@ -15,6 +16,8 @@ class Client {
 
   address?: Address;
 
+  creditCards: Array<CreditCard> | Array<CreditCard['id']> | null;
+
   password?: string;
   token?: string;
 
@@ -22,7 +25,7 @@ class Client {
   isActive: boolean;
   isAdmin: boolean;
 
-  constructor(id: mongoose.Types.ObjectId | string | undefined, name: string, cpf: string, email: string, cellPhone: string, phone: string | undefined, address: Address | undefined, password: string | undefined, token: string | undefined, createdAt: Date | undefined, isActive: boolean | undefined, isAdmin: boolean | undefined) {
+  constructor(id: string | undefined, name: string, cpf: string, email: string, cellPhone: string, phone: string | undefined, address: Address | undefined, creditCards: Client['creditCards'], password: string | undefined, token: string | undefined, createdAt: Date | undefined, isActive: boolean | undefined, isAdmin: boolean | undefined) {
     this.id = id;
 
     this.name = SanitizerString.removeSpaces(name);
@@ -33,6 +36,8 @@ class Client {
     this.phone = phone ? SanitizerString.stringOrUndefined(SanitizerString.onlyNumbers(phone)) : phone;
 
     this.address = address;
+
+    this.creditCards = creditCards || [];
 
     this.password = SanitizerString.stringOrUndefined(password);
     this.token = token;
