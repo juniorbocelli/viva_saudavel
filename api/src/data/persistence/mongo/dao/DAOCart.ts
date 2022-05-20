@@ -38,22 +38,22 @@ class DAOCart implements DAO<Cart, string> {
     if (!this.isValidObjectId(cart))
       throw 'O id do carrinho é inválido';
 
-    const foundedCart = await CartSchema.findById(cart.id);
-
-    if (foundedCart === null)
-      throw 'Carrinho inválido'
-
     const updatedCartData = {
       clientId: cart.client,
-      client: cart.clientId || foundedCart.clientId,
+      client: cart.clientId,
 
-      createdAt: foundedCart.createdAt,
-      isRegistered: cart.isRegistered !== null ? cart.isRegistered : cart.isRegistered,
+      createdAt: cart.createdAt,
+      isRegistered: cart.isRegistered,
 
-      items: cart.items || foundedCart.items,
+      items: cart.items,
     };
 
-    return await CartSchema.findByIdAndUpdate(cart.id, updatedCartData, { new: true });
+    const updateCart = await CartSchema.findByIdAndUpdate(cart.id, updatedCartData, { new: true });
+
+    if (updateCart !== null)
+      return Cart.getFromObject(updateCart);
+
+    return null;
   };
 
   async saveOrUpdate(cart: Cart) {
@@ -102,7 +102,7 @@ class DAOCart implements DAO<Cart, string> {
       items: cart.items,
     };
 
-    return Cart.fromObject(foundedCart);
+    return Cart.getFromObject(foundedCart);
   };
 
   async selectAll(): Promise<Array<Cart>> {
@@ -120,7 +120,7 @@ class DAOCart implements DAO<Cart, string> {
 
         items: cart.items,
       };
-      cartsToReturn.push(Cart.fromObject(foundedCart));
+      cartsToReturn.push(Cart.getFromObject(foundedCart));
     });
     return cartsToReturn;
   };
@@ -140,7 +140,7 @@ class DAOCart implements DAO<Cart, string> {
 
         items: cart.items,
       };
-      cartsToReturn.push(Cart.fromObject(foundedCart));
+      cartsToReturn.push(Cart.getFromObject(foundedCart));
     });
     return cartsToReturn;
   };
@@ -155,7 +155,7 @@ class DAOCart implements DAO<Cart, string> {
       foundedCart.populate(field);
     });
 
-    return Cart.fromObject(foundedCart);
+    return Cart.getFromObject(foundedCart);
   };
 
   async selectAndPopulate(query: Object, fields: Array<string>): Promise<Array<Cart>> {

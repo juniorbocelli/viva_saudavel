@@ -1,3 +1,5 @@
+import mongoose from 'mongoose';
+
 class SanitizerString {
   public static onlyNumbers(value: string): string {
     return value.replace(/\D/g, "");
@@ -34,6 +36,13 @@ class SanitizerString {
     else
       return this.removeSpaces(value);
   };
+
+  public static objectIdToStringOrNull(value: mongoose.Types.ObjectId | string | null): string | null {
+    if (value === null || toString.call(value) === '[object String]')
+      return this.stringOrNull(value);
+    
+      return value.toString();
+  }
 };
 
 export default SanitizerString;

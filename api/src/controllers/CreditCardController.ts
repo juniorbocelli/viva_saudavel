@@ -33,7 +33,7 @@ class CreditCardController {
       await ucManagerClient.addCreditCard(newCard);
 
       // Inactive others and return active card
-      res.status(200).json({ creditCard: await ucManagerCreditCard.inactiveOthers(newCard.id, clientId) });
+      res.status(200).json({ creditCard: await ucManagerCreditCard.inactiveOthers(newCard.id as string, clientId) });
     } catch (error: any) {
       res.status(200).json({ error: error.message });
     };
@@ -41,12 +41,12 @@ class CreditCardController {
 
   static async get(req: Request, res: Response) {
     const daoCreditCard = new DAOCreditCard();
+    const ucManegerCreditCard = new UCManagerCreditCard(daoCreditCard);
+
     const { clientId, id } = req.params;
     const { decrypt } = req.query;
 
     try {
-      const ucManegerCreditCard = new UCManagerCreditCard(daoCreditCard);
-
       const creditCard = await ucManegerCreditCard.get(id, clientId);
 
       if (Boolean(decrypt))
@@ -76,16 +76,12 @@ class CreditCardController {
     const ucManegerCreditCard = new UCManagerCreditCard(daoCreditCard);
 
     const { id, clientId, } = req.params;
-    const {
-      brand,
-      name,
-      number,
-      expiry,
-      cvc,
-    } = req.body;
 
     try {
-      const creditCard = CreditCard.getUpdate(id, brand, name, number, expiry, cvc, null);
+      const previousCreditCard = await ucManegerCreditCard.get(id, clientId);
+      previousCreditCard.decryptCard();
+
+      const creditCard = CreditCard.getUpdated(req.body as CreditCard, previousCreditCard);
 
       res.status(200).json({ creditCard: await ucManegerCreditCard.update(creditCard) });
     } catch (error: any) {

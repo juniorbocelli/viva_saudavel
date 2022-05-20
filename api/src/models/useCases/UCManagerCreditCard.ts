@@ -21,7 +21,7 @@ class UCManagerCreditCard {
     return this.daoCreditCard.save(creditCard);
   };
 
-  public async get(id: CreditCard['id'], clientId: CreditCard['clientId']) {
+  public async get(id: string, clientId: string) {
     // Verify if exist
     const creditCards = await this.daoCreditCard.selectBy({ _id: id, clientId: clientId });
 
@@ -31,11 +31,11 @@ class UCManagerCreditCard {
     return creditCards[0];
   };
 
-  public async getByclientId(clientId: CreditCard['clientId']) {
+  public async getActiveByClientId(clientId: string) {
     const creditCards = await this.daoCreditCard.selectBy({ clientId: clientId, isActive: true });
 
     if (creditCards.length === 0)
-      throw new Error("O cliente não tem cartões ativos");
+      return null;
 
     return creditCards[0];
   };
@@ -61,14 +61,14 @@ class UCManagerCreditCard {
     return await this.daoCreditCard.selectBy(filters);
   };
 
-  public async inactiveOthers(id: CreditCard['id'], clientId: CreditCard['clientId']) {
+  public async inactiveOthers(id: string, clientId: string) {
     // Verify if exist
     await this.get(id, clientId);
 
     const others = await this.daoCreditCard.selectBy({ clientId: clientId });
 
     others.forEach(creditCard => {
-      if (creditCard.id?.valueOf() !== id?.valueOf())
+      if (creditCard.id !== id)
         creditCard.isActive = false;
       else
         creditCard.isActive = true;

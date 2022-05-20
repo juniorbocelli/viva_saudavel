@@ -49,32 +49,32 @@ class DAOClient implements DAO<Client, string> {
     if (!this.isValidObjectId(client))
       throw 'O id do usuário é inválido';
 
-    const foundedClient = await ClientSchema.findById(client.id);
-
-    if (foundedClient === null)
-      throw 'Usuário inválido'
-
     const updatedClientData = {
       name: client.name,
-      cpf: foundedClient.cpf,
+      cpf: client.cpf,
 
       email: client.email,
       cellPhone: client.cellPhone,
-      phone: client.phone || foundedClient.phone,
+      phone: client.phone,
 
-      address: client.address || foundedClient.address,
-      creditCards: client.creditCards || foundedClient.creditCards,
-      cart: client.cart || foundedClient.cart,
+      address: client.address,
+      creditCards: client.creditCards,
+      cart: client.cart,
 
-      password: client.password || foundedClient.password,
-      token: client.token || foundedClient.token,
+      password: client.password,
+      token: client.token,
 
-      createdAt: foundedClient.createdAt,
+      createdAt: client.createdAt,
       isActive: client.isActive,
       isAdmin: client.isAdmin,
     };
 
-    return await ClientSchema.findByIdAndUpdate(client.id, updatedClientData, { new: true });
+    const updateClient = await ClientSchema.findByIdAndUpdate(client.id, updatedClientData, { new: true });
+
+    if (updateClient !== null)
+      return Client.getFromObject(updateClient);
+
+    return null;
   };
 
   async saveOrUpdate(client: Client) {
@@ -112,7 +112,7 @@ class DAOClient implements DAO<Client, string> {
     if (foundedClient === null)
       return null;
 
-    return Client.fromObject(foundedClient);
+    return Client.getFromObject(foundedClient);
   };
 
   async selectAll(): Promise<Array<Client>> {
@@ -120,7 +120,7 @@ class DAOClient implements DAO<Client, string> {
     let clientsToReturn: Array<Client> = [];
 
     clients.forEach((client) => {
-      clientsToReturn.push(Client.fromObject(client));
+      clientsToReturn.push(Client.getFromObject(client));
     });
     return clientsToReturn;
   };
@@ -130,7 +130,7 @@ class DAOClient implements DAO<Client, string> {
     let clientsToReturn: Array<Client> = [];
 
     clients.forEach((client) => {
-      clientsToReturn.push(Client.fromObject(client));
+      clientsToReturn.push(Client.getFromObject(client));
     });
     return clientsToReturn;
   };
@@ -145,7 +145,7 @@ class DAOClient implements DAO<Client, string> {
       foundedClient.populate(field);
     });
 
-    return Client.fromObject(foundedClient);
+    return Client.getFromObject(foundedClient);
   };
 
   async selectAndPopulate(query: Object, fields: Array<string>): Promise<Array<Client>> {
