@@ -6,7 +6,7 @@ import SanitizerString from '../utils/SanitizerString';
 
 class Cart {
   id: string | null;
-  clientId: mongoose.Types.ObjectId | string | null;
+  clientId: string | null;
   client: Client | Client['id'];
 
   createdAt: Date;

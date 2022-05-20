@@ -5,9 +5,10 @@ const cartSchema = new mongoose.Schema<Cart>({
   client: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Client',
+    default: null,
   },
   clientId: {
-    type: mongoose.Schema.Types.ObjectId,
+    type: String,
     required: [true, 'O id do cliente é obrigatório'],
   },
   isRegistered: {
