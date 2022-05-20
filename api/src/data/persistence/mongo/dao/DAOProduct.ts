@@ -8,7 +8,7 @@ class DAOProduct implements DAO<Product, string> {
   isValidObjectId(product: Product | string): boolean {
 
     if (product instanceof Product)
-      if (typeof (product.id) !== "undefined")
+      if (product.id !== null)
         return mongoose.Types.ObjectId.isValid(product.id)
       else
         return false;
