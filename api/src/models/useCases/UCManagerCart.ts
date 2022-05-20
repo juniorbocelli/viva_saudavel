@@ -18,7 +18,7 @@ class UCManagerCart {
 
   private async getNewOrPrevious(clientId: string): Promise<Cart | null> {
     // Verify if already exist cart
-    const carts = await this.daoCart.selectBy({ clientId: clientId });
+    const carts = await this.daoCart.selectAndPopulate({ clientId: clientId }, ['product']);
     const newCart: Cart = {
       id: null,
       clientId: clientId,
@@ -59,10 +59,6 @@ class UCManagerCart {
     if (cart.items === null)
       cart.items = [];
 
-    // Populate products
-    if (cart.items.length > 0)
-      this.daoCart.populate(cart, ['product']);
-
     // Previne invalid products products in cart
     let cartItems = cart.items;
     cartItems.forEach(item => {
@@ -76,47 +72,60 @@ class UCManagerCart {
 
   public async addItem(cartItem: CartItem, clientId: string): Promise<CartItem> {
     let cart = await this.getNewOrPrevious(clientId);
+    let product: Product | null;
 
     if (cart === null)
       throw new Error("Carrinho inválido");
 
-    let product: Product | null;
     if (cartItem.product instanceof Product) {
-      product = cartItem.product
+      product = await this.daoProduct.select(cartItem.product.id as string);
     } else {
       product = await this.daoProduct.select(cartItem.product as string);
     };
 
-    if (product?.isActive && product.quantity! > 0) {
+    if (product === null)
+      throw new Error("Produto inválido");
+
+    cartItem.product = product;
+
+    if (product.isActive && product.quantity! > 0) {
       cart = await this.daoCart.populate(cart, ['product']);
       let newItem = new CartItem(product, cartItem.frequency);
 
-      if (product)
-        cart.items?.push(newItem);
-    };
+      cart.items?.push(newItem);
 
-    this.daoCart.update(cart);
+      this.daoCart.update(cart);
+    };
 
     return cartItem;
   };
 
   public async removeItem(cartItem: CartItem, clientId: string): Promise<CartItem> {
     const cart = await this.getNewOrPrevious(clientId);
+    let product: Product | null;
 
     if (cart === null)
       throw new Error("Carrinho inválido");
 
-    const cartWithItems = await this.daoCart.populate(cart, ['product']);
+    // TODO: Retirar
+    if (cartItem.product instanceof Product)
+      product = await this.daoProduct.select(cartItem.product.id as string);
+    else
+      product = await this.daoProduct.select(cartItem.product);
 
-    let items = cartWithItems.items || []
+    if (product === null)
+      throw new Error("Produto inválido");
 
-    items.forEach(item => {
-      if (item instanceof Product) {
-        
-      } else {
+    let items = cart.items || [];
 
+    for (let item of items) {
+      let product: Product = item.product as Product;
+      if (product.id === (cartItem.product as Product).id && item.frequency === cartItem.frequency) {
+        items.splice(items.indexOf(item), 1);
+
+        break;
       };
-    });
+    };
 
     this.daoCart.update(cart);
 

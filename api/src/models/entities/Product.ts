@@ -4,7 +4,7 @@ import ProductFilter from './ProductFilter';
 import SanitizerString from '../utils/SanitizerString';
 
 class Product {
-  id: mongoose.Types.ObjectId | string | undefined;
+  id: mongoose.Types.ObjectId | string | null;
   name: string | null;
   producer: string | null;
   measure: string | null;
@@ -23,7 +23,7 @@ class Product {
   createdAt: Date | null;
 
   constructor(product?: Product) {
-    this.id = SanitizerString.stringOrUndefined(product?.id);
+    this.id = SanitizerString.stringOrNull(product?.id);
     this.name = SanitizerString.stringOrNull(product?.name);
     this.producer = SanitizerString.stringOrNull(product?.producer);
     this.measure = SanitizerString.stringOrNull(product?.measure);

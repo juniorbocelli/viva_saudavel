@@ -150,32 +150,36 @@ class UCManagerClient {
   };
 
   public async addCreditCard(c: CreditCard) {
-    // Get client
-    const client = await this.daoClient.select(c.client as string);
-
-    if (client === null)
+    if (c.client === null)
       throw new Error("Cliente inválido");
 
     // Get client with credit cards
-    const clientWithCards = await this.daoClient.populate(client, ['creditCards']);
+    const clientWithCards = await this.daoClient.selectAndPopulate({ id: c.client instanceof Client ? c.client.id : c.client }, ['creditCards']);
+
+    if (clientWithCards.length === 0)
+      throw new Error("Cliente invlálido");
+
+    const client = clientWithCards[0];
 
     // Add new credit card
-    clientWithCards.creditCards?.push(c);
+    client.creditCards?.push(c);
 
     // Save client
-    return this.daoClient.update(clientWithCards);
+    return this.daoClient.update(client);
   };
 
   public async removeCreditCard(c: CreditCard) {
-    // Get client
-    const client = await this.daoClient.select(c.client as string);
-
-    if (client === null)
+    if (c.client === null)
       throw new Error("Cliente inválido");
 
     // Get client with credit cards
-    const clientWithCards = await this.daoClient.populate(client, ['creditCards']);
-    let cards = clientWithCards.creditCards || [];
+    const clientWithCards = await this.daoClient.selectAndPopulate({ id: c.client instanceof Client ? c.client.id : c.client }, ['creditCards']);
+
+    if (clientWithCards.length === 0)
+      throw new Error("Cliente invlálido");
+
+    const client = clientWithCards[0];
+    let cards = client.creditCards || [];
 
     // Remove credit card
     cards.forEach((card) => {
@@ -189,10 +193,10 @@ class UCManagerClient {
       };
     });
 
-    clientWithCards.creditCards = cards;
+    client.creditCards = cards;
 
     // Save client
-    return this.daoClient.update(clientWithCards);
+    return this.daoClient.update(client);
   };
 };
 
