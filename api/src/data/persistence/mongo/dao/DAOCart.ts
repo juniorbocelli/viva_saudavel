@@ -21,12 +21,14 @@ class DAOCart implements DAO<Cart, string> {
 
     cartSchema = new CartSchema({
       client: cart.client,
+      clientId: cart.clientId,
 
       createdAt: cart.createdAt,
       isRegistered: cart.isRegistered,
 
       items: cart.items,
     });
+    
     await cartSchema.save();
 
     cart.id = cartSchema._id;
