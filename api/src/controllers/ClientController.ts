@@ -105,28 +105,26 @@ class ClientController {
 
     const { id } = req.params;
     const token = req.headers["x-access-token"];
-    const { name, cpf, email, cellPhone, phone, password, address } = req.body;
+    const { address } = req.body;
 
     try {
-      const receivedClientAddress = new Address(address.cep, address.street, address.district, address.state, address.city, address.number, address.complement);
-      const receivedClient = Client.getUpdate(id, name, cpf, email, cellPhone, phone, receivedClientAddress, null, null, password, token as string, null, null);
+      const newClientData = req.body as Client;
+      const previousClient = await ucManagerClient.getById(id);
 
-      const foundedClient = await ucManagerClient.getById(id);
-      receivedClient.isActive = foundedClient.isActive;
-      receivedClient.isAdmin = foundedClient.isAdmin;
-      receivedClient.createdAt = foundedClient.createdAt;
+      newClientData.address = new Address(address.cep, address.street, address.district, address.state, address.city, address.number, address.complement);
+      const updatedClient = Client.getUpdated(newClientData, previousClient);
 
       const loggedClient = await ucManagerClient.getByToken(token as string)
 
       // Verify ids
-      if (receivedClient.id !== loggedClient.id && !loggedClient.isAdmin) {
+      if (updatedClient.id !== loggedClient.id && !loggedClient.isAdmin) {
         res.status(200).json({ error: "Você não tem autorização para realizar essa operação" });
         ucManagerClient.logout(token as string);
 
         return;
       };
 
-      res.status(200).json({ client: await ucManagerClient.update(receivedClient) });
+      res.status(200).json({ client: await ucManagerClient.update(updatedClient) });
     } catch (error: any) {
       res.status(200).json({ error: error.message });
     };

@@ -20,7 +20,7 @@ class UCManagerProduct {
     return newProduct;
   };
 
-  public async get(id: Product['id']) {
+  public async get(id: string) {
     const product = await this.daoProduct.select(id as string);
 
     if (product === null)

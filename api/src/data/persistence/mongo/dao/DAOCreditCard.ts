@@ -8,7 +8,7 @@ class DAOCreditCard implements DAO<CreditCard, string> {
   isValidObjectId(creditCard: CreditCard | string): boolean {
 
     if (creditCard instanceof CreditCard)
-      if (typeof (creditCard.id) !== "undefined")
+      if (creditCard.id !== null)
         return mongoose.Types.ObjectId.isValid(creditCard.id)
       else
         return false;
@@ -40,34 +40,30 @@ class DAOCreditCard implements DAO<CreditCard, string> {
     return creditCard;
   };
 
-  async update(creditCardToEdit: CreditCard) {
-    if (!this.isValidObjectId(creditCardToEdit))
+  async update(creditCard: CreditCard) {
+    if (!this.isValidObjectId(creditCard))
       throw 'O id do cartão é inválido';
 
-    const foundedCreditCard = await CreditCardSchema.findById(creditCardToEdit.id);
-
-    if (foundedCreditCard === null)
-      throw 'Cartão inválido'
-
     const updatedCreditCard = {
-      client: foundedCreditCard.client,
+      client: creditCard,
 
-      brand: creditCardToEdit.brand || foundedCreditCard.brand,
-      name: creditCardToEdit.name || foundedCreditCard.name,
-      number: creditCardToEdit.number || foundedCreditCard.number,
-      expiry: creditCardToEdit.expiry || foundedCreditCard.expiry,
-      cvv: creditCardToEdit.cvc || foundedCreditCard.cvc,
+      brand: creditCard.brand,
+      name: creditCard.name,
+      number: creditCard.number,
+      expiry: creditCard.expiry,
+      cvv: creditCard.cvc,
 
-      cardHash: creditCardToEdit.cardHash,
+      cardHash: creditCard.cardHash,
 
-      createdAt: foundedCreditCard.createdAt,
-      isActive: creditCardToEdit.isActive !== null ? creditCardToEdit.isActive : foundedCreditCard.isActive,
+      createdAt: creditCard.createdAt,
+      isActive: creditCard.isActive,
     };
 
-    const creditCard = await CreditCardSchema.findByIdAndUpdate(creditCardToEdit.id, updatedCreditCard, { new: true });
+    const updateCreditCard = await CreditCardSchema.findByIdAndUpdate(creditCard.id, updatedCreditCard, { new: true });
 
-    if (creditCard !== null)
-      return new CreditCard(creditCard.id, creditCard.client, creditCard.brand, creditCard.name, creditCard.number, creditCard.expiry, creditCard.cvc, creditCard.cardHash, creditCard.createdAt, creditCard.isActive);
+    if (updateCreditCard !== null)
+      return CreditCard.getFromObject(updateCreditCard);
+
     return null;
   };
 
@@ -106,7 +102,7 @@ class DAOCreditCard implements DAO<CreditCard, string> {
     if (creditCard === null)
       return null;
 
-    return CreditCard.fromObject(creditCard);
+    return CreditCard.getFromObject(creditCard);
   };
 
   async selectAll(): Promise<Array<CreditCard>> {
@@ -114,7 +110,7 @@ class DAOCreditCard implements DAO<CreditCard, string> {
     let creditCardsToReturn: Array<CreditCard> = [];
 
     creditCards.forEach((creditCard) => {
-      creditCardsToReturn.push(CreditCard.fromObject(creditCard));
+      creditCardsToReturn.push(CreditCard.getFromObject(creditCard));
     });
     return creditCardsToReturn;
   };
@@ -124,7 +120,7 @@ class DAOCreditCard implements DAO<CreditCard, string> {
     let creditCardsToReturn: Array<CreditCard> = [];
 
     creditCards.forEach((creditCard) => {
-      creditCardsToReturn.push(CreditCard.fromObject(creditCard));
+      creditCardsToReturn.push(CreditCard.getFromObject(creditCard));
     });
     return creditCardsToReturn;
   };
@@ -139,7 +135,7 @@ class DAOCreditCard implements DAO<CreditCard, string> {
       foundedCreditCard.populate(field);
     });
 
-    return CreditCard.fromObject(foundedCreditCard);
+    return CreditCard.getFromObject(foundedCreditCard);
   };
 
   async selectAndPopulate(query: Object, fields: Array<string>): Promise<Array<CreditCard>> {

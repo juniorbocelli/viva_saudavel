@@ -4,7 +4,7 @@ import Cart from '../entities/Cart';
 import CartItem from '../entities/CartItem';
 import DAOCart from '../../data/persistence/mongo/dao/DAOCart';
 import DAOProduct from '../../data/persistence/mongo/dao/DAOProduct';
-import DAOClient from '../../data/persistence/mongo/dao/DAOClient';
+// import DAOClient from '../../data/persistence/mongo/dao/DAOClient';
 import Product from '../entities/Product';
 
 class UCManagerCart {
@@ -18,33 +18,23 @@ class UCManagerCart {
 
   private async getNewOrPrevious(clientId: string): Promise<Cart | null> {
     // Verify if already exist cart
-    const carts = await this.daoCart.selectAndPopulate({ clientId: clientId }, ['product']);
-    const newCart: Cart = {
-      id: null,
-      clientId: clientId,
-      client: null,
-
-      createdAt: null,
-      isRegistered: null,
-
-      items: null,
-    };
+    const carts = await this.daoCart.selectAndPopulate({ clientId: clientId }, ['items', 'client']);
     let cart: Cart;
 
     if (carts.length === 0)
-      cart = new Cart(newCart);
+      cart = Cart.getNew(clientId, null, false, []);
     else {
       cart = carts[0];
 
-      if (!cart.isRegistered && mongoose.isValidObjectId(cart.clientId)) {
-        let daoClient = new DAOClient();
-        let client = await daoClient.select(cart.clientId as string);
+      // if (!cart.isRegistered && mongoose.isValidObjectId(cart.clientId)) {
+      //   let daoClient = new DAOClient();
+      //   let client = await daoClient.select(cart.clientId as string);
 
-        if (client !== null) {
-          cart.isRegistered = true;
-          cart.client = client;
-        };
-      };
+      //   if (client !== null) {
+      //     cart.isRegistered = true;
+      //     cart.client = client;
+      //   };
+      // };
     };
 
     return await this.daoCart.saveOrUpdate(cart);
@@ -136,7 +126,7 @@ class UCManagerCart {
     const notLoggedCart = await this.getNewOrPrevious(oldId);
 
     // Verify if logged client already have a cart
-    const loggedCart = await this.daoCart.selectBy({ clientId: newId });
+    const loggedCart = await this.daoCart.selectAndPopulate({ clientId: newId }, ['items', 'client']);
 
     let ourCart: Cart;
 
@@ -156,6 +146,8 @@ class UCManagerCart {
       ourCart = notLoggedCart;
 
       ourCart.clientId = newId;
+      ourCart.client = newId;
+      
       ourCart.isRegistered = true;
     };
 

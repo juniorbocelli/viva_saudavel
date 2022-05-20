@@ -133,10 +133,8 @@ class UCManagerClient {
 
     const clientToUpdate = await this.getById(client.id.toString());
 
-    if (typeof (client.password) !== 'undefined')
+    if (client.password !== clientToUpdate.password)
       client.password = await bcrypt.hash(client.password as string, 10);
-    else
-      client.password = clientToUpdate.password;
 
     return await this.daoClient.update(client);
   };

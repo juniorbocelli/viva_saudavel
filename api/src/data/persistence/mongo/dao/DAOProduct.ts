@@ -48,36 +48,31 @@ class DAOProduct implements DAO<Product, string> {
     if (!this.isValidObjectId(product))
       throw 'O id do produto é inválido';
 
-    const foundedProduct = await ProductSchema.findById(product.id);
-
-    if (foundedProduct === null)
-      throw 'Produto inválido'
-
     const updatedProductData = {
-      name: product.name || foundedProduct.name,
-      producer: product.producer || foundedProduct.producer,
-      measure: product.measure || foundedProduct.measure,
-      description: product.description || foundedProduct.description,
-      ingredients: product.ingredients || foundedProduct.ingredients,
-      validate: product.validate || foundedProduct.validate,
+      name: product.name,
+      producer: product.producer,
+      measure: product.measure,
+      description: product.description,
+      ingredients: product.ingredients,
+      validate: product.validate,
 
-      filters: product.filters || foundedProduct.filters,
+      filters: product.filters,
 
-      price: product.price || foundedProduct.price,
-      images: product.images || foundedProduct.images,
-      thumb: product.thumb || foundedProduct.thumb,
+      price: product.price,
+      images: product.images,
+      thumb: product.thumb,
 
-      isActive: product.isActive !== null ? product.isActive : foundedProduct.isActive,
-      quantity: product.quantity || foundedProduct.quantity,
-      createdAt: product.createdAt || foundedProduct.createdAt,
+      isActive: product.isActive,
+      quantity: product.quantity,
+      createdAt: product.createdAt,
     };
 
     const updatedProduct = await ProductSchema.findByIdAndUpdate(product.id, updatedProductData, { new: true });
 
     if (updatedProduct !== null)
-      return Product.fromObject(updatedProduct);
+      return Product.getFromObject(updatedProduct);
 
-    return updatedProduct;
+    return null;
   };
 
   async saveOrUpdate(product: Product) {
@@ -135,7 +130,7 @@ class DAOProduct implements DAO<Product, string> {
       createdAt: product.createdAt,
     };
 
-    return Product.fromObject(foundedProduct);
+    return Product.getFromObject(foundedProduct);
   };
 
   async selectAll(): Promise<Array<Product>> {
@@ -162,7 +157,7 @@ class DAOProduct implements DAO<Product, string> {
         quantity: product.quantity,
         createdAt: product.createdAt,
       };
-      productsToReturn.push(Product.fromObject(foundedProduct));
+      productsToReturn.push(Product.getFromObject(foundedProduct));
     });
     return productsToReturn;
   };
@@ -191,7 +186,7 @@ class DAOProduct implements DAO<Product, string> {
         quantity: product.quantity,
         createdAt: product.createdAt,
       };
-      productsToReturn.push(Product.fromObject(foundedProduct));
+      productsToReturn.push(Product.getFromObject(foundedProduct));
     });
     return productsToReturn;
   };
@@ -206,7 +201,7 @@ class DAOProduct implements DAO<Product, string> {
       foundedProduct.populate(field);
     });
 
-    return Product.fromObject(foundedProduct);
+    return Product.getFromObject(foundedProduct);
   };
 
   async selectAndPopulate(query: Object, fields: Array<string>): Promise<Array<Product>> {

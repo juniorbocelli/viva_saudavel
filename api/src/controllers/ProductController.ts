@@ -23,7 +23,7 @@ class ProductController {
         return res.status(200).json({ error: [e.message] });
       };
 
-      const newProduct = new Product(JSON.parse(uploadResult.body.product) as Product);
+      const newProduct = Product.getFromObject(JSON.parse(uploadResult.body.product) as Product);
 
       uploadedFiles = uploadResult.files;
 
@@ -81,7 +81,7 @@ class ProductController {
 
       // Get registered and updated products
       const previousProduct = await ucManagerProduct.get(id);
-      const receivedProduct = new Product(JSON.parse(uploadResult.body.product) as Product);
+      const receivedProduct = Product.getFromObject(JSON.parse(uploadResult.body.product) as Product);
       receivedProduct.id = previousProduct.id;
 
       // Delete removed images and return the list of remaining images

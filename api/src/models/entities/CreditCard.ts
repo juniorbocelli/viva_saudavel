@@ -5,33 +5,33 @@ import SanitizerString from '../utils/SanitizerString';
 import Client from './Client';
 
 class CreditCard {
-  id: mongoose.Types.ObjectId | string | undefined;
-  client: Client | Client['id'];
+  id: string | null;
+  client: Client | string;
 
-  brand: string | null;
-  name: string | null;
-  number: Array<string> = [];
-  expiry: Date | null;
-  cvc: string | null;
+  brand: string;
+  name: string;
+  number: Array<string>;
+  expiry: Date;
+  cvc: string;
 
   cardHash: string | null;
 
-  createdAt: Date | null;
-  isActive: boolean | null;
+  createdAt: Date;
+  isActive: boolean;
 
   private crypt: Crypt = new Crypt();
 
-  constructor(id: CreditCard['id'], client: CreditCard['client'], brand: CreditCard['brand'], name: CreditCard['name'], number: CreditCard['number'], expiry: CreditCard['expiry'], cvc: CreditCard['cvc'], cardHash: CreditCard['cardHash'], createdAt: CreditCard['createdAt'], isActive: CreditCard['isActive']) {
-    this.id = SanitizerString.stringOrUndefined(id);
+  constructor(id: CreditCard['id'] | mongoose.Types.ObjectId, client: CreditCard['client'], brand: CreditCard['brand'], name: CreditCard['name'], number: CreditCard['number'], expiry: CreditCard['expiry'], cvc: CreditCard['cvc'], cardHash: CreditCard['cardHash'], createdAt: CreditCard['createdAt'], isActive: CreditCard['isActive']) {
+    this.id = SanitizerString.objectIdToStringOrNull(id);
     this.client = client;
 
-    this.brand = SanitizerString.stringOrNull(brand);
-    this.name = SanitizerString.stringOrNull(name);
+    this.brand = SanitizerString.removeSpaces(brand);
+    this.name = SanitizerString.removeSpaces(name);
     this.number = number;
     this.expiry = expiry;
-    this.cvc = SanitizerString.stringOrNull(cvc);
+    this.cvc = SanitizerString.onlyNumbers(cvc);
 
-    this.cardHash = cardHash !== null ? cardHash : this.crypt.hashMD5(number.join());
+    this.cardHash = this.crypt.hashMD5(number.join());
 
     this.createdAt = createdAt;
     this.isActive = isActive;
@@ -39,7 +39,7 @@ class CreditCard {
 
   public setNumber(number: CreditCard['number']) {
     this.number = number;
-    this.cardHash = number !== null ? this.crypt.hashMD5(number.join()) : null;
+    this.cardHash = this.crypt.hashMD5(number.join());
   };
 
   private encryptNumber(): void {
@@ -83,14 +83,30 @@ class CreditCard {
   };
 
   public static getNew(client: CreditCard['client'], brand: CreditCard['brand'], name: CreditCard['name'], number: CreditCard['number'], expiry: CreditCard['expiry'], cvc: CreditCard['cvc']): CreditCard {
-    return new CreditCard(undefined, client, brand, name, number, expiry, cvc, null, new Date(), true);
+    return new CreditCard(null, client, brand, name, number, expiry, cvc, null, new Date(), true);
   };
 
-  public static getUpdate(id: mongoose.Types.ObjectId | string, brand: CreditCard['brand'], name: CreditCard['name'], number: CreditCard['number'], expiry: CreditCard['expiry'], cvc: CreditCard['cvc'], isActive: CreditCard['isActive']) {
-    return new CreditCard(id, null, brand, name, number, expiry, cvc, null, null, isActive);
+  // previousCredicard: desincrypted cart
+  public static getUpdated(o: Object, previousCreditCard: CreditCard): CreditCard {
+    let creditCard = o as CreditCard;
+
+    const updatedCreditCard = {
+      // Imutable fields
+      id: previousCreditCard.id,
+      createdAt: previousCreditCard.createdAt,
+      client: previousCreditCard.client,
+
+      brand: creditCard['brand'] ? SanitizerString.removeSpaces(creditCard['brand']) : previousCreditCard.brand,
+      name: creditCard['name'] ? SanitizerString.removeSpaces(creditCard['name']) : previousCreditCard.name,
+      expiry: creditCard['expiry'] || previousCreditCard.expiry,
+      number: creditCard['number'] || previousCreditCard.number,
+      cvc: creditCard['cvc'] || previousCreditCard.cvc,
+    };
+
+    return this.getFromObject(updatedCreditCard as CreditCard);
   };
 
-  public static fromObject(creditCard: CreditCard) {
+  public static getFromObject(creditCard: CreditCard): CreditCard {
     return new CreditCard(creditCard.id, creditCard.client, creditCard.brand, creditCard.name, creditCard.number, creditCard.expiry, creditCard.cvc, creditCard.cardHash, creditCard.createdAt, creditCard.isActive);
   };
 };
