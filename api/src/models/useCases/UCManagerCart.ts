@@ -18,7 +18,7 @@ class UCManagerCart {
 
   private async getNewOrPrevious(clientId: string): Promise<Cart | null> {
     // Verify if already exist cart
-    const carts = await this.daoCart.selectAndPopulate({ clientId: clientId }, ['items', 'client']);
+    const carts = await this.daoCart.selectAndPopulate({ clientId: clientId }, ['items.product', 'client']);
     let cart: Cart;
 
     if (carts.length === 0)

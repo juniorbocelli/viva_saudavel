@@ -5,7 +5,7 @@ const cartSchema = new mongoose.Schema<Cart>({
   client: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Client',
-    default: null,
+    required: false,
   },
   clientId: {
     type: String,

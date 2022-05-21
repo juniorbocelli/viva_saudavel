@@ -20,8 +20,8 @@ class DAOCart implements DAO<Cart, string> {
     let cartSchema: Cart & mongoose.Document<any, any, Cart>;
 
     cartSchema = new CartSchema({
-      client: cart.client,
       clientId: cart.clientId,
+      client: cart.client,
 
       createdAt: cart.createdAt,
       isRegistered: cart.isRegistered,
@@ -41,8 +41,8 @@ class DAOCart implements DAO<Cart, string> {
       throw 'O id do carrinho é inválido';
 
     const updatedCartData = {
-      clientId: cart.client,
-      client: cart.clientId,
+      clientId: cart.clientId,
+      client: cart.client,
 
       createdAt: cart.createdAt,
       isRegistered: cart.isRegistered,
@@ -59,7 +59,7 @@ class DAOCart implements DAO<Cart, string> {
   };
 
   async saveOrUpdate(cart: Cart) {
-    if (typeof (cart.id) === "undefined") {
+    if (cart.id === null) {
       return this.save(cart);
     };
 
@@ -164,9 +164,9 @@ class DAOCart implements DAO<Cart, string> {
     const carts = await CartSchema.find(query).exec();
 
     let populatedCarts = carts.map(cart => {
-      fields.forEach(field => {
-        cart.populate(field);
-      });
+
+        cart.populate(fields);
+
 
       return cart;
     });
