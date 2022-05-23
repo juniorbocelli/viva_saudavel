@@ -7,6 +7,8 @@ import { requiredSelect } from '../../../../features/validation/rules';
 import { CheckoutFormData, } from '../types';
 import { WeekDaysName } from '../../../../globals/interfaces/checkout';
 
+import DELIVERY_SETTING from '../../../../globals/settings/delivery.json';
+
 interface IDeliveryDaySelectProps {
   methods: UseFormReturn<CheckoutFormData>;
   sx?: SxProps;
@@ -16,16 +18,20 @@ type Option = {
   label: string;
   value: WeekDaysName | ' ';
 };
-const options: Array<Option> = [
+let options: Array<Option> = [
   { label: 'Dia da entrega...', value: ' ' },
-  { label: 'Domingo', value: 'sunday' },
   { label: 'Segunda-feira', value: 'monday' },
   { label: 'Terça-feira', value: 'tuesday' },
   { label: 'Quarta-feira', value: 'wednesday' },
   { label: 'Quinta-feira', value: 'thursday' },
   { label: 'Sexta-feira', value: 'friday' },
-  { label: 'Sábado', value: 'saturday' },
+
 ];
+
+if (DELIVERY_SETTING.isDeliveryInWeekends) {
+  options = [options[0], { label: 'Domingo', value: 'sunday' }, ...options.splice(1, 5)];
+  options.push({ label: 'Sábado', value: 'saturday' },);
+};
 
 const DeliveryDaySelect: React.FC<IDeliveryDaySelectProps> = ({ methods, sx }) => {
   return (
