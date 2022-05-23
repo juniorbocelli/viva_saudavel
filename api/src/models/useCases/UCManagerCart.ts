@@ -16,6 +16,35 @@ class UCManagerCart {
     this.daoProduct = daoProduct;
   };
 
+  private async populateCart(cart: Cart) {
+    let avaliableItems: Array<CartItem> = [];
+
+    for (let item of cart.items) {
+      let product: Product | null;
+
+      if (item.product instanceof Product) {
+        product = await this.daoProduct.select(item.product.id as string);
+
+        if (product && product.quantity !== 0)
+          avaliableItems.push({ frequency: item.frequency, product: product });
+      } else {
+        product = await this.daoProduct.select(item.product as string);
+      };
+
+      if (product && product.quantity !== 0)
+        avaliableItems.push({ frequency: item.frequency, product: product });
+    };
+
+    if (avaliableItems.length !== cart.items.length) {
+      cart.items = avaliableItems;
+      await this.daoCart.update(cart);
+    };
+
+    cart.items = avaliableItems;
+
+    return cart;
+  };
+
   private async getNewOrPrevious(clientId: string): Promise<Cart | null> {
     // Verify if already exist cart
     const carts = await this.daoCart.selectAndPopulate({ clientId: clientId }, ['items.product', 'client']);
@@ -25,16 +54,6 @@ class UCManagerCart {
       cart = Cart.getNew(clientId, null, false, []);
     else {
       cart = carts[0];
-
-      // if (!cart.isRegistered && mongoose.isValidObjectId(cart.clientId)) {
-      //   let daoClient = new DAOClient();
-      //   let client = await daoClient.select(cart.clientId as string);
-
-      //   if (client !== null) {
-      //     cart.isRegistered = true;
-      //     cart.client = client;
-      //   };
-      // };
     };
 
     return await this.daoCart.saveOrUpdate(cart);
@@ -49,15 +68,7 @@ class UCManagerCart {
     if (cart.items === null)
       cart.items = [];
 
-    // Previne invalid products products in cart
-    let cartItems = cart.items;
-    cartItems.forEach(item => {
-      if (item.product instanceof Product)
-        if (!item.product.isActive || item.product.quantity === 0)
-          cartItems.splice(cartItems.indexOf(item), 1);
-    });
-
-    return this.daoCart.saveOrUpdate(cart);
+    return this.populateCart(cart);
   };
 
   public async addItem(cartItem: CartItem, clientId: string): Promise<CartItem> {
@@ -79,12 +90,11 @@ class UCManagerCart {
     cartItem.product = product;
 
     if (product.isActive && product.quantity! > 0) {
-      cart = await this.daoCart.populate(cart, ['product']);
-      let newItem = new CartItem(product, cartItem.frequency);
+      let newItem = new CartItem(product.id as string, cartItem.frequency);
 
-      cart.items?.push(newItem);
+      cart.items.push(newItem);
 
-      this.daoCart.update(cart);
+      await this.daoCart.update(cart);
     };
 
     return cartItem;
@@ -92,30 +102,21 @@ class UCManagerCart {
 
   public async removeItem(cartItem: CartItem, clientId: string): Promise<CartItem> {
     const cart = await this.getNewOrPrevious(clientId);
-    let product: Product | null;
 
     if (cart === null)
       throw new Error("Carrinho inválido");
 
-    // TODO: Retirar
-    if (cartItem.product instanceof Product)
-      product = await this.daoProduct.select(cartItem.product.id as string);
-    else
-      product = await this.daoProduct.select(cartItem.product);
+    let idToRemove: string | null = cartItem.product instanceof Product ? cartItem.product.id : cartItem.product;
 
-    if (product === null)
-      throw new Error("Produto inválido");
-
-    let items = cart.items || [];
-
-    for (let item of items) {
-      let product: Product = item.product as Product;
-      if (product.id === (cartItem.product as Product).id && item.frequency === cartItem.frequency) {
-        items.splice(items.indexOf(item), 1);
-
-        break;
+    cart.items.forEach(item => {
+      if (item.product instanceof Product) {
+        if (item.product.id === idToRemove)
+          cart.items.splice(cart.items.indexOf(item), 1);
+      } else {
+        if (item.product === idToRemove)
+          cart.items.splice(cart.items.indexOf(item), 1);
       };
-    };
+    });
 
     this.daoCart.update(cart);
 
@@ -147,7 +148,7 @@ class UCManagerCart {
 
       ourCart.clientId = newId;
       ourCart.client = newId;
-      
+
       ourCart.isRegistered = true;
     };
 

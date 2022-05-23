@@ -22,9 +22,8 @@ const cartSchema = new mongoose.Schema<Cart>({
   items: [
     {
       product: {
-        type: mongoose.Schema.Types.ObjectId,
+        type: String,
         required: [true, 'O id do produto é obrigatório'],
-        ref: 'Product',
       },
       frequency: {
         type: String,
