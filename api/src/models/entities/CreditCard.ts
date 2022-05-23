@@ -29,7 +29,7 @@ class CreditCard {
     this.name = SanitizerString.removeSpaces(name);
     this.number = number;
     this.expiry = expiry;
-    this.cvc = SanitizerString.onlyNumbers(cvc);
+    this.cvc = cvc;
 
     this.cardHash = this.crypt.hashMD5(number.join());
 
@@ -83,10 +83,10 @@ class CreditCard {
   };
 
   public static getNew(client: CreditCard['client'], brand: CreditCard['brand'], name: CreditCard['name'], number: CreditCard['number'], expiry: CreditCard['expiry'], cvc: CreditCard['cvc']): CreditCard {
-    return new CreditCard(null, client, brand, name, number, expiry, cvc, null, new Date(), true);
+    return new CreditCard(null, client, brand, name, number, expiry, SanitizerString.onlyNumbers(cvc), null, new Date(), true);
   };
 
-  // previousCredicard: desincrypted cart
+  // previousCredicard: send only desincrypted cart
   public static getUpdated(o: Object, previousCreditCard: CreditCard): CreditCard {
     let creditCard = o as CreditCard;
 
@@ -100,7 +100,9 @@ class CreditCard {
       name: creditCard['name'] ? SanitizerString.removeSpaces(creditCard['name']) : previousCreditCard.name,
       expiry: creditCard['expiry'] || previousCreditCard.expiry,
       number: creditCard['number'] || previousCreditCard.number,
-      cvc: creditCard['cvc'] || previousCreditCard.cvc,
+      cvc: SanitizerString.onlyNumbers(creditCard['cvc']) || SanitizerString.onlyNumbers(previousCreditCard.cvc),
+
+      isActive: previousCreditCard.isActive,
     };
 
     return this.getFromObject(updatedCreditCard as CreditCard);

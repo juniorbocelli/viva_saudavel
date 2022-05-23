@@ -3,6 +3,10 @@ import * as Routes from '../globals/routes';
 import { CreditCard } from '../globals/interfaces/creditCard';
 
 export function getCreditCardsAPI(clientId: string) {
+  return axios.get(Routes.API_CREDIT_CARD_GET_ALL_FROM_CLIENT.replace(':clientId', clientId),);
+};
+
+export function getAllCreditAPI(clientId: string) {
   return axios.get(Routes.API_CREDIT_CARD_GET_ALL.replace(':clientId', clientId),);
 };
 

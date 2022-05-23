@@ -100,6 +100,18 @@ class CreditCardController {
     };
   };
 
+  static async getAllFromClient(req: Request, res: Response) {
+    const daoCreditCard = new DAOCreditCard();
+    const ucManegerCreditCard = new UCManagerCreditCard(daoCreditCard);
+    const { clientId } = req.params;
+
+    try {
+      res.status(200).json({ creditCards: await ucManegerCreditCard.getAllFromClient(clientId) });
+    } catch (error: any) {
+      res.status(200).json({ error: error.message });
+    };
+  };
+
   static async remove(req: Request, res: Response) {
     const daoCreditCard = new DAOCreditCard();
     const ucManegerCreditCard = new UCManagerCreditCard(daoCreditCard);
@@ -115,7 +127,7 @@ class CreditCardController {
 
       // Remove card from client
       await ucManagerClient.removeCreditCard(removedCard);
-      
+
       res.status(200).json({ creditCard: removedCard });
     } catch (error: any) {
       res.status(200).json({ error: error.message });

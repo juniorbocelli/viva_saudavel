@@ -156,7 +156,7 @@ class DAOClient implements DAO<Client, string> {
         client.populate(field);
       });
 
-      return client;
+      return Client.getFromObject(client);
     });
 
     return populatedClients;
