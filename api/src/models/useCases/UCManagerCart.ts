@@ -127,18 +127,18 @@ class UCManagerCart {
     const notLoggedCart = await this.getNewOrPrevious(oldId);
 
     // Verify if logged client already have a cart
-    const loggedCart = await this.daoCart.selectAndPopulate({ clientId: newId }, ['items', 'client']);
+    const loggedCart = await this.daoCart.select(newId);
 
     let ourCart: Cart;
 
     if (notLoggedCart === null)
       throw new Error("Carrinho inválido");
 
-    if (loggedCart.length > 0) {
-      ourCart = loggedCart[0];
+    if (loggedCart !== null) {
+      ourCart = loggedCart;
 
       // Concat product items
-      ourCart.items?.concat(notLoggedCart.items || []);
+      ourCart.items.concat(notLoggedCart.items || []);
 
       // Remove not logged cart
       this.daoCart.delete(notLoggedCart.id as string);
