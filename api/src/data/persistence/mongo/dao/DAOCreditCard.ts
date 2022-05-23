@@ -45,7 +45,7 @@ class DAOCreditCard implements DAO<CreditCard, string> {
       throw 'O id do cartão é inválido';
 
     const updatedCreditCard = {
-      client: creditCard,
+      client: creditCard.client,
 
       brand: creditCard.brand,
       name: creditCard.name,
@@ -146,7 +146,7 @@ class DAOCreditCard implements DAO<CreditCard, string> {
         creditCard.populate(field);
       });
 
-      return creditCard;
+      return CreditCard.getFromObject(creditCard);
     });
 
     return populatedCreditCards;

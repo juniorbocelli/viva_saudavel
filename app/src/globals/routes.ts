@@ -73,7 +73,8 @@ export const API_CART_DELETE = `${API_ROOT}clients/:id/carts/`   // DELETE
 export const API_CREDIT_CARD_NEW = `${API_ROOT}/client/:clientId/credit-card/`;  // POST
 export const API_CREDIT_CARD_GET = `${API_ROOT}/client/:clientId/credit-card/:id/`;  // GET
 export const API_CREDIT_CARD_UPDATE = `${API_ROOT}/client/:clientId/credit-card/:id/`;  // PUT
-export const API_CREDIT_CARD_GET_ALL = `${API_ROOT}/client/:clientId/credit-card/`;  // GET
+export const API_CREDIT_CARD_GET_ALL = `${API_ROOT}/client/credit-card/`;  // GET
+export const API_CREDIT_CARD_GET_ALL_FROM_CLIENT = `${API_ROOT}/client/:clientId/credit-card/`;  // GET
 export const API_CREDIT_CARD_ACTIVATE = `${API_ROOT}/client/:clientId/credit-card/:id/activate/`;  // PATH
 export const API_CREDIT_CARD_REMOVE = `${API_ROOT}/client/:clientId/credit-card/:id/`;  // DELETE
 

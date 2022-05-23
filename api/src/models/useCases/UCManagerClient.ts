@@ -160,7 +160,7 @@ class UCManagerClient {
     const client = clientWithCards[0];
 
     // Add new credit card
-    client.creditCards?.push(c);
+    client.creditCards.push(c);
 
     // Save client
     return this.daoClient.update(client);
