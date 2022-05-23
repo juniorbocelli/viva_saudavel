@@ -1,6 +1,6 @@
 import { getCartAPI, addItemAPI, removeItemAPI } from '../../../services/cart';
 
-import { IUseStates, IUseCartAPIs } from '../types';
+import { IUseStates, IUseCartAPIs, CartItemFromAPI } from '../types';
 import { CartItem, CartItemContainer } from '../../../globals/interfaces/cart';
 
 export default function useCartAPIs(states: IUseStates): IUseCartAPIs {
@@ -12,16 +12,25 @@ export default function useCartAPIs(states: IUseStates): IUseCartAPIs {
     return null;
   };
 
-  const syncCart = (cartItems: Array<CartItem>) => {
-    states.setCart(cartItems);
-
+  const syncCart = (cartItems: Array<CartItemFromAPI>) => {
+    let allItems: Array<CartItem>= [];
     let onceItems: Array<CartItemContainer> = [];
     let weeklyItems: Array<CartItemContainer> = [];
     let biweeklyItems: Array<CartItemContainer> = [];
     let monthlyItems: Array<CartItemContainer> = [];
 
-    cartItems.forEach(item => {
+    cartItems.forEach(receivedItem => {
       let repeated: null | number;
+
+      let item: CartItem = {
+        frequency: receivedItem.frequency,
+        productId: receivedItem.product.id!,
+        name: receivedItem.product.name,
+        price: receivedItem.product.price,
+        thumb: receivedItem.product.thumb!,
+      };
+
+      allItems.push(item);
 
       switch (item.frequency) {
         case 'once':
@@ -101,6 +110,8 @@ export default function useCartAPIs(states: IUseStates): IUseCartAPIs {
           break;
       };
     });
+
+    states.setCart(allItems);
   };
 
   const getCart = (clientId: string) => {
@@ -115,7 +126,7 @@ export default function useCartAPIs(states: IUseStates): IUseCartAPIs {
           return;
         };
 
-        const cartItems: Array<CartItem> = response.data.cart.items;
+        const cartItems: Array<CartItemFromAPI> = response.data.cart.items;
         syncCart(cartItems);
       })
       .catch((error) => {
@@ -139,7 +150,15 @@ export default function useCartAPIs(states: IUseStates): IUseCartAPIs {
           return;
         };
 
-        const cartItem: CartItem = response.data.cartItem;
+        const receivedItem: CartItemFromAPI = response.data.cartItem;
+        const cartItem: CartItem = {
+          frequency: receivedItem.frequency,
+          productId: receivedItem.product.id!,
+          name: receivedItem.product.name,
+          price: receivedItem.product.price,
+          thumb: receivedItem.product.thumb!,
+        };
+
         states.setCart(cart => [...cart, cartItem]);
 
         let array: Array<CartItemContainer> = [];
@@ -227,7 +246,7 @@ export default function useCartAPIs(states: IUseStates): IUseCartAPIs {
           return;
         };
 
-        const cartItem: { productId: CartItem['productId'], frequency: CartItem['frequency'] } = response.data.cartItem;
+        const cartItem: { productId: CartItem['productId'], frequency: CartItem['frequency'] } = {productId: response.data.cartItem.product, frequency: response.data.cartItem.frequency};
 
         for (let i = 0; i < states.cart.length; i++) {
           if (cartItem.productId === states.cart[i].productId && cartItem.frequency === states.cart[i].frequency) {

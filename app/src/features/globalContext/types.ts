@@ -1,4 +1,5 @@
 import { CartItem, CartItemContainer } from '../../globals/interfaces/cart';
+import { Product } from '../../globals/interfaces/product';
 
 export type CartState = Array<CartItem>;
 
@@ -75,4 +76,9 @@ export interface IUseCartAPIs {
 export interface IUseCart {
   getTotalItems: (items: Array<CartItemContainer>) => number;
   getTotalCartPrice: (items: Array<CartItem>) => number;
+};
+
+export interface CartItemFromAPI {
+  frequency: CartItem['frequency'];
+  product: Product;
 };
