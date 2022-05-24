@@ -28,8 +28,6 @@ class DAOClient implements DAO<Client, string> {
       phone: client.phone,
 
       address: client.address,
-      creditCards: client.creditCards,
-      cart: client.cart,
 
       password: client.password,
       token: client.token,
@@ -58,8 +56,6 @@ class DAOClient implements DAO<Client, string> {
       phone: client.phone,
 
       address: client.address,
-      creditCards: client.creditCards,
-      cart: client.cart,
 
       password: client.password,
       token: client.token,

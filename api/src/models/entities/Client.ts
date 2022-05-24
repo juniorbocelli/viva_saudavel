@@ -1,8 +1,6 @@
 import mongoose from 'mongoose';
 
 import Address from './Address';
-import CreditCard from './CreditCard';
-import Cart from './Cart';
 import SanitizerString from '../utils/SanitizerString';
 
 class Client {
@@ -17,9 +15,6 @@ class Client {
 
   address: Address;
 
-  creditCards: Array<CreditCard | string>;
-  cart: Cart | Cart['id'];
-
   password: string;
   token: string | null;
 
@@ -27,7 +22,7 @@ class Client {
   isActive: boolean;
   isAdmin: boolean;
 
-  constructor(id: Client['id'] | mongoose.Types.ObjectId, name: Client['name'], cpf: Client['cpf'], email: Client['email'], cellPhone: Client['cellPhone'], phone: Client['phone'], address: Address, creditCards: Client['creditCards'], cart: Client['cart'], password: Client['password'], token: Client['token'], createdAt: Client['createdAt'], isActive: Client['isActive'], isAdmin: Client['isAdmin']) {
+  constructor(id: Client['id'] | mongoose.Types.ObjectId, name: Client['name'], cpf: Client['cpf'], email: Client['email'], cellPhone: Client['cellPhone'], phone: Client['phone'], address: Address, password: Client['password'], token: Client['token'], createdAt: Client['createdAt'], isActive: Client['isActive'], isAdmin: Client['isAdmin']) {
     this.id = SanitizerString.objectIdToStringOrNull(id);
 
     this.name = SanitizerString.removeSpaces(name);
@@ -39,9 +34,6 @@ class Client {
 
     this.address = address;
 
-    this.creditCards = creditCards;
-    this.cart = cart;
-
     this.password = SanitizerString.removeSpaces(password);
     this.token = token;
 
@@ -51,7 +43,7 @@ class Client {
   };
 
   public static getNew(name: Client['name'], cpf: Client['cpf'], email: Client['email'], cellPhone: Client['cellPhone'], phone: Client['phone'], address: Client['address'], password: Client['password']): Client {
-    return new Client(null, name, cpf, email, cellPhone, phone, address, [], null, password, null, new Date(), true, false);
+    return new Client(null, name, cpf, email, cellPhone, phone, address, password, null, new Date(), true, false);
   };
 
   public static getUpdated(o: Object, previousClient: Client): Client {
@@ -70,9 +62,6 @@ class Client {
 
       address: client['address'] || previousClient['address'],
 
-      creditCards: client['creditCards'] || previousClient.creditCards,
-      cart: client['cart'] || previousClient.cart,
-
       password: SanitizerString.removeSpaces(client['password']) || previousClient.password,
       token: client['token'] || previousClient.token,
 
@@ -84,7 +73,7 @@ class Client {
   };
 
   public static getFromObject(c: Client): Client {
-    return new Client(c.id, c.name, c.cpf, c.email, c.cellPhone, c.phone, c.address, c.creditCards, c.cart, c.password, c.token, c.createdAt, c.isActive, c.isAdmin);
+    return new Client(c.id, c.name, c.cpf, c.email, c.cellPhone, c.phone, c.address, c.password, c.token, c.createdAt, c.isActive, c.isAdmin);
   };
 };
 

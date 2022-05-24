@@ -56,20 +56,6 @@ const clientSchema = new mongoose.Schema<Client>({
     },
   },
 
-  // https://mongoosejs.com/docs/typescript.html
-  creditCards: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'CreditCard',
-    }
-  ],
-  cart: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'Cart',
-    }
-  ],
-
   password: {
     type: String,
     required: [true, 'A senha é obrigatória'],
