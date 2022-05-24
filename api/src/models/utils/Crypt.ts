@@ -1,5 +1,4 @@
 import CryptoJS from 'crypto-js';
-import utf8 from 'utf8';
 
 class Crypt {
   public cryptText(plainText: string): string {
@@ -15,7 +14,7 @@ class Crypt {
 
     var bytes = CryptoJS.AES.decrypt(cipherText, process.env.CRYPT_KEY);
 
-    return bytes.toString(CryptoJS.enc.Utf8);
+    return JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
   };
 
   public cryptObject(data: Object): string {

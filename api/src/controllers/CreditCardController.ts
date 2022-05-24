@@ -58,6 +58,29 @@ class CreditCardController {
     };
   };
 
+  // TODO: Put filters in a url without filter
+  static async getByFilter(req: Request, res: Response) {
+    const daoCreditCard = new DAOCreditCard();
+    const ucManegerCreditCard = new UCManagerCreditCard(daoCreditCard);
+
+    const { clientId } = req.params;
+
+    try {
+      let filters = req.query;
+
+      const creditCards = await ucManegerCreditCard.getByFilter({ ...filters, client: clientId });
+
+      if (Boolean(filters.decrypt))
+        creditCards.forEach(item => {
+          item.decryptCard();
+        });
+
+      res.status(200).json({ creditCards: creditCards });
+    } catch (error: any) {
+      res.status(200).json({ error: error.message });
+    };
+  };
+
   static async activateCard(req: Request, res: Response) {
     const daoCreditCard = new DAOCreditCard();
     const { clientId, id, } = req.params;

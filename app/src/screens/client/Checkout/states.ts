@@ -4,7 +4,7 @@ import {
   DialogMessageState,
 } from '../../../ui/components/pages/MainContentBox/types';
 
-import { DeliveryDayState, ShippingValueState } from './types';
+import { DeliveryDayState, ShippingValueState, HasActiveCardState} from './types';
 
 export interface IUseStates {
   isQueryingAPI: IsQueryingAPIState;
@@ -18,6 +18,9 @@ export interface IUseStates {
 
   shippingValue: ShippingValueState;
   setShippingValue: React.Dispatch<React.SetStateAction<ShippingValueState>>;
+
+  hasActiveCard: HasActiveCardState;
+  setHasActiveCard: React.Dispatch<React.SetStateAction<HasActiveCardState>>;
 };
 
 export default function useStates(): IUseStates {
@@ -26,6 +29,8 @@ export default function useStates(): IUseStates {
 
   const [deliveryDay, setDeliveryDay] = React.useState<DeliveryDayState>(null);
   const [shippingValue, setShippingValue] = React.useState<ShippingValueState>(null);
+
+  const [hasActiveCard, setHasActiveCard] = React.useState<HasActiveCardState>(false);
 
   return {
     isQueryingAPI,
@@ -39,5 +44,8 @@ export default function useStates(): IUseStates {
 
     shippingValue,
     setShippingValue,
+
+    hasActiveCard,
+    setHasActiveCard,
   };
 };

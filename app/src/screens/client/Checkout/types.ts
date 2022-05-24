@@ -4,3 +4,5 @@ export interface CheckoutFormData {
 
 export type DeliveryDayState = null | Date;
 export type ShippingValueState = null | number;
+
+export type HasActiveCardState = boolean;
