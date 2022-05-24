@@ -4,7 +4,7 @@ import {
   DialogMessageState,
 } from '../../../ui/components/pages/MainContentBox/types';
 
-import { DeliveryDayState, ShippingValueState, HasActiveCardState} from './types';
+import { DeliveryDayState, ShippingValueState, ActiveCreditCardState} from './types';
 
 export interface IUseStates {
   isQueryingAPI: IsQueryingAPIState;
@@ -19,8 +19,8 @@ export interface IUseStates {
   shippingValue: ShippingValueState;
   setShippingValue: React.Dispatch<React.SetStateAction<ShippingValueState>>;
 
-  hasActiveCard: HasActiveCardState;
-  setHasActiveCard: React.Dispatch<React.SetStateAction<HasActiveCardState>>;
+  activeCreditCard: ActiveCreditCardState;
+  setActiveCreditCard: React.Dispatch<React.SetStateAction<ActiveCreditCardState>>;
 };
 
 export default function useStates(): IUseStates {
@@ -30,7 +30,7 @@ export default function useStates(): IUseStates {
   const [deliveryDay, setDeliveryDay] = React.useState<DeliveryDayState>(null);
   const [shippingValue, setShippingValue] = React.useState<ShippingValueState>(null);
 
-  const [hasActiveCard, setHasActiveCard] = React.useState<HasActiveCardState>(false);
+  const [activeCreditCard, setActiveCreditCard] = React.useState<ActiveCreditCardState>(null);
 
   return {
     isQueryingAPI,
@@ -45,7 +45,7 @@ export default function useStates(): IUseStates {
     shippingValue,
     setShippingValue,
 
-    hasActiveCard,
-    setHasActiveCard,
+    activeCreditCard,
+    setActiveCreditCard,
   };
 };

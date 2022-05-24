@@ -5,4 +5,10 @@ export interface CheckoutFormData {
 export type DeliveryDayState = null | Date;
 export type ShippingValueState = null | number;
 
-export type HasActiveCardState = boolean;
+export interface ActiveCreditCard {
+  lastNumber: string;
+  brand: string;
+  expiry: Date;
+};
+
+export type ActiveCreditCardState = ActiveCreditCard | null;
