@@ -155,7 +155,7 @@ const Register: React.FC<React.ReactFragment> = () => {
                 label="CEP"
                 placeholder="Digite o CEP da sua rua..."
                 fullWidth={true}
-                mask={React.forwardRef((props, ref) => TextMaskCep({ ...props, ...ref }))}
+                mask={React.forwardRef((props, inputRef) => TextMaskCep({ ...props, inputRef }))}
               />
 
               <ControlledTextInput
@@ -214,7 +214,7 @@ const Register: React.FC<React.ReactFragment> = () => {
                 label="CPF"
                 placeholder="Digite seu CPF..."
                 fullWidth={true}
-                mask={React.forwardRef((props, ref) => TextMaskCpf({ ...props, ...ref }))}
+                mask={React.forwardRef((props, inputRef) => TextMaskCpf({ ...props, inputRef }))}
               />
 
               <ControlledTextInput
@@ -237,7 +237,7 @@ const Register: React.FC<React.ReactFragment> = () => {
                 label="Celular"
                 placeholder="Digite seu número de celular..."
                 fullWidth={true}
-                mask={React.forwardRef((props, ref) => TextMaskCellPhone({ ...props, ...ref }))}
+                mask={React.forwardRef((props, inputRef) => TextMaskCellPhone({ ...props, inputRef }))}
               />
 
               <ControlledTextInput
@@ -245,7 +245,7 @@ const Register: React.FC<React.ReactFragment> = () => {
                 label="Telefone"
                 placeholder="Opcional"
                 fullWidth={true}
-                mask={React.forwardRef((props, ref) => TextMaskPhone({ ...props, ...ref }))}
+                mask={React.forwardRef((props, inputRef) => TextMaskPhone({ ...props, inputRef }))}
               />
 
               <Button
