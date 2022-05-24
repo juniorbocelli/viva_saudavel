@@ -7,7 +7,6 @@ import {
   Stack,
   Button,
   IconButton,
-
   useTheme,
 } from '@mui/material';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
@@ -70,6 +69,19 @@ const Checkout: React.FC<React.ReactFragment> = () => {
 
   const onSubmit = (data: CheckoutFormData) => {
     console.log('onSubmit', data);
+
+    if (states.activeCreditCard === null) {
+      states.setDialogMessage({ title: 'Erro', message: 'Você não tem nenhum cartão de crédito ativo' });
+
+      return;
+    };
+
+    const dataToSend: CheckoutFormData = {
+      deliveryDay: data.deliveryDay,
+      items: globalContext['cart'].cart,
+    };
+
+    console.log('dataToSend', dataToSend);
   };
 
   return (
@@ -243,7 +255,7 @@ const Checkout: React.FC<React.ReactFragment> = () => {
 
         <Grid item xs={12} sm={5}>
           {/* Checkout Informations */}
-          <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+          <Box sx={{ display: 'flex', flexDirection: 'column', }}>
             <Box
               sx={
                 {
@@ -251,7 +263,7 @@ const Checkout: React.FC<React.ReactFragment> = () => {
                   p: theme.spacing(2),
                   ml: { xs: 0, md: theme.spacing(2), },
 
-                  mb: theme.spacing(3)
+                  mb: theme.spacing(3),
                 }
               }
             >
@@ -407,6 +419,12 @@ const Checkout: React.FC<React.ReactFragment> = () => {
                     {states.shippingValue !== null ? `R$ ${MaskApply.maskMoney(invoiceValue())}` : ''}
                   </Typography>
 
+                </Box>
+
+                <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+                  <Button type='submit' color='secondary' variant='contained'>
+                    Confirmar
+                  </Button>
                 </Box>
               </form>
 
