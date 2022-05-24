@@ -1,5 +1,9 @@
+import { CartItem } from '../../../globals/interfaces/cart';
+
 export interface CheckoutFormData {
   deliveryDay: string;
+
+  items: Array<CartItem>;
 };
 
 export type DeliveryDayState = null | Date;
