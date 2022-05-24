@@ -72,9 +72,13 @@ export default function useAPIs(states: IUseStates): IUseAPIs {
         const creditCards: Array<CreditCard> = response.data.creditCards;
 
         if (creditCards.length > 0) {
-          states.setHasActiveCard(true);
+          states.setActiveCreditCard({
+            lastNumber: creditCards[0].number[creditCards[0].number.length - 1],
+            brand: creditCards[0].brand,
+            expiry: new Date(creditCards[0].expiry),
+          });
         } else {
-          states.setHasActiveCard(false);
+          states.setActiveCreditCard(null);
         };
 
       })

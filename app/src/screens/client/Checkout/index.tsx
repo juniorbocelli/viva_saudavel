@@ -6,10 +6,15 @@ import {
   LinearProgress,
   Stack,
   Button,
+  IconButton,
 
   useTheme,
 } from '@mui/material';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import EditIcon from '@mui/icons-material/Edit';
+import HomeIcon from '@mui/icons-material/Home';
+
 import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 
@@ -245,7 +250,7 @@ const Checkout: React.FC<React.ReactFragment> = () => {
                   backgroundColor: theme.palette.grey['300'],
                   p: theme.spacing(2),
                   ml: { xs: 0, md: theme.spacing(2), },
-                  
+
                   mb: theme.spacing(3)
                 }
               }
@@ -291,7 +296,7 @@ const Checkout: React.FC<React.ReactFragment> = () => {
                       }
                     >
                       Próxima entrega:
-                </Typography>
+                  </Typography>
                   </Box>
                   <Box>
                     <Typography
@@ -356,7 +361,7 @@ const Checkout: React.FC<React.ReactFragment> = () => {
                     }
                   >
                     Frete
-              </Typography>
+                  </Typography>
 
                   <Typography
                     variant='h6'
@@ -386,7 +391,7 @@ const Checkout: React.FC<React.ReactFragment> = () => {
                     }
                   >
                     Total
-              </Typography>
+                  </Typography>
 
                   <Typography
                     variant='h6'
@@ -401,6 +406,7 @@ const Checkout: React.FC<React.ReactFragment> = () => {
                   >
                     {states.shippingValue !== null ? `R$ ${MaskApply.maskMoney(invoiceValue())}` : ''}
                   </Typography>
+
                 </Box>
               </form>
 
@@ -412,7 +418,9 @@ const Checkout: React.FC<React.ReactFragment> = () => {
                 {
                   backgroundColor: theme.palette.grey['300'],
                   p: theme.spacing(2),
-                  ml: { xs: 0, md: theme.spacing(2), }
+                  ml: { xs: 0, md: theme.spacing(2), },
+
+                  mb: theme.spacing(3),
                 }
               }
             >
@@ -428,14 +436,225 @@ const Checkout: React.FC<React.ReactFragment> = () => {
                   }
                 }
               >
-                Resumo do pedido
-                </Typography>
+                Cartão de Crédito
+              </Typography>
+
+              {
+                states.activeCreditCard !== null ?
+
+                  <Box
+                    sx={
+                      {
+                        display: { xs: 'block', md: 'flex' },
+                        justifyContent: 'space-between'
+                      }
+                    }
+                  >
+                    <Box>
+                      <Typography
+                        variant='h6'
+                        component='div'
+                        color='primary'
+                        sx={
+                          {
+                            fontSize: { xs: '1.4rem', md: '1.9rem' },
+                          }
+                        }
+                      >
+                        Número:
+                      </Typography>
+
+                      <Typography
+                        variant='h6'
+                        component='div'
+                        color={theme.palette.text.secondary}
+                        sx={
+                          {
+                            fontSize: { xs: '1.3rem', md: '1.8rem' },
+                          }
+                        }
+                      >
+                        **** **** **** {states.activeCreditCard.lastNumber}
+                      </Typography>
+                    </Box>
+
+                    <Box>
+                      <Typography
+                        variant='h6'
+                        component='div'
+                        color='primary'
+                        sx={
+                          {
+                            fontSize: { xs: '1.4rem', md: '1.9rem' },
+                          }
+                        }
+                      >
+                        Validade:
+                      </Typography>
+
+                      <Typography
+                        variant='h6'
+                        component='div'
+                        color={theme.palette.text.secondary}
+                        align='left'
+                        sx={
+                          {
+                            fontSize: { xs: '1.3rem', md: '1.8rem' },
+                          }
+                        }
+                      >
+                        {MaskApply.printMonthYearFromTimestamp(states.activeCreditCard.expiry)}
+                      </Typography>
+                    </Box>
+                  </Box>
+                  :
+                  <Typography
+                    variant='h6'
+                    component='span'
+                    color='error'
+
+                    sx={
+                      {
+                        fontSize: { xs: '1.3rem', md: '1.5rem' }
+                      }
+                    }
+                  >
+                    Você ainda não tem um cartão de crédito ativo
+                  </Typography>
+              }
+
+              <Button
+                variant='outlined'
+                size='large'
+                onClick={() => navigate(Routes.SCREEN_CREDIT_CARD_SET)}
+
+                sx={
+                  {
+                    width: '100%',
+                    mt: theme.spacing(3),
+                  }
+                }
+              >
+                Ir para cartões de crédito
+              </Button>
             </Box>
 
+            {/* Client personal data */}
+            {
+              auth.loggedClient &&
+              <Box
+                sx={
+                  {
+                    backgroundColor: theme.palette.grey['300'],
+                    p: theme.spacing(2),
+                    ml: { xs: 0, md: theme.spacing(2), },
+                    mb: theme.spacing(3),
+
+                    display: 'flex',
+                  }
+                }
+              >
+
+                <Box
+                  sx={
+                    {
+                      display: 'flex',
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                      mr: { xs: theme.spacing(1.5), md: theme.spacing(2) },
+                    }
+                  }
+                >
+                  <AccountCircleIcon sx={{ fontSize: { xs: '2.5rem', md: '3rem' } }} />
+                </Box>
+
+                <Typography
+                  variant='body1'
+                  component='div'
+
+                  sx={
+                    {
+                      fontWeight: 500,
+                      fontSize: { xs: '0.9rem', md: '1.4rem' },
+                      lineHeight: '2rem',
+                      flexGrow: 1
+                    }
+                  }
+                >
+                  Nome: {auth.loggedClient.name}
+                  <br />
+                  CPF: {MaskApply.maskCpf(auth.loggedClient.cpf)}
+                  <br />
+                  Email: {auth.loggedClient.email}
+                  <br />
+                  Celular: {MaskApply.maskCellPhone(auth.loggedClient.cellPhone)}
+                </Typography>
+
+                <IconButton sx={{ width: '40px', height: '40px', ml: '10px' }} onClick={() => navigate(Routes.SCREEN_CLIENT_GET)}>
+                  <EditIcon />
+                </IconButton>
+              </Box>
+            }
+
+            {/* Cclient Address */}
+            {
+              auth.loggedClient &&
+              <Box
+                sx={
+                  {
+                    backgroundColor: theme.palette.grey['300'],
+                    p: theme.spacing(2),
+                    ml: { xs: 0, md: theme.spacing(2), },
+
+                    display: 'flex',
+                  }
+                }
+              >
+
+                <Box
+                  sx={
+                    {
+                      display: 'flex',
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                      mr: { xs: theme.spacing(1.5), md: theme.spacing(2) },
+                    }
+                  }
+                >
+                  <HomeIcon sx={{ fontSize: { xs: '2.5rem', md: '3rem' } }} />
+                </Box>
+
+                <Typography
+                  variant='body1'
+                  component='div'
+
+                  sx={
+                    {
+                      fontWeight: 500,
+                      fontSize: { xs: '0.9rem', md: '1.4rem' },
+                      lineHeight: '2rem',
+                      flexGrow: 1,
+                    }
+                  }
+                >
+                  {auth.loggedClient.address.street}, {auth.loggedClient.address.number}
+                  <br />
+                  CEP: {MaskApply.maskCep(auth.loggedClient.address.cep)}
+                  <br />
+                  Bairro: {auth.loggedClient.address.district}
+                  <br />
+                  {auth.loggedClient.address.city}-{auth.loggedClient.address.state}
+                </Typography>
+
+                <IconButton sx={{ width: '40px', height: '40px', ml: '10px' }} onClick={() => navigate(Routes.SCREEN_CLIENT_GET)}>
+                  <EditIcon />
+                </IconButton>
+              </Box>
+            }
+
+
           </Box>
-
         </Grid>
-
       </Grid>
     </MainContentBox>
   );
