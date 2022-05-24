@@ -26,15 +26,16 @@ export const API_PRODUCT_GET_BY_FILTER = `${API_ROOT}/products/filtered/`;  // G
 // Cart routes
 export const API_CART_GET = `${API_ROOT}/clients/:id/carts/`;    // GET
 export const API_CART_ADD_ITEM = `${API_ROOT}/clients/:id/carts/add-item/`;    // PATH
-export const API_CART_REMOVE_ITEM = `${API_ROOT}/clients/:id/carts/remove-item`;   // PATH
+export const API_CART_REMOVE_ITEM = `${API_ROOT}/clients/:id/carts/remove-item/`;   // PATH
 export const API_CART_CHANGE_CLIENT_ID = `${API_ROOT}/clients/:id/cart/change-client-id/`;  // PATH
 export const API_CART_DELETE = `${API_ROOT}clients/:id/carts/`   // DELETE
 
 // Credit Cards routes
 export const API_CREDIT_CARD_NEW = `${API_ROOT}/client/:clientId/credit-card/`;  // POST
 export const API_CREDIT_CARD_GET = `${API_ROOT}/client/:clientId/credit-card/:id/`;  // GET
+export const API_CREDIT_CARD_GET_BY_FILTER = `${API_ROOT}/client/:clientId/filtered/credit-card/`;  // GET
 export const API_CREDIT_CARD_UPDATE = `${API_ROOT}/client/:clientId/credit-card/:id/`;  // PUT
-export const API_CREDIT_CARD_GET_ALL = `${API_ROOT}/client/credit-card/`;  // GET
+export const API_CREDIT_CARD_GET_ALL = `${API_ROOT}/admin/credit-card/`;  // GET
 export const API_CREDIT_CARD_GET_ALL_FROM_CLIENT = `${API_ROOT}/client/:clientId/credit-card/`;  // GET
 export const API_CREDIT_CARD_ACTIVATE = `${API_ROOT}/client/:clientId/credit-card/:id/activate/`;  // PATH
 export const API_CREDIT_CARD_REMOVE = `${API_ROOT}/client/:clientId/credit-card/:id/`;  // DELETE

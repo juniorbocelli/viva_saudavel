@@ -42,8 +42,10 @@ const Checkout: React.FC<React.ReactFragment> = () => {
   }, [methods.watch('deliveryDay')]);
 
   React.useEffect(() => {
-    if (auth.loggedClient)
+    if (auth.loggedClient) {
       apis.getShippingValueByCep(auth.loggedClient.address.cep);
+      apis.getActiveCreditCard(auth.loggedClient.id!);
+    };
   }, [auth.loggedClient]);
 
   const cartVaLue = (): number => {
@@ -67,7 +69,7 @@ const Checkout: React.FC<React.ReactFragment> = () => {
 
   return (
     <MainContentBox primary="Carrinho" states={states} isLoggedIn={true}>
-      <Grid container spacing={{xs: 0, md: 3}} sx={{ width: { xs: '100%', md: '90%' }, m: 'auto' }}>
+      <Grid container spacing={{ xs: 0, md: 3 }} sx={{ width: { xs: '100%', md: '90%' }, m: 'auto' }}>
         {/* Cart Items */}
         <Grid item xs={12} sm={7}>
           {/* Cart itens */}
@@ -234,46 +236,84 @@ const Checkout: React.FC<React.ReactFragment> = () => {
           </Box>
         </Grid>
 
-        {/* Checkout Informations */}
         <Grid item xs={12} sm={5}>
-          <Box
-            sx={
-              {
-                backgroundColor: theme.palette.grey['300'],
-                p: theme.spacing(2),
-                ml: { xs: 0, md: theme.spacing(2) }
-              }
-            }
-          >
-            <Typography
-              variant='h4'
-              color='primary'
-              component='div'
+          {/* Checkout Informations */}
+          <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+            <Box
               sx={
                 {
-                  fontWeight: 500,
-                  fontSize: { xs: '1.6rem', md: '2.4rem' },
-                  mb: { xs: theme.spacing(2), md: theme.spacing(3) },
+                  backgroundColor: theme.palette.grey['300'],
+                  p: theme.spacing(2),
+                  ml: { xs: 0, md: theme.spacing(2), },
+                  
+                  mb: theme.spacing(3)
                 }
               }
             >
-              Resumo do pedido
-            </Typography>
-
-            <form onSubmit={methods.handleSubmit(onSubmit)}>
-              <DeliveryDaySelect methods={methods} sx={{ mb: theme.spacing(2) }} />
-
-              <Stack
-                direction={{ xs: 'column', sm: 'row' }}
-                spacing={{ xs: 1, sm: 2, md: 4 }}
-
+              <Typography
+                variant='h4'
+                color='primary'
+                component='div'
                 sx={
                   {
-                    mb: theme.spacing(3)
+                    fontWeight: 500,
+                    fontSize: { xs: '1.6rem', md: '2.4rem' },
+                    mb: { xs: theme.spacing(2), md: theme.spacing(3) },
                   }
                 }
               >
-                <Box>
+                Resumo do pedido
+              </Typography>
+
+              <form onSubmit={methods.handleSubmit(onSubmit)}>
+                <DeliveryDaySelect methods={methods} sx={{ mb: theme.spacing(2) }} />
+
+                <Stack
+                  direction={{ xs: 'column', sm: 'row' }}
+                  spacing={{ xs: 1, sm: 2, md: 4 }}
+
+                  sx={
+                    {
+                      mb: theme.spacing(3)
+                    }
+                  }
+                >
+                  <Box>
+                    <Typography
+                      variant='h6'
+                      component='span'
+                      color='primary'
+
+                      sx={
+                        {
+                          fontSize: { xs: '1.3rem', md: '1.5rem' }
+                        }
+                      }
+                    >
+                      Próxima entrega:
+                </Typography>
+                  </Box>
+                  <Box>
+                    <Typography
+                      variant='h6'
+                      component='span'
+                      color={states.deliveryDay === null ? 'error' : 'secondary'}
+
+                      sx={
+                        {
+                          fontSize: { xs: '1.4rem', md: '1.6rem' }
+                        }
+                      }
+                    >
+                      {
+                        states.deliveryDay === null ?
+                          'Escolha o dia da entrega...' :
+                          MaskApply.printDateFromTimestamp(states.deliveryDay)}
+                    </Typography>
+                  </Box>
+                </Stack>
+
+                <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: theme.spacing(1.0) }}>
                   <Typography
                     variant='h6'
                     component='span'
@@ -281,126 +321,121 @@ const Checkout: React.FC<React.ReactFragment> = () => {
 
                     sx={
                       {
-                        fontSize: { xs: '1.3rem', md: '1.5rem' }
+                        fontSize: { xs: '1.5rem', md: '1.7rem' }
                       }
                     }
                   >
-                    Próxima entrega:
-                </Typography>
-                </Box>
-                <Box>
+                    {`${globalContext['cart'].cart.length} itens`}
+                  </Typography>
+
                   <Typography
                     variant='h6'
                     component='span'
-                    color={states.deliveryDay === null ? 'error' : 'secondary'}
+                    color='primary'
 
                     sx={
                       {
-                        fontSize: { xs: '1.4rem', md: '1.6rem' }
+                        fontSize: { xs: '1.5rem', md: '1.7rem' }
                       }
                     }
                   >
-                    {
-                      states.deliveryDay === null ?
-                        'Escolha o dia da entrega...' :
-                        MaskApply.printDateFromTimestamp(states.deliveryDay)}
+                    {`R$ ${MaskApply.maskMoney(globalContext['cart'].getTotalCartPrice(globalContext['cart'].cart))}`}
                   </Typography>
                 </Box>
-              </Stack>
 
-              <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: theme.spacing(1.0) }}>
-                <Typography
-                  variant='h6'
-                  component='span'
-                  color='primary'
+                <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: theme.spacing(3) }}>
+                  <Typography
+                    variant='h6'
+                    component='span'
+                    color='primary'
 
-                  sx={
-                    {
-                      fontSize: { xs: '1.5rem', md: '1.7rem' }
+                    sx={
+                      {
+                        fontSize: { xs: '1.5rem', md: '1.7rem' }
+                      }
                     }
-                  }
-                >
-                  {`${globalContext['cart'].cart.length} itens`}
-                </Typography>
-
-                <Typography
-                  variant='h6'
-                  component='span'
-                  color='primary'
-
-                  sx={
-                    {
-                      fontSize: { xs: '1.5rem', md: '1.7rem' }
-                    }
-                  }
-                >
-                  {`R$ ${MaskApply.maskMoney(globalContext['cart'].getTotalCartPrice(globalContext['cart'].cart))}`}
-                </Typography>
-              </Box>
-
-              <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: theme.spacing(3) }}>
-                <Typography
-                  variant='h6'
-                  component='span'
-                  color='primary'
-
-                  sx={
-                    {
-                      fontSize: { xs: '1.5rem', md: '1.7rem' }
-                    }
-                  }
-                >
-                  Frete
+                  >
+                    Frete
               </Typography>
 
-                <Typography
-                  variant='h6'
-                  component='span'
-                  color='primary'
+                  <Typography
+                    variant='h6'
+                    component='span'
+                    color='primary'
 
-                  sx={
-                    {
-                      fontSize: { xs: '1.5rem', md: '1.7rem' }
+                    sx={
+                      {
+                        fontSize: { xs: '1.5rem', md: '1.7rem' }
+                      }
                     }
-                  }
-                >
-                  {states.shippingValue !== null ? `R$ ${MaskApply.maskMoney(states.shippingValue)}` : ''}
-                </Typography>
-              </Box>
+                  >
+                    {states.shippingValue !== null ? `R$ ${MaskApply.maskMoney(states.shippingValue)}` : ''}
+                  </Typography>
+                </Box>
 
-              <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: theme.spacing(3) }}>
-                <Typography
-                  variant='h6'
-                  component='span'
-                  color='primary'
+                <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: theme.spacing(3) }}>
+                  <Typography
+                    variant='h6'
+                    component='span'
+                    color='primary'
 
-                  sx={
-                    {
-                      fontSize: { xs: '1.6rem', md: '1.8rem' }
+                    sx={
+                      {
+                        fontSize: { xs: '1.6rem', md: '1.8rem' }
+                      }
                     }
-                  }
-                >
-                  Total
+                  >
+                    Total
               </Typography>
 
-                <Typography
-                  variant='h6'
-                  component='span'
-                  color='primary'
+                  <Typography
+                    variant='h6'
+                    component='span'
+                    color='primary'
 
-                  sx={
-                    {
-                      fontSize: { xs: '1.6rem', md: '1.8rem' }
+                    sx={
+                      {
+                        fontSize: { xs: '1.6rem', md: '1.8rem' }
+                      }
                     }
+                  >
+                    {states.shippingValue !== null ? `R$ ${MaskApply.maskMoney(invoiceValue())}` : ''}
+                  </Typography>
+                </Box>
+              </form>
+
+            </Box>
+
+            {/* Credit Card */}
+            <Box
+              sx={
+                {
+                  backgroundColor: theme.palette.grey['300'],
+                  p: theme.spacing(2),
+                  ml: { xs: 0, md: theme.spacing(2), }
+                }
+              }
+            >
+              <Typography
+                variant='h4'
+                color='primary'
+                component='div'
+                sx={
+                  {
+                    fontWeight: 500,
+                    fontSize: { xs: '1.6rem', md: '2.4rem' },
+                    mb: { xs: theme.spacing(2), md: theme.spacing(3) },
                   }
-                >
-                  {states.shippingValue !== null ? `R$ ${MaskApply.maskMoney(invoiceValue())}` : ''}
+                }
+              >
+                Resumo do pedido
                 </Typography>
-              </Box>
-            </form>
+            </Box>
 
           </Box>
+
         </Grid>
+
       </Grid>
     </MainContentBox>
   );

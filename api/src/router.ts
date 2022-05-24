@@ -43,7 +43,9 @@ router.patch(Routes.API_CART_CHANGE_CLIENT_ID, CartController.changeClientCode);
 
 // Credit cards routes
 router.get(Routes.API_CREDIT_CARD_GET, Auth.tokenVerify, CreditCardController.get);
+router.get(Routes.API_CREDIT_CARD_GET_BY_FILTER, Auth.tokenVerify, CreditCardController.getByFilter);
 router.get(Routes.API_CREDIT_CARD_GET_ALL, Auth.adminVerify, CreditCardController.getAll);
+// TODO: Join with filter route
 router.get(Routes.API_CREDIT_CARD_GET_ALL_FROM_CLIENT, Auth.tokenVerify, CreditCardController.getAllFromClient);
 router.post(Routes.API_CREDIT_CARD_NEW, Auth.tokenVerify, CreditCardController.new);
 router.put(Routes.API_CREDIT_CARD_UPDATE, Auth.adminVerify, CreditCardController.update);

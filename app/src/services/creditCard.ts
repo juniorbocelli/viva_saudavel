@@ -19,6 +19,15 @@ export function getCreditCardAPI(id: CreditCard['id'], clientId: string, decrypt
     });
 };
 
+export function getCreditCardByFilterAPI(clientId: string, filter: Object = {}) {
+  return axios.get(Routes.API_CREDIT_CARD_GET_BY_FILTER.replace(':clientId', clientId),
+    {
+      params: {
+        ...filter,
+      }
+    });
+};
+
 export function newCreditCardAPI(clientId: string, creditCard: CreditCard) {
   return axios.post(Routes.API_CREDIT_CARD_NEW.replace(':clientId', clientId), creditCard, {});
 };
