@@ -61,10 +61,30 @@ const invoiceSchema = new mongoose.Schema<Invoice>({
     },
   },
 
+  creditCardData: {
+    brand: {
+      type: String,
+      required: [true, 'A bandeira do cartão é obrigatória'],
+    },
+    name: {
+      type: String,
+      required: [true, 'O nome do cartão é obrigatória'],
+    },
+    number: [String],
+    expiry: {
+      type: Date,
+      required: [true, 'A data de vencimento do cartão é obrigatória'],
+    },
+    cvc: {
+      type: String,
+      required: [true, 'O código cvc do cartão é obrigatório'],
+    },
+  },
+
   frequency: {
     type: String,
     enum: {
-      values: ['once', 'weekly', 'biweekly', 'monthly'],
+      values: ['all', 'once', 'weekly', 'biweekly', 'monthly'],
       message: 'O valor {VALUE} é inválido',
     },
     required: [true, 'A frequência do produto é obrigatória'],
