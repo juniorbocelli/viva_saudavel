@@ -74,7 +74,7 @@ class MaskApply {
     return day + "/" + month + "/" + year + " " + hour + ":" + minute;
   };
 
-  public static getMonthName(month: number): string | null {
+  public static getMonthNameFromNumber(month: number): string | null {
     switch (month) {
       case 0:
         return "Janeiro";
@@ -117,6 +117,34 @@ class MaskApply {
     };
   };
 
+  public static getPTWeekDayFromEN(s: string): string {
+    switch (s) {
+      case 'sunday':
+        return 'Domingo';
+
+      case 'monday':
+        return 'Segunda-feira';
+
+      case 'tuesday':
+        return 'Terça-feira';
+
+      case 'wednesday':
+        return 'Quarta-feira'
+
+      case 'thursday':
+        return 'Quinta-feira';
+
+      case 'friday':
+        return 'Sexta-feira';
+
+      case 'saturday':
+        return 'Sábado';
+
+      default:
+        return s;
+    };
+  };
+
   // 25 de Março, 2021 às 10:48
   public static readableDateTime(d: Date | number): string {
     let date: Date;
@@ -127,7 +155,7 @@ class MaskApply {
       date = new Date(d);
     };
 
-    return `${date.getUTCDay()} de ${this.getMonthName(date.getUTCMonth())}, ${date.getUTCFullYear()} às ${date.getUTCHours()}:${date.getUTCMinutes()}`;
+    return `${date.getUTCDay()} de ${this.getMonthNameFromNumber(date.getUTCMonth())}, ${date.getUTCFullYear()} às ${date.getUTCHours()}:${date.getUTCMinutes()}`;
   };
 
   // Format 1.000.000,00
