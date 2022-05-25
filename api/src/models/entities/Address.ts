@@ -19,8 +19,12 @@ class Address {
     this.complement = SanitizerString.stringOrUndefined(complement);
   };
 
-  static getAddressByCep(cep: Address['cep'], street: Address['street'], district: Address['district'], state: Address['state'], city: Address['city']): Address {
+  public static getAddressByCep(cep: Address['cep'], street: Address['street'], district: Address['district'], state: Address['state'], city: Address['city']): Address {
     return new Address(cep, street, district, state, city);
+  };
+
+  public static getFromObject(a: Address): Address {
+    return new Address(a.cep, a.street, a.district, a.state, a.city, a.number, a.complement);
   };
 };
 
