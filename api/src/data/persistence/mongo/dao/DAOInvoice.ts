@@ -26,6 +26,8 @@ class DAOInvoice implements DAO<Invoice, string> {
       receiverData: invoice.receiverData,
       receiverAddress: invoice.receiverAddress,
 
+      creditCardData: invoice.creditCardData,
+
       frequency: invoice.frequency,
       deliveryWeekDay: invoice.deliveryWeekDay,
 
@@ -55,6 +57,8 @@ class DAOInvoice implements DAO<Invoice, string> {
 
       receiverData: invoice.receiverData,
       receiverAddress: invoice.receiverAddress,
+
+      creditCardData: invoice.creditCardData,
 
       frequency: invoice.frequency,
       deliveryWeekDay: invoice.deliveryWeekDay,

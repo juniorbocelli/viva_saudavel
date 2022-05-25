@@ -65,8 +65,7 @@ class UCManagerCart {
     if (cart === null)
       throw new Error("Erro ao criar carrinho");
 
-    if (cart.items === null)
-      cart.items = [];
+    cart.items = [];
 
     return this.populateCart(cart);
   };
@@ -153,6 +152,28 @@ class UCManagerCart {
     };
 
     return this.daoCart.update(ourCart);
+  };
+
+  public async emptyCart(id: string) {
+    const cart = await this.daoCart.select(id);
+
+    if (cart === null)
+      throw new Error("Carrinho inválido");
+
+    cart.items = [];
+
+    return this.daoCart.update(cart);
+  };
+
+  public async emptyCartByClientId(clientId: string) {
+    const carts = await this.daoCart.selectBy({ clientId: clientId });
+
+    if (carts.length === 0)
+      throw new Error("Carrinho inválido");
+
+    carts[0].items = [];
+
+    return this.daoCart.update(carts[0]);
   };
 };
 

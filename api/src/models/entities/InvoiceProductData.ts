@@ -1,6 +1,7 @@
 import mongoose from 'mongoose';
 
 import SanitizerString from '../utils/SanitizerString';
+import CartItem from './CartItem';
 import Product from './Product';
 
 class InvoiceProductData {
@@ -32,11 +33,27 @@ class InvoiceProductData {
     return new InvoiceProductData(p.id, p.name, p.producer, p.measure, p.description, p.ingredients, p.validate, p.price);
   };
 
-  public static getListFromListProducts(l: Array<Product>): Array<InvoiceProductData> {
+  public static getFromCartItem(i: CartItem): InvoiceProductData {
+    const p = i.product as Product;
+
+    return new InvoiceProductData(p.id, p.name, p.producer, p.measure, p.description, p.ingredients, p.validate, p.price);
+  };
+
+  public static getListFromProductsList(l: Array<Product>): Array<InvoiceProductData> {
     let items: Array<InvoiceProductData> = [];
 
     l.forEach(product => {
       items.push(InvoiceProductData.getFromProduct(product));
+    });
+
+    return items;
+  };
+
+  public static getListFromCartItemList(l: Array<CartItem>): Array<InvoiceProductData> {
+    let items: Array<InvoiceProductData> = [];
+
+    l.forEach(cartItem => {
+      items.push(InvoiceProductData.getFromCartItem(cartItem));
     });
 
     return items;
