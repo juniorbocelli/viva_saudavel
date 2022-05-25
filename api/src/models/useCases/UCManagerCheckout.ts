@@ -20,6 +20,10 @@ class UCManagerCheckout {
 
     return this.daoCheckout.save(checkout);
   };
+
+  public async searchUnprocessedCheckout() {
+    
+  }
 };
 
 export default UCManagerCheckout;

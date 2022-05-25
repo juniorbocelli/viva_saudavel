@@ -4,7 +4,6 @@ import CartItem from '../entities/CartItem';
 import Product from '../entities/Product';
 
 import DAOInvoice from '../../data/persistence/mongo/dao/DAOInvoice';
-import DAOCart from '../../data/persistence/mongo/dao/DAOCart';
 import DAOClient from '../../data/persistence/mongo/dao/DAOClient';
 import DAOProduct from '../../data/persistence/mongo/dao/DAOProduct';
 import DAOCreditCard from '../../data/persistence/mongo/dao/DAOCreditCard';
@@ -31,7 +30,7 @@ class UCManagerInvoice {
   private apiShipping: APIShipping;
   private delivery: Delivery;
 
-  constructor(daoInvoice: DAOInvoice, daoCart: DAOCart, daoProduct: DAOProduct, daoClient: DAOClient, daoCreditCard: DAOCreditCard) {
+  constructor(daoInvoice: DAOInvoice, daoProduct: DAOProduct, daoClient: DAOClient, daoCreditCard: DAOCreditCard) {
     this.daoInvoice = daoInvoice;
     this.ucManagerProductPersistence = new UCManagerProduct(daoProduct);
     this.ucManagerClientPersistence = new UCManagerClient(daoClient);
