@@ -27,7 +27,8 @@ import { useAuth } from '../../../features/auth/context';
 import useAPIs from './apis';
 
 import { CheckoutFormData } from './types';
-import { WeekDaysName, Checkout as CheckoutInterface } from '../../../globals/interfaces/checkout';
+import { Checkout as CheckoutInterface } from '../../../globals/interfaces/checkout';
+import { WeekDaysName } from '../../../globals/interfaces/dateTime';
 
 import * as Routes from '../../../globals/routes';
 import MaskApply from '../../../features/utils/MaskApply';

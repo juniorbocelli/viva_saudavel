@@ -35,6 +35,9 @@ export const SCREEN_ADMIN_CLIENTS = `${APP_ROOT}/${ADMIN_PREFIX}/clientes/`;
 export const SCREEN_CLIENT_GET = `${APP_ROOT}/meus-dados/`;
 export const SCREEN_CLIENT_CHECKOUT = `${APP_ROOT}/finalizar-compra/`;
 
+export const SCREEN_CLIENT_INVOICE_GET_ALL = `${APP_ROOT}/pedidos/`;
+export const SCREEN_CLIENT_INVOICE_GET = `${APP_ROOT}/pedido/:id/`;
+
 export const SCREEN_CREDIT_CARD_SET = `${APP_ROOT}/cartao-de-credito/`;
 
 export const SCREEN_ADMiN_CHECKOUTS = `${APP_ROOT}/${ADMIN_PREFIX}/checkout/`;
@@ -85,3 +88,7 @@ export const API_CLIENT_CHECKOUT = ``;
 export const API_CHECKOUT_GET_DELIVERY_DAY = `${API_ROOT}/checkout/delivery-day/:weekDay/`; // GET
 export const API_CHECKOUT_GET_ALL = `${API_ROOT}/checkout/`; // GET
 export const API_CHECKOUT_NEW = `${API_ROOT}/client/:clientId/checkout/`; // POST
+
+// Invoice routes
+export const API_INVOICE_CLIENT_GET = `${API_ROOT}/client/:clientId/invoice/:id/`; // GET
+export const API_INVOICE_ADMIN_GET = `${API_ROOT}/admin/invoice/:id/`; // GET

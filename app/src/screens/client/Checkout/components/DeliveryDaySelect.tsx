@@ -5,7 +5,7 @@ import { UseFormReturn } from 'react-hook-form';
 import SelectInput from '../../../../ui/components/form/SelectInput';
 import { requiredSelect } from '../../../../features/validation/rules';
 import { CheckoutFormData, } from '../types';
-import { WeekDaysName } from '../../../../globals/interfaces/checkout';
+import { WeekDaysName } from '../../../../globals/interfaces/dateTime';
 
 import DELIVERY_SETTING from '../../../../globals/settings/delivery.json';
 

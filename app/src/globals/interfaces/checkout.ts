@@ -1,7 +1,6 @@
 import { CartItem, CartItemAPI } from './cart';
 import { Client } from './client';
-
-export type WeekDaysName = 'sunday' | 'monday' | 'tuesday' | 'wednesday' | 'thursday' | 'friday' | 'saturday';
+import { WeekDaysName } from './dateTime';
 
 export interface Checkout {
   id?: string;
