@@ -37,6 +37,8 @@ export const SCREEN_CLIENT_CHECKOUT = `${APP_ROOT}/finalizar-compra/`;
 
 export const SCREEN_CREDIT_CARD_SET = `${APP_ROOT}/cartao-de-credito/`;
 
+export const SCREEN_ADMiN_CHECKOUTS = `${APP_ROOT}/${ADMIN_PREFIX}/checkout/`;
+
 /**
  * APIs
  */
@@ -80,3 +82,5 @@ export const API_CREDIT_CARD_REMOVE = `${API_ROOT}/client/:clientId/credit-card/
 
 export const API_CLIENT_CHECKOUT = ``;
 export const API_CHECKOUT_GET_DELIVERY_DAY = `${API_ROOT}/checkout/delivery-day/:weekDay/`; // GET
+export const API_CHECKOUT_GET_ALL = `${API_ROOT}/checkout/`; // GET
+export const API_CHECKOUT_NEW = `${API_ROOT}/client/:clientId/checkout/`; // POST
