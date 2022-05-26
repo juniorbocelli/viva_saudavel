@@ -1,15 +1,20 @@
 import { Request, Response } from 'express';
 
 import CartItem from '../models/entities/CartItem';
+
 import DAOCart from '../data/persistence/mongo/dao/DAOCart';
 import DAOProduct from '../data/persistence/mongo/dao/DAOProduct';
+import DAOClient from '../data/persistence/mongo/dao/DAOClient';
+
 import UCManagerCart from '../models/useCases/UCManagerCart';
 
 class CartController {
   static async get(req: Request, res: Response) {
     const daoCart = new DAOCart();
     const daoProduct = new DAOProduct();
-    const ucManagerCart = new UCManagerCart(daoCart, daoProduct);
+    const daoClient = new DAOClient();
+
+    const ucManagerCart = new UCManagerCart(daoCart, daoProduct, daoClient);
 
     const { id } = req.params;
 
@@ -25,7 +30,9 @@ class CartController {
   static async addItem(req: Request, res: Response) {
     const daoCart = new DAOCart();
     const daoProduct = new DAOProduct();
-    const ucManagerCart = new UCManagerCart(daoCart, daoProduct);
+    const daoClient = new DAOClient();
+
+    const ucManagerCart = new UCManagerCart(daoCart, daoProduct, daoClient);
 
     const { id } = req.params;
     const { productId, frequency } = req.body;
@@ -42,7 +49,9 @@ class CartController {
   static async removeItem(req: Request, res: Response) {
     const daoCart = new DAOCart();
     const daoProduct = new DAOProduct();
-    const ucManagerCart = new UCManagerCart(daoCart, daoProduct);
+    const daoClient = new DAOClient();
+
+    const ucManagerCart = new UCManagerCart(daoCart, daoProduct, daoClient);
 
     const { id } = req.params;
     const { productId, frequency } = req.body;
@@ -59,7 +68,9 @@ class CartController {
   static async changeClientCode(req: Request, res: Response) {
     const daoCart = new DAOCart();
     const daoProduct = new DAOProduct();
-    const ucManagerCart = new UCManagerCart(daoCart, daoProduct);
+    const daoClient = new DAOClient();
+
+    const ucManagerCart = new UCManagerCart(daoCart, daoProduct, daoClient);
 
     const { id } = req.params;
     const { clientId } = req.body;

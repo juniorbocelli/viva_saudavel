@@ -2,18 +2,25 @@ import mongoose from 'mongoose';
 
 import Cart from '../entities/Cart';
 import CartItem from '../entities/CartItem';
+import Product from '../entities/Product';
+
 import DAOCart from '../../data/persistence/mongo/dao/DAOCart';
 import DAOProduct from '../../data/persistence/mongo/dao/DAOProduct';
-// import DAOClient from '../../data/persistence/mongo/dao/DAOClient';
-import Product from '../entities/Product';
+import DAOClient from '../../data/persistence/mongo/dao/DAOClient';
+
+import UCManagerClient from './UCManagerClient';
 
 class UCManagerCart {
   private daoCart: DAOCart;
   private daoProduct: DAOProduct;
 
-  constructor(daoCart: DAOCart, daoProduct: DAOProduct) {
+  private ucManagerClientPersistence: UCManagerClient;
+
+  constructor(daoCart: DAOCart, daoProduct: DAOProduct, daoClient: DAOClient) {
     this.daoCart = daoCart;
     this.daoProduct = daoProduct;
+
+    this.ucManagerClientPersistence = new UCManagerClient(daoClient);
   };
 
   private async populateCart(cart: Cart) {
@@ -22,16 +29,12 @@ class UCManagerCart {
     for (let item of cart.items) {
       let product: Product | null;
 
-      if (item.product instanceof Product) {
+      if (item.product instanceof Product)
         product = await this.daoProduct.select(item.product.id as string);
-
-        if (product && product.quantity !== 0)
-          avaliableItems.push({ frequency: item.frequency, product: product });
-      } else {
+      else
         product = await this.daoProduct.select(item.product as string);
-      };
 
-      if (product && product.quantity !== 0)
+      if (product && product.isActive && product.quantity !== 0)
         avaliableItems.push({ frequency: item.frequency, product: product });
     };
 
@@ -47,13 +50,21 @@ class UCManagerCart {
 
   private async getNewOrPrevious(clientId: string): Promise<Cart | null> {
     // Verify if already exist cart
-    const carts = await this.daoCart.selectAndPopulate({ clientId: clientId }, ['items.product', 'client']);
+    const carts = await this.daoCart.selectBy({ clientId: clientId });
     let cart: Cart;
 
     if (carts.length === 0)
       cart = Cart.getNew(clientId, null, false, []);
-    else {
+    else
       cart = carts[0];
+
+    if (!cart.isRegistered && mongoose.isValidObjectId(clientId)) {
+      let client = await this.ucManagerClientPersistence.getById(clientId);
+
+      if (client !== null) {
+        cart.isRegistered = true;
+        cart.client = client.id;
+      };
     };
 
     return await this.daoCart.saveOrUpdate(cart);
@@ -65,9 +76,7 @@ class UCManagerCart {
     if (cart === null)
       throw new Error("Erro ao criar carrinho");
 
-    cart.items = [];
-
-    return this.populateCart(cart);
+    return await this.populateCart(cart);
   };
 
   public async addItem(cartItem: CartItem, clientId: string): Promise<CartItem> {
