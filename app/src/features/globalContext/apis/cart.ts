@@ -19,6 +19,12 @@ export default function useCartAPIs(states: IUseStates): IUseCartAPIs {
     let biweeklyItems: Array<CartItemContainer> = [];
     let monthlyItems: Array<CartItemContainer> = [];
 
+    // Reset all cart states
+    states.setOnceItems([]);
+    states.setWeeklyItems([]);
+    states.setBiweeklyItems([]);
+    states.setMonthlyItems([]);
+
     cartItems.forEach(receivedItem => {
       let repeated: null | number;
 

@@ -24,11 +24,13 @@ import DeliveryDaySelect from './components/DeliveryDaySelect';
 import useStates from './states';
 import { useGlobalContext } from '../../../features/globalContext/context';
 import { useAuth } from '../../../features/auth/context';
-import MaskApply from '../../../features/utils/MaskApply';
-import { CheckoutFormData } from './types';
 import useAPIs from './apis';
-import { WeekDaysName } from '../../../globals/interfaces/checkout';
+
+import { CheckoutFormData } from './types';
+import { WeekDaysName, Checkout as CheckoutInterface } from '../../../globals/interfaces/checkout';
+
 import * as Routes from '../../../globals/routes';
+import MaskApply from '../../../features/utils/MaskApply';
 
 const Checkout: React.FC<React.ReactFragment> = () => {
   const states = useStates();
@@ -68,20 +70,27 @@ const Checkout: React.FC<React.ReactFragment> = () => {
   };
 
   const onSubmit = (data: CheckoutFormData) => {
-    console.log('onSubmit', data);
-
     if (states.activeCreditCard === null) {
       states.setDialogMessage({ title: 'Erro', message: 'Você não tem nenhum cartão de crédito ativo' });
 
       return;
     };
 
-    const dataToSend: CheckoutFormData = {
-      deliveryDay: data.deliveryDay,
+    if (globalContext['cart'].cart.length === 0) {
+      states.setDialogMessage({ title: 'Erro', message: 'Você não tem nenhum produto no carrinho' });
+
+      return;
+    }
+
+    const checkoutData: CheckoutInterface = {
+      deliveryDay: data.deliveryDay as WeekDaysName,
       items: globalContext['cart'].cart,
     };
 
-    console.log('dataToSend', dataToSend);
+    if (auth.loggedClient) {
+      // Send data to api
+      apis.newCheckout(auth.loggedClient.id!, checkoutData);
+    };
   };
 
   return (
