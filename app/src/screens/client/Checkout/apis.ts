@@ -1,12 +1,16 @@
+import { useNavigate } from 'react-router-dom';
+
 import { getShippingValueByCepAPI } from '../../../services/shipping';
 import { getDeliveryDateAPI, newCheckoutAPI } from '../../../services/checkout';
 import { getCreditCardByFilterAPI } from '../../../services/creditCard';
 
 import { IUseStates } from './states';
-import { Checkout, WeekDaysName } from '../../../globals/interfaces/checkout';
+import { Checkout, CheckoutAPI, WeekDaysName } from '../../../globals/interfaces/checkout';
+import { CreditCard } from '../../../globals/interfaces/creditCard';
+
+import { useGlobalContext } from '../../../features/globalContext/context';
 
 import Math from '../../../features/utils/Math';
-import { CreditCard } from '../../../globals/interfaces/creditCard';
 
 export interface IUseAPIs {
   getShippingValueByCep: (destinationCep: string) => void;
@@ -16,6 +20,9 @@ export interface IUseAPIs {
 };
 
 export default function useAPIs(states: IUseStates): IUseAPIs {
+  const navigate = useNavigate();
+  const globalContext = useGlobalContext();
+
   const getShippingValueByCep = (destinationCep: string) => {
     states.setIsQueryingAPI(true);
 
@@ -97,18 +104,34 @@ export default function useAPIs(states: IUseStates): IUseAPIs {
   const newCheckout = (clientId: string, checkout: Checkout) => {
     states.setIsQueryingAPI(true);
 
-    newCheckoutAPI(clientId, checkout)
+    let checkoutItemsAPI: CheckoutAPI['items'] = [];
+
+    checkout.items.forEach(item => {
+      checkoutItemsAPI.push({ frequency: item.frequency, product: item.productId });
+    });
+
+    const checkoutAPI: CheckoutAPI = {
+      deliveryDay: checkout.deliveryDay,
+      items: checkoutItemsAPI
+    };
+
+    newCheckoutAPI(clientId, checkoutAPI)
       .then((response) => {
-        console.log('response => getDeliveryDateAPI', response);
+        console.log('response => newCheckoutAPI', response);
         states.setDeliveryDay(response.data.firstDelivery);
 
         if (typeof (response.data.error) !== 'undefined') {
           states.setDialogMessage({ title: "Erro", message: response.data.error });
           return;
         };
+        // Remove cart objects
+        globalContext['cart'].getCart(clientId);
+
+        // Navigate to invoice page
+        // navigate('/');
       })
       .catch((error) => {
-        console.log('error => getDeliveryDateAPI', error);
+        console.log('error => newCheckoutAPI', error);
         states.setDialogMessage({ title: "Erro", message: error.message });
       })
       .finally(() => {
