@@ -7,6 +7,7 @@ import AddressController from './controllers/AddressController';
 import ShippingController from './controllers/ShippingController';
 import CheckoutController from './controllers/CheckoutController';
 import CreditCardController from './controllers/CreditCardController';
+import InvoiceController from './controllers/InvoiceController';
 import Auth from './middlewares/Auth';
 import * as Routes from './globals/routes';
 
@@ -52,9 +53,13 @@ router.put(Routes.API_CREDIT_CARD_UPDATE, Auth.adminVerify, CreditCardController
 router.patch(Routes.API_CREDIT_CARD_ACTIVATE, Auth.adminVerify, CreditCardController.activateCard);
 router.delete(Routes.API_CREDIT_CARD_REMOVE, Auth.adminVerify, CreditCardController.remove);
 
-// checkout routes
+// Checkout routes
 router.get(Routes.API_CHECKOUT_GET_DELIVERY_DAY, Auth.tokenVerify, CheckoutController.getDeliveryDate);
 router.get(Routes.API_CHECKOUT_GET_ALL, Auth.tokenVerify, CheckoutController.getAllWithFilter);
 router.post(Routes.API_CHECKOUT_NEW, Auth.tokenVerify, CheckoutController.new);
+
+// Invoice routes
+router.get(Routes.API_INVOICE_ADMIN_GET, Auth.adminVerify, InvoiceController.getAdminInvoice);
+router.get(Routes.API_INVOICE_CLIENT_GET, Auth.tokenVerify, InvoiceController.getClientInvoice);
 
 export default router;
