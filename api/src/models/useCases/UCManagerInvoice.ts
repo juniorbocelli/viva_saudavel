@@ -7,10 +7,13 @@ import DAOInvoice from '../../data/persistence/mongo/dao/DAOInvoice';
 import DAOClient from '../../data/persistence/mongo/dao/DAOClient';
 import DAOProduct from '../../data/persistence/mongo/dao/DAOProduct';
 import DAOCreditCard from '../../data/persistence/mongo/dao/DAOCreditCard';
+import DAOCheckout from '../../data/persistence/mongo/dao/DAOCheckout';
+import DAOCart from '../../data/persistence/mongo/dao/DAOCart';
 
 import UCManagerClient from './UCManagerClient';
 import UCManagerProduct from './UCManagerProduct';
 import UCManagerCreditCard from './UCManagerCreditCard';
+import UCManagerCheckout from './UCManagerCheckout';
 
 import APIShipping from '../../data/apis/APIShipping';
 import SHIPPING_SETTING from '../../settings/shipping.json';
@@ -23,18 +26,22 @@ import CreditCard from '../entities/CreditCard';
 
 class UCManagerInvoice {
   private daoInvoice: DAOInvoice;
+
   private ucManagerProductPersistence: UCManagerProduct;
   private ucManagerClientPersistence: UCManagerClient;
   private ucManagerCreditCardPersistence: UCManagerCreditCard;
+  private ucManagerCheckoutPersistence: UCManagerCheckout;
 
   private apiShipping: APIShipping;
   private delivery: Delivery;
 
-  constructor(daoInvoice: DAOInvoice, daoProduct: DAOProduct, daoClient: DAOClient, daoCreditCard: DAOCreditCard) {
+  constructor(daoInvoice: DAOInvoice, daoProduct: DAOProduct, daoClient: DAOClient, daoCreditCard: DAOCreditCard, daoCheckout: DAOCheckout, daoCart: DAOCart) {
     this.daoInvoice = daoInvoice;
+
     this.ucManagerProductPersistence = new UCManagerProduct(daoProduct);
     this.ucManagerClientPersistence = new UCManagerClient(daoClient);
     this.ucManagerCreditCardPersistence = new UCManagerCreditCard(daoCreditCard);
+    this.ucManagerCheckoutPersistence = new UCManagerCheckout(daoCheckout, daoCart, daoProduct, daoClient);
 
     this.apiShipping = new APIShipping(SHIPPING_SETTING.minValToFreeShipping);
     this.delivery = new Delivery(DELIVERY_SETTINGS.minDaysToFirstDelivery, DELIVERY_SETTINGS.isDeliveryInHolidays, DELIVERY_SETTINGS.isDeliveryInWeekends);
@@ -99,12 +106,18 @@ class UCManagerInvoice {
     const deliveryDate = this.getFirstDeliveryDay(checkout.deliveryDay);
 
     // Calculate shipping value
-    const shippingValue = Math.currencyToFloat(await this.getShippingValue(checkout.client.address.cep));
+    const shippingValue = Math.currencyToFloat(await this.getShippingValue(client.address.cep));
 
     // Get first invoice
     const invoice = Invoice.getNewFromEntities(checkout, creditCard, 'all', deliveryDate, shippingValue, 0);
 
-    return this.daoInvoice.save(invoice);
+    try {
+      return this.daoInvoice.save(invoice.getFlatInvoice());
+    } catch (error) {
+      this.ucManagerCheckoutPersistence.remove(checkout);
+
+      throw new Error(error as string);
+    };
   };
 };
 

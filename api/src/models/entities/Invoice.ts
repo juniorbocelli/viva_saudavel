@@ -22,7 +22,7 @@ class Invoice {
 
   creditCardData: CreditCard;
 
-  frequency: 'all' |'once' | 'weekly' | 'biweekly' | 'monthly';
+  frequency: 'all' | 'once' | 'weekly' | 'biweekly' | 'monthly';
   deliveryWeekDay: WeekDaysName;
 
   scheduledDeliveryDate: Date;
@@ -101,6 +101,16 @@ class Invoice {
 
   public static getFromObject(i: Invoice): Invoice {
     return new Invoice(i.id, i.checkout, i.client, i.receiverData, i.receiverAddress, i.creditCardData, i.frequency, i.deliveryWeekDay, i.scheduledDeliveryDate, i.deliveryDate, i.paymentDate, i.values, i.items, i.status, i.createdAt);
+  };
+
+  public getFlatInvoice(): Invoice {
+    if (this.checkout instanceof Checkout)
+      this.checkout = this.checkout.id as string;
+
+    if (this.client instanceof Client)
+      this.client = this.client.id as string;
+
+    return this;
   };
 };
 

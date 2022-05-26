@@ -25,10 +25,13 @@ class UCManagerCheckout {
     let populatedItems: Array<CartItem> = [];
 
     for (let cartItem of checkout.items)
-      if (cartItem.product instanceof Product)
+      if (cartItem.product instanceof Product) {
         populatedItems.push({ frequency: cartItem.frequency, product: cartItem.product });
-      else
-        populatedItems.push({ frequency: cartItem.frequency, product: await this.ucManagerProductPersistence.get(cartItem.product) })
+      } else {
+        let product = await this.ucManagerProductPersistence.get(cartItem.product);
+        if (product !== null)
+          populatedItems.push({ frequency: cartItem.frequency, product: product });
+      };
 
     return populatedItems;
   };
@@ -49,6 +52,13 @@ class UCManagerCheckout {
 
   public async getAllWithFilter(filter: Object): Promise<Array<Checkout>> {
     return this.daoCheckout.selectBy(filter);
+  };
+
+  public async remove(checkout: Checkout | string) {
+    if (checkout instanceof Checkout)
+      return this.daoCheckout.delete(checkout.id as string);
+    else
+      return this.daoCheckout.delete(checkout);
   };
 };
 
