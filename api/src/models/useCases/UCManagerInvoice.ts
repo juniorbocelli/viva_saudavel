@@ -96,9 +96,9 @@ class UCManagerInvoice {
 
     if (client === null)
       throw new Error("Cliente inválido");
-      
+
     checkout.client = client;
-    
+
     // Populate products
     checkout.items = await this.populateProducts(checkout.items);
 
@@ -118,6 +118,21 @@ class UCManagerInvoice {
 
       throw new Error(error as string);
     };
+  };
+
+  public async getClientInvoice(clientId: string, id: string): Promise<Invoice | null> {
+    const invoices = await this.daoInvoice.selectBy({ client: clientId, _id: id });
+
+    if (invoices.length === 0)
+      return null;
+
+    return invoices[0];
+  };
+
+  public async getAdminInvoice(id: string): Promise<Invoice | null> {
+    const invoice = await this.daoInvoice.select(id);
+
+    return invoice;
   };
 };
 

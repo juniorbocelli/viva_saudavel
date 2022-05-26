@@ -10,7 +10,7 @@ export const API_CLIENT_LOGIN = `${API_ROOT}/client/login/`;   // POST
 export const API_CLIENT_GET_LOGGED = `${API_ROOT}/client/logged/:token/`;   // GET
 export const API_CLIENT_LOGOUT = `${API_ROOT}/client/logout/`;   // PUT
 
-// client routes
+// Client routes
 export const API_CLIENT_GET = `${API_ROOT}/client/:id/`;    // GET
 export const API_CLIENT_UPDATE = `${API_ROOT}/client/:id/`; // PUT
 export const API_CLIENT_GET_ALL = `${API_ROOT}/clients/`;  // GET
@@ -45,3 +45,7 @@ export const API_CREDIT_CARD_REMOVE = `${API_ROOT}/client/:clientId/credit-card/
 export const API_CHECKOUT_GET_DELIVERY_DAY = `${API_ROOT}/checkout/delivery-day/:weekDay/`; // GET
 export const API_CHECKOUT_GET_ALL = `${API_ROOT}/checkout/`; // GET
 export const API_CHECKOUT_NEW = `${API_ROOT}/client/:clientId/checkout/`; // POST
+
+// Invoice routes
+export const API_INVOICE_CLIENT_GET = `${API_ROOT}/client/:clientId/invoice/:id/`; // GET
+export const API_INVOICE_ADMIN_GET = `${API_ROOT}/admin/invoice/:id/`; // GET
