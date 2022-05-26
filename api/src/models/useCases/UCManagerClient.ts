@@ -103,7 +103,7 @@ class UCManagerClient {
     if (id === null)
       throw new Error("Cliente inválido");
 
-    const clientData = await this.daoClient.select(id.toString());
+    const clientData = await this.daoClient.select(id);
 
     if (clientData === null)
       throw new Error("Cliente inválido");

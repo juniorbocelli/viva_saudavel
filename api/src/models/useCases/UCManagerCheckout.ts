@@ -5,6 +5,7 @@ import CartItem from '../entities/CartItem';
 import DAOCheckout from '../../data/persistence/mongo/dao/DAOCheckout';
 import DAOCart from '../../data/persistence/mongo/dao/DAOCart';
 import DAOProduct from '../../data/persistence/mongo/dao/DAOProduct';
+import DAOClient from '../../data/persistence/mongo/dao/DAOClient';
 
 import UCManagerCart from './UCManagerCart';
 import UCManagerProduct from './UCManagerProduct';
@@ -14,9 +15,9 @@ class UCManagerCheckout {
   private ucManagerCartPersistence: UCManagerCart;
   private ucManagerProductPersistence: UCManagerProduct;
 
-  constructor(daoCheckout: DAOCheckout, daoCart: DAOCart, daoProduct: DAOProduct) {
+  constructor(daoCheckout: DAOCheckout, daoCart: DAOCart, daoProduct: DAOProduct, daoClient: DAOClient) {
     this.daoCheckout = daoCheckout;
-    this.ucManagerCartPersistence = new UCManagerCart(daoCart, daoProduct);
+    this.ucManagerCartPersistence = new UCManagerCart(daoCart, daoProduct, daoClient);
     this.ucManagerProductPersistence = new UCManagerProduct(daoProduct);
   };
 
