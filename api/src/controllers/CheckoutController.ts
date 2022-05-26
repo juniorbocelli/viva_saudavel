@@ -37,7 +37,7 @@ class CheckoutController {
     const daoCreditCard = new DAOCreditCard();
 
     const ucManagerCheckout = new UCManagerCheckout(daoCheckout, daoCart, daoProduct, daoClient);
-    const ucManagerInvoice = new UCManagerInvoice(daoInvoice, daoProduct, daoClient, daoCreditCard);
+    const ucManagerInvoice = new UCManagerInvoice(daoInvoice, daoProduct, daoClient, daoCreditCard, daoCheckout, daoCart);
 
     const { clientId } = req.params;
     const {
@@ -48,7 +48,7 @@ class CheckoutController {
     try {
       const checkout = await ucManagerCheckout.new(Checkout.getNew(clientId, items, deliveryDay))
 
-      res.status(200).json({ invoice: ucManagerInvoice.newFromNewCheckout(checkout) });
+      res.status(200).json({ invoice: await ucManagerInvoice.newFromNewCheckout(checkout) });
     } catch (error: any) {
       res.status(200).json({ error: error.message });
     };
