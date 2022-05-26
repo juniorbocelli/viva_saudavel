@@ -1,9 +1,10 @@
-import { IUseStates } from './states';
-import { WeekDaysName } from '../../../globals/interfaces/checkout';
-
 import { getShippingValueByCepAPI } from '../../../services/shipping';
-import { getDeliveryDateAPI } from '../../../services/checkout';
+import { getDeliveryDateAPI, newCheckoutAPI } from '../../../services/checkout';
 import { getCreditCardByFilterAPI } from '../../../services/creditCard';
+
+import { IUseStates } from './states';
+import { Checkout, WeekDaysName } from '../../../globals/interfaces/checkout';
+
 import Math from '../../../features/utils/Math';
 import { CreditCard } from '../../../globals/interfaces/creditCard';
 
@@ -11,6 +12,7 @@ export interface IUseAPIs {
   getShippingValueByCep: (destinationCep: string) => void;
   getDeliveryDate: (weekDay: WeekDaysName) => void;
   getActiveCreditCard: (clientId: string) => void;
+  newCheckout: (clientId: string, checkout: Checkout) => void;
 };
 
 export default function useAPIs(states: IUseStates): IUseAPIs {
@@ -92,9 +94,32 @@ export default function useAPIs(states: IUseStates): IUseAPIs {
       });
   };
 
+  const newCheckout = (clientId: string, checkout: Checkout) => {
+    states.setIsQueryingAPI(true);
+
+    newCheckoutAPI(clientId, checkout)
+      .then((response) => {
+        console.log('response => getDeliveryDateAPI', response);
+        states.setDeliveryDay(response.data.firstDelivery);
+
+        if (typeof (response.data.error) !== 'undefined') {
+          states.setDialogMessage({ title: "Erro", message: response.data.error });
+          return;
+        };
+      })
+      .catch((error) => {
+        console.log('error => getDeliveryDateAPI', error);
+        states.setDialogMessage({ title: "Erro", message: error.message });
+      })
+      .finally(() => {
+        states.setIsQueryingAPI(false);
+      });
+  };
+
   return {
     getShippingValueByCep,
     getDeliveryDate,
     getActiveCreditCard,
+    newCheckout,
   };
 };

@@ -45,6 +45,10 @@ class UCManagerCheckout {
   public async getAll(): Promise<Array<Checkout>> {
     return this.daoCheckout.selectAll();
   };
+
+  public async getAllWithFilter(filter: Object): Promise<Array<Checkout>> {
+    return this.daoCheckout.selectBy(filter);
+  };
 };
 
 export default UCManagerCheckout;

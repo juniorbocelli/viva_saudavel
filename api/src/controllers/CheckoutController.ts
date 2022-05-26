@@ -67,6 +67,20 @@ class CheckoutController {
       res.status(200).json({ error: error.message });
     };
   };
+
+  static async getAllWithFilter(req: Request, res: Response) {
+    const daoCheckout = new DAOCheckout();
+    const daoCart = new DAOCart();
+    const daoProduct = new DAOProduct();
+
+    const ucManagerCheckout = new UCManagerCheckout(daoCheckout, daoCart, daoProduct);
+
+    try {
+      res.status(200).json({ checkouts: await ucManagerCheckout.getAllWithFilter(req.query) });
+    } catch (error: any) {
+      res.status(200).json({ error: error.message });
+    };
+  };
 };
 
 export default CheckoutController;

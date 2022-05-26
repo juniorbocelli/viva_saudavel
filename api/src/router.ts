@@ -54,5 +54,7 @@ router.delete(Routes.API_CREDIT_CARD_REMOVE, Auth.adminVerify, CreditCardControl
 
 // checkout routes
 router.get(Routes.API_CHECKOUT_GET_DELIVERY_DAY, Auth.tokenVerify, CheckoutController.getDeliveryDate);
+router.get(Routes.API_CHECKOUT_GET_ALL, Auth.tokenVerify, CheckoutController.getAllWithFilter);
+router.post(Routes.API_CHECKOUT_NEW, Auth.tokenVerify, CheckoutController.new);
 
 export default router;
