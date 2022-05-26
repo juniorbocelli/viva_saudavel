@@ -23,9 +23,6 @@ class UCManagerProduct {
   public async get(id: string) {
     const product = await this.daoProduct.select(id as string);
 
-    if (product === null)
-      throw new Error("Produto inválido");
-
     return product;
   };
 

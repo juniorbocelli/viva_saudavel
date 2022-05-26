@@ -25,9 +25,6 @@ class UCManagerCreditCard {
     // Verify if exist
     const creditCards = await this.daoCreditCard.selectBy({ _id: id, client: clientId });
 
-    if (creditCards.length === 0)
-      throw new Error("Cartão não existe");
-
     return creditCards[0];
   };
 

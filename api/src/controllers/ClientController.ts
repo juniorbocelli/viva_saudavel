@@ -111,6 +111,9 @@ class ClientController {
       const newClientData = req.body as Client;
       const previousClient = await ucManagerClient.getById(id);
 
+      if (previousClient === null)
+        throw new Error("Cliente inválido");
+
       newClientData.address = new Address(address.cep, address.street, address.district, address.state, address.city, address.number, address.complement);
       const updatedClient = Client.getUpdated(newClientData, previousClient);
 

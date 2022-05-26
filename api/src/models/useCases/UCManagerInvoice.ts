@@ -85,7 +85,12 @@ class UCManagerInvoice {
     creditCard.decryptCard();
 
     // Get client
-    checkout.client = await this.ucManagerClientPersistence.getById(checkout.client as string);
+    const client = await this.ucManagerClientPersistence.getById(checkout.client as string)
+
+    if (client === null)
+      throw new Error("Cliente inválido");
+      
+    checkout.client = client;
     
     // Populate products
     checkout.items = await this.populateProducts(checkout.items);

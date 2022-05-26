@@ -36,7 +36,7 @@ class CheckoutController {
     const daoClient = new DAOClient();
     const daoCreditCard = new DAOCreditCard();
 
-    const ucManagerCheckout = new UCManagerCheckout(daoCheckout, daoCart, daoProduct);
+    const ucManagerCheckout = new UCManagerCheckout(daoCheckout, daoCart, daoProduct, daoClient);
     const ucManagerInvoice = new UCManagerInvoice(daoInvoice, daoProduct, daoClient, daoCreditCard);
 
     const { clientId } = req.params;
@@ -58,8 +58,9 @@ class CheckoutController {
     const daoCheckout = new DAOCheckout();
     const daoCart = new DAOCart();
     const daoProduct = new DAOProduct();
+    const daoClient = new DAOClient();
 
-    const ucManagerCheckout = new UCManagerCheckout(daoCheckout, daoCart, daoProduct);
+    const ucManagerCheckout = new UCManagerCheckout(daoCheckout, daoCart, daoProduct, daoClient);
 
     try {
       res.status(200).json({ checkouts: ucManagerCheckout.getAll() });
@@ -72,8 +73,9 @@ class CheckoutController {
     const daoCheckout = new DAOCheckout();
     const daoCart = new DAOCart();
     const daoProduct = new DAOProduct();
+    const daoClient = new DAOClient();
 
-    const ucManagerCheckout = new UCManagerCheckout(daoCheckout, daoCart, daoProduct);
+    const ucManagerCheckout = new UCManagerCheckout(daoCheckout, daoCart, daoProduct, daoClient);
 
     try {
       res.status(200).json({ checkouts: await ucManagerCheckout.getAllWithFilter(req.query) });

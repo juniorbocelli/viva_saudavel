@@ -103,14 +103,7 @@ class UCManagerClient {
     if (id === null)
       throw new Error("Cliente inválido");
 
-    const clientData = await this.daoClient.select(id);
-
-    if (clientData === null)
-      throw new Error("Cliente inválido");
-
-    const client = clientData;
-
-    return client;
+    return await this.daoClient.select(id);;
   };
 
   public async getByToken(token: Client['token']) {
@@ -119,12 +112,7 @@ class UCManagerClient {
 
     const clients = await this.daoClient.selectBy({ token: token });
 
-    if (clients.length !== 1)
-      throw new Error("Cliente inválido");
-
-    const client = clients[0];
-
-    return client;
+    return clients[0];
   };
 
   public async update(client: Client) {
@@ -132,6 +120,9 @@ class UCManagerClient {
       throw new Error("Cliente inválido");
 
     const clientToUpdate = await this.getById(client.id.toString());
+
+    if (clientToUpdate === null)
+      throw new Error("Cliente inválido");
 
     if (client.password !== clientToUpdate.password)
       client.password = await bcrypt.hash(client.password as string, 10);

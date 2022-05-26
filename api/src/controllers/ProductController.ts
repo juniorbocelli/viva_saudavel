@@ -81,6 +81,10 @@ class ProductController {
 
       // Get registered and updated products
       const previousProduct = await ucManagerProduct.get(id);
+
+      if (previousProduct === null)
+        throw new Error("Produto inválido");
+        
       const receivedProduct = Product.getFromObject(JSON.parse(uploadResult.body.product) as Product);
       receivedProduct.id = previousProduct.id;
 
