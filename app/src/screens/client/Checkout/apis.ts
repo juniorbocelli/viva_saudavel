@@ -5,7 +5,8 @@ import { getDeliveryDateAPI, newCheckoutAPI } from '../../../services/checkout';
 import { getCreditCardByFilterAPI } from '../../../services/creditCard';
 
 import { IUseStates } from './states';
-import { Checkout, CheckoutAPI, WeekDaysName } from '../../../globals/interfaces/checkout';
+import { Checkout, CheckoutAPI } from '../../../globals/interfaces/checkout';
+import { WeekDaysName } from '../../../globals/interfaces/dateTime';
 import { CreditCard } from '../../../globals/interfaces/creditCard';
 
 import { useGlobalContext } from '../../../features/globalContext/context';
