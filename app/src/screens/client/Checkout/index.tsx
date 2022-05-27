@@ -20,6 +20,7 @@ import { useForm } from 'react-hook-form';
 import MainContentBox from '../../../ui/components/pages/MainContentBox';
 import CartItem from '../../../ui/components/CartItem';
 import DeliveryDaySelect from './components/DeliveryDaySelect';
+import CreditCardLogo from '../../../ui/components/CreditCardLogo';
 
 import useStates from './states';
 import { useGlobalContext } from '../../../features/globalContext/context';
@@ -492,18 +493,27 @@ const Checkout: React.FC<React.ReactFragment> = () => {
                         Número:
                       </Typography>
 
-                      <Typography
-                        variant='h6'
-                        component='div'
-                        color={theme.palette.text.secondary}
-                        sx={
-                          {
-                            fontSize: { xs: '1.3rem', md: '1.8rem' },
+                      <Box sx={{ display: 'flex' }}>
+                        <Typography
+                          variant='h6'
+                          component='div'
+                          color={theme.palette.text.secondary}
+                          sx={
+                            {
+                              fontSize: { xs: '1.3rem', md: '1.8rem' },
+                              mr: theme.spacing(1),
+                            }
                           }
-                        }
-                      >
-                        **** **** **** {states.activeCreditCard.lastNumber}
-                      </Typography>
+                        >
+                          {`**** **** **** ${states.activeCreditCard.lastNumber}`}
+
+                        </Typography>
+
+                        <CreditCardLogo
+                          brand={states.activeCreditCard.brand}
+                          style={{ width: '40px', marginTop: '0px' }}
+                        />
+                      </Box>
                     </Box>
 
                     <Box>
