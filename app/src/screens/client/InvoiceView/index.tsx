@@ -1,8 +1,12 @@
 import React from 'react';
+import {
+  Grid,
+} from '@mui/material';
 import { useParams } from 'react-router-dom';
 
 import MainContentBox from '../../../ui/components/pages/MainContentBox';
-import ClientDataView from '../../../components/ClientDataView';
+import ClientData from '../../../components/dataView/ClientData';
+import AddressData from '../../../components/dataView/AddressData';
 
 import useStates from './states';
 import useAPIs from './apis';
@@ -25,7 +29,17 @@ const InvoiceView: React.FC<React.ReactFragment> = () => {
     <MainContentBox states={states} primary='Pedido'>
       {
         states.invoice !== null &&
-        <ClientDataView client={states.invoice.receiverData} address={states.invoice.receiverAddress} />
+        <React.Fragment>
+          <Grid container spacing={2}>
+            <Grid item xs={12} md={6}>
+              <ClientData client={states.invoice.receiverData} />
+            </Grid>
+
+            <Grid item xs={12} md={6}>
+              <AddressData address={states.invoice.receiverAddress} />
+            </Grid>
+          </Grid>
+        </React.Fragment>
       }
     </MainContentBox>
   );
