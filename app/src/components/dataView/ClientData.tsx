@@ -30,7 +30,7 @@ const ClientData: React.FC<IClientDataProps> = ({ client }) => {
         sx={
           {
             fontSize: { xs: '1.4rem', md: '1.7rem' },
-            mb: theme.spacing(3)
+            mb: theme.spacing(2)
           }
         }
       >

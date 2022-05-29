@@ -3,9 +3,16 @@ import {
   Typography,
 
   useTheme,
+
+  SxProps,
 } from '@mui/material';
 
-const Paragraph: React.FC<React.ReactFragment> = ({ children }) => {
+interface IParagraphProps {
+  children: React.ReactNode;
+  sx?: SxProps;
+};
+
+const Paragraph: React.FC<IParagraphProps> = ({ children, sx }) => {
   const theme = useTheme();
 
   return (
@@ -20,6 +27,7 @@ const Paragraph: React.FC<React.ReactFragment> = ({ children }) => {
           fontStyle: 'italic',
           ml: theme.spacing(2.0),
           mb: theme.spacing(1.5),
+          ...sx,
         }
       }
     >

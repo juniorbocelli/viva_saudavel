@@ -1,12 +1,15 @@
 import React from 'react';
 import {
-  Grid,
+  Stack,
 } from '@mui/material';
 import { useParams } from 'react-router-dom';
 
 import MainContentBox from '../../../ui/components/pages/MainContentBox';
 import ClientData from '../../../components/dataView/ClientData';
 import AddressData from '../../../components/dataView/AddressData';
+import CreditCardData from '../../../components/dataView/CreditCardData';
+import InvoiceItemsData from '../../../components/dataView/InvoiceItemsData';
+import InvoiceData from '../../../components/dataView/InvoiceData';
 
 import useStates from './states';
 import useAPIs from './apis';
@@ -29,17 +32,20 @@ const InvoiceView: React.FC<React.ReactFragment> = () => {
     <MainContentBox states={states} primary='Pedido'>
       {
         states.invoice !== null &&
-        <React.Fragment>
-          <Grid container spacing={2}>
-            <Grid item xs={12} md={6}>
-              <ClientData client={states.invoice.receiverData} />
-            </Grid>
+        <Stack
+          direction='column'
+          spacing={{ xs: 4, md: 6 }}
+        >
+          <InvoiceData invoice={states.invoice} />
 
-            <Grid item xs={12} md={6}>
-              <AddressData address={states.invoice.receiverAddress} />
-            </Grid>
-          </Grid>
-        </React.Fragment>
+          <InvoiceItemsData items={states.invoice.items} />
+
+          <CreditCardData creditCard={states.invoice.creditCardData} />
+
+          <ClientData client={states.invoice.receiverData} />
+
+          <AddressData address={states.invoice.receiverAddress} />
+        </Stack>
       }
     </MainContentBox>
   );

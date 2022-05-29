@@ -30,7 +30,7 @@ const CreditCardData: React.FC<ICreditCardDataProps> = ({ creditCard }) => {
         sx={
           {
             fontSize: { xs: '1.4rem', md: '1.7rem' },
-            mb: theme.spacing(3)
+            mb: theme.spacing(2)
           }
         }
       >
@@ -55,7 +55,13 @@ const CreditCardData: React.FC<ICreditCardDataProps> = ({ creditCard }) => {
             </Paragraph>
           </Box>
 
-          <CreditCardLogo brand={creditCard.brand} style={{ width: '50px' }} />
+          <Box sx={{ display: { xs: 'none', md: 'block' } }}>
+            <CreditCardLogo brand={creditCard.brand} style={{ width: '40px', marginLeft: '7px', marginTop: '35px' }} />
+          </Box>
+
+          <Box sx={{ display: { xs: 'block', md: 'none' } }}>
+            <CreditCardLogo brand={creditCard.brand} style={{ width: '30px', marginLeft: '5px', marginTop: '20px' }} />
+          </Box>
         </Box>
 
         <Title>

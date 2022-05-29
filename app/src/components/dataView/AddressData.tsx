@@ -29,7 +29,7 @@ const AddressData: React.FC<IAddressDataProps> = ({ address }) => {
         sx={
           {
             fontSize: { xs: '1.4rem', md: '1.7rem' },
-            mb: theme.spacing(3)
+            mb: theme.spacing(2)
           }
         }
       >
