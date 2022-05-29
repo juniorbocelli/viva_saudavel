@@ -199,7 +199,7 @@ const InvoiceData: React.FC<IInvoiceDataProps> = ({ invoice }) => {
         </Typography>
 
         <Typography variant='body2' color='text.secondary'>
-          ** Nos pedidos com recorrência o frete é cobrado somente uma vez, sempre naa primeira entrega de cada mês.
+          ** Nos pedidos com recorrência o frete é cobrado somente uma vez, sempre na primeira entrega de cada mês.
         </Typography>
       </Box>
     </div>
