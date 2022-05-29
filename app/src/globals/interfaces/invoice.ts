@@ -17,7 +17,7 @@ export interface InvoiceValues {
   totalValue: number;
 };
 
-export type InvoiceStatus = 'awaitingPayment' | 'paymentAccept' | 'paymentFailed' | 'preparingForShipping' | 'dispatched' | 'delivered' | 'returned' | 'canceled';
+export type InvoiceStatus = 'awaitingPayment' | 'paymentAccept' | 'paymentFailed' | 'preparingForShipping' | 'dispatched' | 'delivered' | 'returned' | 'canceled' | 'finished';
 
 export interface InvoiceProductData {
   id: string | null;
@@ -30,7 +30,7 @@ export interface InvoiceProductData {
   validate: string;
 
   price: number;
-}
+};
 
 export interface Invoice {
   id: string | null;
