@@ -14,3 +14,5 @@ export const integerRegExp = /^\d{1,}$/g;
 export const gissServiceCode = /^\d{2}\.\d{2}$/g;
 
 export const competenceRegExp = /^\d{2}\/\d{4}$/g;
+
+export const cepRegExp = /^\d{2}\.\d{3}-\d{3}$/g;

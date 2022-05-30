@@ -26,14 +26,22 @@ import {
 import { RegisterDataForm } from './types';
 import { useAuth } from '../../../features/auth/context';
 
+import useStates from './states';
+import useAPIs from './apis';
+
 import * as Routes from '../../../globals/routes';
+import SanitizerString from '../../../features/utils/SanitizerString';
+import { cepRegExp } from '../../../features/validation/regexp';
 
 const Register: React.FC<React.ReactFragment> = () => {
   const auth = useAuth();
+  const states = useStates();
   const theme = useTheme();
   const methods = useForm<RegisterDataForm>({ mode: 'onBlur', reValidateMode: 'onBlur' });
+  const apis = useAPIs(states, auth.feedback, methods);
   const navigation = useNavigate();
 
+  // Effects
   React.useEffect(() => {
     if (auth.isSignedIn())
       navigation(Routes.API_CLIENT_LOGIN, { replace: true });
@@ -61,6 +69,13 @@ const Register: React.FC<React.ReactFragment> = () => {
     };
 
     auth.register(client);
+  };
+
+  const handleBlur = () => {
+    if (cepRegExp.test(methods.getValues('cep')))
+      apis.getAddressByCep(SanitizerString.onlyNumbers(methods.getValues('cep')));
+    else
+      states.setIsFromRegion(false);
   };
 
   return (
@@ -156,108 +171,117 @@ const Register: React.FC<React.ReactFragment> = () => {
                 placeholder="Digite o CEP da sua rua..."
                 fullWidth={true}
                 mask={React.forwardRef((props, inputRef) => TextMaskCep({ ...props, inputRef }))}
+                onBlur={handleBlur}
               />
 
-              <ControlledTextInput
-                hookForm={["street", methods.control, methods.formState.errors, Rules.requiredText]}
-                label="Logradouro"
-                placeholder="Digite o nome da sua rua..."
-                fullWidth={true}
-              />
+              {
+                states.isFromRegion &&
+                <React.Fragment>
+                  <ControlledTextInput
+                    hookForm={["street", methods.control, methods.formState.errors, Rules.requiredText]}
+                    label="Logradouro"
+                    placeholder="Digite o nome da sua rua..."
+                    fullWidth={true}
+                  />
 
-              <ControlledTextInput
-                hookForm={["district", methods.control, methods.formState.errors, Rules.requiredText]}
-                label="Bairro"
-                placeholder="Digite o nome da seu bairro..."
-                fullWidth={true}
-              />
+                  <ControlledTextInput
+                    hookForm={["district", methods.control, methods.formState.errors, Rules.requiredText]}
+                    label="Bairro"
+                    placeholder="Digite o nome da seu bairro..."
+                    fullWidth={true}
+                  />
 
-              <ControlledTextInput
-                hookForm={["state", methods.control, methods.formState.errors, Rules.requiredText]}
-                label="Estado"
-                disabled={false}
-                fullWidth={true}
-              />
+                  <ControlledTextInput
+                    hookForm={["state", methods.control, methods.formState.errors, Rules.requiredText]}
+                    label="Estado"
+                    disabled={false}
+                    fullWidth={true}
+                  />
 
-              <ControlledTextInput
-                hookForm={["city", methods.control, methods.formState.errors, Rules.requiredText]}
-                label="Cidade"
-                disabled={false}
-                fullWidth={true}
-              />
+                  <ControlledTextInput
+                    hookForm={["city", methods.control, methods.formState.errors, Rules.requiredText]}
+                    label="Cidade"
+                    disabled={false}
+                    fullWidth={true}
+                  />
 
-              <ControlledTextInput
-                hookForm={["number", methods.control, methods.formState.errors, Rules.requiredText]}
-                label="Número"
-                placeholder="Digite o número da sua casa..."
-                fullWidth={true}
-              />
+                  <ControlledTextInput
+                    hookForm={["number", methods.control, methods.formState.errors, Rules.requiredText]}
+                    label="Número"
+                    placeholder="Digite o número da sua casa..."
+                    fullWidth={true}
+                  />
 
-              <ControlledTextInput
-                hookForm={["complement", methods.control, methods.formState.errors, Rules.optionalText]}
-                label="Complemento"
-                placeholder="Opcional"
-                fullWidth={true}
-              />
+                  <ControlledTextInput
+                    hookForm={["complement", methods.control, methods.formState.errors, Rules.optionalText]}
+                    label="Complemento"
+                    placeholder="Opcional"
+                    fullWidth={true}
+                  />
+                </React.Fragment>
+              }
             </Grid>
 
-            <Grid md={6} item>
-              <ControlledTextInput
-                hookForm={["name", methods.control, methods.formState.errors, Rules.requiredText]}
-                label="Nome"
-                placeholder="Digite seu nome..."
-                fullWidth={true}
-              />
+            {
+              states.isFromRegion &&
+              <Grid md={6} item>
+                <ControlledTextInput
+                  hookForm={["name", methods.control, methods.formState.errors, Rules.requiredText]}
+                  label="Nome"
+                  placeholder="Digite seu nome..."
+                  fullWidth={true}
+                />
 
-              <ControlledTextInput
-                hookForm={["cpf", methods.control, methods.formState.errors, Rules.requiredCpf]}
-                label="CPF"
-                placeholder="Digite seu CPF..."
-                fullWidth={true}
-                mask={React.forwardRef((props, inputRef) => TextMaskCpf({ ...props, inputRef }))}
-              />
+                <ControlledTextInput
+                  hookForm={["cpf", methods.control, methods.formState.errors, Rules.requiredCpf]}
+                  label="CPF"
+                  placeholder="Digite seu CPF..."
+                  fullWidth={true}
+                  mask={React.forwardRef((props, inputRef) => TextMaskCpf({ ...props, inputRef }))}
+                />
 
-              <ControlledTextInput
-                hookForm={["email", methods.control, methods.formState.errors, Rules.requiredText]}
-                label="E-mail"
-                placeholder="Digite seu e-mail..."
-                fullWidth={true}
-              />
+                <ControlledTextInput
+                  hookForm={["email", methods.control, methods.formState.errors, Rules.requiredText]}
+                  label="E-mail"
+                  placeholder="Digite seu e-mail..."
+                  fullWidth={true}
+                />
 
-              <ControlledTextInput
-                hookForm={["password", methods.control, methods.formState.errors, Rules.requiredText]}
-                type='password'
-                label="Senha"
-                placeholder="Digite sua uma senha..."
-                fullWidth={true}
-              />
+                <ControlledTextInput
+                  hookForm={["password", methods.control, methods.formState.errors, Rules.requiredText]}
+                  type='password'
+                  label="Senha"
+                  placeholder="Digite sua uma senha..."
+                  fullWidth={true}
+                />
 
-              <ControlledTextInput
-                hookForm={["cellPhone", methods.control, methods.formState.errors, Rules.requiredCellPhone]}
-                label="Celular"
-                placeholder="Digite seu número de celular..."
-                fullWidth={true}
-                mask={React.forwardRef((props, inputRef) => TextMaskCellPhone({ ...props, inputRef }))}
-              />
+                <ControlledTextInput
+                  hookForm={["cellPhone", methods.control, methods.formState.errors, Rules.requiredCellPhone]}
+                  label="Celular"
+                  placeholder="Digite seu número de celular..."
+                  fullWidth={true}
+                  mask={React.forwardRef((props, inputRef) => TextMaskCellPhone({ ...props, inputRef }))}
+                />
 
-              <ControlledTextInput
-                hookForm={["phone", methods.control, methods.formState.errors, Rules.optionalPhone]}
-                label="Telefone"
-                placeholder="Opcional"
-                fullWidth={true}
-                mask={React.forwardRef((props, inputRef) => TextMaskPhone({ ...props, inputRef }))}
-              />
+                <ControlledTextInput
+                  hookForm={["phone", methods.control, methods.formState.errors, Rules.optionalPhone]}
+                  label="Telefone"
+                  placeholder="Opcional"
+                  fullWidth={true}
+                  mask={React.forwardRef((props, inputRef) => TextMaskPhone({ ...props, inputRef }))}
+                />
 
-              <Button
-                type='submit'
-                variant='contained'
-                color='primary'
-                sx={{ mt: { xs: theme.spacing(2), md: theme.spacing(2) } }}
-                fullWidth
-              >
-                Cadastrar
-              </Button>
-            </Grid>
+                <Button
+                  type='submit'
+                  variant='contained'
+                  color='primary'
+                  sx={{ mt: { xs: theme.spacing(2), md: theme.spacing(2) } }}
+                  fullWidth
+                >
+                  Cadastrar
+                </Button>
+              </Grid>
+            }
           </Grid>
           <Button sx={{ mt: theme.spacing(3) }} onClick={() => navigation(Routes.SCREEN_ADMIN_INDEX)} startIcon={<ArrowBackIcon />}>
             Voltar
