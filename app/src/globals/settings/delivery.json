@@ -1,5 +1,8 @@
 {
     "minDaysToFirstDelivery": 2,
     "isDeliveryInHolidays": false,
-    "isDeliveryInWeekends": false
+    "isDeliveryInWeekends": false,
+
+    "minValidCEP": 13560001,
+    "maxValidCEP": 13577999
 }

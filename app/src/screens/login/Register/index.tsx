@@ -15,6 +15,8 @@ import background1 from '../../../assets/images/backgrounds/background-1.jpg';
 import leafLogo from '../../../assets/images/logo/leaf.svg';
 
 import ControlledTextInput from '../../../ui/components/form/ControlledTextInput';
+import BackDrop from '../../../ui/components/BackDrop';
+import AlertDialog from '../../../ui/components/AlertDialog';
 
 import * as Rules from '../../../features/validation/rules';
 import {
@@ -47,6 +49,15 @@ const Register: React.FC<React.ReactFragment> = () => {
       navigation(Routes.API_CLIENT_LOGIN, { replace: true });
   }, [auth.isSignedIn()]);
 
+  React.useEffect(() => {
+    if (states.receivedAddress !== null) {
+      methods.setValue('street', states.receivedAddress.street);
+      methods.setValue('district', states.receivedAddress.district);
+      methods.setValue('city', states.receivedAddress.city);
+      methods.setValue('state', states.receivedAddress.state);
+    }
+  }, [states.receivedAddress]);
+
   const onSubmit = (data: RegisterDataForm) => {
     console.log('data', data);
     let client = {
@@ -75,7 +86,7 @@ const Register: React.FC<React.ReactFragment> = () => {
     if (cepRegExp.test(methods.getValues('cep')))
       apis.getAddressByCep(SanitizerString.onlyNumbers(methods.getValues('cep')));
     else
-      states.setIsFromRegion(false);
+      states.setReceivedAddress(null);
   };
 
   return (
@@ -93,6 +104,15 @@ const Register: React.FC<React.ReactFragment> = () => {
         }
       }
     >
+
+      {/* Feedbacks from API */}
+      <BackDrop open={auth.feedback.isQueryingAPI} />
+      <AlertDialog
+        title='Aviso'
+        content={<p>{auth.feedback.errorMessage}</p>}
+        open={auth.feedback.errorMessage !== null}
+        onClose={() => auth.feedback.setErrorMessage(null)}
+      />
 
       {/* Green box mobile */}
       <Box
@@ -175,7 +195,7 @@ const Register: React.FC<React.ReactFragment> = () => {
               />
 
               {
-                states.isFromRegion &&
+                states.receivedAddress !== null &&
                 <React.Fragment>
                   <ControlledTextInput
                     hookForm={["street", methods.control, methods.formState.errors, Rules.requiredText]}
@@ -223,7 +243,7 @@ const Register: React.FC<React.ReactFragment> = () => {
             </Grid>
 
             {
-              states.isFromRegion &&
+              states.receivedAddress !== null &&
               <Grid md={6} item>
                 <ControlledTextInput
                   hookForm={["name", methods.control, methods.formState.errors, Rules.requiredText]}

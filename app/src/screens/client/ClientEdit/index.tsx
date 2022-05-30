@@ -16,14 +16,13 @@ import useEffects from './effects';
 import { useAuth } from '../../../features/auth/context';
 
 import * as Rules from '../../../features/validation/rules';
-import {
-  TextMaskCpf,
-  TextMaskCellPhone,
-  TextMaskCep,
-  TextMaskPhone,
-} from '../../../features/validation/masks';
+import * as Masks from '../../../features/validation/masks';
+import SanitizerString from '../../../features/utils/SanitizerString';
+
 import { ClientDataForm } from './types';
-import { IClientUpdateProps } from './apis/updateClientAPI';
+import { Client } from '../../../globals/interfaces/client';
+
+import DELIVERY_SETTINGS from '../../../globals/settings/delivery.json';
 
 const ClientEdit: React.FC<React.ReactFragment> = () => {
   const auth = useAuth();
@@ -35,7 +34,14 @@ const ClientEdit: React.FC<React.ReactFragment> = () => {
 
   const onSubmit = (data: ClientDataForm) => {
     console.log('data', data);
-    const client: IClientUpdateProps = {
+    // Verify if new cep is valid
+    if (parseInt(SanitizerString.onlyNumbers(data.cep)) < DELIVERY_SETTINGS['minValidCEP'] || parseInt(SanitizerString.onlyNumbers(data.cep)) > DELIVERY_SETTINGS['maxValidCEP']) {
+      states.setDialogMessage({ title: "Erro", message: "Essa região ainda não é atendida 🙁" })
+
+      return;
+    };
+
+    const client: Client = {
       id: auth.loggedClient ? auth.loggedClient.id! : '',
       name: data.name,
       cpf: data.cpf,
@@ -70,7 +76,7 @@ const ClientEdit: React.FC<React.ReactFragment> = () => {
               label="CEP"
               placeholder="Digite o CEP da sua rua..."
               fullWidth={true}
-              mask={React.forwardRef((props, inputRef) => TextMaskCep({ ...props, inputRef }))}
+              mask={React.forwardRef((props, inputRef) => Masks.TextMaskCep({ ...props, inputRef }))}
             />
 
             <ControlledTextInput
@@ -129,7 +135,7 @@ const ClientEdit: React.FC<React.ReactFragment> = () => {
               label="CPF"
               placeholder="Digite seu CPF..."
               fullWidth={true}
-              mask={React.forwardRef((props, inputRef) => TextMaskCpf({ ...props, inputRef }))}
+              mask={React.forwardRef((props, inputRef) => Masks.TextMaskCpf({ ...props, inputRef }))}
             />
 
             <ControlledTextInput
@@ -152,7 +158,7 @@ const ClientEdit: React.FC<React.ReactFragment> = () => {
               label="Celular"
               placeholder="Digite seu número de celular..."
               fullWidth={true}
-              mask={React.forwardRef((props, inputRef) => TextMaskCellPhone({ ...props, inputRef }))}
+              mask={React.forwardRef((props, inputRef) => Masks.TextMaskCellPhone({ ...props, inputRef }))}
             />
 
             <ControlledTextInput
@@ -160,7 +166,7 @@ const ClientEdit: React.FC<React.ReactFragment> = () => {
               label="Telefone"
               placeholder="Opcional"
               fullWidth={true}
-              mask={React.forwardRef((props, inputRef) => TextMaskPhone({ ...props, inputRef }))}
+              mask={React.forwardRef((props, inputRef) => Masks.TextMaskPhone({ ...props, inputRef }))}
             />
 
             <Button
@@ -171,7 +177,7 @@ const ClientEdit: React.FC<React.ReactFragment> = () => {
               fullWidth
             >
               Salvar dados
-              </Button>
+            </Button>
           </Grid>
         </Grid>
       </form>

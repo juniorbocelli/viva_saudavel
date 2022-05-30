@@ -3,8 +3,11 @@ import { UseFormReturn } from 'react-hook-form';
 import { IUseState } from './states';
 import { RegisterDataForm } from './types';
 import { IAuthContext } from '../../../features/auth/types';
+import { AddressFromCepAPI } from '../../../globals/interfaces/client';
 
 import { getAddressByCepAPI } from '../../../services/cep';
+
+import DELIVERY_SETTINGS from '../../../globals/settings/delivery.json';
 
 export interface IUseAPIs {
   getAddressByCep: (cep: string) => void;
@@ -23,15 +26,13 @@ export default function useAPIs(states: IUseState, auth: IAuthContext['feedback'
           return;
         };
 
-        if (parseInt(cep) > 13560001 && parseInt(cep) < 13577999) {
-          states.setIsFromRegion(true);
+        const address: AddressFromCepAPI = response.data.address;
 
-          // TODO: exchange by address state and useEffect
-          setTimeout(() => {
-            methods.setValue('street', response.data.address.street);
-          }, 2000);
+        if (parseInt(cep) > DELIVERY_SETTINGS['minValidCEP'] && parseInt(cep) < DELIVERY_SETTINGS['maxValidCEP']) {
+          states.setReceivedAddress(address);
         } else {
-          states.setIsFromRegion(false);
+          states.setReceivedAddress(null);
+          auth.setErrorMessage("Infelizmente ainda não atendemos na sua região 🙁");
         }
       })
       .catch(error => {

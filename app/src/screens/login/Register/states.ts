@@ -1,17 +1,17 @@
 import React from 'react';
 
-import { IsFromRegionState } from './types';
+import { ReceivedAddressState } from './types';
 
 export interface IUseState {
-  isFromRegion: IsFromRegionState;
-  setIsFromRegion: React.Dispatch<React.SetStateAction<IsFromRegionState>>;
+  receivedAddress: ReceivedAddressState;
+  setReceivedAddress: React.Dispatch<React.SetStateAction<ReceivedAddressState>>;
 };
 
 export default function useStates(): IUseState {
-  const [isFromRegion, setIsFromRegion] = React.useState<IsFromRegionState>(false);
+  const [receivedAddress, setReceivedAddress] = React.useState<ReceivedAddressState>(null);
 
   return {
-    isFromRegion,
-    setIsFromRegion,
+    receivedAddress,
+    setReceivedAddress,
   };
 };
