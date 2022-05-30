@@ -49,3 +49,5 @@ export const API_CHECKOUT_NEW = `${API_ROOT}/client/:clientId/checkout/`; // POS
 // Invoice routes
 export const API_INVOICE_CLIENT_GET = `${API_ROOT}/client/:clientId/invoice/:id/`; // GET
 export const API_INVOICE_ADMIN_GET = `${API_ROOT}/admin/invoice/:id/`; // GET
+export const API_INVOICE_CLIENT_GET_ALL = `${API_ROOT}/client/:clientId/invoice/`; // GET
+export const API_INVOICE_ADMIN_GET_ALL = `${API_ROOT}/admin/invoice/`; // GET

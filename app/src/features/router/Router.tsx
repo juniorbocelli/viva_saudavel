@@ -22,6 +22,7 @@ import ClientEdit from '../../screens/client/ClientEdit';
 import Checkout from '../../screens/client/Checkout';
 import CreditCardSet from '../../screens/client/CreditCardSet';
 import InvoiceView from '../../screens/client/InvoiceView';
+import InvoicesList from '../../screens/client/InvoicesList';
 
 import Login from '../../screens/login/Login';
 import Register from '../../screens/login/Register';
@@ -32,6 +33,8 @@ import ProductsList from '../../screens/admin/ProductsList';
 import ProductSet from '../../screens/admin/ProductSet';
 import ClientsList from '../../screens/admin/ClientsList';
 import CheckoutsList from '../../screens/admin/CheckoutsList';
+import AdminInvoicesList from '../../screens/admin/AdminInvoicesList';
+import AdminInvoiceView from '../../screens/admin/AdminInvoiceView';
 
 const AllRoutes = React.memo((props) => {
   return (
@@ -47,6 +50,7 @@ const AllRoutes = React.memo((props) => {
       <Route path={GlobalRoutes.SCREEN_CLIENT_CHECKOUT} element={<Navigation><Checkout /></Navigation>} />
       <Route path={GlobalRoutes.SCREEN_CREDIT_CARD_SET} element={<Navigation><CreditCardSet /></Navigation>} />
       <Route path={GlobalRoutes.SCREEN_CLIENT_INVOICE_GET} element={<Navigation><InvoiceView /></Navigation>} />
+      <Route path={GlobalRoutes.SCREEN_CLIENT_INVOICE_GET_ALL} element={<Navigation><InvoicesList /></Navigation>} />
 
       <Route path={GlobalRoutes.SCREEN_ADMIN_INDEX} element={<AdminNavigation><AdminHome /></AdminNavigation>} />
       <Route path={GlobalRoutes.SCREEN_ADMIN_PRODUCTS} element={<AdminNavigation><ProductsList /></AdminNavigation>} />
@@ -55,7 +59,9 @@ const AllRoutes = React.memo((props) => {
 
       <Route path={GlobalRoutes.SCREEN_ADMIN_CLIENTS} element={<AdminNavigation><ClientsList /></AdminNavigation>} />
 
-      <Route path={GlobalRoutes.SCREEN_ADMiN_CHECKOUTS} element={<AdminNavigation><CheckoutsList /></AdminNavigation>} />
+      <Route path={GlobalRoutes.SCREEN_ADMIN_CHECKOUTS} element={<AdminNavigation><CheckoutsList /></AdminNavigation>} />
+      <Route path={GlobalRoutes.SCREEN_ADMIN_INVOICE_GET_ALL} element={<AdminNavigation><AdminInvoicesList /></AdminNavigation>} />
+      <Route path={GlobalRoutes.SCREEN_ADMIN_INVOICE_GET} element={<AdminNavigation><AdminInvoiceView /></AdminNavigation>} />
 
       <Route path={GlobalRoutes.SCREEN_CLIENT_LOGIN} element={<Login />} />
       <Route path={GlobalRoutes.SCREEN_CLIENT_REGISTER} element={<Register />} />

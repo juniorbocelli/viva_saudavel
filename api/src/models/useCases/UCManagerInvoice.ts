@@ -130,9 +130,17 @@ class UCManagerInvoice {
   };
 
   public async getAdminInvoice(id: string): Promise<Invoice | null> {
-    const invoice = await this.daoInvoice.select(id);
+    const invoice = this.daoInvoice.select(id);
 
     return invoice;
+  };
+
+  public async getAllClientWithFilter(clientId: string, filter: Object): Promise<Array<Invoice>> {
+    return this.daoInvoice.selectBy({ client: clientId, ...filter });
+  };
+
+  public async getAllAdminWithFilter(filter: Object): Promise<Array<Invoice>> {
+    return this.daoInvoice.selectBy(filter);
   };
 };
 

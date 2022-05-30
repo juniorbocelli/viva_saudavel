@@ -49,7 +49,14 @@ const productMenu: Array<MenuItem> = [
 const checkoutMenu: Array<MenuItem> = [
   {
     label: "Todas as cestas",
-    to: Routes.SCREEN_ADMiN_CHECKOUTS,
+    to: Routes.SCREEN_ADMIN_CHECKOUTS,
+  },
+];
+
+const invoiceMenu: Array<MenuItem> = [
+  {
+    label: "Todas as cestas",
+    to: Routes.SCREEN_ADMIN_INVOICE_GET_ALL,
   },
 ];
 
@@ -172,21 +179,49 @@ export default function Navbar() {
           <ListItem
             button onClick={handlePopoverOpen}
             sx={{ width: `${drawerWidth - 1}px`, }}
-            data-control='client'
-            selected={isOpen('client') || isActive(checkoutMenu)}
+            data-control='checkout'
+            selected={isOpen('checkout') || isActive(checkoutMenu)}
           >
             <ListItemIcon>
               <AssignmentIndIcon />
             </ListItemIcon>
-            <ListItemText primary="Clientes" sx={{ fontSize: '1.0rem', }} />
-            {isOpen('client') ? <IconExpandLess /> : <IconExpandMore />}
+            <ListItemText primary="Cestas" sx={{ fontSize: '1.0rem', }} />
+            {isOpen('checkout') ? <IconExpandLess /> : <IconExpandMore />}
           </ListItem>
 
-          <Collapse in={isOpen('client')} timeout="auto" unmountOnExit>
+          <Collapse in={isOpen('checkout')} timeout="auto" unmountOnExit>
             <Divider />
             <List component="div" disablePadding>
               {
                 checkoutMenu.map((item, key) => {
+                  return (<ChildItem key={key} label={item.label} to={item.to} drawerWidth={drawerWidth} />)
+                })
+              }
+              <Divider />
+            </List>
+          </Collapse>
+
+          {/**
+           * Invoices
+           */}
+          <ListItem
+            button onClick={handlePopoverOpen}
+            sx={{ width: `${drawerWidth - 1}px`, }}
+            data-control='invoice'
+            selected={isOpen('invoice') || isActive(invoiceMenu)}
+          >
+            <ListItemIcon>
+              <AssignmentIndIcon />
+            </ListItemIcon>
+            <ListItemText primary="Pedidos" sx={{ fontSize: '1.0rem', }} />
+            {isOpen('invoice') ? <IconExpandLess /> : <IconExpandMore />}
+          </ListItem>
+
+          <Collapse in={isOpen('invoice')} timeout="auto" unmountOnExit>
+            <Divider />
+            <List component="div" disablePadding>
+              {
+                invoiceMenu.map((item, key) => {
                   return (<ChildItem key={key} label={item.label} to={item.to} drawerWidth={drawerWidth} />)
                 })
               }

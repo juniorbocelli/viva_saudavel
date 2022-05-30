@@ -69,16 +69,18 @@ class CheckoutController {
     };
   };
 
-  static async getAllWithFilter(req: Request, res: Response) {
+  static async getAllClientWithFilter(req: Request, res: Response) {
     const daoCheckout = new DAOCheckout();
     const daoCart = new DAOCart();
     const daoProduct = new DAOProduct();
     const daoClient = new DAOClient();
 
+    const { clientId } = req.params;
+
     const ucManagerCheckout = new UCManagerCheckout(daoCheckout, daoCart, daoProduct, daoClient);
 
     try {
-      res.status(200).json({ checkouts: await ucManagerCheckout.getAllWithFilter(req.query) });
+      res.status(200).json({ checkouts: await ucManagerCheckout.getAllClientWithFilter(clientId, req.query) });
     } catch (error: any) {
       res.status(200).json({ error: error.message });
     };

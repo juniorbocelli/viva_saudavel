@@ -53,6 +53,44 @@ class InvoiceController {
       res.status(200).json({ error: error.message });
     };
   };
+
+  static async getAllClientWithFilter(req: Request, res: Response) {
+    const daoInvoice = new DAOInvoice();
+    const daoCart = new DAOCart();
+    const daoProduct = new DAOProduct();
+    const daoClient = new DAOClient();
+    const daoCreditCard = new DAOCreditCard();
+    const daoCheckout = new DAOCheckout();
+
+    const { clientId } = req.params
+
+    const ucManagerInvoice = new UCManagerInvoice(daoInvoice, daoProduct, daoClient, daoCreditCard, daoCheckout, daoCart);
+
+    try {
+      res.status(200).json({ invoices: await ucManagerInvoice.getAllClientWithFilter(clientId, req.query) });
+    } catch (error: any) {
+      res.status(200).json({ error: error.message });
+    };
+  };
+
+  static async getAllAdminWithFilter(req: Request, res: Response) {
+    const daoInvoice = new DAOInvoice();
+    const daoCart = new DAOCart();
+    const daoProduct = new DAOProduct();
+    const daoClient = new DAOClient();
+    const daoCreditCard = new DAOCreditCard();
+    const daoCheckout = new DAOCheckout();
+
+    const { clientId } = req.params
+
+    const ucManagerInvoice = new UCManagerInvoice(daoInvoice, daoProduct, daoClient, daoCreditCard, daoCheckout, daoCart);
+
+    try {
+      res.status(200).json({ invoices: await ucManagerInvoice.getAllAdminWithFilter(req.query) });
+    } catch (error: any) {
+      res.status(200).json({ error: error.message });
+    };
+  };
 };
 
 export default InvoiceController;

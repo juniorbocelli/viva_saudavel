@@ -50,8 +50,8 @@ class UCManagerCheckout {
     return this.daoCheckout.selectAll();
   };
 
-  public async getAllWithFilter(filter: Object): Promise<Array<Checkout>> {
-    return this.daoCheckout.selectBy(filter);
+  public async getAllClientWithFilter(clientId: string, filter: Object): Promise<Array<Checkout>> {
+    return this.daoCheckout.selectBy({ client: clientId, ...filter });
   };
 
   public async remove(checkout: Checkout | string) {
