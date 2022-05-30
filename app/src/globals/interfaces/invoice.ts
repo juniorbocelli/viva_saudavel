@@ -58,3 +58,59 @@ export interface Invoice {
 
   createdAt: Date;
 };
+
+export const getStatus = (status: Invoice['status']): string => {
+  switch (status) {
+    case 'awaitingPayment':
+      return 'Aguardando pagamento';
+
+    case 'paymentAccept':
+      return 'Pagamento aceito'
+
+    case 'paymentFailed':
+      return 'Pagamento falhou';
+
+    case 'preparingForShipping':
+      return 'Preparando para envio';
+
+    case 'dispatched':
+      return 'Enviado';
+
+    case 'delivered':
+      return 'Entregue';
+
+    case 'returned':
+      return 'O pedido retornou';
+
+    case 'canceled':
+      return 'Pedido cancelado';
+
+    case 'finished':
+      return 'Pedido finalizado';
+
+    default:
+      return 'Desconhecido';
+  }
+};
+
+export const getFrequency = (frequency: Invoice['frequency']): string => {
+  switch (frequency) {
+    case 'all':
+      return 'Primeiro pedido';
+
+    case 'once':
+      return 'Apenas uma vez'
+
+    case 'weekly':
+      return 'Semanal';
+
+    case 'biweekly':
+      return 'Quinzenal';
+
+    case 'monthly':
+      return 'Mensal';
+
+    default:
+      return 'Desconhecida';
+  }
+};

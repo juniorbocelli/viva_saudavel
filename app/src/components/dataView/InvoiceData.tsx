@@ -11,7 +11,7 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import Title from './components/Title';
 import Paragraph from './components/Paragraph';
 
-import { Invoice } from '../../globals/interfaces/invoice';
+import { Invoice, getStatus, getFrequency } from '../../globals/interfaces/invoice';
 
 import MaskApply from '../../features/utils/MaskApply';
 
@@ -21,62 +21,6 @@ interface IInvoiceDataProps {
 
 const InvoiceData: React.FC<IInvoiceDataProps> = ({ invoice }) => {
   const theme = useTheme();
-
-  const getStatus = (status: Invoice['status']): string => {
-    switch (status) {
-      case 'awaitingPayment':
-        return 'Aguardando pagamento';
-
-      case 'paymentAccept':
-        return 'Pagamento aceito'
-
-      case 'paymentFailed':
-        return 'Pagamento falhou';
-
-      case 'preparingForShipping':
-        return 'Preparando para envio';
-
-      case 'dispatched':
-        return 'Enviado';
-
-      case 'delivered':
-        return 'Entregue';
-
-      case 'returned':
-        return 'O pedido retornou';
-
-      case 'canceled':
-        return 'Pedido cancelado';
-
-      case 'finished':
-        return 'Pedido finalizado';
-
-      default:
-        return 'Desconhecido';
-    }
-  };
-
-  const getFrequency = (frequency: Invoice['frequency']): string => {
-    switch (frequency) {
-      case 'all':
-        return 'Primeiro pedido';
-
-      case 'once':
-        return 'Apenas uma vez'
-
-      case 'weekly':
-        return 'Semanal';
-
-      case 'biweekly':
-        return 'Quinzenal';
-
-      case 'monthly':
-        return 'Mensal';
-
-      default:
-        return 'Desconhecida';
-    }
-  };
 
   return (
     <div>
