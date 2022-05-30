@@ -22,6 +22,14 @@ export interface IAuthStates {
 export interface IAuthContext {
   loggedClient: LoggedClientState;
 
+  feedback: {
+    isQueryingAPI: IsQueryingAPIState;
+    setIsQueryingAPI: React.Dispatch<React.SetStateAction<IsQueryingAPIState>>;
+
+    errorMessage: ErrorMessageState;
+    setErrorMessage: React.Dispatch<React.SetStateAction<ErrorMessageState>>;
+  },
+
   register: (client: Client) => void;
   login: (email: string, password: string) => void,
   logout: () => void,
