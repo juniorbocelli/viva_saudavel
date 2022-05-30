@@ -24,3 +24,13 @@ export interface Client {
 
   address: Address;
 };
+
+
+export interface AddressFromCepAPI {
+  cep: string;
+
+  street: string;
+  district: string;
+  city: string;
+  state: string;
+};

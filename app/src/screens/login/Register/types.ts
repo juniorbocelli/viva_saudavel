@@ -1,9 +1,9 @@
-import { Client } from '../../../globals/interfaces/client';
+import { Client, AddressFromCepAPI } from '../../../globals/interfaces/client';
 
 export type IsQueryingAPIState = boolean;
 export type ErrorMessageState = string | undefined;
 
-export type IsFromRegionState = boolean;
+export type ReceivedAddressState = AddressFromCepAPI | null;
 
 export type RegisterDataForm = {
   name: string;

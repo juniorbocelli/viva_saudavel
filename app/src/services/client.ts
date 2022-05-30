@@ -1,13 +1,16 @@
-import axios from '../../../../globals/axios';
-import { API_CLIENT_UPDATE } from '../../../../globals/routes';
-import { Client } from '../../../../globals/interfaces/client';
+import axios from '../globals/axios';
+import * as Routes from '../globals/routes';
 
-export interface IClientUpdateProps extends Client {
-  id: string;
+import { Client } from '../globals/interfaces/client';
+
+export function getClientAPI(id: string) {
+  return axios.get(Routes.API_CLIENT_GET
+    .replace(':id', id));
 };
 
-export default function updateClientAPI(client: IClientUpdateProps) {
-  return axios.put(API_CLIENT_UPDATE.replace(':id', client.id),
+export function updateClientAPI(client: Client) {
+  return axios.put(Routes.API_CLIENT_UPDATE
+    .replace(':id', client.id as string),
     {
       name: client.name,
       cpf: client.cpf,

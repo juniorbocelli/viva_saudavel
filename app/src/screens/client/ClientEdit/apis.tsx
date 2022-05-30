@@ -1,18 +1,17 @@
 import { UseFormSetValue } from 'react-hook-form';
 import { AxiosError, AxiosResponse } from 'axios';
 
-import getClientAPI from './getClientAPI';
-import updateClientAPI, { IClientUpdateProps } from './updateClientAPI';
+import { IUseStates } from './states';
+import { ClientDataForm } from './types';
+import { Client } from '../../../globals/interfaces/client';
 
-import { IUseStates } from '../states';
-import { ClientDataForm } from '../types';
-import { Client } from '../../../../globals/interfaces/client';
+import { getClientAPI, updateClientAPI } from '../../../services/client';
 
-import MaskApply from '../../../../features/utils/MaskApply';
+import MaskApply from '../../../features/utils/MaskApply';
 
 export interface IUseAPIs {
   getClient: (id: string) => void;
-  updateClient: (client: IClientUpdateProps) => void;
+  updateClient: (client: Client) => void;
 };
 
 export default function useAPIs(states: IUseStates, setValue: UseFormSetValue<ClientDataForm>): IUseAPIs {
@@ -61,7 +60,7 @@ export default function useAPIs(states: IUseStates, setValue: UseFormSetValue<Cl
       });
   };
 
-  const updateClient = (client: IClientUpdateProps) => {
+  const updateClient = (client: Client) => {
     states.setIsQueryingAPI(true);
 
     updateClientAPI(client)
