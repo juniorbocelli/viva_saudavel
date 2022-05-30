@@ -11,21 +11,19 @@ import TextInput from '../../../../../ui/components/form/TextInput';
 import * as Rules from '../../../../../features/validation/rules';
 import { IUseStates } from '../../states';
 import { ResetPasswordFormData } from '../../types';
+import { useAuth } from '../../../../../features/auth/context';
 
 const ResetPassword: React.FC<IUseStates> = (states) => {
   const theme = useTheme();
+  const auth = useAuth();
   const { register, formState: { errors }, handleSubmit } = useForm<ResetPasswordFormData>();
-
-  const {
-    setErrorMessage,
-  } = states;
 
   const onSubmit = (data: ResetPasswordFormData) => {
     console.log(data);
     // Here: API that send login data
 
     if (data.password !== data.passwordConfirmation)
-      setErrorMessage("As senhas informadas não coincidem!");
+      auth.feedback.setErrorMessage("As senhas informadas não coincidem!");
     return null;
   }
 

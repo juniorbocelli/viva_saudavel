@@ -40,9 +40,6 @@ const Login: React.FC<React.ReactFragment> = (props) => {
   }, [auth.isSignedIn()]);
 
   const {
-    isQueryingAPI,
-    errorMessage,
-
     operation,
 
     setToken,
@@ -68,7 +65,7 @@ const Login: React.FC<React.ReactFragment> = (props) => {
         }
       }
     >
-      <BackDrop open={isQueryingAPI} />
+      <BackDrop open={auth.feedback.isQueryingAPI} />
 
       <Box
         sx={
@@ -161,9 +158,9 @@ const Login: React.FC<React.ReactFragment> = (props) => {
         }
 
         {
-          typeof (errorMessage) !== "undefined" &&
-          <Typography color="error" variant="body1" sx={{ mt: theme.spacing(3) }}>
-            {errorMessage}
+          typeof (auth.feedback.errorMessage) !== "undefined" &&
+          <Typography color="error" variant="body1" sx={{ mt: theme.spacing(1) }}>
+            {auth.feedback.errorMessage}
           </Typography>
         }
 

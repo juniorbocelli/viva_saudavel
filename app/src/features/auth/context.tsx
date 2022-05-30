@@ -27,7 +27,7 @@ export const AuthContextProvider: React.FC<Props> = ({ children }) => {
   const isAdmin = () => {
     if (states.loggedClient === undefined)
       return undefined;
-      
+
     if (states.loggedClient === null)
       return false;
     else
@@ -43,6 +43,14 @@ export const AuthContextProvider: React.FC<Props> = ({ children }) => {
       value={
         {
           loggedClient: states.loggedClient,
+
+          feedback: {
+            isQueryingAPI: states.isQueryingAPI,
+            setIsQueryingAPI: states.setIsQueryingAPI,
+
+            errorMessage: states.errorMessage,
+            setErrorMessage: states.setErrorMessage,
+          },
 
           register: api.register,
           login: api.login,
