@@ -14,9 +14,11 @@ class InvoiceProductData {
   ingredients: string;
   validate: string;
 
+  thumb: string;
+
   price: number;
 
-  constructor(id: Product['id'] | mongoose.Types.ObjectId, name: Product['name'], producer: Product['producer'], measure: Product['measure'], description: Product['description'], ingredients: Product['ingredients'], validate: Product['validate'], price: Product['price']) {
+  constructor(id: Product['id'] | mongoose.Types.ObjectId, name: Product['name'], producer: Product['producer'], measure: Product['measure'], description: Product['description'], ingredients: Product['ingredients'], validate: Product['validate'], thumb: Product['thumb'], price: Product['price']) {
     this.id = SanitizerString.objectIdToStringOrNull(id);
 
     this.name = SanitizerString.removeSpaces(name);
@@ -26,17 +28,19 @@ class InvoiceProductData {
     this.ingredients = SanitizerString.removeSpaces(ingredients);
     this.validate = SanitizerString.removeSpaces(validate);
 
+    this.thumb = SanitizerString.stringOrEmpty(thumb);
+
     this.price = price;
   };
 
   public static getFromProduct(p: Product): InvoiceProductData {
-    return new InvoiceProductData(p.id, p.name, p.producer, p.measure, p.description, p.ingredients, p.validate, p.price);
+    return new InvoiceProductData(p.id, p.name, p.producer, p.measure, p.description, p.ingredients, p.validate, p.thumb, p.price);
   };
 
   public static getFromCartItem(i: CartItem): InvoiceProductData {
     const p = i.product as Product;
 
-    return new InvoiceProductData(p.id, p.name, p.producer, p.measure, p.description, p.ingredients, p.validate, p.price);
+    return new InvoiceProductData(p.id, p.name, p.producer, p.measure, p.description, p.ingredients, p.validate, p.thumb, p.price);
   };
 
   public static getListFromProductsList(l: Array<Product>): Array<InvoiceProductData> {

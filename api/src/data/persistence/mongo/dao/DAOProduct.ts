@@ -41,7 +41,7 @@ class DAOProduct implements DAO<Product, string> {
 
     product.id = productSchema._id;
 
-    return productSchema;
+    return product;
   };
 
   async update(product: Product) {

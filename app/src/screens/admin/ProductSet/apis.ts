@@ -35,7 +35,11 @@ export default function useAPIs(states: IUseStates, methods: UseFormReturn<Produ
           return;
         };
 
-        navigation(`${Routes.SCREEN_ADMIN_PRODUCT_EDIT.replace(":id", response.data.product._id)}`, { replace: true });
+        // Verify if product was saved
+        if (typeof (response.data.product.id) !== 'undefined')
+          navigation(`${Routes.SCREEN_ADMIN_PRODUCT_EDIT.replace(":id", response.data.product.id)}`, { replace: true });
+        else
+          states.setDialogMessage({ title: "Erro", message: 'Ocorreu um erro ao tentar salvar o produto' });
       })
       .catch((error: AxiosError) => {
         console.error('error => newProductAPI', error);
@@ -50,9 +54,9 @@ export default function useAPIs(states: IUseStates, methods: UseFormReturn<Produ
   };
 
   const getProduct = () => {
-    states.setIsQueryingAPI(true);
+    if (typeof (states.productId) !== 'undefined' && states.productId !== 'undefined') {
+      states.setIsQueryingAPI(true);
 
-    if (typeof (states.productId) !== 'undefined')
       getProductAPI(states.productId)
         .then((response) => {
           console.log('response => getProductAPI', response);
@@ -100,6 +104,9 @@ export default function useAPIs(states: IUseStates, methods: UseFormReturn<Produ
         .finally(() => {
           states.setIsQueryingAPI(false);
         });
+    } else {
+      states.setDialogMessage({ title: "Erro", message: "Produto invalido" });
+    };
   };
 
   const updateProduct = (product: FormData) => {
