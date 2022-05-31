@@ -17,6 +17,8 @@ export interface Client {
   cellPhone: string;
   phone?: string;
 
+  token?: string;
+
   isActive?: boolean;
   isAdmin?: boolean;
   isMailConfirmed?: boolean;

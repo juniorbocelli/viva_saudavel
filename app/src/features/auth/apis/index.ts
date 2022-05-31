@@ -84,7 +84,7 @@ function useAPIs(states: IAuthStates): IUseAPI {
     states.setIsQueryingAPI(true);
 
     registerAPI(client)
-      .then((response) => {
+      .then(async response => {
         console.log('response => registerAPI', response);
         // Verify if exist errors
         if (typeof (response.data.error) !== 'undefined') {
@@ -99,11 +99,27 @@ function useAPIs(states: IAuthStates): IUseAPI {
           const client: Client = response.data.client;
 
           // Change default cart key to client id
-          changeClientCode(LocalStorage.getCartKey(), client.id as string);
+          try {
+            // Since the execution order of changeClientCode and setLogged matters, we have to ensure that changeClientCode
+            // is executed first
+            const response = await changeClientCodeAPI(LocalStorage.getCartKey(), client.id as string);
 
-          // Set loggedIn routines
-          setLogged(client, response.data.client.token);
-        };
+            // Verify if exist errors
+            if (typeof (response.data.error) !== 'undefined') {
+              setNotLogged();
+              states.setErrorMessage(response.data.error);
+
+              return;
+            };
+
+            // Set loggedIn routines
+            setLogged(client, response.data.client.token);
+
+          } catch (error) {
+            setNotLogged();
+            states.setErrorMessage(error as string);
+          };
+        }
       })
       .catch((error) => {
         setNotLogged();
@@ -119,7 +135,7 @@ function useAPIs(states: IAuthStates): IUseAPI {
     states.setIsQueryingAPI(true);
 
     loginAPI(email, password)
-      .then(response => {
+      .then(async response => {
         console.log('response => loginAPI', response);
         // Verify if exist errors
         if (typeof (response.data.error) !== 'undefined') {
@@ -134,12 +150,27 @@ function useAPIs(states: IAuthStates): IUseAPI {
           const client: Client = response.data.client;
 
           // Change default cart key to client id
-          changeClientCode(LocalStorage.getCartKey(), client.id as string);
+          try {
+            // Since the execution order of changeClientCode and setLogged matters, we have to ensure that changeClientCode
+            // is executed first
+            const response = await changeClientCodeAPI(LocalStorage.getCartKey(), client.id as string);
 
-          // Set loggedIn routines
-          setLogged(client, response.data.client.token);
-        };
+            // Verify if exist errors
+            if (typeof (response.data.error) !== 'undefined') {
+              setNotLogged();
+              states.setErrorMessage(response.data.error);
 
+              return;
+            };
+
+            // Set loggedIn routines
+            setLogged(client, client.token as string);
+
+          } catch (error) {
+            setNotLogged();
+            states.setErrorMessage(error as string);
+          };
+        }
       })
       .catch(error => {
         setNotLogged();

@@ -34,9 +34,10 @@ const Cart: React.FC<IUseNavigationStates> = (naviStates) => {
   React.useEffect(() => {
     // If loggedClient is undefined, we not know if user is logged or not
     if (typeof (auth.loggedClient) !== 'undefined')
-      globalContext['cart'].getCart(auth.loggedClient?.id || LocalStorage.getCartKey());
-
-    console.log('auth.loggedClient', auth.loggedClient);
+      if (auth.loggedClient !== null)
+        globalContext['cart'].getCart(auth.loggedClient.id as string);
+      else
+        globalContext['cart'].getCart(LocalStorage.getCartKey());
   }, [auth.loggedClient]);
 
   const {
