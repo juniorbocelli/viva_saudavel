@@ -7,6 +7,7 @@ import {
 
 import {
   CheckoutsState,
+  CheckoutFilterState,
 } from './types';
 
 export interface IUseStates {
@@ -18,6 +19,9 @@ export interface IUseStates {
 
   checkouts: CheckoutsState;
   setCheckouts: React.Dispatch<React.SetStateAction<CheckoutsState>>;
+
+  checkoutFilter: CheckoutFilterState;
+  setCheckoutFilter: React.Dispatch<React.SetStateAction<CheckoutFilterState>>;
 };
 
 export default function useStates(): IUseStates {
@@ -25,6 +29,7 @@ export default function useStates(): IUseStates {
   const [dialogMessage, setDialogMessage] = React.useState<DialogMessageState>(undefined);
 
   const [checkouts, setCheckouts] = React.useState<CheckoutsState>([]);
+  const [checkoutFilter, setCheckoutFilter] = React.useState<CheckoutFilterState>({});
 
   return {
     isQueryingAPI,
@@ -35,5 +40,8 @@ export default function useStates(): IUseStates {
 
     checkouts,
     setCheckouts,
+
+    checkoutFilter,
+    setCheckoutFilter,
   };
 };

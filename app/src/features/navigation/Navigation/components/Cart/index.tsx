@@ -323,7 +323,7 @@ const Cart: React.FC<IUseNavigationStates> = (naviStates) => {
                   setIsMobileCartOpen(false)
 
                   if (auth.isSignedIn())
-                    navigate(Routes.SCREEN_CLIENT_CHECKOUT);
+                    navigate(Routes.SCREEN_CLIENT_CHECKOUT_NEW);
                   else
                     navigate(Routes.SCREEN_CLIENT_LOGIN);
                 }
