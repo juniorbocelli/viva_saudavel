@@ -54,6 +54,10 @@ class UCManagerCheckout {
     return this.daoCheckout.selectBy({ client: clientId, ...filter });
   };
 
+  public async getAllAdminWithFilter(filter: Object): Promise<Array<Checkout>> {
+    return this.daoCheckout.selectBy(filter);
+  };
+
   public async remove(checkout: Checkout | string) {
     if (checkout instanceof Checkout)
       return this.daoCheckout.delete(checkout.id as string);

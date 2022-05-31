@@ -1,5 +1,4 @@
-import { getAllCheckoutsAPI } from '../../../services/checkout';
-import {Checkout} from '../../../globals/interfaces/checkout';
+import { getAllAdminCheckoutsAPI } from '../../../services/checkout';
 
 import { IUseStates } from './states';
 
@@ -11,9 +10,9 @@ export default function useAPIs(states: IUseStates): IUseAPIs {
   const getAllCheckouts = (filters: Object = {}) => {
     states.setIsQueryingAPI(true);
 
-    getAllCheckoutsAPI(filters)
+    getAllAdminCheckoutsAPI(filters)
       .then((response) => {
-        console.log('response => getAllCheckoutsAPI', response);
+        console.log('response => getAllAdminCheckoutsAPI', response);
 
         if (typeof (response.data.error) !== 'undefined') {
           states.setDialogMessage({ title: "Erro", message: response.data.error });
@@ -21,7 +20,7 @@ export default function useAPIs(states: IUseStates): IUseAPIs {
         };
       })
       .catch((error) => {
-        console.log('error => getAllCheckoutsAPI', error);
+        console.log('error => getAllAdminCheckoutsAPI', error);
       })
       .finally(() => {
         states.setIsQueryingAPI(false);

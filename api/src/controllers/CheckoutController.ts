@@ -54,7 +54,7 @@ class CheckoutController {
     };
   };
 
-  static async getAll(req: Request, res: Response) {
+  static async getAllAdminWithFilter(req: Request, res: Response) {
     const daoCheckout = new DAOCheckout();
     const daoCart = new DAOCart();
     const daoProduct = new DAOProduct();
@@ -63,7 +63,7 @@ class CheckoutController {
     const ucManagerCheckout = new UCManagerCheckout(daoCheckout, daoCart, daoProduct, daoClient);
 
     try {
-      res.status(200).json({ checkouts: ucManagerCheckout.getAll() });
+      res.status(200).json({ checkouts: await ucManagerCheckout.getAllAdminWithFilter(req.query) });
     } catch (error: any) {
       res.status(200).json({ error: error.message });
     };
