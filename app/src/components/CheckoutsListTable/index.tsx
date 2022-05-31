@@ -6,13 +6,13 @@ import DataTable from "react-data-table-component";
 import SortIcon from "@mui/icons-material/ArrowDownward";
 import { useNavigate } from 'react-router-dom';
 
-import { Checkout } from '../../../../../globals/interfaces/checkout';
-import { Client } from '../../../../../globals/interfaces/client';
-import { CartItem } from '../../../../../globals/interfaces/cart';
+import { Checkout } from '../../globals/interfaces/checkout';
+import { Client } from '../../globals/interfaces/client';
+import { CartItem } from '../../globals/interfaces/cart';
 
-import { IUseStates } from '../../states';
-import MaskApply from '../../../../../features/utils/MaskApply';
-import * as Routes from '../../../../../globals/routes';
+import { IUseStates } from '../../screens/admin/CheckoutsList/states';
+import MaskApply from '../../features/utils/MaskApply';
+import * as Routes from '../../globals/routes';
 
 const getValue = (frequency: CartItem['frequency'], items: Checkout['items']): number => {
   let total: number = 0.00;

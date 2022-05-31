@@ -12,10 +12,12 @@ TODO:
 - Definir Title para as páginas;
 
 
-Finished:
-
-
 Bugs:
 
 - Está cadastrando cartão de crédito inativo;
 - Redirecionar cliente para algum lugar após finalizar compra;
+
+
+Finished:
+
+- Colocar thumb no visualizador de produtos;

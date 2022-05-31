@@ -1,7 +1,7 @@
 import React from 'react';
 
 import AdminMainContentBox from '../../../ui/components/pages/AdminMainContentBox';
-import CheckoutsListTable from './components/CheckoutsListTable';
+import CheckoutsListTable from '../../../components/CheckoutsListTable';
 
 import useStates from './states';
 import useAPIs from './apis';

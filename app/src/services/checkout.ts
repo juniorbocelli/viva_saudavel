@@ -7,8 +7,17 @@ export function getDeliveryDateAPI(weekDay: WeekDaysName) {
   return axios.get(Routes.API_CHECKOUT_GET_DELIVERY_DAY.replace(':weekDay', weekDay));
 };
 
-export function getAllCheckoutsAPI(filters: Object = {}) {
-  return axios.get(Routes.API_CHECKOUT_GET_ALL, {
+export function getAllAdminCheckoutsAPI(filters: Object = {}) {
+  return axios.get(Routes.API_CHECKOUT_ADMIN_GET_ALL, {
+    params: {
+      ...filters,
+    }
+  });
+};
+
+export function getAllClientCheckoutsAPI(clientId: string, filters: Object = {}) {
+  return axios.get(Routes.API_CHECKOUT_CLIENT_GET_ALL
+    .replace(':clientId', clientId), {
     params: {
       ...filters,
     }

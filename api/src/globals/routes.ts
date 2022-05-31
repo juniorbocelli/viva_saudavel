@@ -43,7 +43,8 @@ export const API_CREDIT_CARD_REMOVE = `${API_ROOT}/client/:clientId/credit-card/
 
 // Checkout routes
 export const API_CHECKOUT_GET_DELIVERY_DAY = `${API_ROOT}/checkout/delivery-day/:weekDay/`; // GET
-export const API_CHECKOUT_GET_ALL = `${API_ROOT}/checkout/`; // GET
+export const API_CHECKOUT_ADMIN_GET_ALL = `${API_ROOT}/checkout/`; // GET
+export const API_CHECKOUT_CLIENT_GET_ALL = `${API_ROOT}/client/:clientId/checkout/`; // GET
 export const API_CHECKOUT_NEW = `${API_ROOT}/client/:clientId/checkout/`; // POST
 
 // Invoice routes
