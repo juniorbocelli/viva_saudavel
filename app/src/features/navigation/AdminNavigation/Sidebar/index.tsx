@@ -49,7 +49,7 @@ const productMenu: Array<MenuItem> = [
 const checkoutMenu: Array<MenuItem> = [
   {
     label: "Todas as cestas",
-    to: Routes.SCREEN_ADMIN_CHECKOUTS,
+    to: Routes.SCREEN_ADMIN_CHECKOUT_GET_ALL,
   },
 ];
 

@@ -33,14 +33,15 @@ export const SCREEN_ADMIN_PRODUCT_EDIT = `${APP_ROOT}/${ADMIN_PREFIX}/produto/:i
 export const SCREEN_ADMIN_CLIENTS = `${APP_ROOT}/${ADMIN_PREFIX}/clientes/`;
 
 export const SCREEN_CLIENT_GET = `${APP_ROOT}/meus-dados/`;
-export const SCREEN_CLIENT_CHECKOUT = `${APP_ROOT}/finalizar-compra/`;
+export const SCREEN_CLIENT_CHECKOUT_NEW = `${APP_ROOT}/finalizar-compra/`;
 
 export const SCREEN_CLIENT_INVOICE_GET_ALL = `${APP_ROOT}/pedidos/`;
 export const SCREEN_CLIENT_INVOICE_GET = `${APP_ROOT}/pedido/:id/`;
 
 export const SCREEN_CREDIT_CARD_SET = `${APP_ROOT}/cartao-de-credito/`;
 
-export const SCREEN_ADMIN_CHECKOUTS = `${APP_ROOT}/${ADMIN_PREFIX}/checkout/`;
+export const SCREEN_ADMIN_CHECKOUT_GET_ALL = `${APP_ROOT}/${ADMIN_PREFIX}/cestas/`;
+export const SCREEN_CLIENT_CHECKOUT_GET_ALL = `${APP_ROOT}/cestas/`;
 
 export const SCREEN_ADMIN_INVOICE_GET_ALL = `${APP_ROOT}/${ADMIN_PREFIX}/notas/`;
 export const SCREEN_ADMIN_INVOICE_GET = `${APP_ROOT}/${ADMIN_PREFIX}/nota/:id/`;

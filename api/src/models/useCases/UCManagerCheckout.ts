@@ -36,6 +36,8 @@ class UCManagerCheckout {
     return populatedItems;
   };
 
+  // TODO: Populate client methods
+
   public async new(checkout: Checkout) {
     await this.ucManagerCartPersistence.emptyCartByClientId(checkout.client as string);
 
@@ -51,11 +53,13 @@ class UCManagerCheckout {
   };
 
   public async getAllClientWithFilter(clientId: string, filter: Object): Promise<Array<Checkout>> {
-    return this.daoCheckout.selectBy({ client: clientId, ...filter });
+    const checkouts = await this.daoCheckout.selectBy({ client: clientId, ...filter });
+    
+    return checkouts;
   };
 
   public async getAllAdminWithFilter(filter: Object): Promise<Array<Checkout>> {
-    return this.daoCheckout.selectBy(filter);
+    return this.daoCheckout.selectBy({});
   };
 
   public async remove(checkout: Checkout | string) {

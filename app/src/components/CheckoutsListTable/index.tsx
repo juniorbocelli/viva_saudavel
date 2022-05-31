@@ -1,7 +1,4 @@
 import React from 'react';
-import {
-  Button,
-} from '@mui/material';
 import DataTable from "react-data-table-component";
 import SortIcon from "@mui/icons-material/ArrowDownward";
 import { useNavigate } from 'react-router-dom';
@@ -10,7 +7,7 @@ import { Checkout } from '../../globals/interfaces/checkout';
 import { Client } from '../../globals/interfaces/client';
 import { CartItem } from '../../globals/interfaces/cart';
 
-import { IUseStates } from '../../screens/admin/CheckoutsList/states';
+import { IUseStates } from '../../screens/admin/AdminCheckoutsList/states';
 import MaskApply from '../../features/utils/MaskApply';
 import * as Routes from '../../globals/routes';
 
