@@ -1,0 +1,14 @@
+TODO:
+
+- Enviar e-mails;
+- Cron;
+- Colocar thumb no visualizador de produtos;
+- Mostrar lista de cestas para cliente;
+- Mostrar cesta para cliente;
+- Cron que procura cestas e cria pedidos;
+- Função editar pedido para admin;
+- Função bloquear cliente para admin;
+- Função recuperar senha para cliente;
+
+
+Finished:
