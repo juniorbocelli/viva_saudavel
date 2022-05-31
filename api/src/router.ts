@@ -49,9 +49,9 @@ router.get(Routes.API_CREDIT_CARD_GET_ALL, Auth.adminVerify, CreditCardControlle
 // TODO: Join with filter route
 router.get(Routes.API_CREDIT_CARD_GET_ALL_FROM_CLIENT, Auth.tokenVerify, CreditCardController.getAllFromClient);
 router.post(Routes.API_CREDIT_CARD_NEW, Auth.tokenVerify, CreditCardController.new);
-router.put(Routes.API_CREDIT_CARD_UPDATE, Auth.adminVerify, CreditCardController.update);
-router.patch(Routes.API_CREDIT_CARD_ACTIVATE, Auth.adminVerify, CreditCardController.activateCard);
-router.delete(Routes.API_CREDIT_CARD_REMOVE, Auth.adminVerify, CreditCardController.remove);
+router.put(Routes.API_CREDIT_CARD_UPDATE, Auth.tokenVerify, CreditCardController.update);
+router.patch(Routes.API_CREDIT_CARD_ACTIVATE, Auth.tokenVerify, CreditCardController.activateCard);
+router.delete(Routes.API_CREDIT_CARD_REMOVE, Auth.tokenVerify, CreditCardController.remove);
 
 // Checkout routes
 router.get(Routes.API_CHECKOUT_GET_DELIVERY_DAY, Auth.tokenVerify, CheckoutController.getDeliveryDate);
@@ -61,7 +61,7 @@ router.post(Routes.API_CHECKOUT_NEW, Auth.tokenVerify, CheckoutController.new);
 // Invoice routes
 router.get(Routes.API_INVOICE_ADMIN_GET, Auth.adminVerify, InvoiceController.getAdminInvoice);
 router.get(Routes.API_INVOICE_CLIENT_GET, Auth.tokenVerify, InvoiceController.getClientInvoice);
-router.get(Routes.API_INVOICE_CLIENT_GET_ALL, Auth.adminVerify, InvoiceController.getAllClientWithFilter);
+router.get(Routes.API_INVOICE_CLIENT_GET_ALL, Auth.tokenVerify, InvoiceController.getAllClientWithFilter);
 router.get(Routes.API_INVOICE_ADMIN_GET_ALL, Auth.adminVerify, InvoiceController.getAllAdminWithFilter);
 
 export default router;

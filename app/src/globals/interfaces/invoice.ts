@@ -29,6 +29,8 @@ export interface InvoiceProductData {
   ingredients: string;
   validate: string;
 
+  thumb: string;
+
   price: number;
 };
 

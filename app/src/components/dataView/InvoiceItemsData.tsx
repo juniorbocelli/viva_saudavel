@@ -36,7 +36,7 @@ const InvoiceItemData: React.FC<IInvoiceItemsData> = ({ items }) => {
         Produtos
       </Typography>
       {
-        items.map((item) => {
+        items.map((item, key) => {
           return (
             <Box
               sx={
@@ -45,23 +45,36 @@ const InvoiceItemData: React.FC<IInvoiceItemsData> = ({ items }) => {
                   p: theme.spacing(2)
                 }
               }
+
+              key={key}
             >
               <Title>
                 {item.name}
               </Title>
 
-              <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
-                <Paragraph>
-                  Produtor: {item.producer}
-                </Paragraph>
+              <Box sx={{ display: 'flex', }}>
 
-                <Paragraph>
-                  Quantidade: {item.measure}
-                </Paragraph>
+                <Box sx={{ display: { xs: 'block', md: 'none' } }}>
+                  <img src={item.thumb} alt={`Imagem do produto ${item.name}`} width='100px' />
+                </Box>
 
-                <Paragraph>
-                  Preço: {MaskApply.maskMoney(item.price)}
-                </Paragraph>
+                <Box sx={{ display: { xs: 'none', md: 'block' } }}>
+                  <img src={item.thumb} alt={`Imagem do produto ${item.name}`} width='170px' />
+                </Box>
+
+                <Box>
+                  <Paragraph>
+                    Produtor: {item.producer}
+                  </Paragraph>
+
+                  <Paragraph>
+                    Quantidade: {item.measure}
+                  </Paragraph>
+
+                  <Paragraph>
+                    Preço: {MaskApply.maskMoney(item.price)}
+                  </Paragraph>
+                </Box>
               </Box>
             </Box>
           )

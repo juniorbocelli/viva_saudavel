@@ -9,6 +9,13 @@ TODO:
 - Função editar pedido para admin;
 - Função bloquear cliente para admin;
 - Função recuperar senha para cliente;
+- Definir Title para as páginas;
 
 
 Finished:
+
+
+Bugs:
+
+- Está cadastrando cartão de crédito inativo;
+- Redirecionar cliente para algum lugar após finalizar compra;

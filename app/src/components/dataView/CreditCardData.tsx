@@ -72,7 +72,7 @@ const CreditCardData: React.FC<ICreditCardDataProps> = ({ creditCard }) => {
         </Paragraph>
 
         <Box sx={{ display: 'flex' }}>
-          <Box>
+          <Box sx={{ mr: theme.spacing(4) }}>
             <Title>
               Vencimento:
             </Title>

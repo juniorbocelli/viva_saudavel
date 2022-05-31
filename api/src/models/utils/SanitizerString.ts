@@ -38,7 +38,7 @@ class SanitizerString {
   };
 
   public static objectIdToStringOrNull(value: mongoose.Types.ObjectId | string | null): string | null {
-    if (value === null || toString.call(value) === '[object String]')
+    if (value === null || toString.call(value) === '[object String]' || value)
       return this.stringOrNull(value);
     
       return value.toString();

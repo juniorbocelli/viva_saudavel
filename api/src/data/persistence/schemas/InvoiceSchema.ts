@@ -162,6 +162,10 @@ const invoiceSchema = new mongoose.Schema<Invoice>({
         type: String,
         required: [true, 'A validade do produto é obrigatória'],
       },
+      thumb: {
+        type: String,
+        required: [true, 'A miniatura do produto é obrigatória'],
+      },
 
       price: {
         type: Number,

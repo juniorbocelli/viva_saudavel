@@ -23,7 +23,8 @@ class ProductController {
         return res.status(200).json({ error: [e.message] });
       };
 
-      const newProduct = Product.getFromObject(JSON.parse(uploadResult.body.product) as Product);
+      const p: Product = JSON.parse(uploadResult.body.product);
+      const newProduct = Product.getNew(p.name, p.producer, p.measure, p.description, p.ingredients, p.validate, p.filters, p.price, [], null, p.quantity);
 
       uploadedFiles = uploadResult.files;
 
@@ -84,8 +85,9 @@ class ProductController {
 
       if (previousProduct === null)
         throw new Error("Produto inválido");
-        
-      const receivedProduct = Product.getFromObject(JSON.parse(uploadResult.body.product) as Product);
+
+      const p: Product = JSON.parse(uploadResult.body.product);
+      const receivedProduct = Product.getNew(p.name, p.producer, p.measure, p.description, p.ingredients, p.validate, p.filters, p.price, [], null, p.quantity);
       receivedProduct.id = previousProduct.id;
 
       // Delete removed images and return the list of remaining images
@@ -110,13 +112,10 @@ class ProductController {
 
       // If currentThumb = null, else define new thumb
       if (currentThumb === null) {
-        receivedProduct.thumb = null;
-
         let firstImage = `${receivedProduct.images[0].split('/').at(-1)}`;
-        let thumbName = `${firstImage.split('.')[0]}_thumb.${firstImage.split('.')[1]}`;
-
-        // res.status(200).json({ caralho: thumbName })
-        // return;
+        // let thumbName = `${firstImage.split('.')[0]}_thumb.${firstImage.split('.')[1]}`;
+        
+        let thumbName = previousProduct.thumb?.split('/').at(-1);
 
         sharp(`${manageImages.uploadFilePath}/${firstImage}`)
           .resize(400, 400)
