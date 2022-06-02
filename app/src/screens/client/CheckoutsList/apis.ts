@@ -1,7 +1,7 @@
 import { getAllClientCheckoutsAPI } from '../../../services/checkout';
 
 import { IUseStates } from './states';
-import { Checkout } from '../../../globals/interfaces/checkout';
+import { CheckoutAPI } from '../../../globals/interfaces/checkout';
 
 export interface IUseAPIs {
   getAllCheckouts: (clientId: string) => void;
@@ -20,7 +20,7 @@ export default function useAPIs(states: IUseStates): IUseAPIs {
           return;
         };
 
-        const checkouts: Array<Checkout> = response.data.checkouts;
+        const checkouts: Array<CheckoutAPI> = response.data.checkouts;
 
         states.setCheckouts(checkouts);
       })

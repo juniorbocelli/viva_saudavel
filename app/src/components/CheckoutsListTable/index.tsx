@@ -3,42 +3,45 @@ import DataTable from "react-data-table-component";
 import SortIcon from "@mui/icons-material/ArrowDownward";
 import { useNavigate } from 'react-router-dom';
 
-import { Checkout } from '../../globals/interfaces/checkout';
+import { CheckoutAPI } from '../../globals/interfaces/checkout';
 import { Client } from '../../globals/interfaces/client';
-import { CartItem } from '../../globals/interfaces/cart';
+import { CartItemAPI } from '../../globals/interfaces/cart';
+import { Product } from '../../globals/interfaces/product';
 
 import { IUseStates } from '../../screens/admin/AdminCheckoutsList/states';
 import MaskApply from '../../features/utils/MaskApply';
 import * as Routes from '../../globals/routes';
 
-const getValue = (frequency: CartItem['frequency'], items: Checkout['items']): number => {
+import { useAuth } from '../../features/auth/context';
+
+const getValue = (frequency: CartItemAPI['frequency'], items: CheckoutAPI['items']): number => {
   let total: number = 0.00;
 
   items.forEach(item => {
     if (item.frequency === frequency)
-      total = total + item.price;
+      total = total + (item.product as Product).price;
   });
 
   return total;
 };
 
-const columns: any = [
+const columns: Array<any> = [
   {
     name: "Cliente",
-    selector: (row: Checkout) => (row.client as Client).name,
+    selector: (row: CheckoutAPI) => (row.client as Client).name,
     sortable: true,
     width: "350px",
     wrap: true,
   },
   {
     name: "Dia de entrega",
-    selector: (row: Checkout) => MaskApply.getPTWeekDayFromEN(row.deliveryDay),
+    selector: (row: CheckoutAPI) => MaskApply.getPTWeekDayFromEN(row.deliveryDay),
     sortable: true,
   },
 
   {
-    name: "Única",
-    cell: (row: Checkout) => {
+    name: "Uma vez",
+    cell: (row: CheckoutAPI) => {
 
       return `R$ ${MaskApply.maskMoney(getValue('once', row.items))}`;
     },
@@ -48,7 +51,7 @@ const columns: any = [
 
   {
     name: "Mensal",
-    cell: (row: Checkout) => {
+    cell: (row: CheckoutAPI) => {
 
       return `R$ ${MaskApply.maskMoney(getValue('weekly', row.items))}`;
     },
@@ -58,7 +61,7 @@ const columns: any = [
 
   {
     name: "Quinzenal",
-    cell: (row: Checkout) => {
+    cell: (row: CheckoutAPI) => {
 
       return `R$ ${MaskApply.maskMoney(getValue('biweekly', row.items))}`;
     },
@@ -68,7 +71,7 @@ const columns: any = [
 
   {
     name: "Mensal",
-    cell: (row: Checkout) => {
+    cell: (row: CheckoutAPI) => {
 
       return `R$ ${MaskApply.maskMoney(getValue('monthly', row.items))}`;
     },
@@ -77,10 +80,22 @@ const columns: any = [
   },
 
   {
-    name: "Criada",
-    selector: (row: Checkout) => MaskApply.printDateFromTimestamp(row.createdAt!),
+    name: "Criada em",
+    selector: (row: CheckoutAPI) => MaskApply.printDateFromTimestamp(row.createdAt!),
     sortable: true,
     wrap: true,
+  },
+
+  {
+    name: "Ativa?",
+    cell: (row: CheckoutAPI) => {
+      if (row.isActive)
+        return 'Ativa';
+      else
+        return 'Inativa';
+    },
+    sortable: true,
+    compact: true,
   },
 ];
 
@@ -90,8 +105,12 @@ interface ICheckoutsListTableProps {
 
 const CheckoutssListTable: React.FC<ICheckoutsListTableProps> = ({ checkouts }) => {
   const navigation = useNavigate();
+  const auth = useAuth();
 
-  const handleRowClick = (row: Checkout) => {
+  if (!auth.isAdmin())
+    columns.splice(0, 1);
+
+  const handleRowClick = (row: CheckoutAPI) => {
     console.log("Row data", row);
     navigation(Routes.SCREEN_ADMIN_PRODUCT_EDIT.replace(':id', row.id as string));
   };
@@ -111,7 +130,6 @@ const CheckoutssListTable: React.FC<ICheckoutsListTableProps> = ({ checkouts }) 
         striped
         onRowClicked={handleRowClick}
       />
-
     </div>
   );
 };

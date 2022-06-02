@@ -1,5 +1,5 @@
-import { Checkout } from '../../../globals/interfaces/checkout';
+import { CheckoutAPI } from '../../../globals/interfaces/checkout';
 
-export type CheckoutsState = Array<Checkout>;
+export type CheckoutsState = Array<CheckoutAPI>;
 
 export type CheckoutFilterState = Object | undefined;
