@@ -40,7 +40,6 @@ class UCManagerCheckout {
     return populatedItems;
   };
 
-  // TODO: Populate client methods
   private async populateClient(clientCheckout: Checkout['client']): Promise<Client> {
     let client: Client | null;
 
@@ -54,6 +53,13 @@ class UCManagerCheckout {
     };
 
     return client;
+  };
+
+  public async populateAll(checkout: Checkout): Promise<Checkout> {
+    checkout.items = await this.populateProducts(checkout.items);
+    checkout.client = await this.populateClient(checkout.client);
+
+    return checkout;
   };
 
   public async new(checkout: Checkout) {
@@ -73,8 +79,9 @@ class UCManagerCheckout {
   public async getAllClientWithFilter(clientId: string, filter: Object): Promise<Array<Checkout>> {
     const checkouts = await this.daoCheckout.selectBy({ client: clientId, ...filter });
 
-    for (let checkout of checkouts)
-      checkout.items = await this.populateProducts(checkout.items);
+    for (let checkout of checkouts) {
+      checkout = await this.populateAll(checkout)
+    };
 
     return checkouts;
   };
@@ -83,9 +90,7 @@ class UCManagerCheckout {
     const checkouts = await this.daoCheckout.selectBy(filter);
 
     for (let checkout of checkouts) {
-      checkout.items = await this.populateProducts(checkout.items);
-
-      checkout.client = await this.populateClient(checkout.client);
+      checkout = await this.populateAll(checkout)
     };
 
     return checkouts;

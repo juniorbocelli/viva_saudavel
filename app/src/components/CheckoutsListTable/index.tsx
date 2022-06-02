@@ -1,4 +1,9 @@
 import React from 'react';
+import {
+  Chip,
+
+  useTheme,
+} from '@mui/material';
 import DataTable from "react-data-table-component";
 import SortIcon from "@mui/icons-material/ArrowDownward";
 import { useNavigate } from 'react-router-dom';
@@ -25,7 +30,7 @@ const getValue = (frequency: CartItemAPI['frequency'], items: CheckoutAPI['items
   return total;
 };
 
-const columns: Array<any> = [
+const columnsAdmin: Array<any> = [
   {
     name: "Cliente",
     selector: (row: CheckoutAPI) => (row.client as Client).name,
@@ -33,6 +38,53 @@ const columns: Array<any> = [
     width: "350px",
     wrap: true,
   },
+
+  {
+    name: "Dia de entrega",
+    selector: (row: CheckoutAPI) => MaskApply.getPTWeekDayFromEN(row.deliveryDay),
+    sortable: true,
+  },
+
+  {
+    name: "Criada em",
+    selector: (row: CheckoutAPI) => MaskApply.printDateFromTimestamp(row.createdAt!),
+    sortable: true,
+    wrap: true,
+  },
+
+  {
+    name: "Ativa?",
+    cell: (row: CheckoutAPI) => {
+      if (row.isActive)
+        return (
+          <Chip
+            label='Ativa'
+            color='primary'
+            size='small'
+          />
+        );
+      else
+        return (
+          <Chip
+            label='Inativa'
+            color='secondary'
+            size='small'
+          />
+        );
+    },
+    sortable: true,
+    compact: true,
+  },
+];
+
+const columnsClient: Array<any> = [
+  {
+    name: "Criada em",
+    selector: (row: CheckoutAPI) => MaskApply.printDateFromTimestamp(row.createdAt!),
+    sortable: true,
+    wrap: true,
+  },
+
   {
     name: "Dia de entrega",
     selector: (row: CheckoutAPI) => MaskApply.getPTWeekDayFromEN(row.deliveryDay),
@@ -80,19 +132,24 @@ const columns: Array<any> = [
   },
 
   {
-    name: "Criada em",
-    selector: (row: CheckoutAPI) => MaskApply.printDateFromTimestamp(row.createdAt!),
-    sortable: true,
-    wrap: true,
-  },
-
-  {
     name: "Ativa?",
     cell: (row: CheckoutAPI) => {
       if (row.isActive)
-        return 'Ativa';
+        return (
+          <Chip
+            label='Ativa'
+            color='primary'
+            size='small'
+          />
+        );
       else
-        return 'Inativa';
+        return (
+          <Chip
+            label='Inativa'
+            color='secondary'
+            size='small'
+          />
+        );
     },
     sortable: true,
     compact: true,
@@ -107,9 +164,6 @@ const CheckoutssListTable: React.FC<ICheckoutsListTableProps> = ({ checkouts }) 
   const navigation = useNavigate();
   const auth = useAuth();
 
-  if (!auth.isAdmin())
-    columns.splice(0, 1);
-
   const handleRowClick = (row: CheckoutAPI) => {
     console.log("Row data", row);
     navigation(Routes.SCREEN_ADMIN_PRODUCT_EDIT.replace(':id', row.id as string));
@@ -121,7 +175,7 @@ const CheckoutssListTable: React.FC<ICheckoutsListTableProps> = ({ checkouts }) 
         title="Lista de cestas"
         responsive={false}
 
-        columns={columns}
+        columns={auth.isAdmin() ? columnsAdmin : columnsClient}
         data={checkouts}
         defaultSortAsc={true}
         sortIcon={<SortIcon />}
