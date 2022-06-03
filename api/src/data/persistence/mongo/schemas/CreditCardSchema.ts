@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import CreditCard from '../../../models/entities/CreditCard';
+import CreditCard from '../../../../models/entities/CreditCard';
 
 const creditCardSchema = new mongoose.Schema<CreditCard>({
   client: {

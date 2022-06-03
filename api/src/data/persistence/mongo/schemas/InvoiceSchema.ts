@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import Invoice from '../../../models/entities/Invoice';
+import Invoice from '../../../../models/entities/Invoice';
 
 const invoiceSchema = new mongoose.Schema<Invoice>({
   checkout: {

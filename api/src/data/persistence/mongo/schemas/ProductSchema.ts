@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import Product from '../../../models/entities/Product';
+import Product from '../../../../models/entities/Product';
 
 const productSchema = new mongoose.Schema<Product>({
   name: {

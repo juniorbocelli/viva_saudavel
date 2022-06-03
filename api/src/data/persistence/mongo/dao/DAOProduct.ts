@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 
 import DAO from '../../../utils/DAO';
-import ProductSchema from '../../schemas/ProductSchema';
+import ProductSchema from '../schemas/ProductSchema';
 import Product from '../../../../models/entities/Product';
 
 class DAOProduct implements DAO<Product, string> {

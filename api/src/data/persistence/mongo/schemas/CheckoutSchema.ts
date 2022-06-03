@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import Checkout from '../../../models/entities/Checkout';
+import Checkout from '../../../../models/entities/Checkout';
 
 const checkoutSchema = new mongoose.Schema<Checkout>({
   client: {

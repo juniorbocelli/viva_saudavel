@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 
 import DAO from '../../../utils/DAO';
-import CheckoutSchema from '../../schemas/CheckoutSchema';
+import CheckoutSchema from '../schemas/CheckoutSchema';
 import Checkout from '../../../../models/entities/Checkout';
 
 class DAOCheckout implements DAO<Checkout, string> {

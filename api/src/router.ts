@@ -55,8 +55,10 @@ router.delete(Routes.API_CREDIT_CARD_REMOVE, Auth.tokenVerify, CreditCardControl
 
 // Checkout routes
 router.get(Routes.API_CHECKOUT_GET_DELIVERY_DAY, Auth.tokenVerify, CheckoutController.getDeliveryDate);
-router.get(Routes.API_CHECKOUT_CLIENT_GET_ALL, Auth.tokenVerify, CheckoutController.getAllClientWithFilter);
-router.get(Routes.API_CHECKOUT_ADMIN_GET_ALL, Auth.adminVerify, CheckoutController.getAllAdminWithFilter);
+router.get(Routes.API_CHECKOUT_CLIENT_GET_ALL, Auth.tokenVerify, CheckoutController.getAllCheckoutsWithFilterClient);
+router.get(Routes.API_CHECKOUT_ADMIN_GET_ALL, Auth.adminVerify, CheckoutController.getAllCheckoutsWithFilterAdmin);
+router.get(Routes.API_CHECKOUT_CLIENT_GET, Auth.tokenVerify, CheckoutController.getCheckoutClient);
+router.get(Routes.API_CHECKOUT_ADMIN_GET, Auth.adminVerify, CheckoutController.getCheckoutAdmin);
 router.post(Routes.API_CHECKOUT_NEW, Auth.tokenVerify, CheckoutController.new);
 
 // Invoice routes

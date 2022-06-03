@@ -54,7 +54,7 @@ class CheckoutController {
     };
   };
 
-  static async getAllAdminWithFilter(req: Request, res: Response) {
+  static async getAllCheckoutsWithFilterAdmin(req: Request, res: Response) {
     const daoCheckout = new DAOCheckout();
     const daoCart = new DAOCart();
     const daoProduct = new DAOProduct();
@@ -63,13 +63,13 @@ class CheckoutController {
     const ucManagerCheckout = new UCManagerCheckout(daoCheckout, daoCart, daoProduct, daoClient);
 
     try {
-      res.status(200).json({ checkouts: await ucManagerCheckout.getAllAdminWithFilter(req.query) });
+      res.status(200).json({ checkouts: await ucManagerCheckout.getAllCheckoutWithFilterAdmin(req.query) });
     } catch (error: any) {
       res.status(200).json({ error: error.message });
     };
   };
 
-  static async getAllClientWithFilter(req: Request, res: Response) {
+  static async getAllCheckoutsWithFilterClient(req: Request, res: Response) {
     const daoCheckout = new DAOCheckout();
     const daoCart = new DAOCart();
     const daoProduct = new DAOProduct();
@@ -80,7 +80,41 @@ class CheckoutController {
     const ucManagerCheckout = new UCManagerCheckout(daoCheckout, daoCart, daoProduct, daoClient);
 
     try {
-      res.status(200).json({ checkouts: await ucManagerCheckout.getAllClientWithFilter(clientId, req.query) });
+      res.status(200).json({ checkouts: await ucManagerCheckout.getAllCheckoutWithFilterClient(clientId, req.query) });
+    } catch (error: any) {
+      res.status(200).json({ error: error.message });
+    };
+  };
+
+  static async getCheckoutAdmin(req: Request, res: Response) {
+    const daoCheckout = new DAOCheckout();
+    const daoCart = new DAOCart();
+    const daoProduct = new DAOProduct();
+    const daoClient = new DAOClient();
+
+    const { id } = req.params;
+
+    const ucManagerCheckout = new UCManagerCheckout(daoCheckout, daoCart, daoProduct, daoClient);
+
+    try {
+      res.status(200).json({ checkout: await ucManagerCheckout.getCheckoutAdmin(id) });
+    } catch (error: any) {
+      res.status(200).json({ error: error.message });
+    };
+  };
+
+  static async getCheckoutClient(req: Request, res: Response) {
+    const daoCheckout = new DAOCheckout();
+    const daoCart = new DAOCart();
+    const daoProduct = new DAOProduct();
+    const daoClient = new DAOClient();
+
+    const { clientId, id } = req.params;
+
+    const ucManagerCheckout = new UCManagerCheckout(daoCheckout, daoCart, daoProduct, daoClient);
+
+    try {
+      res.status(200).json({ checkout: await ucManagerCheckout.getCheckoutClient(clientId, id) });
     } catch (error: any) {
       res.status(200).json({ error: error.message });
     };
