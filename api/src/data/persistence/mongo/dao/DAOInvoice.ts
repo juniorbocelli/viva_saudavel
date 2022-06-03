@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 
 import DAO from '../../../utils/DAO';
-import InvoiceSchema from '../../schemas/InvoiceSchema';
+import InvoiceSchema from '../schemas/InvoiceSchema';
 import Invoice from '../../../../models/entities/Invoice';
 
 class DAOInvoice implements DAO<Invoice, string> {

@@ -76,7 +76,7 @@ class UCManagerCheckout {
     return this.daoCheckout.selectAll();
   };
 
-  public async getAllClientWithFilter(clientId: string, filter: Object): Promise<Array<Checkout>> {
+  public async getAllCheckoutWithFilterClient(clientId: string, filter: Object): Promise<Array<Checkout>> {
     const checkouts = await this.daoCheckout.selectBy({ client: clientId, ...filter });
 
     for (let checkout of checkouts) {
@@ -86,7 +86,7 @@ class UCManagerCheckout {
     return checkouts;
   };
 
-  public async getAllAdminWithFilter(filter: Object): Promise<Array<Checkout>> {
+  public async getAllCheckoutWithFilterAdmin(filter: Object): Promise<Array<Checkout>> {
     const checkouts = await this.daoCheckout.selectBy(filter);
 
     for (let checkout of checkouts) {
@@ -101,6 +101,24 @@ class UCManagerCheckout {
       return this.daoCheckout.delete(checkout.id as string);
     else
       return this.daoCheckout.delete(checkout);
+  };
+
+  public async getCheckoutClient(clientId: string, id: string): Promise<Checkout> {
+    const checkouts = await this.daoCheckout.selectBy({ client: clientId, _id: id });
+
+    if (checkouts.length === 0)
+      throw new Error("Carrinho inválido");
+
+    return checkouts[0];
+  };
+
+  public async getCheckoutAdmin(id: string): Promise<Checkout> {
+    const checkout = await this.daoCheckout.select(id);
+
+    if (checkout === null)
+      throw new Error("Carrinho inválido");
+
+    return checkout;
   };
 };
 

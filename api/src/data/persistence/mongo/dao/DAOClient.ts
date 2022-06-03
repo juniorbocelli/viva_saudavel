@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 
 import DAO from '../../../utils/DAO';
-import ClientSchema from '../../schemas/ClientSchema';
+import ClientSchema from '../schemas/ClientSchema';
 import Client from '../../../../models/entities/Client';
 
 class DAOClient implements DAO<Client, string> {

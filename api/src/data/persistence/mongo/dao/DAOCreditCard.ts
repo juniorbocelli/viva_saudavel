@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 
 import DAO from '../../../utils/DAO';
-import CreditCardSchema from '../../schemas/CreditCardSchema';
+import CreditCardSchema from '../schemas/CreditCardSchema';
 import CreditCard from '../../../../models/entities/CreditCard';
 
 class DAOCreditCard implements DAO<CreditCard, string> {

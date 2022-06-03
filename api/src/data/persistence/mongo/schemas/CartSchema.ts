@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import Cart from '../../../models/entities/Cart';
+import Cart from '../../../../models/entities/Cart';
 
 const cartSchema = new mongoose.Schema<Cart>({
   client: {
