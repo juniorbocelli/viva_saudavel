@@ -7,7 +7,7 @@ export function getDeliveryDateAPI(weekDay: WeekDaysName) {
   return axios.get(Routes.API_CHECKOUT_GET_DELIVERY_DAY.replace(':weekDay', weekDay));
 };
 
-export function getAllAdminCheckoutsAPI(filters: Object = {}) {
+export function getAllCheckoutsAdminAPI(filters: Object = {}) {
   return axios.get(Routes.API_CHECKOUT_ADMIN_GET_ALL, {
     params: {
       ...filters,
@@ -15,13 +15,24 @@ export function getAllAdminCheckoutsAPI(filters: Object = {}) {
   });
 };
 
-export function getAllClientCheckoutsAPI(clientId: string, filters: Object = {}) {
+export function getAllCheckoutsClientAPI(clientId: string, filters: Object = {}) {
   return axios.get(Routes.API_CHECKOUT_CLIENT_GET_ALL
     .replace(':clientId', clientId), {
     params: {
       ...filters,
     }
   });
+};
+
+export function getCheckoutAdminAPI(id: string) {
+  return axios.get(Routes.API_CHECKOUT_ADMIN_GET
+    .replace(':id', id));
+};
+
+export function getCheckoutClientAPI(clientId: string, id: string) {
+  return axios.get(Routes.API_CHECKOUT_CLIENT_GET
+    .replace(':clientId', clientId)
+    .replace(':id', id));
 };
 
 export function newCheckoutAPI(clientId: string, checkout: CheckoutAPI) {
