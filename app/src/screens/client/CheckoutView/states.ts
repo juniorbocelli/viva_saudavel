@@ -9,13 +9,14 @@ import {
   ShippingValueState,
   ActiveCreditCardState,
 
-  AllItemsState,
+  CheckoutState,
+
   OnceItemsState,
   WeeklyItemsState,
   BiweeklyItemsState,
   MonthlyItemsState,
 
-  ProductsPriceState,
+  PricesState,
 } from './types';
 
 export interface IUseStates {
@@ -34,8 +35,8 @@ export interface IUseStates {
   activeCreditCard: ActiveCreditCardState;
   setActiveCreditCard: React.Dispatch<React.SetStateAction<ActiveCreditCardState>>;
 
-  allItems: AllItemsState;
-  setAllItems: React.Dispatch<React.SetStateAction<AllItemsState>>;
+  checkout: CheckoutState;
+  setCheckout: React.Dispatch<React.SetStateAction<CheckoutState>>;
 
   onceItems: OnceItemsState;
   setOnceItems: React.Dispatch<React.SetStateAction<OnceItemsState>>;
@@ -49,8 +50,8 @@ export interface IUseStates {
   monthlyItems: MonthlyItemsState;
   setMonthlyItems: React.Dispatch<React.SetStateAction<MonthlyItemsState>>;
 
-  productsPrice: ProductsPriceState;
-  setProductsPrice: React.Dispatch<React.SetStateAction<ProductsPriceState>>;
+  prices: PricesState;
+  setPrices: React.Dispatch<React.SetStateAction<PricesState>>;
 };
 
 export default function useStates(): IUseStates {
@@ -62,13 +63,19 @@ export default function useStates(): IUseStates {
 
   const [activeCreditCard, setActiveCreditCard] = React.useState<ActiveCreditCardState>(null);
 
-  const [allItems, setAllItems] = React.useState<AllItemsState>([]);
+  const [checkout, setCheckout] = React.useState<CheckoutState>(null);
+
   const [onceItems, setOnceItems] = React.useState<OnceItemsState>([]);
   const [weeklyItems, setWeeklyItems] = React.useState<WeeklyItemsState>([]);
   const [biweeklyItems, setBiweeklyItems] = React.useState<BiweeklyItemsState>([]);
   const [monthlyItems, setMonthlyItems] = React.useState<MonthlyItemsState>([]);
 
-  const [productsPrice, setProductsPrice] = React.useState<ProductsPriceState>(0);
+  const [prices, setPrices] = React.useState<PricesState>({
+    once: 0,
+    weekly: 0,
+    biweekly: 0,
+    monthly: 0,
+  });
 
   return {
     isQueryingAPI,
@@ -86,8 +93,8 @@ export default function useStates(): IUseStates {
     activeCreditCard,
     setActiveCreditCard,
 
-    allItems,
-    setAllItems,
+    checkout,
+    setCheckout,
 
     onceItems,
     setOnceItems,
@@ -101,7 +108,7 @@ export default function useStates(): IUseStates {
     monthlyItems,
     setMonthlyItems,
 
-    productsPrice,
-    setProductsPrice,
+    prices,
+    setPrices,
   };
 };

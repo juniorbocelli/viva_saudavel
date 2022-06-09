@@ -13,12 +13,13 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import EditIcon from '@mui/icons-material/Edit';
 import HomeIcon from '@mui/icons-material/Home';
 
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 
 import MainContentBox from '../../../ui/components/pages/MainContentBox';
 import CheckoutItem from '../../../ui/components/CheckoutItem';
 import CreditCardLogo from '../../../ui/components/CreditCardLogo';
+import FrequencyResume from './components/FrequencyResume';
 
 import useStates from './states';
 import { useGlobalContext } from '../../../features/globalContext/context';
@@ -35,13 +36,17 @@ const CheckoutView: React.FC<React.ReactFragment> = () => {
   const auth = useAuth();
   const theme = useTheme();
   const navigate = useNavigate();
+  const params = useParams();
 
+  // Effects
   React.useEffect(() => {
-    if (auth.loggedClient) {
-      apis.getShippingValueByCep(auth.loggedClient.address.cep);
-      apis.getActiveCreditCard(auth.loggedClient.id!);
-    };
-  }, [auth.loggedClient]);
+    if (typeof (params.id) !== 'undefined')
+      if (auth.loggedClient) {
+        apis.getShippingValueByCep(auth.loggedClient.address.cep);
+        apis.getActiveCreditCard(auth.loggedClient.id!);
+        apis.getCheckoutClient(auth.loggedClient.id as string, params.id)
+      };
+  }, [auth.loggedClient, params.id]);
 
   const cartVaLue = (): number => {
     return globalContext['cart'].getTotalCartPrice(globalContext['cart'].cart);
@@ -238,9 +243,54 @@ const CheckoutView: React.FC<React.ReactFragment> = () => {
                   }
                 }
               >
-                Resumo do pedido
+                Resumo da Cesta
               </Typography>
 
+
+              <Stack
+                direction={{ xs: 'column', sm: 'row' }}
+                spacing={{ xs: 1, sm: 2, md: 4 }}
+
+                sx={
+                  {
+                    mb: theme.spacing(3)
+                  }
+                }
+              >
+
+                <Box>
+                  <Typography
+                    variant='h6'
+                    component='span'
+                    color='primary'
+
+                    sx={
+                      {
+                        fontSize: { xs: '1.3rem', md: '1.5rem' }
+                      }
+                    }
+                  >
+                    Dia de entrega:
+                  </Typography>
+                </Box>
+                <Box>
+                  <Typography
+                    variant='h6'
+                    component='span'
+                    color='secondary'
+                    sx={
+                      {
+                        fontSize: { xs: '1.4rem', md: '1.6rem' }
+                      }
+                    }
+                  >
+                    {
+                      states.checkout &&
+                      MaskApply.getPTWeekDayFromEN(states.checkout.deliveryDay)
+                    }
+                  </Typography>
+                </Box>
+              </Stack>
 
               <Stack
                 direction={{ xs: 'column', sm: 'row' }}
@@ -264,15 +314,14 @@ const CheckoutView: React.FC<React.ReactFragment> = () => {
                       }
                     }
                   >
-                    Próxima entrega:
+                    Criada em:
                   </Typography>
                 </Box>
                 <Box>
                   <Typography
                     variant='h6'
                     component='span'
-                    color={states.deliveryDay === null ? 'error' : 'secondary'}
-
+                    color='secondary'
                     sx={
                       {
                         fontSize: { xs: '1.4rem', md: '1.6rem' }
@@ -280,42 +329,12 @@ const CheckoutView: React.FC<React.ReactFragment> = () => {
                     }
                   >
                     {
-                      states.deliveryDay === null ?
-                        'Escolha o dia da entrega...' :
-                        MaskApply.printDateFromTimestamp(states.deliveryDay)}
+                      states.checkout &&
+                      MaskApply.printDateFromTimestamp(states.checkout.createdAt!)
+                    }
                   </Typography>
                 </Box>
               </Stack>
-
-              <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: theme.spacing(1.0) }}>
-                <Typography
-                  variant='h6'
-                  component='span'
-                  color='primary'
-
-                  sx={
-                    {
-                      fontSize: { xs: '1.5rem', md: '1.7rem' }
-                    }
-                  }
-                >
-                  {`${globalContext['cart'].cart.length} itens`}
-                </Typography>
-
-                <Typography
-                  variant='h6'
-                  component='span'
-                  color='primary'
-
-                  sx={
-                    {
-                      fontSize: { xs: '1.5rem', md: '1.7rem' }
-                    }
-                  }
-                >
-                  {`R$ ${MaskApply.maskMoney(globalContext['cart'].getTotalCartPrice(globalContext['cart'].cart))}`}
-                </Typography>
-              </Box>
 
               <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: theme.spacing(3) }}>
                 <Typography
@@ -347,36 +366,49 @@ const CheckoutView: React.FC<React.ReactFragment> = () => {
                 </Typography>
               </Box>
 
-              <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: theme.spacing(3) }}>
-                <Typography
-                  variant='h6'
-                  component='span'
-                  color='primary'
+              {
+                states.onceItems.length > 0 &&
+                <FrequencyResume
+                  frequency='Apenas uma vez'
+                  qtdItems={states.onceItems.length}
+                  price={states.prices.once}
+                  lastDelivery={new Date()}
+                  nextDelivery={new Date()}
+                />
+              }
 
-                  sx={
-                    {
-                      fontSize: { xs: '1.6rem', md: '1.8rem' }
-                    }
-                  }
-                >
-                  Total
-                  </Typography>
+              {
+                states.weeklyItems.length > 0 &&
+                <FrequencyResume
+                  frequency='Semanal'
+                  qtdItems={states.weeklyItems.length}
+                  price={states.prices.weekly}
+                  lastDelivery={new Date()}
+                  nextDelivery={new Date()}
+                />
+              }
 
-                <Typography
-                  variant='h6'
-                  component='span'
-                  color='primary'
+              {
+                states.biweeklyItems.length > 0 &&
+                <FrequencyResume
+                  frequency='Quinzenal'
+                  qtdItems={states.biweeklyItems.length}
+                  price={states.prices.biweekly}
+                  lastDelivery={new Date()}
+                  nextDelivery={new Date()}
+                />
+              }
 
-                  sx={
-                    {
-                      fontSize: { xs: '1.6rem', md: '1.8rem' }
-                    }
-                  }
-                >
-                  {states.shippingValue !== null ? `R$ ${MaskApply.maskMoney(invoiceValue())}` : ''}
-                </Typography>
-
-              </Box>
+              {
+                states.monthlyItems.length > 0 &&
+                <FrequencyResume
+                  frequency='Mensal'
+                  qtdItems={states.monthlyItems.length}
+                  price={states.prices.monthly}
+                  lastDelivery={new Date()}
+                  nextDelivery={new Date()}
+                />
+              }
 
               <Box sx={{ display: 'flex', justifyContent: 'center' }}>
                 <Button type='submit' color='secondary' variant='contained'>
@@ -634,8 +666,6 @@ const CheckoutView: React.FC<React.ReactFragment> = () => {
                 </IconButton>
               </Box>
             }
-
-
           </Box>
         </Grid>
       </Grid>
