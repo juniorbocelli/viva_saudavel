@@ -42,6 +42,8 @@ export const SCREEN_CREDIT_CARD_SET = `${APP_ROOT}/cartao-de-credito/`;
 
 export const SCREEN_ADMIN_CHECKOUT_GET_ALL = `${APP_ROOT}/${ADMIN_PREFIX}/cestas/`;
 export const SCREEN_CLIENT_CHECKOUT_GET_ALL = `${APP_ROOT}/cestas/`;
+export const SCREEN_ADMIN_CHECKOUT_GET = `${APP_ROOT}/${ADMIN_PREFIX}/cesta/:id/`;
+export const SCREEN_CLIENT_CHECKOUT_GET = `${APP_ROOT}/cesta/:id/`;
 
 export const SCREEN_ADMIN_INVOICE_GET_ALL = `${APP_ROOT}/${ADMIN_PREFIX}/notas/`;
 export const SCREEN_ADMIN_INVOICE_GET = `${APP_ROOT}/${ADMIN_PREFIX}/nota/:id/`;
@@ -91,6 +93,8 @@ export const API_CREDIT_CARD_REMOVE = `${API_ROOT}/client/:clientId/credit-card/
 export const API_CHECKOUT_GET_DELIVERY_DAY = `${API_ROOT}/checkout/delivery-day/:weekDay/`; // GET
 export const API_CHECKOUT_ADMIN_GET_ALL = `${API_ROOT}/checkout/`; // GET
 export const API_CHECKOUT_CLIENT_GET_ALL = `${API_ROOT}/client/:clientId/checkout/`; // GET
+export const API_CHECKOUT_ADMIN_GET = `${API_ROOT}/pedido/:id/`; // GET
+export const API_CHECKOUT_CLIENT_GET = `${API_ROOT}/client/:clientId/pedido/:id/`; // GET
 export const API_CHECKOUT_NEW = `${API_ROOT}/client/:clientId/checkout/`; // POST
 
 // Invoice routes

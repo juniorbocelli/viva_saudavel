@@ -24,6 +24,7 @@ import CreditCardSet from '../../screens/client/CreditCardSet';
 import InvoiceView from '../../screens/client/InvoiceView';
 import InvoicesList from '../../screens/client/InvoicesList';
 import CheckoutsList from '../../screens/client/CheckoutsList';
+import CheckoutView from '../../screens/client/CheckoutView';
 
 import Login from '../../screens/login/Login';
 import Register from '../../screens/login/Register';
@@ -50,6 +51,7 @@ const AllRoutes = React.memo((props) => {
       <Route path={GlobalRoutes.SCREEN_CLIENT_GET} element={<Navigation><ClientEdit /></Navigation>} />
       <Route path={GlobalRoutes.SCREEN_CLIENT_CHECKOUT_NEW} element={<Navigation><Checkout /></Navigation>} />
       <Route path={GlobalRoutes.SCREEN_CLIENT_CHECKOUT_GET_ALL} element={<Navigation><CheckoutsList /></Navigation>} />
+      <Route path={GlobalRoutes.SCREEN_CLIENT_CHECKOUT_GET} element={<Navigation><CheckoutView /></Navigation>} />
       <Route path={GlobalRoutes.SCREEN_CREDIT_CARD_SET} element={<Navigation><CreditCardSet /></Navigation>} />
       <Route path={GlobalRoutes.SCREEN_CLIENT_INVOICE_GET} element={<Navigation><InvoiceView /></Navigation>} />
       <Route path={GlobalRoutes.SCREEN_CLIENT_INVOICE_GET_ALL} element={<Navigation><InvoicesList /></Navigation>} />
