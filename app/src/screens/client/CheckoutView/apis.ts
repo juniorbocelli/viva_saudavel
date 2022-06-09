@@ -111,28 +111,34 @@ export default function useAPIs(states: IUseStates): IUseAPIs {
           return;
         };
 
+        // Get checkout
+        const checkout: CheckoutAPI = response.data.checkout;
+        states.setCheckout(checkout);
+
         const allItems: Array<CartItemAPI> = response.data.checkout.items;
 
         allItems.forEach(item => {
           let product: Product = item.product as Product;
-          // Set products price
-          states.setProductsPrice(states.productsPrice + product.price);
 
           switch (item.frequency) {
             case 'once':
               states.setOnceItems(items => [...items, product]);
+              states.setPrices(prices => ({ ...prices, once: prices.once + product.price }));
               break;
 
             case 'weekly':
               states.setWeeklyItems(items => [...items, product]);
+              states.setPrices(prices => ({ ...prices, weekly: prices.weekly + product.price }));
               break;
 
             case 'biweekly':
               states.setBiweeklyItems(items => [...items, product]);
+              states.setPrices(prices => ({ ...prices, biweekly: prices.biweekly + product.price }));
               break;
 
             case 'monthly':
               states.setMonthlyItems(items => [...items, product]);
+              states.setPrices(prices => ({ ...prices, monthly: prices.monthly + product.price }));
               break;
           };
         });

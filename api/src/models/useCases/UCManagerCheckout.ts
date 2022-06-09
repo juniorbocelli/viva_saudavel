@@ -109,7 +109,7 @@ class UCManagerCheckout {
     if (checkouts.length === 0)
       throw new Error("Carrinho inválido");
 
-    return checkouts[0];
+    return await this.populateAll(checkouts[0]);
   };
 
   public async getCheckoutAdmin(id: string): Promise<Checkout> {

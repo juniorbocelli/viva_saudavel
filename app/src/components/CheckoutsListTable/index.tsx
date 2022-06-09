@@ -165,8 +165,10 @@ const CheckoutssListTable: React.FC<ICheckoutsListTableProps> = ({ checkouts }) 
   const auth = useAuth();
 
   const handleRowClick = (row: CheckoutAPI) => {
-    console.log("Row data", row);
-    navigation(Routes.SCREEN_ADMIN_PRODUCT_EDIT.replace(':id', row.id as string));
+    if (auth.isAdmin())
+      navigation(Routes.SCREEN_ADMIN_CHECKOUT_GET.replace(':id', row.id as string));
+    else
+      navigation(Routes.SCREEN_CLIENT_CHECKOUT_GET.replace(':id', row.id as string));
   };
 
   return (
