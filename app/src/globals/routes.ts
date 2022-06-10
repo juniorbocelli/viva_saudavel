@@ -32,7 +32,8 @@ export const SCREEN_ADMIN_PRODUCT_EDIT = `${APP_ROOT}/${ADMIN_PREFIX}/produto/:i
 
 export const SCREEN_ADMIN_CLIENTS = `${APP_ROOT}/${ADMIN_PREFIX}/clientes/`;
 
-export const SCREEN_CLIENT_GET = `${APP_ROOT}/meus-dados/`;
+export const SCREEN_CLIENT_PROFILE = `${APP_ROOT}/meus-dados/`;
+export const SCREEN_CLIENT_GET = `${APP_ROOT}/editar-dados/`;
 export const SCREEN_CLIENT_CHECKOUT_NEW = `${APP_ROOT}/finalizar-compra/`;
 
 export const SCREEN_CLIENT_INVOICE_GET_ALL = `${APP_ROOT}/pedidos/`;
