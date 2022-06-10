@@ -25,3 +25,10 @@ export interface CheckoutAPI {
   createdAt?: Date;
   isActive?: Boolean;
 };
+
+export interface DeliveryDates {
+  once: Date | null;
+  weekly: Date | null;
+  biweekly: Date | null;
+  monthly: Date | null;
+};

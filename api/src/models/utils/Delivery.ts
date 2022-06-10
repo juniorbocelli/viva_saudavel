@@ -13,6 +13,23 @@ class Delivery {
     this.isDeliveryInWeekends = isDeliveryInWeekends;
   };
 
+  public reviewPolicyOfDelivery(dayOfDelivery: Date): Date {
+    if (!this.isDeliveryInHolidays && !this.isDeliveryInWeekends) // No Holidays, no weekends
+      return Dates.getNextBusinessDay(dayOfDelivery);
+    else if (!this.isDeliveryInHolidays && this.isDeliveryInWeekends) // No Holidays, yes weekends
+      return Dates.getNextNoHolidayDay(dayOfDelivery);
+    else if (this.isDeliveryInHolidays && !this.isDeliveryInWeekends) // Yes Holidays, no weekends
+      return Dates.getNextNoWeekendDay(dayOfDelivery);
+    else  //  All days
+      return dayOfDelivery;
+  };
+
+  /**
+   * 
+   * @param day Get the first day of delivery
+   * @param fromDate 
+   * @returns 
+   */
   public getFirstDeliveryDate(day: WeekDaysName, fromDate?: Date): Date {
     let date = typeof (fromDate) !== 'undefined' ? fromDate : new Date();
 
@@ -25,12 +42,8 @@ class Delivery {
 
     const dayOfDelivery = Dates.getNextDay(date, day);
 
-    if (!this.isDeliveryInHolidays && !this.isDeliveryInWeekends)
-      return Dates.getNextBusinessDay(dayOfDelivery);
-    else if (!this.isDeliveryInHolidays && this.isDeliveryInWeekends)
-      return Dates.getNextDay(dayOfDelivery, 'monday');
 
-    return dayOfDelivery;
+    return this.reviewPolicyOfDelivery(dayOfDelivery);
   };
 
   public getNextDeliveryDay(frequency: FrequencyTypes, firstDelivery: Date): Date {

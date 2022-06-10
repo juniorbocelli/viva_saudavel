@@ -14,11 +14,10 @@ interface IFrequencyResumeProps {
   qtdItems: number;
   price: number;
   frequency: string;
-  lastDelivery: Date;
   nextDelivery: Date | null;
 };
 
-const FrequencyResume: React.FC<IFrequencyResumeProps> = ({ qtdItems, price, frequency, lastDelivery, nextDelivery }) => {
+const FrequencyResume: React.FC<IFrequencyResumeProps> = ({ qtdItems, price, frequency, nextDelivery }) => {
   const theme = useTheme();
 
   return (
@@ -77,44 +76,6 @@ const FrequencyResume: React.FC<IFrequencyResumeProps> = ({ qtdItems, price, fre
             }
           >
             R$ {MaskApply.maskMoney(price)}
-          </Typography>
-        </Stack>
-
-        <Stack
-          direction={{ xs: 'row', sm: 'row' }}
-          spacing={{ xs: 1, sm: 2, md: 4 }}
-
-          sx={
-            {
-              mb: theme.spacing(0)
-            }
-          }
-        >
-          <Typography
-            variant='h6'
-            component='span'
-            color='primary'
-
-            sx={
-              {
-                fontSize: { xs: '1.3rem', md: '1.5rem' }
-              }
-            }
-          >
-            Última entrega:
-          </Typography>
-
-          <Typography
-            variant='h6'
-            component='span'
-            color='secondary'
-            sx={
-              {
-                fontSize: { xs: '1.4rem', md: '1.6rem' }
-              }
-            }
-          >
-            {MaskApply.printDateFromTimestamp(lastDelivery)}
           </Typography>
         </Stack>
 

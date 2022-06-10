@@ -1,7 +1,6 @@
 import { Product } from '../../../globals/interfaces/product';
-import { CheckoutAPI } from '../../../globals/interfaces/checkout';
+import { CheckoutAPI, DeliveryDates } from '../../../globals/interfaces/checkout';
 
-export type DeliveryDayState = null | Date;
 export type ShippingValueState = null | number;
 
 export interface ActiveCreditCard {
@@ -25,3 +24,7 @@ export interface PricesState {
   biweekly: number;
   monthly: number;
 };
+
+export type DeliveryDatesState = null | DeliveryDates;
+
+export type IsActiveState = boolean;

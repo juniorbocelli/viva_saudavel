@@ -41,3 +41,14 @@ export function newCheckoutAPI(clientId: string, checkout: CheckoutAPI) {
     items: checkout.items,
   }, {});
 };
+
+export function getNextDeliveryDateAdminAPI(id: string) {
+  return axios.get(Routes.API_CHECKOUT_ADMIN_GET_NEXT_DELIVERY_DATE
+    .replace(':id', id));
+};
+
+export function getNextDeliveryDateClientAPI(clientId: string, id: string) {
+  return axios.get(Routes.API_CHECKOUT_CLIENT_GET_NEXT_DELIVERY_DATE
+    .replace(':clientId', clientId)
+    .replace(':id', id));
+};
