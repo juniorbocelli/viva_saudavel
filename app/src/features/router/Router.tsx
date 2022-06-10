@@ -25,6 +25,7 @@ import InvoiceView from '../../screens/client/InvoiceView';
 import InvoicesList from '../../screens/client/InvoicesList';
 import CheckoutsList from '../../screens/client/CheckoutsList';
 import CheckoutView from '../../screens/client/CheckoutView';
+import Profile from '../../screens/client/Profile';
 
 import Login from '../../screens/login/Login';
 import Register from '../../screens/login/Register';
@@ -49,6 +50,7 @@ const AllRoutes = React.memo((props) => {
       <Route path={GlobalRoutes.SCREEN_PRODUCER_SELECT} element={<Navigation><ProducerSelect /></Navigation>} />
       <Route path={GlobalRoutes.SCREEN_FILTER_SELECT} element={<Navigation><FilterSelect /></Navigation>} />
 
+      <Route path={GlobalRoutes.SCREEN_CLIENT_PROFILE} element={<Navigation><Profile /></Navigation>} />
       <Route path={GlobalRoutes.SCREEN_CLIENT_GET} element={<Navigation><ClientEdit /></Navigation>} />
       <Route path={GlobalRoutes.SCREEN_CLIENT_CHECKOUT_NEW} element={<Navigation><Checkout /></Navigation>} />
       <Route path={GlobalRoutes.SCREEN_CLIENT_CHECKOUT_GET_ALL} element={<Navigation><CheckoutsList /></Navigation>} />
