@@ -8,3 +8,4 @@
 # /src/public/images/products/
 
 package-lock.json
+.env
