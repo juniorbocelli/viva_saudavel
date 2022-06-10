@@ -1,10 +1,9 @@
 import { getShippingValueByCepAPI } from '../../../services/shipping';
-import { getDeliveryDateAPI, getCheckoutClientAPI } from '../../../services/checkout';
+import { getCheckoutClientAPI, getNextDeliveryDateClientAPI } from '../../../services/checkout';
 import { getCreditCardByFilterAPI } from '../../../services/creditCard';
 
 import { IUseStates } from './states';
-import { Checkout, CheckoutAPI } from '../../../globals/interfaces/checkout';
-import { WeekDaysName } from '../../../globals/interfaces/dateTime';
+import { CheckoutAPI, DeliveryDates } from '../../../globals/interfaces/checkout';
 import { CreditCard } from '../../../globals/interfaces/creditCard';
 
 import Math from '../../../features/utils/Math';
@@ -13,10 +12,11 @@ import { Product } from '../../../globals/interfaces/product';
 
 export interface IUseAPIs {
   getShippingValueByCep: (destinationCep: string) => void;
-  getDeliveryDate: (weekDay: WeekDaysName) => void;
   getActiveCreditCard: (clientId: string) => void;
 
   getCheckoutClient: (clientId: string, id: string) => void;
+
+  getNextDeliveryDateClient: (clientId: string, id: string) => void;
 };
 
 export default function useAPIs(states: IUseStates): IUseAPIs {
@@ -34,28 +34,6 @@ export default function useAPIs(states: IUseStates): IUseAPIs {
         };
       })
       .catch((error) => {
-        states.setDialogMessage({ title: "Erro", message: error.message });
-      })
-      .finally(() => {
-        states.setIsQueryingAPI(false);
-      });
-  };
-
-  const getDeliveryDate = (weekDay: WeekDaysName) => {
-    states.setIsQueryingAPI(true);
-
-    getDeliveryDateAPI(weekDay)
-      .then((response) => {
-        console.log('response => getDeliveryDateAPI', response);
-        states.setDeliveryDay(response.data.firstDelivery);
-
-        if (typeof (response.data.error) !== 'undefined') {
-          states.setDialogMessage({ title: "Erro", message: response.data.error });
-          return;
-        };
-      })
-      .catch((error) => {
-        console.log('error => getDeliveryDateAPI', error);
         states.setDialogMessage({ title: "Erro", message: error.message });
       })
       .finally(() => {
@@ -104,7 +82,6 @@ export default function useAPIs(states: IUseStates): IUseAPIs {
     getCheckoutClientAPI(clientId, id)
       .then((response) => {
         console.log('response => getCheckoutClientAPI', response);
-        states.setDeliveryDay(response.data.firstDelivery);
 
         if (typeof (response.data.error) !== 'undefined') {
           states.setDialogMessage({ title: "Erro", message: response.data.error });
@@ -114,6 +91,9 @@ export default function useAPIs(states: IUseStates): IUseAPIs {
         // Get checkout
         const checkout: CheckoutAPI = response.data.checkout;
         states.setCheckout(checkout);
+
+        // Get isActive
+        states.setIsActive(checkout.isActive as boolean);
 
         const allItems: Array<CartItemAPI> = response.data.checkout.items;
 
@@ -152,11 +132,37 @@ export default function useAPIs(states: IUseStates): IUseAPIs {
       });
   };
 
+  const getNextDeliveryDateClient = (clientId: string, id: string) => {
+    states.setIsQueryingAPI(true);
+
+    getNextDeliveryDateClientAPI(clientId, id)
+      .then(response => {
+        console.log('response => getNextDeliveryDateClientAPI', response);
+
+        if (typeof (response.data.error) !== 'undefined') {
+          states.setDialogMessage({ title: "Erro", message: response.data.error });
+          return;
+        };
+
+        const deliveryDates: DeliveryDates = response.data.deliveryDates;
+
+        states.setDeliveryDates(deliveryDates);
+      })
+      .catch(error => {
+        console.log('error => getNextDeliveryDateClientAPI', error);
+        states.setDialogMessage({ title: "Erro", message: error.message });
+      })
+      .finally(() => {
+        states.setIsQueryingAPI(false);
+      });
+  };
+
   return {
     getShippingValueByCep,
-    getDeliveryDate,
     getActiveCreditCard,
 
     getCheckoutClient,
+
+    getNextDeliveryDateClient,
   };
 };

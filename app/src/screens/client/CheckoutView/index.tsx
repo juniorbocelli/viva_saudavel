@@ -6,6 +6,9 @@ import {
   Stack,
   Button,
   IconButton,
+  Switch,
+  FormControlLabel,
+
   useTheme,
 } from '@mui/material';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
@@ -22,7 +25,6 @@ import CreditCardLogo from '../../../ui/components/CreditCardLogo';
 import FrequencyResume from './components/FrequencyResume';
 
 import useStates from './states';
-import { useGlobalContext } from '../../../features/globalContext/context';
 import { useAuth } from '../../../features/auth/context';
 import useAPIs from './apis';
 
@@ -32,7 +34,6 @@ import MaskApply from '../../../features/utils/MaskApply';
 const CheckoutView: React.FC<React.ReactFragment> = () => {
   const states = useStates();
   const apis = useAPIs(states);
-  const globalContext = useGlobalContext();
   const auth = useAuth();
   const theme = useTheme();
   const navigate = useNavigate();
@@ -44,23 +45,14 @@ const CheckoutView: React.FC<React.ReactFragment> = () => {
       if (auth.loggedClient) {
         apis.getShippingValueByCep(auth.loggedClient.address.cep);
         apis.getActiveCreditCard(auth.loggedClient.id!);
-        apis.getCheckoutClient(auth.loggedClient.id as string, params.id)
+        apis.getCheckoutClient(auth.loggedClient.id as string, params.id);
+        apis.getNextDeliveryDateClient(auth.loggedClient.id as string, params.id);
       };
   }, [auth.loggedClient, params.id]);
 
-  const cartVaLue = (): number => {
-    return globalContext['cart'].getTotalCartPrice(globalContext['cart'].cart);
-  };
 
-  const invoiceValue = (): number => {
-    let value: number = 0;
-
-    if (states.shippingValue !== null)
-      value = value + states.shippingValue;
-
-    value = value + cartVaLue();
-
-    return value;
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    states.setIsActive(event.target.checked);
   };
 
   return (
@@ -372,8 +364,7 @@ const CheckoutView: React.FC<React.ReactFragment> = () => {
                   frequency='Apenas uma vez'
                   qtdItems={states.onceItems.length}
                   price={states.prices.once}
-                  lastDelivery={new Date()}
-                  nextDelivery={new Date()}
+                  nextDelivery={states.deliveryDates?.once || null}
                 />
               }
 
@@ -383,8 +374,7 @@ const CheckoutView: React.FC<React.ReactFragment> = () => {
                   frequency='Semanal'
                   qtdItems={states.weeklyItems.length}
                   price={states.prices.weekly}
-                  lastDelivery={new Date()}
-                  nextDelivery={new Date()}
+                  nextDelivery={states.deliveryDates?.weekly || null}
                 />
               }
 
@@ -394,8 +384,7 @@ const CheckoutView: React.FC<React.ReactFragment> = () => {
                   frequency='Quinzenal'
                   qtdItems={states.biweeklyItems.length}
                   price={states.prices.biweekly}
-                  lastDelivery={new Date()}
-                  nextDelivery={new Date()}
+                  nextDelivery={states.deliveryDates?.biweekly || null}
                 />
               }
 
@@ -405,15 +394,22 @@ const CheckoutView: React.FC<React.ReactFragment> = () => {
                   frequency='Mensal'
                   qtdItems={states.monthlyItems.length}
                   price={states.prices.monthly}
-                  lastDelivery={new Date()}
-                  nextDelivery={new Date()}
+                  nextDelivery={states.deliveryDates?.monthly || null}
                 />
               }
 
               <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-                <Button type='submit' color='secondary' variant='contained'>
-                  Confirmar
-                  </Button>
+                <FormControlLabel
+                  control={
+                    <Switch
+                      checked={states.isActive}
+                      onChange={handleChange}
+                      inputProps={{ 'aria-label': 'controlled' }}
+                    />
+                  }
+
+                  label='Cesta ativa?'
+                />
               </Box>
 
             </Box>

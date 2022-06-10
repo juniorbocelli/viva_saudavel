@@ -2,6 +2,8 @@ import Checkout from '../entities/Checkout';
 import Product from '../entities/Product';
 import CartItem from '../entities/CartItem';
 import Client from '../entities/Client';
+import DeliveryDates from '../entities/DeliveryDates';
+import Delivery from '../utils/Delivery';
 
 import DAOCheckout from '../../data/persistence/mongo/dao/DAOCheckout';
 import DAOCart from '../../data/persistence/mongo/dao/DAOCart';
@@ -12,17 +14,23 @@ import UCManagerCart from './UCManagerCart';
 import UCManagerProduct from './UCManagerProduct';
 import UCManagerClient from './UCManagerClient';
 
+import DELIVERY_SETTINGS from '../../settings/delivery.json'
+
 class UCManagerCheckout {
   private daoCheckout: DAOCheckout;
   private ucManagerCartPersistence: UCManagerCart;
   private ucManagerProductPersistence: UCManagerProduct;
   private ucManagerClientPersistence: UCManagerClient;
 
+  private delivery: Delivery;
+
   constructor(daoCheckout: DAOCheckout, daoCart: DAOCart, daoProduct: DAOProduct, daoClient: DAOClient) {
     this.daoCheckout = daoCheckout;
     this.ucManagerCartPersistence = new UCManagerCart(daoCart, daoProduct, daoClient);
     this.ucManagerProductPersistence = new UCManagerProduct(daoProduct);
     this.ucManagerClientPersistence = new UCManagerClient(daoClient);
+
+    this.delivery = new Delivery(DELIVERY_SETTINGS.minDaysToFirstDelivery, DELIVERY_SETTINGS.isDeliveryInHolidays, DELIVERY_SETTINGS.isDeliveryInWeekends);
   };
 
   private async populateProducts(checkoutItems: Array<CartItem>): Promise<Array<CartItem>> {
@@ -119,6 +127,96 @@ class UCManagerCheckout {
       throw new Error("Carrinho inválido");
 
     return checkout;
+  };
+
+  public async getNextDeliveryDayClient(clientId: string, id: string): Promise<DeliveryDates> {
+    const checkouts = await this.daoCheckout.selectBy({ clientId: clientId, _id: id });
+
+    let checkout: Checkout;
+
+    let frequency: Array<string> = [];
+    let weeklyDate: Date | null;
+    let biweeklyDate: Date | null;
+    let monthlyDate: Date | null;
+
+    if (checkouts.length === 0)
+      throw new Error("Checkout inválido");
+
+    checkout = checkouts[0];
+
+    // Check first delivery
+    if (new Date() < this.delivery.getFirstDeliveryDate(checkout.deliveryDay, checkout.createdAt)) {
+      let day = this.delivery.getFirstDeliveryDate(checkout.deliveryDay, checkout.createdAt)
+      return new DeliveryDates(day, day, day, day);
+    };
+
+    // Check frequency
+    checkout.items.forEach(item => {
+      frequency.push(item.frequency);
+    });
+
+    // Weekly date
+    if (frequency.indexOf('weekly') !== -1)
+      weeklyDate = this.delivery.getNextDeliveryDay('weekly', checkout.createdAt);
+    else
+      weeklyDate = null;
+
+    // Biweekly date
+    if (frequency.indexOf('biweekly') !== -1)
+      biweeklyDate = this.delivery.getNextDeliveryDay('biweekly', checkout.createdAt);
+    else
+      biweeklyDate = null;
+
+    // Monthly date
+    if (frequency.indexOf('monthly') !== -1)
+      monthlyDate = this.delivery.getNextDeliveryDay('monthly', checkout.createdAt);
+    else
+      monthlyDate = null;
+
+    return new DeliveryDates(null, weeklyDate, biweeklyDate, monthlyDate);
+  };
+
+  public async getNextDeliveryDayAdmin(id: string): Promise<DeliveryDates> {
+    const checkout = await this.daoCheckout.select(id);
+
+    let frequency: Array<string> = [];
+    let weeklyDate: Date | null;
+    let biweeklyDate: Date | null;
+    let monthlyDate: Date | null;
+
+    if (checkout === null)
+      throw new Error("Checkout inválido");
+
+    // Check first delivery
+    if (new Date() < this.delivery.getFirstDeliveryDate(checkout.deliveryDay, checkout.createdAt)) {
+      let day = this.delivery.getFirstDeliveryDate(checkout.deliveryDay, checkout.createdAt)
+      return new DeliveryDates(day, day, day, day);
+    };
+
+    // Check frequency
+    checkout.items.forEach(item => {
+      frequency.push(item.frequency);
+    });
+
+    // Weekly date
+    if (frequency.indexOf('weekly') !== -1)
+      weeklyDate = this.delivery.getNextDeliveryDay('weekly', checkout.createdAt);
+    else
+      weeklyDate = null;
+
+    // Biweekly date
+    if (frequency.indexOf('biweekly') !== -1)
+      biweeklyDate = this.delivery.getNextDeliveryDay('biweekly', checkout.createdAt);
+    else
+      biweeklyDate = null;
+
+    // Monthly date
+    if (frequency.indexOf('monthly') !== -1)
+      monthlyDate = this.delivery.getNextDeliveryDay('monthly', checkout.createdAt);
+    else
+      monthlyDate = null;
+
+    return new DeliveryDates(null, weeklyDate, biweeklyDate, monthlyDate);
   };
 };
 

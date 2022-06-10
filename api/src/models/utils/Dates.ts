@@ -85,6 +85,22 @@ class Dates {
 
     return date;
   };
+
+  public static getNextNoHolidayDay(date: Date): Date {
+    while (this.isHoliday(date)) {
+      this.subDays(date, 1);
+    };
+
+    return date;
+  };
+
+  public static getNextNoWeekendDay(date: Date): Date {
+    while (this.isWeekend(date)) {
+      this.subDays(date, 1);
+    };
+
+    return date;
+  };
 };
 
 export default Dates;

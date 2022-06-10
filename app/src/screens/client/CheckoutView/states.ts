@@ -5,7 +5,6 @@ import {
 } from '../../../ui/components/pages/MainContentBox/types';
 
 import {
-  DeliveryDayState,
   ShippingValueState,
   ActiveCreditCardState,
 
@@ -17,6 +16,8 @@ import {
   MonthlyItemsState,
 
   PricesState,
+  DeliveryDatesState,
+  IsActiveState,
 } from './types';
 
 export interface IUseStates {
@@ -25,9 +26,6 @@ export interface IUseStates {
 
   dialogMessage: DialogMessageState;
   setDialogMessage: React.Dispatch<React.SetStateAction<DialogMessageState>>;
-
-  deliveryDay: DeliveryDayState;
-  setDeliveryDay: React.Dispatch<React.SetStateAction<DeliveryDayState>>;
 
   shippingValue: ShippingValueState;
   setShippingValue: React.Dispatch<React.SetStateAction<ShippingValueState>>;
@@ -52,13 +50,18 @@ export interface IUseStates {
 
   prices: PricesState;
   setPrices: React.Dispatch<React.SetStateAction<PricesState>>;
+
+  deliveryDates: DeliveryDatesState;
+  setDeliveryDates: React.Dispatch<React.SetStateAction<DeliveryDatesState>>;
+
+  isActive: IsActiveState;
+  setIsActive: React.Dispatch<React.SetStateAction<IsActiveState>>;
 };
 
 export default function useStates(): IUseStates {
   const [isQueryingAPI, setIsQueryingAPI] = React.useState<IsQueryingAPIState>(false);
   const [dialogMessage, setDialogMessage] = React.useState<DialogMessageState>(undefined);
 
-  const [deliveryDay, setDeliveryDay] = React.useState<DeliveryDayState>(null);
   const [shippingValue, setShippingValue] = React.useState<ShippingValueState>(null);
 
   const [activeCreditCard, setActiveCreditCard] = React.useState<ActiveCreditCardState>(null);
@@ -76,6 +79,8 @@ export default function useStates(): IUseStates {
     biweekly: 0,
     monthly: 0,
   });
+  const [deliveryDates, setDeliveryDates] = React.useState<DeliveryDatesState>(null);
+  const [isActive, setIsActive] = React.useState<IsActiveState>(false);
 
   return {
     isQueryingAPI,
@@ -83,10 +88,7 @@ export default function useStates(): IUseStates {
 
     dialogMessage,
     setDialogMessage,
-
-    deliveryDay,
-    setDeliveryDay,
-
+    
     shippingValue,
     setShippingValue,
 
@@ -110,5 +112,11 @@ export default function useStates(): IUseStates {
 
     prices,
     setPrices,
+
+    deliveryDates,
+    setDeliveryDates,
+
+    isActive,
+    setIsActive,
   };
 };

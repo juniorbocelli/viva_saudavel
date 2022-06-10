@@ -36,7 +36,7 @@ class CheckoutController {
     const daoClient = new DAOClient();
     const daoCreditCard = new DAOCreditCard();
 
-    const ucManagerCheckout = new UCManagerCheckout(daoCheckout, daoCart, daoProduct, daoClient);
+    const ucManagerCheckout = new UCManagerCheckout(daoCheckout, daoCart, daoProduct, daoClient,);
     const ucManagerInvoice = new UCManagerInvoice(daoInvoice, daoProduct, daoClient, daoCreditCard, daoCheckout, daoCart);
 
     const { clientId } = req.params;
@@ -115,6 +115,40 @@ class CheckoutController {
 
     try {
       res.status(200).json({ checkout: await ucManagerCheckout.getCheckoutClient(clientId, id) });
+    } catch (error: any) {
+      res.status(200).json({ error: error.message });
+    };
+  };
+
+  static async getNextDeliveryDayClient(req: Request, res: Response) {
+    const daoCheckout = new DAOCheckout();
+    const daoCart = new DAOCart();
+    const daoProduct = new DAOProduct();
+    const daoClient = new DAOClient();
+
+    const { clientId, id } = req.params;
+
+    const ucManagerCheckout = new UCManagerCheckout(daoCheckout, daoCart, daoProduct, daoClient);
+
+    try {
+      res.status(200).json({ deliveryDates: await ucManagerCheckout.getNextDeliveryDayClient(clientId, id) });
+    } catch (error: any) {
+      res.status(200).json({ error: error.message });
+    };
+  };
+
+  static async getNextDeliveryDayAdmin(req: Request, res: Response) {
+    const daoCheckout = new DAOCheckout();
+    const daoCart = new DAOCart();
+    const daoProduct = new DAOProduct();
+    const daoClient = new DAOClient();
+
+    const { id } = req.params;
+
+    const ucManagerCheckout = new UCManagerCheckout(daoCheckout, daoCart, daoProduct, daoClient);
+
+    try {
+      res.status(200).json({ deliveryDates: await ucManagerCheckout.getNextDeliveryDayAdmin(id) });
     } catch (error: any) {
       res.status(200).json({ error: error.message });
     };
