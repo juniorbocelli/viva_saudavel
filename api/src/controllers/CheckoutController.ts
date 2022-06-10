@@ -96,8 +96,12 @@ class CheckoutController {
 
     const ucManagerCheckout = new UCManagerCheckout(daoCheckout, daoCart, daoProduct, daoClient);
 
+    const checkout = await ucManagerCheckout.getCheckoutAdmin(id);
+    if (checkout === null)
+      throw new Error("Checkout inválido");
+
     try {
-      res.status(200).json({ checkout: await ucManagerCheckout.getCheckoutAdmin(id) });
+      res.status(200).json({ checkout: checkout });
     } catch (error: any) {
       res.status(200).json({ error: error.message });
     };
@@ -113,8 +117,12 @@ class CheckoutController {
 
     const ucManagerCheckout = new UCManagerCheckout(daoCheckout, daoCart, daoProduct, daoClient);
 
+    const checkout = await ucManagerCheckout.getCheckoutClient(clientId, id);
+    if (checkout === null)
+      throw new Error("Checkout inválido");
+
     try {
-      res.status(200).json({ checkout: await ucManagerCheckout.getCheckoutClient(clientId, id) });
+      res.status(200).json({ checkout: checkout });
     } catch (error: any) {
       res.status(200).json({ error: error.message });
     };
@@ -149,6 +157,56 @@ class CheckoutController {
 
     try {
       res.status(200).json({ deliveryDates: await ucManagerCheckout.getNextDeliveryDayAdmin(id) });
+    } catch (error: any) {
+      res.status(200).json({ error: error.message });
+    };
+  };
+
+  static async handleActiveAdmin(req: Request, res: Response) {
+    const daoCheckout = new DAOCheckout();
+    const daoCart = new DAOCart();
+    const daoProduct = new DAOProduct();
+    const daoClient = new DAOClient();
+
+    const { id } = req.params;
+    const { isActive } = req.body;
+
+    const ucManagerCheckout = new UCManagerCheckout(daoCheckout, daoCart, daoProduct, daoClient);
+
+    // Get checkout
+    const checkout = await ucManagerCheckout.getCheckoutAdmin(id)
+    if (checkout === null)
+      throw new Error("Checkout inválido");
+
+    const updatedCheckout = Checkout.getUpdated({ isActive: isActive }, checkout);
+
+    try {
+      res.status(200).json({ checkout: await ucManagerCheckout.update(updatedCheckout) });
+    } catch (error: any) {
+      res.status(200).json({ error: error.message });
+    };
+  };
+
+  static async handleActiveClient(req: Request, res: Response) {
+    const daoCheckout = new DAOCheckout();
+    const daoCart = new DAOCart();
+    const daoProduct = new DAOProduct();
+    const daoClient = new DAOClient();
+
+    const { clientId, id } = req.params;
+    const { isActive } = req.body;
+
+    const ucManagerCheckout = new UCManagerCheckout(daoCheckout, daoCart, daoProduct, daoClient);
+
+    // Get checkout
+    const checkout = await ucManagerCheckout.getCheckoutClient(clientId, id);
+    if (checkout === null)
+      throw new Error("Checkout inválido");
+
+    const updatedCheckout = Checkout.getUpdated({ isActive: isActive }, checkout);
+
+    try {
+      res.status(200).json({ checkout: await ucManagerCheckout.update(updatedCheckout) });
     } catch (error: any) {
       res.status(200).json({ error: error.message });
     };

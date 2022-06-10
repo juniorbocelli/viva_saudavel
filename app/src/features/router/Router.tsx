@@ -37,6 +37,7 @@ import ClientsList from '../../screens/admin/ClientsList';
 import AdminCheckoutsList from '../../screens/admin/AdminCheckoutsList';
 import AdminInvoicesList from '../../screens/admin/AdminInvoicesList';
 import AdminInvoiceView from '../../screens/admin/AdminInvoiceView';
+import AdminCheckoutView from '../../screens/admin/AdminCheckoutView';
 
 const AllRoutes = React.memo((props) => {
   return (
@@ -64,6 +65,7 @@ const AllRoutes = React.memo((props) => {
       <Route path={GlobalRoutes.SCREEN_ADMIN_CLIENTS} element={<AdminNavigation><ClientsList /></AdminNavigation>} />
 
       <Route path={GlobalRoutes.SCREEN_ADMIN_CHECKOUT_GET_ALL} element={<AdminNavigation><AdminCheckoutsList /></AdminNavigation>} />
+      <Route path={GlobalRoutes.SCREEN_ADMIN_CHECKOUT_GET} element={<AdminNavigation><AdminCheckoutView /></AdminNavigation>} />
       <Route path={GlobalRoutes.SCREEN_ADMIN_INVOICE_GET_ALL} element={<AdminNavigation><AdminInvoicesList /></AdminNavigation>} />
       <Route path={GlobalRoutes.SCREEN_ADMIN_INVOICE_GET} element={<AdminNavigation><AdminInvoiceView /></AdminNavigation>} />
 

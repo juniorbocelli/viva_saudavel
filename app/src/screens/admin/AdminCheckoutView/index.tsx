@@ -31,7 +31,7 @@ import useAPIs from './apis';
 import * as Routes from '../../../globals/routes';
 import MaskApply from '../../../features/utils/MaskApply';
 
-const CheckoutView: React.FC<React.ReactFragment> = () => {
+const AdminCheckoutView: React.FC<React.ReactFragment> = () => {
   const states = useStates();
   const apis = useAPIs(states);
   const auth = useAuth();
@@ -672,4 +672,4 @@ const CheckoutView: React.FC<React.ReactFragment> = () => {
   );
 };
 
-export default CheckoutView;
+export default AdminCheckoutView;

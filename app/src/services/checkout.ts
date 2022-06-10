@@ -52,3 +52,20 @@ export function getNextDeliveryDateClientAPI(clientId: string, id: string) {
     .replace(':clientId', clientId)
     .replace(':id', id));
 };
+
+export function handleActiveCheckoutAdminAPI(id: string, active: boolean) {
+  return axios.patch(Routes.API_CHECKOUT_ADMIN_HANDLE_ACTIVE
+    .replace(':id', id),
+    {
+      isActive: active,
+    });
+};
+
+export function handleActiveCheckoutClientAPI(clientId: string, id: string, active: boolean) {
+  return axios.patch(Routes.API_CHECKOUT_CLIENT_HANDLE_ACTIVE
+    .replace(':clientId', clientId)
+    .replace(':id', id),
+    {
+      isActive: active,
+    });
+};

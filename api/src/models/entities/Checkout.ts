@@ -46,7 +46,7 @@ class Checkout {
 
       deliveryDay: checkout['deliveryDay'] || previousCheckout.deliveryDay,
 
-      isActive: checkout['isActive'] || previousCheckout.isActive,
+      isActive: typeof(checkout['isActive']) !== 'undefined' ? checkout['isActive'] : previousCheckout.isActive,
     };
 
     return Checkout.getFromObject(updatedCheckout as Checkout);
@@ -60,7 +60,7 @@ class Checkout {
     let products: Array<Product> = [];
 
     this.items.forEach(item => {
-      if(item.frequency === f)
+      if (item.frequency === f)
         if (item.product instanceof Product)
           products.push(item.product);
         else
