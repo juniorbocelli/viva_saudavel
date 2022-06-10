@@ -1,5 +1,7 @@
 import brazilHolidays from '../../assets/json/brazilHolidays.json';
 
+import MaskApply from './MaskApply';
+
 export type WeekDaysName = 'sunday' | 'monday' | 'tuesday' | 'wednesday' | 'thursday' | 'friday' | 'saturday';
 
 class Dates {
@@ -29,11 +31,11 @@ class Dates {
   };
 
   public static dateToString(date: Date): string {
-    return `${date.getUTCFullYear()}-${date.getUTCMonth()}-${date.getUTCDay()}`;
+    return `${date.getUTCFullYear()}-${MaskApply.twoZeros(date.getUTCMonth() + 1)}-${MaskApply.twoZeros(date.getUTCDate())}`;
   };
 
   public static isHoliday(date: Date): boolean {
-    return typeof (this.holidays[this.dateToString(date)]) === 'undefined';
+    return typeof (this.holidays[this.dateToString(date)]) !== 'undefined';
   };
 
   public static isWeekend(date: Date) {
@@ -77,7 +79,7 @@ class Dates {
    * @returns 
    */
   public static getNextBusinessDay(date: Date): Date {
-    while (this.isWeekend(date) || this.isWeekend(date)) {
+    while (this.isWeekend(date) || this.isHoliday(date)) {
       this.sumDays(date, 1);
     };
 
