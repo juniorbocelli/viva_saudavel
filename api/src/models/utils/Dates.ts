@@ -15,6 +15,19 @@ class Dates {
 
   private static holidays = JSON.parse(JSON.stringify(brazilHolidays));
 
+  public static treatAsUTC(date: Date): Date {
+    let result = new Date(date);
+    result.setMinutes(result.getMinutes() - result.getTimezoneOffset());
+
+    return result;
+  };
+
+  public static daysBetween(startDate: Date, endDate: Date): number {
+    let millisecondsPerDay = 24 * 60 * 60 * 1000;
+
+    return Math.floor((this.treatAsUTC(endDate).getTime() - this.treatAsUTC(startDate).getTime()) / millisecondsPerDay);
+  };
+
   public static dateToString(date: Date): string {
     return `${date.getUTCFullYear()}-${date.getUTCMonth()}-${date.getUTCDay()}`;
   };
@@ -41,6 +54,12 @@ class Dates {
     return result;
   };
 
+  /**
+   * Return the next week day from a date
+   * @param from 
+   * @param day 
+   * @returns 
+   */
   public static getNextDay(from: Date, day: WeekDaysName): Date {
     const numberDay = this.weekDays.indexOf(day);
 
@@ -52,6 +71,11 @@ class Dates {
     return from;
   };
 
+  /**
+   * Return the next business day from a data
+   * @param date 
+   * @returns 
+   */
   public static getNextBusinessDay(date: Date): Date {
     while (this.isWeekend(date) || this.isWeekend(date)) {
       this.sumDays(date, 1);

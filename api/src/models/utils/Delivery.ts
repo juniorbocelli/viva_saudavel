@@ -1,5 +1,7 @@
 import Dates, { WeekDaysName } from './Dates';
 
+export type FrequencyTypes = 'weekly' | 'biweekly' | 'monthly';
+
 class Delivery {
   private minDaysToFirstDelivery: number;
   private isDeliveryInHolidays: boolean;
@@ -11,8 +13,8 @@ class Delivery {
     this.isDeliveryInWeekends = isDeliveryInWeekends;
   };
 
-  public getFirstDeliveryDate(day: WeekDaysName): Date {
-    let date = new Date();
+  public getFirstDeliveryDate(day: WeekDaysName, fromDate?: Date): Date {
+    let date = typeof (fromDate) !== 'undefined' ? fromDate : new Date();
 
     if (!this.isDeliveryInWeekends)
       if (Dates.weekDays.indexOf(day) === 0 || Dates.weekDays.indexOf(day) === 6)
@@ -29,6 +31,32 @@ class Delivery {
       return Dates.getNextDay(dayOfDelivery, 'monday');
 
     return dayOfDelivery;
+  };
+
+  public getNextDeliveryDay(frequency: FrequencyTypes, firstDelivery: Date): Date {
+    let today = new Date();
+    let diff = Dates.daysBetween(firstDelivery, today);
+
+
+    switch (frequency) {
+      case 'weekly':
+        if (diff % 7 === 0)
+          return today;
+        else
+          return Dates.sumDays(today, 7 - diff % 7);
+
+      case 'biweekly':
+        if (diff % 14 === 0)
+          return today;
+        else
+          return Dates.sumDays(today, 14 - diff % 14);
+
+      case 'monthly':
+        if (diff % 28 === 0)
+          return today;
+        else
+          return Dates.sumDays(today, 28 - diff % 28);
+    };
   };
 };
 
