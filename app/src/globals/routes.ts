@@ -98,6 +98,8 @@ export const API_CHECKOUT_CLIENT_GET = `${API_ROOT}/client/:clientId/checkout/:i
 export const API_CHECKOUT_NEW = `${API_ROOT}/client/:clientId/checkout/`; // POST
 export const API_CHECKOUT_CLIENT_GET_NEXT_DELIVERY_DATE = `${API_ROOT}/client/:clientId/checkout/:id/delivery-date/`; // GET
 export const API_CHECKOUT_ADMIN_GET_NEXT_DELIVERY_DATE = `${API_ROOT}/client/:clientId/checkout/:id/delivery-date/`; // GET
+export const API_CHECKOUT_CLIENT_HANDLE_ACTIVE = `${API_ROOT}/client/:clientId/checkout/:id/handle-activate/`;    // PATH
+export const API_CHECKOUT_ADMIN_HANDLE_ACTIVE = `${API_ROOT}/client/:clientId/checkout/:id/handle-activate/`; // PATH
 
 // Invoice routes
 export const API_INVOICE_CLIENT_GET = `${API_ROOT}/client/:clientId/invoice/:id/`; // GET

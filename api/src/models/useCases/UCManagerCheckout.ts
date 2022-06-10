@@ -70,6 +70,35 @@ class UCManagerCheckout {
     return checkout;
   };
 
+  private async unpopulateProducts(checkoutItems: Array<CartItem>): Promise<Array<CartItem>> {
+    let unpopulatedItems: Array<CartItem> = [];
+
+    for (let item of checkoutItems)
+      if (item.product instanceof Product) {
+        unpopulatedItems.push({ frequency: item.frequency, product: item.product.id as string });
+      } else {
+        let product = await this.ucManagerProductPersistence.get(item.product);
+        if (product !== null)
+          unpopulatedItems.push({ frequency: item.frequency, product: product });
+      };
+
+    return unpopulatedItems;
+  };
+
+  private async unpopulateClient(clientCheckout: Checkout['client']): Promise<string> {
+    if (clientCheckout instanceof Client)
+      return clientCheckout.id as string;
+    else
+      return clientCheckout;
+  };
+
+  public async unpopulateAll(checkout: Checkout): Promise<Checkout> {
+    checkout.items = await this.unpopulateProducts(checkout.items);
+    checkout.client = await this.unpopulateClient(checkout.client);
+
+    return checkout;
+  };
+
   public async new(checkout: Checkout) {
     await this.ucManagerCartPersistence.emptyCartByClientId(checkout.client as string);
 
@@ -111,26 +140,26 @@ class UCManagerCheckout {
       return this.daoCheckout.delete(checkout);
   };
 
-  public async getCheckoutClient(clientId: string, id: string): Promise<Checkout> {
+  public async getCheckoutClient(clientId: string, id: string): Promise<Checkout | null> {
     const checkouts = await this.daoCheckout.selectBy({ client: clientId, _id: id });
 
     if (checkouts.length === 0)
-      throw new Error("Carrinho inválido");
+      return null;
 
     return await this.populateAll(checkouts[0]);
   };
 
-  public async getCheckoutAdmin(id: string): Promise<Checkout> {
+  public async getCheckoutAdmin(id: string): Promise<Checkout | null> {
     const checkout = await this.daoCheckout.select(id);
 
     if (checkout === null)
-      throw new Error("Carrinho inválido");
+      return null;
 
-    return checkout;
+    return this.populateAll(checkout);
   };
 
   public async getNextDeliveryDayClient(clientId: string, id: string): Promise<DeliveryDates> {
-    const checkouts = await this.daoCheckout.selectBy({ clientId: clientId, _id: id });
+    const checkouts = await this.daoCheckout.selectBy({ client: clientId, _id: id });
 
     let checkout: Checkout;
 
@@ -217,6 +246,13 @@ class UCManagerCheckout {
       monthlyDate = null;
 
     return new DeliveryDates(null, weeklyDate, biweeklyDate, monthlyDate);
+  };
+
+  public async update(checkout: Checkout) {
+    // Unpopulate entities
+    const unpopulatedCheckout = await this.unpopulateAll(checkout);
+
+    return unpopulatedCheckout;
   };
 };
 

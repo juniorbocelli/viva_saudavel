@@ -62,6 +62,8 @@ router.get(Routes.API_CHECKOUT_ADMIN_GET, Auth.adminVerify, CheckoutController.g
 router.post(Routes.API_CHECKOUT_NEW, Auth.tokenVerify, CheckoutController.new);
 router.get(Routes.API_CHECKOUT_CLIENT_GET_NEXT_DELIVERY_DATE, Auth.tokenVerify, CheckoutController.getNextDeliveryDayClient);
 router.get(Routes.API_CHECKOUT_ADMIN_GET_NEXT_DELIVERY_DATE, Auth.adminVerify, CheckoutController.getNextDeliveryDayAdmin);
+router.patch(Routes.API_CHECKOUT_CLIENT_HANDLE_ACTIVE, Auth.tokenVerify, CheckoutController.handleActiveClient);
+router.patch(Routes.API_CHECKOUT_ADMIN_HANDLE_ACTIVE, Auth.adminVerify, CheckoutController.handleActiveAdmin);
 
 // Invoice routes
 router.get(Routes.API_INVOICE_ADMIN_GET, Auth.adminVerify, InvoiceController.getAdminInvoice);
