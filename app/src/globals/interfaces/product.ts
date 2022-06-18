@@ -1,6 +1,7 @@
 export type ProductProducerCode = 'aviacao' | 'agua-na-caixa' | 'beta-mel' | 'bufala-almeida-prado' | 'capril-do-bosque' |
   'fazenda-do-bem' | 'goldy' | 'jaguacy' | 'keiff' | 'letti' | 'la-ferme-moderne' | 'mister-rabbit' | 'naturegg' |
-  'pardinho-artesanal' | 'piracanjuba' | 'ralston' | 'urakami' | 'verde-campo' | 'villa-piva' | 'xando' | 'yorgus';
+  'pardinho-artesanal' | 'piracanjuba' | 'ralston' | 'urakami' | 'verde-campo' | 'villa-piva' | 'xando' | 'yorgus' | 'sadia' |
+  'president' | 'ceratti' | 'haciendas' | 'perdigao' | 'figueiras' | 'seara';
 
 export type ProductCategory = 'leite-e-derivados' | 'queijos' | 'frios' | 'hortifruti' | 'bebidas' | 'doces-e-geleias';
 

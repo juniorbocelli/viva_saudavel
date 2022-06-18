@@ -29,6 +29,23 @@ const options: Array<Option> = [
   { label: 'Keiff', value: 'keiff' },
   { label: 'Letti A²', value: 'letti' },
   { label: 'La Ferme Moderne', value: 'la-ferme-moderne' },
+  { label: 'Mister Rabbit', value: 'mister-rabbit' },
+  { label: 'Naturegg', value: 'naturegg' },
+  { label: 'Pardinho Artesanal', value: 'pardinho-artesanal' },
+  { label: 'Piracanjuba', value: 'piracanjuba' },
+  { label: 'Ralston', value: 'ralston' },
+  { label: 'Urakami', value: 'urakami' },
+  { label: 'Verde Campo', value: 'verde-campo' },
+  { label: 'Villa Piva', value: 'villa-piva' },
+  { label: 'Xandô', value: 'xando' },
+  { label: 'Yorgus', value: 'yorgus' },
+  { label: 'Sadia', value: 'sadia' },
+  { label: 'Seara', value: 'seara' },
+  { label: 'Perdigão', value: 'perdigao' },
+  { label: 'Figueiras', value: 'figueiras' },
+  { label: 'President', value: 'president' },
+  { label: 'Ceratti', value: 'ceratti' },
+  { label: 'Haciendas', value: 'haciendas' },
 ];
 
 const ProducerSelect: React.FC<IProducerSelectProps> = ({ methods, sx }) => {

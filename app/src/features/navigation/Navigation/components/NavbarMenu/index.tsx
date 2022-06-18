@@ -119,6 +119,24 @@ const NavbarMenu: React.FC<React.ReactFragment> = (props) => {
         >
           <ListItemText primary="La Ferme Moderne" />
         </ListItemButton>
+
+        <ListItemButton
+          onClick={() => handlerClickNavigate(GlobalRouters.SCREEN_PRODUCER.replace(':producer', 'perdigao'))}
+        >
+          <ListItemText primary="Perdigão" />
+        </ListItemButton>
+
+        <ListItemButton
+          onClick={() => handlerClickNavigate(GlobalRouters.SCREEN_PRODUCER.replace(':producer', 'president'))}
+        >
+          <ListItemText primary="President" />
+        </ListItemButton>
+
+        <ListItemButton
+          onClick={() => handlerClickNavigate(GlobalRouters.SCREEN_PRODUCER.replace(':producer', 'figueiras'))}
+        >
+          <ListItemText primary="Figueiras" />
+        </ListItemButton>
       </Box>
 
       <Box>
@@ -180,6 +198,24 @@ const NavbarMenu: React.FC<React.ReactFragment> = (props) => {
           onClick={() => handlerClickNavigate(GlobalRouters.SCREEN_PRODUCER.replace(':producer', 'yorgus'))}
         >
           <ListItemText primary="Yorgus" />
+        </ListItemButton>
+
+        <ListItemButton
+          onClick={() => handlerClickNavigate(GlobalRouters.SCREEN_PRODUCER.replace(':producer', 'seara'))}
+        >
+          <ListItemText primary="Seara" />
+        </ListItemButton>
+
+        <ListItemButton
+          onClick={() => handlerClickNavigate(GlobalRouters.SCREEN_PRODUCER.replace(':producer', 'ceratti'))}
+        >
+          <ListItemText primary="Ceratti" />
+        </ListItemButton>
+
+        <ListItemButton
+          onClick={() => handlerClickNavigate(GlobalRouters.SCREEN_PRODUCER.replace(':producer', 'haciendas'))}
+        >
+          <ListItemText primary="Haciendas" />
         </ListItemButton>
       </Box>
     </Box>
