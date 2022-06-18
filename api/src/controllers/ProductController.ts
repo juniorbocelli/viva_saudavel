@@ -19,7 +19,7 @@ class ProductController {
     try {
       try {
         uploadResult = await manageImages.handleArrayUploadFile(req, res);
-      } catch (e) {
+      } catch (e: any) {
         return res.status(200).json({ error: [e.message] });
       };
 
@@ -76,7 +76,7 @@ class ProductController {
       const { id } = req.params;
       try {
         uploadResult = await manageImages.handleArrayUploadFile(req, res);
-      } catch (e) {
+      } catch (e: any) {
         return res.status(200).json({ error: [e.message] });
       };
 
