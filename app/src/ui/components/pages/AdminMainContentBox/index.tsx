@@ -8,7 +8,6 @@ import {
 import { useNavigate } from 'react-router-dom';
 
 import BreadCrumbs from '../../../../components/BreadCrumbs';
-import PageTitle from '../../../../components/PageTitle';
 import BackDrop from '../../BackDrop';
 import AlertDialog from '../../AlertDialog';
 
@@ -18,13 +17,15 @@ import {
 } from './types';
 import { useAuth } from '../../../../features/auth/context';
 import * as Routes from '../../../../globals/routes';
+import * as Strings from '../../../../globals/strings';
 
 interface IAdminMainContentBoxProps {
   children?: React.ReactNode;
   primary?: string;
 
+  pageTitle?: string;
+
   hasBreadcrumb?: boolean;
-  hasBrowseTitle?: boolean;
 
   isRenderBackDrop?: boolean;
   isRenderDialogMessages?: boolean;
@@ -42,23 +43,31 @@ const AdminMainContentBox: React.FC<IAdminMainContentBoxProps> = (props) => {
   const auth = useAuth();
   const navigation = useNavigate();
 
-  React.useEffect(() => {
-    if (auth.isAdmin() === false)
-      navigation(Routes.API_CLIENT_LOGIN, { replace: true });
-  }, [auth.isAdmin()]);
-
   const {
     children,
     primary,
 
+    pageTitle,
+
     hasBreadcrumb,
-    hasBrowseTitle,
 
     isRenderBackDrop,
     isRenderDialogMessages,
 
     states,
   } = props;
+
+  React.useEffect(() => {
+    if (auth.isAdmin() === false)
+      navigation(Routes.API_CLIENT_LOGIN, { replace: true });
+  }, [auth.isAdmin()]);
+
+  React.useEffect(() => {
+    if (typeof (pageTitle) !== 'undefined')
+      document.title = `${Strings.PAGE_TITLE_COMPANY_NAME}${Strings.PAGE_TITLE_SEPARATOR}${pageTitle}`;
+    else
+      document.title = `${Strings.PAGE_TITLE_COMPANY_NAME}`;
+  }, [pageTitle]);
 
   const _onClose = () => {
     if (typeof (states?.setDialogMessage) !== "undefined")
@@ -94,11 +103,6 @@ const AdminMainContentBox: React.FC<IAdminMainContentBoxProps> = (props) => {
             content={states.dialogMessage?.message || ''}
             onClose={_onClose}
           />
-        }
-
-        {
-          (typeof (hasBrowseTitle) === "undefined" ? true : hasBrowseTitle) &&
-          <PageTitle />
         }
 
         <Box sx={{ flexGrow: 1, p: theme.spacing(2), minHeight: '70vh' }}>

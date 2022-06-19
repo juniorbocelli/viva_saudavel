@@ -8,7 +8,6 @@ import {
 import { useNavigate } from 'react-router-dom';
 
 import BreadCrumbs from '../../../../components/BreadCrumbs';
-import PageTitle from '../../../../components/PageTitle';
 import BackDrop from '../../../../ui/components/BackDrop';
 import AlertDialog from '../../../../ui/components/AlertDialog';
 import Footer from '../../../../ui/components/Footer';
@@ -20,13 +19,15 @@ import {
   DialogMessageState,
 } from './types';
 import * as Routes from '../../../../globals/routes';
+import * as Strings from '../../../../globals/strings';
 
 interface IMainContentBoxProps {
   children?: React.ReactNode;
   primary?: string;
 
+  pageTitle?: string;
+
   hasBreadcrumb?: boolean;
-  hasBrowseTitle?: boolean;
 
   isRenderBackDrop?: boolean;
   isRenderDialogMessages?: boolean;
@@ -50,8 +51,9 @@ const MainContentBox: React.FC<IMainContentBoxProps> = (props) => {
     children,
     primary,
 
+    pageTitle,
+
     hasBreadcrumb,
-    hasBrowseTitle,
 
     isRenderBackDrop,
     isRenderDialogMessages,
@@ -61,10 +63,18 @@ const MainContentBox: React.FC<IMainContentBoxProps> = (props) => {
     states,
   } = props;
 
+  // Effects
   React.useEffect(() => {
     if (auth.isSignedIn() === false && !!isLoggedIn)
       navigation(Routes.API_CLIENT_LOGIN, { replace: true });
   }, [auth.isSignedIn()]);
+
+  React.useEffect(() => {
+    if (typeof (pageTitle) !== 'undefined')
+      document.title = `${Strings.PAGE_TITLE_COMPANY_NAME}${Strings.PAGE_TITLE_SEPARATOR}${pageTitle}`;
+    else
+      document.title = `${Strings.PAGE_TITLE_COMPANY_NAME}`;
+  }, [pageTitle]);
 
   const _onClose = () => {
     if (typeof (states?.setDialogMessage) !== "undefined")
@@ -100,11 +110,6 @@ const MainContentBox: React.FC<IMainContentBoxProps> = (props) => {
             content={states.dialogMessage?.message || ''}
             onClose={_onClose}
           />
-        }
-
-        {
-          (typeof (hasBrowseTitle) === "undefined" ? true : hasBrowseTitle) &&
-          <PageTitle />
         }
 
         <Box sx={{ flexGrow: 1, p: theme.spacing(2), minHeight: '70vh' }}>
