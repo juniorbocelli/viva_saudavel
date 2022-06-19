@@ -99,6 +99,7 @@ const ProductSet: React.FC<React.ReactFragment> = () => {
     <AdminMainContentBox
       primary={typeof (states.productId) === 'undefined' ? "Cadastro de Produto" : "Edição de Produto"}
       states={states}
+      pageTitle="Dashboard Produto"
     >
       <form onSubmit={methods.handleSubmit(onSubmit)} encType='multipart/form-data'>
         <Typography variant='h5' component='div' sx={{ mb: theme.spacing(1.5) }}>

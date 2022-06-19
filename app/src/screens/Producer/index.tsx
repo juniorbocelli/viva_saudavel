@@ -94,7 +94,11 @@ const Producer: React.FC<React.ReactFragment> = () => {
   }, [params.producer]);
 
   return (
-    <MainContentBox primary={`Produtos de: ${getProducerName(params.producer as Filter['producerCode'])}`} states={states}>
+    <MainContentBox
+      primary={`Produtos de: ${getProducerName(params.producer as Filter['producerCode'])}`}
+      states={states}
+      pageTitle={`Produtos - ${getProducerName(params.producer as Filter['producerCode'])}`}
+    >
       <ProductModal product={states.selectedProduct} setProduct={states.setSelectedProduct} />
 
       <div style={{ width: '100%' }}>

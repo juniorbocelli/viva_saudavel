@@ -24,7 +24,7 @@ const Profile: React.FC<React.ReactFragment> = () => {
   }, [auth.loggedClient]);
 
   return (
-    <MainContentBox primary='Meus Dados' isLoggedIn={true}>
+    <MainContentBox primary='Meus Dados' isLoggedIn={true} pageTitle="Meus Dados">
       <Grid container>
         <Grid item md={4} xs={12}>
           <ClientView />

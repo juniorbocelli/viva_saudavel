@@ -29,7 +29,7 @@ const InvoiceView: React.FC<React.ReactFragment> = () => {
   }, [params.id, auth.loggedClient]);
 
   return (
-    <MainContentBox states={states} primary='Pedido'>
+    <MainContentBox states={states} primary='Pedido' isLoggedIn={true} pageTitle="Pedidos">
       {
         states.invoice !== null &&
         <Stack

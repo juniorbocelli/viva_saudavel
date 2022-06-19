@@ -15,7 +15,7 @@ const ProductsList: React.FC<React.ReactFragment> = () => {
   effects.useComponentDidMount();
 
   return (
-    <AdminMainContentBox primary="Produtos" states={states}>
+    <AdminMainContentBox primary="Produtos" states={states} pageTitle="Dashboard Produtos">
       <ProductsListTable products={states.products} />
     </AdminMainContentBox>
   );

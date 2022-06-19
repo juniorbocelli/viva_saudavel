@@ -19,7 +19,7 @@ const InvoicesList: React.FC<React.ReactFragment> = () => {
   }, [auth.loggedClient]);
 
   return (
-    <MainContentBox primary='Pedidos' states={states} isLoggedIn={true}>
+    <MainContentBox primary='Pedidos' states={states} isLoggedIn={true} pageTitle="Pedidos">
       <InvoicesListTable invoices={states.invoices} />
     </MainContentBox>
   );

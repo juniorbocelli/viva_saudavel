@@ -19,7 +19,7 @@ const CheckoutsList: React.FC<React.ReactFragment> = () => {
   }, [states.checkoutFilter, auth.loggedClient]);
 
   return (
-    <MainContentBox primary="Cestas" states={states} isLoggedIn={true}>
+    <MainContentBox primary="Cestas" states={states} isLoggedIn={true} pageTitle="Cestas">
       <CheckoutsListTable checkouts={states.checkouts} />
     </MainContentBox>
   );

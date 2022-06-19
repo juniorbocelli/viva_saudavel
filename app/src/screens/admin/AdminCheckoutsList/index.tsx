@@ -16,7 +16,7 @@ const AdminCheckoutsList: React.FC<React.ReactFragment> = () => {
   }, [states.checkoutFilter]);
 
   return (
-    <AdminMainContentBox primary="Cestas" states={states}>
+    <AdminMainContentBox primary="Cestas" states={states} pageTitle="Dashboard Cestas">
       <CheckoutsListTable checkouts={states.checkouts} />
     </AdminMainContentBox>
   );

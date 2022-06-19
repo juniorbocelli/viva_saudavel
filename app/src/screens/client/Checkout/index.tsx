@@ -96,7 +96,7 @@ const Checkout: React.FC<React.ReactFragment> = () => {
   };
 
   return (
-    <MainContentBox primary="Carrinho" states={states} isLoggedIn={true}>
+    <MainContentBox primary="Carrinho" states={states} isLoggedIn={true} pageTitle="Checkout">
       <Grid container spacing={{ xs: 0, md: 3 }} sx={{ width: { xs: '100%', md: '90%' }, m: 'auto' }}>
         {/* Cart Items */}
         <Grid item xs={12} sm={7}>

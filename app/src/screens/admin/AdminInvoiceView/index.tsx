@@ -4,7 +4,7 @@ import {
 } from '@mui/material';
 import { useParams } from 'react-router-dom';
 
-import MainContentBox from '../../../ui/components/pages/MainContentBox';
+import AdminMainContentBox from '../../../ui/components/pages/AdminMainContentBox';
 import ClientData from '../../../components/dataView/ClientData';
 import AddressData from '../../../components/dataView/AddressData';
 import CreditCardData from '../../../components/dataView/CreditCardData';
@@ -29,7 +29,7 @@ const AdminInvoiceView: React.FC<React.ReactFragment> = () => {
   }, [params.id, auth.loggedClient]);
 
   return (
-    <MainContentBox states={states} primary='Pedido'>
+    <AdminMainContentBox states={states} primary='Pedido' pageTitle="Dashboard Nota">
       {
         states.invoice !== null &&
         <Stack
@@ -47,7 +47,7 @@ const AdminInvoiceView: React.FC<React.ReactFragment> = () => {
           <AddressData address={states.invoice.receiverAddress} />
         </Stack>
       }
-    </MainContentBox>
+    </AdminMainContentBox>
   );
 };
 

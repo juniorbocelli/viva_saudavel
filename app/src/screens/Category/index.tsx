@@ -50,7 +50,11 @@ const Category: React.FC<React.ReactFragment> = () => {
   };
 
   return (
-    <MainContentBox primary={getCategoryName(params.category as Filter['category'])} states={states}>
+    <MainContentBox
+      primary={getCategoryName(params.category as Filter['category'])}
+      states={states}
+      pageTitle={getCategoryName(params.category as Filter['category'])}
+    >
       <ProductModal product={states.selectedProduct} setProduct={states.setSelectedProduct} />
 
       <div style={{ width: '100%' }}>

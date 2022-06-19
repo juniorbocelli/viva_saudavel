@@ -20,7 +20,7 @@ const AdminInvoicesList: React.FC<React.ReactFragment> = () => {
   }, [auth.loggedClient]);
 
   return (
-    <AdminMainContentBox primary='Pedidos' states={states}>
+    <AdminMainContentBox primary='Pedidos' states={states} pageTitle="Dashboard Notas">
       <InvoicesListTable invoices={states.invoices} />
     </AdminMainContentBox>
   );

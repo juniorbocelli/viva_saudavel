@@ -15,7 +15,7 @@ const ClientsList: React.FC<React.ReactFragment> = () => {
   effects.useComponentDidMount();
 
   return (
-    <AdminMainContentBox primary='Clientes' states={states}>
+    <AdminMainContentBox primary='Clientes' states={states} pageTitle="Dashboard Clientes">
       <ClientsListTable clients={states.clients} />
     </AdminMainContentBox>
   );

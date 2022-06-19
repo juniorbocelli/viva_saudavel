@@ -112,7 +112,7 @@ const CreditCardSet: React.FC<React.ReactFragment> = () => {
   };
 
   return (
-    <MainContentBox states={states} isLoggedIn={true} primary='Cartão de Crédito'>
+    <MainContentBox states={states} isLoggedIn={true} primary='Cartão de Crédito' pageTitle="Cartões de Crédito">
       <Grid container spacing={2}>
         {/* Form  */}
         <Grid item xs={12} md={6}>

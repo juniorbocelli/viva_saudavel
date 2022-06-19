@@ -56,7 +56,11 @@ const FilterSelect: React.FC<React.ReactFragment> = () => {
   effects.useFilterDidChanged(states.selectedFilter);
 
   return (
-    <MainContentBox primary={states.selectedFilter ? `Filtro de: ${getFilterName(states.selectedFilter)}` : `Selecione um Filtro`} states={states}>
+    <MainContentBox
+    primary={states.selectedFilter ? `Filtro de: ${getFilterName(states.selectedFilter)}` : `Selecione um Filtro`}
+    states={states}
+    pageTitle={states.selectedFilter ? `Filtro - ${getFilterName(states.selectedFilter)}` : `Filtros`}
+    >
       <ProductModal product={states.selectedProduct} setProduct={states.setSelectedProduct} />
 
       <FormControl fullWidth sx={{ mb: theme.spacing(1) }}>

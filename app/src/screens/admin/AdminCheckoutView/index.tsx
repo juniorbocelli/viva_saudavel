@@ -19,7 +19,7 @@ import HomeIcon from '@mui/icons-material/Home';
 import { useNavigate, useParams } from 'react-router-dom';
 
 
-import MainContentBox from '../../../ui/components/pages/MainContentBox';
+import AdminMainContentBox from '../../../ui/components/pages/AdminMainContentBox';
 import CheckoutItem from '../../../ui/components/CheckoutItem';
 import CreditCardLogo from '../../../ui/components/CreditCardLogo';
 import FrequencyResume from './components/FrequencyResume';
@@ -59,7 +59,7 @@ const AdminCheckoutView: React.FC<React.ReactFragment> = () => {
   };
 
   return (
-    <MainContentBox primary="Carrinho" states={states} isLoggedIn={true}>
+    <AdminMainContentBox primary="Carrinho" states={states} pageTitle="Cesta">
       <Grid container spacing={{ xs: 0, md: 3 }} sx={{ width: { xs: '100%', md: '90%' }, m: 'auto' }}>
         {/* Cart Items */}
         <Grid item xs={12} sm={7}>
@@ -668,7 +668,7 @@ const AdminCheckoutView: React.FC<React.ReactFragment> = () => {
           </Box>
         </Grid>
       </Grid>
-    </MainContentBox>
+    </AdminMainContentBox>
   );
 };
 

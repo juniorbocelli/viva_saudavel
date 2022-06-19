@@ -25,6 +25,7 @@ import { useEffects } from './effects';
 import { useAuth } from '../../../features/auth/context';
 
 import * as Routes from '../../../globals/routes';
+import * as Strings from '../../../globals/strings';
 
 const Login: React.FC<React.ReactFragment> = (props) => {
   const states = useStates();
@@ -50,6 +51,10 @@ const Login: React.FC<React.ReactFragment> = (props) => {
   React.useEffect(() => {
     setToken(Url.getParams().token);
   }, [setToken]);
+
+  React.useEffect(() => {
+    document.title = `${Strings.PAGE_TITLE_COMPANY_NAME}${Strings.PAGE_TITLE_SEPARATOR}Login`;
+  }, []);
 
   return (
     <Box

@@ -75,7 +75,11 @@ const Filter: React.FC<React.ReactFragment> = () => {
   }, [params.filter]);
 
   return (
-    <MainContentBox primary={`Filtrado por: ${getFilterName(params.filter as FilterCodes)}`} states={states}>
+    <MainContentBox
+      primary={`Filtrado por: ${getFilterName(params.filter as FilterCodes)}`}
+      states={states}
+      pageTitle={`Filtro -: ${getFilterName(params.filter as FilterCodes)}`}
+    >
       <ProductModal product={states.selectedProduct} setProduct={states.setSelectedProduct} />
 
       <div style={{ width: '100%' }}>

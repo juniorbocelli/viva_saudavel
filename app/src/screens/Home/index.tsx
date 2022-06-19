@@ -22,7 +22,7 @@ const Home: React.FC<React.ReactFragment> = (props) => {
   effects.useComponentDidMount();
 
   return (
-    <MainContentBox states={states}>
+    <MainContentBox states={states} pageTitle="Home">
       <ProductModal product={states.selectedProduct} setProduct={states.setSelectedProduct} />
 
       {/* Leite e derivados Gallery */}

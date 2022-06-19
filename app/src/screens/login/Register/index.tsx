@@ -32,6 +32,7 @@ import useStates from './states';
 import useAPIs from './apis';
 
 import * as Routes from '../../../globals/routes';
+import * as Strings from '../../../globals/strings';
 import SanitizerString from '../../../features/utils/SanitizerString';
 import { cepRegExp } from '../../../features/validation/regexp';
 
@@ -57,6 +58,10 @@ const Register: React.FC<React.ReactFragment> = () => {
       methods.setValue('state', states.receivedAddress.state);
     }
   }, [states.receivedAddress]);
+
+  React.useEffect(() => {
+    document.title = `${Strings.PAGE_TITLE_COMPANY_NAME}${Strings.PAGE_TITLE_SEPARATOR}Cadastro`;
+  }, []);
 
   const onSubmit = (data: RegisterDataForm) => {
     console.log('data', data);

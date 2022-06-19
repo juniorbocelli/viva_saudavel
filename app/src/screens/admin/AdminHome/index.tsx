@@ -4,7 +4,7 @@ import AdminMainContentBox from '../../../ui/components/pages/AdminMainContentBo
 
 const AdminHome: React.FC<React.ReactFragment> = () => {
   return (
-    <AdminMainContentBox primary="Dashboard">
+    <AdminMainContentBox primary="Dashboard" pageTitle="Dashboard">
 
     </AdminMainContentBox>
   );
