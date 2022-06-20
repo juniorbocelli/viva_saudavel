@@ -2,7 +2,7 @@ import axios from 'axios';
 import { globalAuth } from '../features/auth/context';
 import LocalStorage from '../features/storage/LocalStorage';
 
-const baseURL = "http://localhost:5000";
+const baseURL = "https://warm-meadow-60509.herokuapp.com/";
 const apiAxios = axios.create({ headers: { "x-access-token": LocalStorage.getToken() }, baseURL: baseURL });
 
 apiAxios.interceptors.request.use(function (config) {

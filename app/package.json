@@ -65,7 +65,7 @@
     "@types/react-slick": "^0.23.8",
     "@types/react-text-mask": "^5.4.10"
   },
-  "proxy": "http://localhost:5000",
+  "proxy": "https://warm-meadow-60509.herokuapp.com/",
   "browser": {
     "crypto": false
   }
