@@ -62,25 +62,6 @@ const Home: React.FC<React.ReactFragment> = (props) => {
       </Typography>
       <ProductGallery productCards={states.queijos} setProduct={states.setSelectedProduct} />
 
-      {/* Frios Gallery */}
-      <Typography
-        variant='h3'
-        component='div'
-        color='primary'
-
-        sx={
-          {
-            fontSize: { xs: '1.6rem', md: '2.6rem' },
-            mt: { xs: theme.spacing(1.0), md: theme.spacing(2) },
-            ml: { md: theme.spacing(2) },
-            mb: { xs: theme.spacing(1.0), md: theme.spacing(2) },
-          }
-        }
-      >
-        Frios
-      </Typography>
-      <ProductGallery productCards={states.frios} setProduct={states.setSelectedProduct} />
-
       {/* Hortifruti Gallery */}
       <Typography
         variant='h3'
@@ -138,6 +119,25 @@ const Home: React.FC<React.ReactFragment> = (props) => {
         Doces e Geléias
       </Typography>
       <ProductGallery productCards={states.docesEGeleias} setProduct={states.setSelectedProduct} />
+
+      {/* Frios Gallery */}
+      <Typography
+        variant='h3'
+        component='div'
+        color='primary'
+
+        sx={
+          {
+            fontSize: { xs: '1.6rem', md: '2.6rem' },
+            mt: { xs: theme.spacing(1.0), md: theme.spacing(2) },
+            ml: { md: theme.spacing(2) },
+            mb: { xs: theme.spacing(1.0), md: theme.spacing(2) },
+          }
+        }
+      >
+        Frios
+      </Typography>
+      <ProductGallery productCards={states.frios} setProduct={states.setSelectedProduct} />
     </MainContentBox >
   );
 };
