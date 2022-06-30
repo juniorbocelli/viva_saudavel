@@ -1,6 +1,9 @@
 # Viva Saudável
 Esse é um projeto escolar para a matéria Projeto de Sistemas do curso de Análise e Desenvolvimento de Sistemas do IFSP, campus de São Carlos.
 
+## Deploy do Projeto
+https://viva-saudavel.netlify.app/
+
 ## A idéia
 A idéia do sistema é criar um site com compras de produtos frescos de forma recorrente, como uma assinatura, onde o cliente monta cestas com produtos que ele queira receber semanalmente, quinzenalmente e mensalmente e escolhe o dia melhor para a entrega.
 
