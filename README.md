@@ -6,6 +6,8 @@ Infelizmente o Heroku, onde as APIs estavam armazenadas, agora é um serviço pa
 
 Você ainda pode executá-lo desde que tenha o MongoDB instalado no seu computador, ou execute ele a partir de um container Docker.
 
+O óbivio: você anterar o arquivo .env dentro da pasta "api", com as suas informações, antes de tentar executar o projeto.
+
 Estou criando um script que cria o container automaticamente, bastando que o Docker já esteja instalado na máquina.
 
 ## A idéia
