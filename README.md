@@ -10,6 +10,9 @@ O óbivio: você alterar o arquivo .env dentro da pasta "api", com as suas infor
 
 Estou criando um script que cria o container automaticamente, bastando que o Docker já esteja instalado na máquina.
 
+## Usuário Administrador
+Para ter um usuário com nível de Administrador e por der acessar a área de administração do sistema, basta cadastrar um cliente comum e mudar, no banco de dados, na collection "clients", isAdmin=true.
+
 ## A idéia
 A idéia do sistema é criar um site com compras de produtos frescos de forma recorrente, como uma assinatura, onde o cliente monta cestas com produtos que ele queira receber semanalmente, quinzenalmente e mensalmente e escolhe o dia melhor para a entrega.
 
