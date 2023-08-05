@@ -2,7 +2,11 @@
 Esse é um projeto escolar para a matéria Projeto de Sistemas do curso de Análise e Desenvolvimento de Sistemas do IFSP, campus de São Carlos.
 
 ## Deploy do Projeto
-https://viva-saudavel.netlify.app/
+Infelizmente o Heroku, onde as APIs estavam armazenadas, agora é um serviço pago. Então, o deploy do projeto (https://viva-saudavel.netlify.app/) deixou de funcionar.
+
+Você ainda pode executá-lo desde que tenha o MongoDB instalado no seu computador, ou execute ele a partir de um container Docker.
+
+Estou criando um script que cria o container automaticamente, bastando que o Docker já esteja instalado na máquina.
 
 ## A idéia
 A idéia do sistema é criar um site com compras de produtos frescos de forma recorrente, como uma assinatura, onde o cliente monta cestas com produtos que ele queira receber semanalmente, quinzenalmente e mensalmente e escolhe o dia melhor para a entrega.
